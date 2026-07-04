@@ -139,7 +139,7 @@ Siz oddiy Pod dan boshladingiz va 9 ta bir vaqtdagi nosozlik bilan production fa
 
 Yakunlaganingiz uchun rahmat **K8sQuest**! You've demonstrated exceptional dedication and skill.
 
-May your clusters be stable, your pods always Running, and your deployments forever successful!
+Klasterlaringiz barqaror, pod laringiz doim Running, va deployment laringiz abadiy muvaffaqiyatli bo'lsin!
 
 **Happy Kuberneting!** ⎈
 

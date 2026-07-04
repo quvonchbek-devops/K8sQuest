@@ -2,7 +2,7 @@
 
 ## Missiya Umumiy Ko'rinishi
 
-**Maqsad:** Fix a frontend application that couldn't communicate with a backend service in a different namespace by using the proper DNS FQDN format.
+**Maqsad:** Boshqa namespace dagi backend service bilan aloqa qila olmagan frontend ilovani tuzatingce by using the proper DNS FQDN format.
 
 **XP berildi:** 250 XP  
 **Qiyinlik:** Intermediate  
@@ -12,7 +12,7 @@
 
 ## What You Encountered
 
-Siz `k8squest` namespace da frontend ilovani deploy qildingiz, u `backend-ns` namespace dagi backend API ga murojaat qilishi kerak edi. Ikkala service mukammal ishlayotgan edi, endpoint lar mavjud edi, and network connectivity was fine. Yet every API call from the frontend failed with DNS resolution errors.
+Siz `k8squest` namespace da frontend ilovani deploy qildingiz, u `backend-ns` namespace dagi backend API ga murojaat qilishi kerak edi. Ikkala service mukammal ishlayotgan edi, endpoint lar mavjud edi. Tarmoq ulanishi ham yaxshi edi. Lekin frontend dan har bir API murojaat DNS hal qilish xatolari bilan muvaffaqiyatsiz bo'ldi.
 
 Aybdor? Frontend faqat bir xil namespace ichida hal qilinadigan qisqa service nomi (`api-service`) ishlatayotgan edi.
 
@@ -34,7 +34,7 @@ command: ['sh', '-c', 'wget -q -O- http://api-service']
 
 ### Tushunish Kubernetes DNS
 
-Kubernetes ichki DNS server (CoreDNS) ishlatadi, u service discovery ta'minlaydi. Har bir Service DNS yozuvi oladi, lekinhe DNS name format depends on whether you're accessing a service in the same namespace or a different namespace.
+Kubernetes ichki DNS server (CoreDNS) ishlatadi, u service discovery ta'minlaydi. Har bir Service DNS yozuvi oladi, lekin DNS nom formati bir xil namespace yoki boshqa namespace dagi service ga kirayotganingizga bog'liqmespace or a different namespace.
 
 **DNS Architecture:**
 
@@ -188,7 +188,7 @@ spec:
 
 **Phase 2: Frontend Update (Week 2)**
 
-The frontend team updated their code to call the new microservice:
+Frontend jamoasi yangi microservice ga murojaat qilish uchun kodini yangiladi:
 
 ```javascript
 // Frontend code (running in 'frontend' namespace)

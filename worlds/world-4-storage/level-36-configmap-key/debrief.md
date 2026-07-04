@@ -136,7 +136,7 @@ env:
 1. **All referenced keys must exist** - Or pod fails to start
 2. **Keys are case-sensitive** - database_host ≠ databaseHost
 3. **Three usage patterns** - Env vars, envFrom, volume mounts
-4. **Use optional: true for non-critical** - Allows pod to start
+4. **Muhim bo'lmagan uchun optional: true ishlating** — Pod ni ishga tushishga ruxsat beradi
 5. **Deploy dan oldin tekshiring** — ConfigMap da barcha kerakli kalit lar borligini tekshiring
 
 ---

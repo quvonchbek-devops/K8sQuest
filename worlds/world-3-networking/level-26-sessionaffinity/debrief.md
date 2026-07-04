@@ -209,7 +209,7 @@ spec:
 **User Journey:**
 1. User adds item to cart → Request goes to Pod 3 (cart stored in Pod 3's memory)
 2. User continues shopping → Request goes to Pod 7 (cart appears empty!)
-3. User adds another item → Request goes to Pod 2 (cart only has this new item)
+3. Foydalanuvchi yana mahsulot qo'shadi → So'rov Pod 2 ga tushadi (savatda faqat yangi mahsulot bor)
 4. User goes to checkout → Request goes to Pod 3 (cart has first item from step 1!)
 5. User sees wrong items, gets confused, abandons cart
 
@@ -375,7 +375,7 @@ sessionAffinity: None       # Default, no affinity
 sessionAffinity: ClientIP   # Route by client IP
 ```
 
-**NOTE:** Kubernetes only supports these two values. No other options (like cookie-based affinity) at the Service level. For advanced routing, use an Ingress controller.
+**NOTE:** Kubernetes faqat shu ikki qiymatni qo'llab-quvvatlaydi. Service darajasida boshqa variantlar (cookie-asoslangan affinity kabi) yo'qice level. For advanced routing, use an Ingress controller.
 
 ---
 
@@ -848,11 +848,11 @@ readinessProbe:
 
 Siz o'zlashtirgansiz session affinity and understand stateful vs stateless design! Endi siz bilasiz:
 - ✅ How to configure sessionAffinity: ClientIP
-- ✅ When to use (and when NOT to use) session affinity
+- ✅ Session affinity ni qachon ishlatish (va qachon ISHLATMASLIK) kerak
 - ✅ Tradeoffs between stateful and stateless architectures
 - ✅ How to migrate from stateful to stateless
 
-In the next levels, you'll explore cross-namespace service communication, service endpoint updates, and more advanced networking patterns.
+Keyingi level larda siz namespace lar arasi service aloqasi, service endpoint yangilanishlari, and more advanced networking patterns.
 
 **Continue your K8sQuest journey to unlock the next challenge!** 🚀
 

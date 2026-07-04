@@ -552,7 +552,7 @@ volumeMounts:
 
 ## 🚀 Keyingi Qadamlar
 
-Now that you understand volume mount paths, you're ready for:
+Endi volume mount yo'llarini tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 33:** Access mode mismatches (ReadWriteOnce vs ReadWriteMany)
 - **Level 34:** StatefulSet volumeClaimTemplates

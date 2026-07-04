@@ -2,7 +2,7 @@
 
 ## Missiya Umumiy Ko'rinishi
 
-**Maqsad:** Fix an Ingress configuration where the path routing was incorrectly configured, causing 404 errors for all requests to the application.
+**Maqsad:** Path yo'naltirish noto'g'ri sozlangani uchun 404 xatolarga sabab bo'lgan Ingress konfiguratsiyasini tuzating for all requests to the application.
 
 **XP berildi:** 250 XP  
 **Qiyinlik:** Intermediate  
@@ -12,7 +12,7 @@
 
 ## What You Encountered
 
-Siz oddiy web ilovani (nginx) `http://myapp.local` da deploy qildingiz. Hamma narsa to'g'ri sozlangandek ko'rindi— Pod ishlayotgan edi, Service da endpoint lar mavjud edi, va Ingress resursi ham bor edi — lekin URL ga kirganda 404 xato oldingiz.esource existed. Yet when you tried to access the application, you got **404 Not Found** errors.
+Siz oddiy web ilovani (nginx) `http://myapp.local` da deploy qildingiz. Hamma narsa to'g'ri sozlangandek ko'rindi— Pod ishlayotgan edi, Service da endpoint lar mavjud edi, va Ingress resursi ham bor edi — lekin URL ga kirganda 404 xato oldingiz. Ingress path `/api` ga sozlangan edi, aslida `/` bo'lishi kerak edi.
 
 The culprit? A subtle but critical misconfiguration in the Ingress path.
 
@@ -304,9 +304,9 @@ Now:
 
 ### 1. **Path Rewriting**
 
-Sometimes you want the Ingress path to differ from the backend path.
+Ba'zida Ingress path ni backend path dan farqli qilishni xohlaysiz.
 
-**Example:** Old API at `/api/v1`, new API at `/v2`, but you want users to access both at `/api`
+**Example:** Eski API `/api/v1` da, yangi API `/v2` da, lekin foydalanuvchilar ikkisiga ham `/api` orqali kirishini xohlaysiz
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -561,7 +561,7 @@ pathType: Exact
 
 For `Exact` paths, `/login` and `/login/` are DIFFERENT.
 
-**Recommendation:** Use `Prefix` unless you have a specific reason to use `Exact`.
+**Recommendation:** `Exact` ishlatish uchun aniq sabab bo'lmasa `Prefix` ishlating.
 
 ### 3. **Document Your Routing Logic**
 

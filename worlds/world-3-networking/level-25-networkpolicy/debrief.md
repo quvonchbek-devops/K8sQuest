@@ -117,7 +117,7 @@ spec:
 
 ### Default Deny Behavior
 
-**CRITICAL:** Once you create a NetworkPolicy for a pod, that pod becomes "protected" and ALL traffic is denied standart holatda EXCEPT what you explicitly allow.
+**CRITICAL:** Pod uchun NetworkPolicy yaratganingizda, bu pod "himoyalangan" bo'ladi va BARCHA trafik rad etiladid standart holatda EXCEPT what you explicitly allow.
 
 ```yaml
 # NO NetworkPolicy
@@ -178,7 +178,7 @@ NetworkPolicy endi frontend ni vakolatli manba sifatida to'g'ri aniqlaydi va uni
 
 ### Nima Sodir Bo'ldi
 
-The security team decided to implement NetworkPolicies across all production namespaces to improve security posture. They created policies to restrict database access to only authorized applications.
+Xavfsizlik jamoasi xavfsizlik holatini yaxshilash uchun barcha production namespace larda NetworkPolicy larni joriy qilishga qaror qildisture. They created policies to restrict database access to only authorized applications.
 
 **The Broken NetworkPolicy:**
 ```yaml
@@ -883,7 +883,7 @@ ingress:
    - Label mismatch (eng keng tarqalgan!)
    - Forgetting to allow DNS (egress to kube-dns)
    - Applying policy to wrong pods (podSelector mistake)
-   - Using AND logic when you need OR
+   - OR kerak bo'lganda AND logikasi ishlatish
    - Not ruxsat berish ingress controller or monitoring
 
 6. **Real-World Lessons:**

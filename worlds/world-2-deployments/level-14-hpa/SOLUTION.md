@@ -43,7 +43,7 @@ Check HPA status:
 kubectl get hpa web-backend-hpa -n k8squest
 ```
 
-The HPA should now show CPU metrics and be able to scale!
+HPA endi CPU metrikalarini ko'rsatishi va scale qila olishi kerak!
 
 ## Expected Result
 - metrics-server pods running in kube-system namespace

@@ -8,7 +8,7 @@ kubectl logs nginx-broken -n k8squest
 ```
 
 **Why it fails:**
-The container is crashing so fast that by the time you run this command, the new container has no logs yet (or minimal logs). You need the logs from the PREVIOUS crashed container.
+Konteyner shunchalik tez crash bo'ladiki, bu buyruqni ishlatganingizda yangi konteynerda hali log yo'q (yoki juda kam). OLDINGI crash bo'lgan konteyner loglarini ko'rishingiz kerak.
 
 **Correct approach:**
 ```bash
@@ -16,7 +16,7 @@ kubectl logs nginx-broken --previous -n k8squest
 ```
 
 **Key Learning:**
-The `--previous` flag shows logs from the last terminated container, which is exactly what you need when debugging crashes.
+`--previous` bayrog'i oxirgi to'xtatilgan konteyner loglarini ko'rsatadi — crash larni debug qilayotganda aynan shu kerak.
 
 ---
 
@@ -29,7 +29,7 @@ kubectl edit pod nginx-broken -n k8squest
 ```
 
 **Why it fails:**
-Most pod spec fields (including `command`) are **immutable** after creation. Kubernetes will reject your changes or they won't take effect.
+Ko'p pod spec maydonlari (`command` ni o'z ichiga olgan holda) yaratilgandan keyin **o'zgartirib bo'lmaydi** (immutable). Kubernetes o'zgarishlaringizni rad etadi yoki ular ta'sir qilmaydi.
 
 **Correct approach:**
 ```bash
@@ -41,17 +41,17 @@ kubectl apply -f solution.yaml -n k8squest
 ```
 
 **Key Learning:**
-When the pod spec needs to change, you must recreate the pod. This is why Deployments exist - they handle this for you!
+Pod spec o'zgarishi kerak bo'lganda, pod ni qayta yaratishingiz shart. Deployment lar aynan shuning uchun mavjud — ular buni siz uchun boshqaradi!
 
 ---
 
 ## ❌ Mistake #3: Fixing the Wrong Container
 
 **What players try:**
-In multi-container pods, players often fix the first container in the YAML without checking which one is actually crashing.
+Ko'p konteynerli pod larda, o'yinchilar ko'pincha qaysi biri haqiqatan crash bo'layotganini tekshirmasdan YAML dagi birinchi konteynerni tuzatadi.
 
 **Why it fails:**
-Events and status will show "Container 'app' is crashing" but you fixed container 'nginx'. Always check which specific container is failing.
+Event lar va status ko'rsatadi "Container 'app' is crashing" lekin siz konteynerni tuzatdingiz 'nginx'. Doim qaysi aniq konteyner muvaffaqiyatsiz ekanini tekshiring.
 
 **Correct approach:**
 ```bash
@@ -63,7 +63,7 @@ kubectl get pod nginx-broken -n k8squest -o jsonpath='{.status.containerStatuses
 ```
 
 **Key Learning:**
-Always identify the exact container that's failing before making changes.
+O'zgarish kiritishdan oldin doim muvaffaqiyatsiz bo'lgan aniq konteynerni aniqlang.
 
 ---
 
@@ -73,7 +73,7 @@ Always identify the exact container that's failing before making changes.
 See "Exit Code: 127" in describe output but don't understand what it means.
 
 **Why it fails:**
-Exit codes tell you WHY the container crashed:
+Chiqish kodlari konteyner NIMA UCHUN crash bo'lganini aytadi:
 - **Exit 0**: Normal exit (success)
 - **Exit 1**: General error
 - **Exit 127**: Command not found
@@ -103,7 +103,7 @@ kubectl apply -f broken.yaml -n k8squest
 ```
 
 **Why it fails:**
-Applying the same broken config won't fix the issue! You need to modify the YAML or create a fixed version.
+Bir xil buzilgan konfiguratsiyani apply qilish muammoni tuzatmaydi! YAML ni o'zgartirish yoki tuzatilgan versiya yaratish kerak.
 
 **Correct approach:**
 1. Copy broken.yaml to a new file
@@ -124,10 +124,10 @@ kubectl apply -f my-fix.yaml -n k8squest
 ## ❌ Mistake #6: Ignoring Events
 
 **What players try:**
-Focus only on pod status and logs, skip events.
+Faqat pod holati va loglarga e'tibor berish, event larni o'tkazib yuborish.
 
 **Why it fails:**
-Events contain crucial debugging info like:
+Event larda muhim debug ma'lumotlari bor:
 - Why scheduling failed
 - When probes failed
 - Image pull errors
@@ -143,7 +143,7 @@ kubectl describe pod nginx-broken -n k8squest | grep -A 20 Events
 ```
 
 **Key Learning:**
-Events are Kubernetes' way of telling you what went wrong. They're sorted by time and show the sequence of failures.
+Event lar — Kubernetes ning nima noto'g'ri ketganini aytish usuli. Ular vaqt bo'yicha tartiblangan va nosozliklar ketma-ketligini ko'rsatadi.
 
 ---
 
@@ -153,7 +153,7 @@ Events are Kubernetes' way of telling you what went wrong. They're sorted by tim
 Change the YAML and immediately run validate.
 
 **Why it fails:**
-You need to actually apply the changes and verify the pod is running before validation.
+O'zgarishlarni haqiqatan apply qilish va validatsiyadan oldin pod ishlayotganini tekshirish kerak.
 
 **Correct approach:**
 ```bash
@@ -174,7 +174,7 @@ kubectl wait --for=condition=ready pod/nginx-broken -n k8squest --timeout=60s
 ```
 
 **Key Learning:**
-Always verify your fix manually before running validation. kubectl get/describe/logs are your friends!
+Validatsiyani ishga tushirishdan oldin doim tuzatishingizni qo'lda tekshiring. kubectl get/describe/logs are your friends!
 
 ---
 
@@ -187,7 +187,7 @@ kubectl get pods
 ```
 
 **Why it fails:**
-By default, kubectl looks in the `default` namespace. K8sQuest uses the `k8squest` namespace.
+Standart holatda kubectl `default` namespace ga qaraydi. K8sQuest uses the `k8squest` namespace.
 
 **Correct approach:**
 ```bash
@@ -199,7 +199,7 @@ kubectl config set-context --current --namespace=k8squest
 ```
 
 **Key Learning:**
-Namespaces isolate resources. Always use `-n k8squest` or set it as default.
+Namespace lar resurslarni izolyatsiya qiladi. Doim ishlating `-n k8squest` or set it as default.
 
 ---
 
@@ -242,11 +242,11 @@ kubectl get pod nginx-broken -n k8squest -w
 
 1. **Always check previous logs** when debugging crashes (`--previous` flag)
 2. **Pod specs are mostly immutable** - delete and recreate to change them
-3. **Events are your friend** - they show the timeline of what went wrong
+3. **Event lar — do'stingiz** — ular nima noto'g'ri ketganining vaqt jadvalini ko'rsatadi
 4. **Exit codes matter** - 127 = command not found, 137 = OOMKilled
 5. **Specify namespace** - use `-n k8squest` or set default context
 6. **Test before validate** - verify with kubectl before running validation
-7. **Fix the config, not just the symptom** - understand WHY it crashed
+7. **Faqat simptomni emas, konfiguratsiyani tuzating** — NIMA UCHUN crash bo'lganini tushuning
 
 ---
 

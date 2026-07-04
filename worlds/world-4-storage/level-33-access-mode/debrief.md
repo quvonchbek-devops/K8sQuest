@@ -1,6 +1,6 @@
 # 🎓 Missiya Yakuni: PV/PVC Access Modes
 
-**Tabriklaymiz!** You've successfully fixed the access mode configuration! Understanding access modes is critical for shared storage scenarios.
+**Tabriklaymiz!** Siz access mode konfiguratsiyasini muvaffaqiyatli tuzatdingiz! Access mode larni tushunish juda muhical for shared storage scenarios.
 
 ---
 
@@ -22,11 +22,11 @@ accessModes:
 
 ### ⚠️ About This Level
 
-**Muhim Context:** This level runs on Kind (single-node cluster), so even with ReadWriteOnce, all 3 pods successfully start chunkiy're all on the same node.
+**Muhim Context:** Bu level Kind da (bitta node li klaster) ishlaydi, shuning uchun ReadWriteOnce bilan ham 3 ta pod muvaffaqiyatlissfully start chunkiy're all on the same node.
 
 **In a real multi-node production cluster:**
 - ReadWriteOnce with 3 replicas would cause pods on different nodes to fail mounting
-- Only pods on the first node would start; others would be Pending with volume attach errors
+- Faqat birinchi node dagi pod lar ishlaydi; qolganlari volume attach xatolari bilan Pending bo'ladi
 
 **This level teaches TWO important concepts:**
 1. **Access Mode selection** - choosing RWO vs RWX for your workload
@@ -166,7 +166,7 @@ Not all storage types support all access modes!
 
 **In this simulation:**
 - We use `hostPath` with `ReadWriteMany` for learning purposes
-- This works in Kind (single-node cluster) where all pods land on the same node
+- Bu Kind da (bitta node li klaster) ishlaydi, chunki barcha pod lar bitta node ga tushadi
 - The `hostPath` *represents* shared network storage (like NFS/EFS)
 
 **Produkciyada:**
@@ -330,7 +330,7 @@ accessModes:
 
 ## 🔒 Critical Lesson: PVC Spec Immutability
 
-**You discovered this in the level:** Most PVC fields cannot be changed after creation!
+**Siz buni levelda kashf qildingiz:** Ko'p PVC maydonlarini yaratilgandan keyin o'zgartirib bo'lmaydi!
 
 ### What You Can't Change
 
@@ -426,7 +426,7 @@ resources:
 
 ### Haqiqiy Dunyo Impact
 
-**Why this matters:** Many teams learn this the hard way:
+**Nima uchun bu muhim:** Ko'p jamoalar buni qiyin yo'l bilan o'rganadi:
 - Deploy with wrong access mode
 - Realize mistake after data is written
 - Can't simply edit and apply
@@ -590,7 +590,7 @@ replicas: 20       # Scale for Black Friday
 
 ### Lessons Learned
 
-1. **Know your storage backend:** Different types have different capabilities
+1. **Storage backend ingizni biling:** Turli xil turlarda turli xil imkoniyatlar bor
 2. **Test before production:** Especially during critical periods
 3. **Validate configurations:** Tekshiring storage class supports required access modes
 4. **Have rollback plan:** Test rollback procedures beforehand
@@ -703,13 +703,13 @@ provisioner: efs.csi.aws.com
 5. **Test before production** - Especially when migrating storage systems
 6. **Monitor PVC status** - Alert on Pending state
 7. **Document requirements** - Make access mode needs explicit
-8. **Know your cloud provider** - Different services have different capabilities
+8. **Cloud provider ingizni biling** — Turli xil service larda turli xil imkoniyatlar bor
 
 ---
 
 ## 🚀 Keyingi Qadamlar
 
-Now that you understand access modes, you're ready for:
+Endi access mode larni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 34:** StatefulSet volumeClaimTemplates (per-pod storage)
 - **Level 35:** StorageClass configuration and dynamic provisioning

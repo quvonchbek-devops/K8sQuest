@@ -1,6 +1,6 @@
 # 🎓 Missiya Yakuni: Service Endpoints & Readiness Probes
 
-**Tabriklaymiz!** Siz o'zlashtirgansiz one of the most critical concepts in production Kubernetes: **readiness probes and service endpoint management**. This seemingly simple configuration detail has to'sib qo'ydi countless outages and saved millions in revenue.
+**Tabriklaymiz!** Siz o'zlashtirgansiz production Kubernetes dagi eng muhim konseptlardan birini: **readiness probes and service endpoint management**. This seemingly simple configuration detail has to'sib qo'ydi countless outages and saved millions in revenue.
 
 ---
 
@@ -301,7 +301,7 @@ kubectl get pods -l app=transcoder -o json | \
 4. **Inadequate monitoring:** No alerting on 5xx error rates
 5. **No runbook:** Team didn't know how to diagnose endpoint issues
 
-**Tuzatish that should have been there:**
+**Tuzatish bo'lishi kerak edi:**
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -791,5 +791,5 @@ Siz o'zlashtirgansiz readiness probes and endpoint management. Next, you'll tack
 
 ---
 
-*"Produkciyada, traffic should only flow to pods that are ready. Readiness probes are not optional—they're essential."* - Kubernetes SRE Handbook
+*"Produkciyada, trafik faqat tayyor pod larga yo'naltirilishi kerak. Readiness probe lar ixtiyoriy emas — ular muhential."* - Kubernetes SRE Handbook
 

@@ -1,13 +1,13 @@
 # 🎓 Missiya Yakuni: Headless Services & StatefulSet DNS
 
-**Tabriklaymiz!** Siz yakunladingiz World 3: Networking & Services by mastering headless services and StatefulSet DNS! This is one of the most important patterns for running stateful applications Kubernetes da, and understanding it will enable you to deploy databases, message queues, and distributed systems with confidence.
+**Tabriklaymiz!** Siz yakunladingiz World 3: Networking & Services ni headless service lar va StatefulSet DNS! Bu Kubernetes da stateful ilovalarni ishga tushirish uchun eng muhim pattern lardan biri. Buni tushunish ma'lumotlar bazalari, xabar navbatlari va taqsimlangan tizimlarni ishonch bilan deploy qilish imkonini beradi.
 
 ---
 
 ## 📊 Nimani Tuzatdingiz
 
 ### Muammo
-Your StatefulSet pods couldn't communicate with each other using predictable DNS names, causing:
+StatefulSet pod laringiz bashorat qilinadigan DNS nomlari orqali bir-biri bilan aloqa qila olmadi, bu quyidagilarga sabab bo'ldi:
 - **Pods unable to discover peers** in the cluster
 - **Database replication failing** (topa olmaydi master/slave nodes)
 - **Distributed systems broken** (peers can't coordinate)
@@ -514,7 +514,7 @@ db.analytics.count()  # mongodb-1: 12,449,201  (1,181 docs behind)
 db.analytics.count()  # mongodb-2: 12,448,905  (1,477 docs behind)
 ```
 
-**Problem:** During the 45-minute outage, some writes succeeded on primary but weren't replicated!
+**Problem:** 45 daqiqalik uzilish vaqtida ba'zi yozuvlar primary da muvaffaqiyatli bo'ldi lekin replika qilinmadi!
 
 **7:45 AM - Rollback Decision**
 - Data inconsistency unacceptable
@@ -1337,7 +1337,7 @@ Siz yakunladingiz **World 3: Networking & Services** (2,300 XP)!
 
 ---
 
-*"Headless services are not missing a head—they're giving each pod its own identity."* - Kubernetes Wisdom
+*"Headless service lar boshsiz emas — ular har bir pod ga o'z identifikatsiyasini beradi."* - Kubernetes Wisdom
 
-**Eslab qoling:** For StatefulSets, always use `clusterIP: None`. Your database cluster will thank you!
+**Eslab qoling:** StatefulSet lar uchun doim `clusterIP: None` ishlating. Ma'lumotlar bazasi klasteringiz minnatdor bo'ladou!
 

@@ -505,7 +505,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 ## 🚀 Keyingi Qadamlar
 
-Now that you understand ResourceQuotas, you're ready for:
+Endi ResourceQuota larni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 44:** NetworkPolicy - controlling network traffic
 - **Level 45:** Node Affinity - advanced pod scheduling

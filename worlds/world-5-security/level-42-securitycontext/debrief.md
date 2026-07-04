@@ -14,7 +14,7 @@ securityContext:
   # ❌ No allowPrivilegeEscalation setting!
 ```
 
-**Natija:** Pod rejected with "container has runAsNonRoot and image will run as root"
+**Natija:** Pod rejected with "konteyner da runAsNonRoot bor va image root sifatida ishlaydi"
 
 **The Solution:**
 ```yaml
@@ -175,7 +175,7 @@ securityContext:
 
 **Purpose:** Gives container almost all host capabilities
 
-**When to use:** Almost never! Only for:
+**Qachon ishlatish:** Deyarli hech qachon! Faqat:
 - System-level daemons
 - Device access (GPU, hardware)
 
@@ -600,7 +600,7 @@ kubectl describe pod <pod-name>
 ```
 
 Qidiring:
-- "container has runAsNonRoot and image will run as root"
+- "konteyner da runAsNonRoot bor va image root sifatida ishlaydi"
 - "containers must run as non-root"
 
 ### Tekshirish Current Settings
@@ -657,7 +657,7 @@ kubectl exec <pod-name> -- grep Cap /proc/1/status
 
 ## 🚀 Keyingi Qadamlar
 
-Now that you understand SecurityContext, you're ready for:
+Endi SecurityContext ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 43:** ResourceQuota - controlling resource consumption
 - **Level 44:** NetworkPolicy - controlling network traffic

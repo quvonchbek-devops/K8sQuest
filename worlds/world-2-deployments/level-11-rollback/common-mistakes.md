@@ -28,7 +28,7 @@ kubectl rollout undo deployment/payment-api --to-revision=2 -n k8squest
 ```
 
 **Key Learning:**
-Always review rollout history before blindly running `undo`. You need to know which revision was good!
+Ko'r-ko'rona `undo` ishlatishdan oldin doim rollout tarixini ko'rib chiqing. Qaysi revision yaxshi bo'lganini bilishingiz kerak!
 
 ---
 
@@ -41,7 +41,7 @@ kubectl rollout undo deployment/payment-api -n k8squest
 ```
 
 **Why it fails:**
-Rollouts are **asynchronous**. The undo command returns immediately, but the actual rollout takes time (creating new pods, terminating old ones).
+Rollout lar **asinxron**. Undo buyrug'i darhol qaytadi, lekin haqiqiy rollout vaqt oladi (yangi pod lar yaratish, eskilarni to'xtatish).
 
 **Correct approach:**
 ```bash
@@ -60,7 +60,7 @@ kubectl get pods -n k8squest -w
 ```
 
 **Key Learning:**
-Use `kubectl rollout status` to wait for rollout completion. Don't validate while pods are still updating!
+`kubectl rollout status` bilan rollout tugashini kuting. Pod lar hali yangilanayotganda validatsiya qilmang!
 
 ---
 
@@ -75,7 +75,7 @@ kubectl delete rs payment-api-abc123 -n k8squest
 ```
 
 **Why it fails:**
-Each deployment revision creates a ReplicaSet. Old ReplicaSets are kept for rollback history. Deleting them:
+Har bir deployment revision ReplicaSet yaratadi. Eski ReplicaSet lar rollback tarixi uchun saqlanadi. Ularni o'chirish:
 - Removes your rollback ability
 - Doesn't fix the current deployment
 - Can cause issues with rollout management
@@ -102,7 +102,7 @@ ReplicaSets = Deployment's internal mechanism for version control. Don't touch t
 Focus only on executing the rollback command, forget to understand WHY the deployment failed.
 
 **Why it fails:**
-You might roll back successfully but not learn:
+Siz muvaffaqiyatli rollback qilishingiz mumkin, lekin o'rganmasligingiz mumkin:
 - What went wrong in the new version?
 - How to prevent this in the future?
 - What to check before deploying?
@@ -133,7 +133,7 @@ Rollback is a recovery mechanism, not a learning shortcut. Understand the failur
 Expect to roll back 10 revisions ago.
 
 **Why it fails:**
-Deployments have `revisionHistoryLimit` (default: 10). After 10 deployments, old ReplicaSets are garbage collected.
+Deployment larda `revisionHistoryLimit` bor (standart: 10). 10 ta deployment dan keyin eski ReplicaSet lar avtomatik tozalanadi.
 
 **Correct approach:**
 ```yaml
@@ -152,7 +152,7 @@ kubectl rollout history deployment/payment-api -n k8squest
 ```
 
 **Key Learning:**
-You can only roll back as far as `revisionHistoryLimit` allows. Default is 10 revisions.
+Faqat `revisionHistoryLimit` ruxsat bergancha orqaga qaytishingiz mumkin. Standart — 10 ta revision.
 
 ---
 
@@ -194,7 +194,7 @@ kubectl get pods -n k8squest
 ```
 
 **Why it fails:**
-Pods come and go during rollouts. The Deployment is the source of truth for:
+Rollout lar vaqtida pod lar keladi va ketadi. Deployment quyidagilar uchun haqiqat manbai:
 - Desired state
 - Rollout progress
 - Available replicas

@@ -79,7 +79,7 @@ deny-all (podSelector: {})
   = Backend and database can communicate!
 ```
 
-**Eslatma:** The backend pod may show an error during apply chunki uning command differs between broken/solution, but this is harmless - the NetworkPolicies still apply correctly.
+**Eslatma:** Backend pod apply vaqtida xato ko'rsatishi mumkin chunki uning command i broken/solution, lekin bu zararsiz — NetworkPolicy lar baribir to'g'ri apply bo'ladi.
 
 ---
 
@@ -223,7 +223,7 @@ ingress:
   - port: 8080
 ```
 
-**Means:** Allow from frontend pods AND production namespace (both required)
+**Means:** frontend pod lardan VA production namespace dan ruxsat berish (ikkalasi ham talab qilinadi)
 
 ### Allow from Specific IPs
 
@@ -792,7 +792,7 @@ kubectl get pod my-pod --show-labels
 
 ## 🚀 Keyingi Qadamlar
 
-Now that you understand NetworkPolicy, you're ready for:
+Endi NetworkPolicy ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 45:** Node Affinity - advanced pod scheduling
 - **Level 46:** Taints and Tolerations - node scheduling constraints

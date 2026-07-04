@@ -77,7 +77,7 @@ spec:
 
 ### What are PersistentVolumes?
 
-**PersistentVolume (PV)** is a piece of storage in the cluster that has been provisioned by an administrator or dynamically using Storage Classes.
+**PersistentVolume (PV)** — bu klasterda administrator yoki StorageClass tomonidan ta'minlangan storager dynamically using Storage Classes.
 
 **Buni shunday tasavvur qiling:** A parking spot in a parking garage
 - Pre-allocated space
@@ -491,7 +491,7 @@ $ kubectl delete pv postgres-pv
 $ kubectl apply -f postgres-pv-fixed.yaml
 ```
 
-But they forgot to fix the StorageClass! Still says "standard" o'rniga of "fast-ssd"
+But they forgot to fix the StorageClass! Hali ham "fast-ssd" o'rniga "standard" deb yozilgan
 
 **11:30 PM - PVC Still Pending**
 ```bash

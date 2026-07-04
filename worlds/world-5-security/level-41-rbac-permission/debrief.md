@@ -528,7 +528,7 @@ roleRef:
 
 ## 🚀 Keyingi Qadamlar
 
-Now that you understand RBAC, you're ready for:
+Endi RBAC ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 42:** SecurityContext and privilege escalation
 - **Level 43:** ResourceQuotas and limits

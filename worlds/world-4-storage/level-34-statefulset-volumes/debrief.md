@@ -45,7 +45,7 @@ volumeClaimTemplates:
 - Databases (PostgreSQL, MySQL, MongoDB)
 - Message queues (Kafka, RabbitMQ)
 - Distributed systems (etcd, ZooKeeper)
-- Each instance needs its own persistent identity and data
+- Har bir instance o'zining doimiy identifikatsiyasi va ma'lumotlariga ega bo'lishi kerak
 
 **Wrong Approach (Deployment with single PVC):**
 ```yaml
@@ -548,7 +548,7 @@ spec:
 
 ## 🚀 Keyingi Qadamlar
 
-Now that you understand StatefulSet storage, you're ready for:
+Endi StatefulSet storage ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 35:** StorageClass configuration and dynamic provisioning
 - **Level 36:** ConfigMap volumes and key management

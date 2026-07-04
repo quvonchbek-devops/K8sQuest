@@ -1,6 +1,6 @@
 # 🎓 Missiya Yakuni: LoadBalancer vs NodePort Service Types
 
-**Tabriklaymiz!** Siz o'rgandingiz the crucial differences between Kubernetes service types and why LoadBalancer services don't work in local development clusters. This knowledge will save you hours of frustration when developing and deploying applications.
+**Tabriklaymiz!** Siz o'rgandingiz Kubernetes service turlari orasidagi muhim farqlarni va nima uchun LoadBalancer service lar lokal ishlab chiqish klasterlarida ishlamasligini. Bu bilim sizga soatlab vaqt tejaydi of frustration when developing and deploying applications.
 
 ---
 
@@ -72,7 +72,7 @@ Kubernetes provides **four service types**, each solving different networking ne
 
 **Characteristics:**
 - Gets a cluster-internal virtual IP address
-- Only accessible from within the cluster
+- Faqat klaster ichidan kirish mumkin
 - Default type if not specified
 - Cheapest (no external resources)
 
@@ -858,7 +858,7 @@ Siz o'zlashtirgansiz Kubernetes service types and cloud provider integration. Ke
 - ✅ Design cost-effective architectures with Ingress
 - ✅ Avoid the $45,000 LoadBalancer mistake
 
-**Eslab qoling:** Produkciyada, use Ingress with one LoadBalancer, not LoadBalancer per service. Your cloud bill will thank you!
+**Eslab qoling:** Produkciyada, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingizll will thank you!
 
 ---
 

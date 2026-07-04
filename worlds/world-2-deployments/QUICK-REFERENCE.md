@@ -412,7 +412,7 @@ kubectl get rs -n k8squest -o wide
 **Rule of Thumb:**
 - Always use **readiness** for apps behind services
 - Use **liveness** only if app can deadlock/freeze
-- Use **startup** for apps that take >30s to start
+- Ishga tushishi >30s dan ko'p vaqt oladigan ilovalar uchun **startup** ishlating
 
 ---
 
@@ -482,7 +482,7 @@ When stuck on a level, try these in order:
 - [ ] Use `hints` in game - Progressive guidance
 - [ ] Use `guide` in game - Complete walkthrough if needed
 
-**Eslab qoling:** Deployments are powerful but complex. Understanding the mental model is more important than memorizing commands!
+**Eslab qoling:** Deployment lar kuchli lekin murakkab. Tushuncha modelini tushunish buyruqlarni yodlashdan muhimroq memorizing commands!
 
 ---
 

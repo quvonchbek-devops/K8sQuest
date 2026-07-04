@@ -385,7 +385,7 @@ preferredDuringSchedulingIgnoredDuringExecution:
 
 If no GPU nodes available, pod might schedule on non-GPU node!
 
-**Fix:** Use `required` for must-have constraints
+**Fix:** Majburiy cheklovlar uchun `required` ishlating
 
 ---
 
@@ -468,7 +468,7 @@ preferred...:
 
 ## 🚀 Keyingi Qadamlar
 
-Now that you understand NodeAffinity, you're ready for:
+Endi NodeAffinity ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 46:** Taints and Tolerations - the complement to affinity
 - **Level 47:** PodDisruptionBudget - availability during updates
