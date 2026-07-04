@@ -1,0 +1,12 @@
+name: "Port Nomuvofiqlik Muammosi"
+description: "Service noto'g'ri konteyner portiga yo'naltirmoqda, bu ulanish xatolariga olib kelmoqda"
+objective: "Port konfiguratsiyasini to'g'rilang, shunda service konteynerga ulansin"
+xp: 100
+difficulty: boshlang'ich
+expected_time: 10m
+concepts:
+  - Container ports
+  - Service ports va targetPorts
+  - Port mapping
+  - kubectl port-forward
+  - Ulanish muammolarini aniqlash

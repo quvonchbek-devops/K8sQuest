@@ -1,0 +1,12 @@
+name: "Namespace Chalkashligi"
+description: "Resurslar noto'g'ri namespace ga deploy qilingan, bu ulanish xatolariga olib kelmoqda"
+objective: "Resurslarni to'g'ri namespace ga ko'chiring"
+xp: 200
+difficulty: o'rta
+expected_time: 15m
+concepts:
+  - Namespaces
+  - Resurslarni izolyatsiya qilish
+  - kubectl namespaces
+  - Namespace lar arasi aloqa
+  - Namespace best practice lari

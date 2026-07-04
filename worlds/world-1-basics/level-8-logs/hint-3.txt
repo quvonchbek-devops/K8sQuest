@@ -1,0 +1,14 @@
+💡 Yechimga yaqin maslahat:
+
+Tuzatish qadamlari:
+1. Pod ni o'chiring: `kubectl delete pod database-app -n k8squest`
+2. broken.yaml ga environment variable qo'shing:
+   ```yaml
+   env:
+   - name: POSTGRES_PASSWORD
+     value: "mysecretpassword"
+   ```
+3. Apply qiling: `kubectl apply -f broken.yaml`
+4. Tekshiring: `kubectl logs database-app -n k8squest`
+
+"database system is ready to accept connections" xabarini ko'rishingiz kerak!

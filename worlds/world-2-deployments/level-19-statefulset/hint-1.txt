@@ -1,0 +1,14 @@
+🔍 Kuzatuv maslahat:
+
+Joriy resurs turini tekshiring:
+`kubectl get deployments,statefulsets -n k8squest`
+
+Bu Deployment mi yoki StatefulSet?
+
+Pod nomlarini tekshiring:
+`kubectl get pods -n k8squest -l app=database`
+
+Deployment pod lari tasodifiy nomlarga ega: database-7d8f9c-abc12
+StatefulSet pod lari barqaror nomlarga ega: database-0, database-1, database-2
+
+Stateful ilovalar (ma'lumotlar bazalari, xabar navbatlari) uchun barqaror identifikatsiya kerak!

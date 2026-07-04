@@ -1,0 +1,13 @@
+name: "Blue-Green Noto'g'ri Ketdi"
+description: "Service eski versiyaga yo'naltirilgan, foydalanuvchilar yangi deployment ni ko'rmayapti"
+objective: "Trafikni yangi blue-green deployment ga yo'naltirish uchun service selector ni yangilang"
+xp: 200
+difficulty: o'rta
+expected_time: 12m
+concepts:
+  - blue-green deployment lar
+  - service selector lar
+  - label lar
+  - trafik almashtirish
+  - deployment strategiyalari
+  - nol-to'xtashli almashish

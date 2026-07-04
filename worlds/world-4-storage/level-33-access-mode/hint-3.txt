@@ -1,0 +1,14 @@
+✅ Maslahat 3: To'liq Yechim
+
+broken.yaml da PVC ning accessModes ni PV ga mos qiling:
+
+```yaml
+# PV qo'llab-quvvatlaydi:
+accessModes: ["ReadWriteOnce"]
+
+# PVC ham shunday bo'lishi kerak:
+accessModes: ["ReadWriteOnce"]    # ReadWriteMany emas!
+```
+
+`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
+`kubectl get pvc -n k8squest` — STATUS: Bound bo'lishi kerak

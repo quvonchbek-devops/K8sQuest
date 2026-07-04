@@ -1,0 +1,32 @@
+✅ Yechim maslahat:
+
+Service selector ni tuzating:
+
+```bash
+kubectl delete svc backend-service -n k8squest
+kubectl apply -f solution.yaml -n k8squest
+```
+
+Yoki to'g'ridan-to'g'ri tahrirlang:
+```bash
+kubectl edit svc backend-service -n k8squest
+```
+
+Selector ni o'zgartiring:
+```yaml
+selector:
+  app: backend-app  # Noto'g'ri
+  tier: api
+```
+
+Quyidagiga:
+```yaml
+selector:
+  app: backend  # To'g'ri — pod label ga mos
+  tier: api
+```
+
+Keyin endpoint lar paydo bo'lganini tekshiring:
+```bash
+kubectl get endpoints backend-service -n k8squest
+```

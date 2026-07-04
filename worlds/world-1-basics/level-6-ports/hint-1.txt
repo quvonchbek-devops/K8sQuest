@@ -1,0 +1,9 @@
+🔍 Kuzatuv maslahat:
+
+Konteyner qaysi portda tinglayotganini tekshiring:
+`kubectl get pod web-server -n k8squest -o yaml | grep containerPort`
+
+Keyin service qaysi portga yo'naltirmoqda:
+`kubectl get service web-service -n k8squest -o yaml | grep targetPort`
+
+Ular mos kelyaptimi?

@@ -1,0 +1,19 @@
+level: 45
+title: "Node Affinity: Scheduling Mismatch"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "Node Affinity Nomuvofiqlik"
+difficulty: advanced
+xp: 300
+xp_reward: 300
+world: 5
+concepts:
+  - node-affinity
+  - required-affinity
+  - preferred-affinity
+  - node-labels
+description: "Pod ning node affinity qoidasi hech qanday mavjud node ga mos kelmayapti, bu pod ni schedule qilinmaydigan qilib qo'ymoqda."
+learning_objectives:
+  - Understand required vs preferred affinity
+  - Configure nodeAffinity selectors correctly
+  - Match node label keys and values
+  - Debug scheduling failures

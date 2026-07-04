@@ -1,0 +1,28 @@
+✅ Yechim maslahat:
+
+Service da clusterIP ni None ga o'zgartiring:
+
+```bash
+kubectl delete service web-cluster -n k8squest
+kubectl apply -f solution.yaml
+```
+
+Asosiy o'zgarish — FAQAT BITTA QATOR:
+```yaml
+spec:
+  clusterIP: None  # ✅ IP manzildan None ga o'zgardi
+```
+
+Tekshirish:
+```bash
+# Service headless ekanini tasdiqlash
+kubectl get service web-cluster -n k8squest
+# CLUSTER-IP: None ko'rinishi kerak
+
+# Per-pod DNS ni test qilish
+kubectl run -it --rm debug --image=busybox:1.28 -n k8squest -- sh
+nslookup web-0.web-cluster.k8squest.svc.cluster.local
+nslookup web-1.web-cluster.k8squest.svc.cluster.local
+```
+
+Har bir so'rov aniq pod ning IP manzilini qaytarishi kerak!

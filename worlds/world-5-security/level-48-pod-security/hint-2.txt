@@ -1,0 +1,16 @@
+🧭 Maslahat 2: Xavfsiz Konfiguratsiya
+
+Xavfli → Xavfsiz:
+```yaml
+# ❌ Xavfli
+securityContext:
+  privileged: true
+  runAsUser: 0
+
+# ✅ Xavfsiz
+securityContext:
+  privileged: false
+  runAsNonRoot: true
+  runAsUser: 1000
+  allowPrivilegeEscalation: false
+```

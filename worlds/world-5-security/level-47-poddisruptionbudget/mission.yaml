@@ -1,0 +1,19 @@
+level: 47
+title: "PodDisruptionBudget: Blocking Drain"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "PodDisruptionBudget Konfiguratsiyasi"
+difficulty: advanced
+xp: 300
+xp_reward: 300
+world: 5
+concepts:
+  - poddisruptionbudget
+  - minavailable
+  - maxunavailable
+  - voluntary-disruption
+description: "PDB deployment bilan mos kelmayapti, bu node texnik xizmat ko'rsatish va klaster yangilanishlarini to'sib qo'ymoqda."
+learning_objectives:
+  - Understand PodDisruptionBudget purpose
+  - Configure minAvailable vs maxUnavailable
+  - Balance availability with maintenance needs
+  - Debug PDB-related eviction failures

@@ -1,0 +1,12 @@
+💡 Yechimga yaqin maslahat:
+
+Tuzatish qadamlari:
+1. Pod ni o'chiring: `kubectl delete pod app-with-logging -n k8squest`
+2. broken.yaml da log-sidecar buyrug'ini ishlaydigan biriga o'zgartiring:
+   ```
+   command: ["sh", "-c", "while true; do echo 'Logging...' >> /var/log/app.log; sleep 5; done"]
+   ```
+3. Apply qiling: `kubectl apply -f broken.yaml`
+4. Ikkala konteyner ishlayotganini tekshiring: `kubectl get pod app-with-logging -n k8squest`
+
+READY ustunida "2/2" ko'rinishi kerak!

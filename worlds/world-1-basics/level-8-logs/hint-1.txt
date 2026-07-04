@@ -1,0 +1,9 @@
+🔍 Kuzatuv maslahat:
+
+Pod holatini tekshiring: `kubectl get pod database-app -n k8squest`
+
+RESTARTS ustuniga qarang. Qayta-qayta ishga tushmoqdami?
+
+Endi loglarni tekshiring: `kubectl logs database-app -n k8squest`
+
+Qanday xato ko'ryapsiz?

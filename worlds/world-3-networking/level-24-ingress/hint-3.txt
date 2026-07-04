@@ -1,0 +1,20 @@
+✅ Yechim maslahat:
+
+broken.yaml da quyidagini o'zgartiring:
+
+```yaml
+      - path: /api        # ❌ NOTO'G'RI PATH
+```
+Quyidagiga:
+```yaml
+      - path: /           # ✅ TO'G'RI PATH
+```
+
+Qadamlar:
+1. broken.yaml ni tahrirlang — Ingress dagi `path: /api` ni `path: /` ga o'zgartiring
+2. Apply qiling: `kubectl apply -f broken.yaml`
+3. Tekshiring: `kubectl describe ingress web-ingress -n k8squest`
+
+Nima uchun ishlaydi:
+- So'rov: "/" → Ingress qoidasi: "/" → Mos! ✅
+- Oldin: "/" → Ingress qoidasi: "/api" → Mos emas! ❌

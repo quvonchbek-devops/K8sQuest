@@ -1,0 +1,17 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Canary deployment larda odatda quyidagini xohlaysiz:
+- 90% trafik → Stable versiya
+- 10% trafik → Canary versiya (test qilinayotgan yangi versiya)
+
+Hozir:
+- app-stable: 5 replika
+- app-canary: 5 replika
+- Jami: 10 pod
+
+Bu 50/50 taqsimot beradi (5/10 = 50%)!
+
+10% canary uchun yaxlitlangan sonlar bilan:
+- 9 stable : 1 canary kerak (9/10 = 90%, 1/10 = 10%)
+
+Muammo: Canary replikalari juda ko'p!

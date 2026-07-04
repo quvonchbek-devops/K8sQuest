@@ -1,0 +1,12 @@
+name: "Service Selector Nomuvofiqlik"
+description: "Service mavjud lekin pod lar trafik qabul qilmayapti"
+objective: "Service ni tuzating, shunda u backend pod larga trafik yo'naltirsin"
+xp: 200
+difficulty: "o'rta"
+expected_time: "15m"
+concepts:
+  - services
+  - label selectors
+  - service endpoints
+  - kubectl describe svc
+  - ClusterIP

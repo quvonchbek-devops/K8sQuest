@@ -1,0 +1,9 @@
+💡 Yechimga yaqin maslahat:
+
+Tuzatish qadamlari:
+1. default namespace dan o'chiring: `kubectl delete -f broken.yaml`
+2. broken.yaml dagi BARCHA `namespace: default` ni `namespace: k8squest` ga o'zgartiring
+3. To'g'ri namespace ga apply qiling: `kubectl apply -f broken.yaml`
+4. Tekshiring: `kubectl get all -n k8squest`
+
+Barcha resurslar endi k8squest namespace da bo'lishi kerak!

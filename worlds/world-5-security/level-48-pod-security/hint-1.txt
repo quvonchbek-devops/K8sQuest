@@ -1,0 +1,12 @@
+🔍 Maslahat 1: Pod Xavfsizlik Standartini Tushunish
+
+Pod xavfsizlik standartini buzmoqda — imtiyozli yoki xavfli konfiguratsiyalar bilan.
+
+```bash
+kubectl apply -f broken.yaml    # Xato xabarini o'qing
+kubectl get pod -n k8squest
+kubectl describe pod -n k8squest
+```
+
+Qidiring: privileged: true, hostNetwork: true, runAsRoot kabi xavfli sozlamalar.
+Xavfsiz sozlamalar bilan almashtiring.

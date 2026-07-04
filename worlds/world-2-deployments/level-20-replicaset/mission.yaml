@@ -1,0 +1,13 @@
+name: "Deployment siz ReplicaSet"
+description: "Qo'lda ReplicaSet yangilanishlarni qiyinlashtirmoqda va avtomatlashtirishni buzmoqda"
+objective: "Yaxshiroq boshqarish uchun mustaqil ReplicaSet ni Deployment ga aylantiring"
+xp: 150
+difficulty: boshlang'ich
+expected_time: 10m
+concepts:
+  - ReplicaSet
+  - Deployment
+  - resurslarni egalik qilish
+  - deklarativ yangilanishlar
+  - rollout boshqaruvi
+  - abstraksiya qatlamlari

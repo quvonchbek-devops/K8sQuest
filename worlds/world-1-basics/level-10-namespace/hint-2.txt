@@ -1,0 +1,7 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Resurslar "default" namespace da, lekin bu quest uchun ular "k8squest" namespace da bo'lishi kerak!
+
+broken.yaml ga qarang — metadata bo'limlarida `namespace: default` ko'rsatilgan.
+
+Buni `namespace: k8squest` ga o'zgartirish kerak.

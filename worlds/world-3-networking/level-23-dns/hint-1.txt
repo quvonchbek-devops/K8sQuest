@@ -1,0 +1,9 @@
+🔍 Kuzatuv maslahat:
+
+Klient pod loglarini tekshiring: `kubectl logs app-client -n k8squest`
+
+"Connection failed" takrorlanayotganini ko'rasiz. Pod "database" hostname ga ulanishga urinmoqda.
+
+Lekin haqiqiy SERVICE nomi nima? `kubectl get svc -n k8squest`
+
+Service nomi "database-service", "database" emas!

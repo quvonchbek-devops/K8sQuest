@@ -1,0 +1,24 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Ingress NOTO'G'RI PATH bilan sozlangan.
+
+Hozirgi holat:
+```yaml
+spec:
+  rules:
+  - host: myapp.local
+    http:
+      paths:
+      - path: /api        # ❌ NOTO'G'RI!
+        pathType: Prefix
+```
+
+So'rov: http://myapp.local/ → Path: "/"
+Ingress qoidasi: path: "/api"
+"/" "/api" bilan boshlanadimi? YO'Q! → 404 Not Found
+
+Tuzatish: path ni "/api" dan "/" ga o'zgartiring.
+
+Path turlari:
+- **Prefix**: /path va /path/boshqa-narsa ga mos
+- **Exact**: Faqat aniq path ga mos

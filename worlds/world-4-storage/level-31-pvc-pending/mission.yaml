@@ -1,0 +1,30 @@
+id: 31
+title: "PVC Stuck in Pending"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "PVC Pending da Qotib Qoldi"
+difficulty: intermediate
+xp: 250
+xp_reward: 250
+estimated_time: "15 minutes"
+
+description: "PersistentVolumeClaim mavjud bo'lmagan StorageClass ga murojaat qilgani uchun Pending holatida qotib qolgan. Pod ishga tusholmayapti chunki volume tayyor emas."
+learning_objectives:
+  - Understand PersistentVolume (PV) and PersistentVolumeClaim (PVC) relationship
+  - Learn how PVC binding works in Kubernetes
+  - Configure PV to match PVC requirements
+  - Understand storage capacity and access modes
+
+concepts:
+  - persistentvolume
+  - persistentvolumeclaim
+  - pvc-binding
+  - storage-capacity
+  - access-modes
+  - volume-provisioning
+
+success_criteria:
+  - PVC successfully bound to a PV
+  - PVC status changes from Pending to Bound
+  - Pod successfully starts and mounts the volume
+
+hints_available: 3

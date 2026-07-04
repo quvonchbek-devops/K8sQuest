@@ -1,0 +1,27 @@
+✅ Maslahat 3: To'liq Yechim
+
+deny-all policy ni aniq ruxsat qoidalari bilan almashtiring:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+  namespace: k8squest
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - port: 8080
+      protocol: TCP
+```
+
+`kubectl delete networkpolicy --all -n k8squest`
+`kubectl apply -f solution.yaml`
+Pod lar orasidagi aloqani qayta test qiling.

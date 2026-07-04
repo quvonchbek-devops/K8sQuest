@@ -1,0 +1,16 @@
+🔍 Maslahat 1: Kuzatish va Tahlil
+
+Tarmoq aloqasi muammosini tekshiring:
+
+1. Pod larni ko'ring: `kubectl get pods -n k8squest`
+2. Pod lar orasida ulanishni test qiling:
+   ```bash
+   kubectl exec <pod-nomi> -n k8squest -- wget -q -O- http://<service>:port --timeout=3
+   ```
+3. NetworkPolicy larni ko'ring:
+   ```bash
+   kubectl get networkpolicy -n k8squest
+   kubectl describe networkpolicy -n k8squest
+   ```
+
+Qaysi NetworkPolicy qonuniy trafikni to'sib qo'ymoqda?

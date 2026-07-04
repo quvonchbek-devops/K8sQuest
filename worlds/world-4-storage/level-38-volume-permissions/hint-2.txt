@@ -1,0 +1,17 @@
+🧭 Maslahat 2: Volume Ruxsatlari
+
+Muammo: Konteyner root bo'lmagan foydalanuvchi sifatida ishlaydi, lekin volume
+root ga tegishli. Natija: yozish ruxsati yo'q.
+
+Yechim — pod spec ga `fsGroup` qo'shing:
+```yaml
+spec:
+  securityContext:
+    fsGroup: 1000    # Volume fayllarini shu GID ga o'zgartiradi
+  containers:
+  - name: app
+    securityContext:
+      runAsUser: 1000    # Konteyner shu UID bilan ishlaydi
+```
+
+`fsGroup` volume mount qilinganida fayl ruxsatlarini avtomatik sozlaydi.

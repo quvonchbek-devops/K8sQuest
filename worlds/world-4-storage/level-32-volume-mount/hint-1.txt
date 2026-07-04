@@ -1,0 +1,9 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+Pod ishlayapti lekin ilova ma'lumotlarni topa olmayapti.
+
+Tekshiring:
+1. Pod loglarini ko'ring: `kubectl logs data-app -n k8squest`
+2. Volume mount yo'lini tekshiring:
+   `kubectl get pod data-app -n k8squest -o yaml | grep -A5 volumeMounts`
+3. Ilova qaysi yo'lda ma'lumot kutmoqda vs volume qayerga mount qilingan?

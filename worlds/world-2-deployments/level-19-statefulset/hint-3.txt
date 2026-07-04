@@ -1,0 +1,18 @@
+💡 Yechimga yaqin maslahat:
+
+Deployment ni StatefulSet ga aylantiring.
+
+Qadamlar:
+1. Mavjud Deployment ni o'chiring:
+   `kubectl delete deployment database -n k8squest`
+
+2. O'rniga StatefulSet yarating:
+   `kubectl apply -f solution.yaml`
+
+3. Pod lar tartib bilan ishga tushishini kuzating (0, keyin 1, keyin 2):
+   `kubectl get pods -n k8squest -l app=database -w`
+
+4. Barqaror nomlarni tekshiring:
+   `kubectl get pods -n k8squest -l app=database`
+
+Ko'rinishi kerak: database-0, database-1, database-2 (tasodifiy hash emas)!

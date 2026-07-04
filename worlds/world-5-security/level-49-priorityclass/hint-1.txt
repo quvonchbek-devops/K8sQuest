@@ -1,0 +1,11 @@
+🔍 Maslahat 1: PriorityClass Muammosi
+
+Muhim pod lar past prioritet tufayli chiqarib yuborilmoqda (evict).
+
+```bash
+kubectl get priorityclass
+kubectl get pods -n k8squest -o wide
+kubectl describe pod -n k8squest    # Preempted xabarlarini qidiring
+```
+
+Barcha pod lar bir xil prioritetga ega — muhim ilovalar ajratilmagan!

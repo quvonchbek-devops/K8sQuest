@@ -1,0 +1,20 @@
+🧭 Maslahat 2: volumeClaimTemplates ni Tushunish
+
+StatefulSet lar har bir pod uchun alohida PVC yaratish uchun `volumeClaimTemplates` ishlatadi:
+
+```yaml
+spec:
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+```
+
+Bu har bir pod uchun: data-pod-0, data-pod-1, data-pod-2 PVC yaratadi.
+
+Muammo ehtimol: noto'g'ri template nomi, mos kelmaydigan volumeMount nomi,
+yoki mavjud bo'lmagan StorageClass.

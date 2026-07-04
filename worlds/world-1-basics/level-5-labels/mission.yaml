@@ -1,0 +1,13 @@
+name: "Uzilgan Aloqa — Labels & Selectors"
+description: "Service label selector mos kelmagani uchun pod larni topa olmayapti"
+objective: "Service selector yoki Pod label larni to'g'rilang, shunda trafik pod ga yetib borsin"
+xp: 150
+difficulty: boshlang'ich
+expected_time: 15m
+concepts:
+  - Labels
+  - Selectors
+  - Services
+  - kubectl get bilan label filtrlash
+  - Service endpoints
+  - Pod ulanish (connectivity)

@@ -1,0 +1,1 @@
+Pod qayta-qayta ishdan chiqmoqda. Events bo'limini ko'rish uchun `kubectl describe pod nginx-broken -n k8squest` buyrug'ini ishlating. Nima xato bo'layotganini ko'rsatuvchi xabarlarni qidiring.

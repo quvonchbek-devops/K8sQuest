@@ -1,0 +1,11 @@
+✅ Maslahat 3: Tekshirish
+
+Barcha tuzatishlardan keyin:
+```bash
+./validate.sh
+```
+
+Barcha 9 ta tekshiruv o'tishi kerak.
+Agar ba'zilari muvaffaqiyatsiz bo'lsa — `kubectl describe` bilan aniq muammoni toping.
+
+🎉 Tabriklaymiz! K8sQuest ning 50 ta levelini yakunladingiz!

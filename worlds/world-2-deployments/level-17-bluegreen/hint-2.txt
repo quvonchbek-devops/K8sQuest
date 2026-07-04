@@ -1,0 +1,20 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Ikkita deployment ishlayapti:
+- app-blue (eski versiya)
+- app-green (yangi versiya)
+
+Service selector:
+```yaml
+selector:
+  app: myapp
+  version: blue  # Muammo shu!
+```
+
+Bu service faqat IKKALA label ga mos pod larga trafik yo'naltiradi:
+- app=myapp ✅
+- version=blue ✅ (app-blue pod lariga mos)
+
+app-green pod larda version=green bor, shuning uchun mos kelmaydi!
+
+Foydalanuvchilar hali ham ESKI (blue) versiyani ko'rishmoqda.

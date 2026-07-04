@@ -1,0 +1,22 @@
+🔍 XAOS FINALI — BARCHA MASLAHATLAR
+
+Bu yakuniy topshiriq! World 5 ning BARCHA 9 ta konseptini bir vaqtda tuzatishingiz kerak.
+
+Tekshirish tartibi:
+1. `kubectl get all -n k8squest` — umumiy holat
+2. `kubectl describe pod -n k8squest` — har bir pod uchun
+3. `kubectl get pdb,networkpolicy,resourcequota -n k8squest`
+4. `kubectl get nodes --show-labels`
+
+Umumiy muammolar ro'yxati:
+- ❌ RBAC ruxsatlari yetishmayapti
+- ❌ SecurityContext juda cheklangan
+- ❌ ResourceQuota limiti oshib ketgan
+- ❌ NetworkPolicy trafikni to'sib qo'ygan
+- ❌ Node affinity mos kelmayapti
+- ❌ Taint toleration yetishmayapti
+- ❌ PDB eviction ni to'sib qo'ygan
+- ❌ Pod xavfsizlik standarti buzilgan
+- ❌ PriorityClass sozlanmagan
+
+Har birini ALOHIDA tuzating, har bir tuzatishdan keyin validatsiya qiling!

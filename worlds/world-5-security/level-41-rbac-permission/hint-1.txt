@@ -1,0 +1,19 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+RBAC ruxsat muammosini tekshiramiz:
+
+1️⃣ Pod holati va loglarini tekshiring:
+   ```bash
+   kubectl get pod -n k8squest
+   kubectl logs <pod-nomi> -n k8squest
+   ```
+
+2️⃣ "Forbidden" yoki "unauthorized" xatolarini qidiring
+
+3️⃣ ServiceAccount ni tekshiring:
+   ```bash
+   kubectl get serviceaccount -n k8squest
+   kubectl get roles,rolebindings -n k8squest
+   ```
+
+Pod Kubernetes API ga murojaat qilmoqda lekin kerakli RBAC ruxsatlari yo'q.

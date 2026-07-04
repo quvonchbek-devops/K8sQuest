@@ -1,0 +1,21 @@
+✅ Yechim maslahat:
+
+broken.yaml da IKKALA pod ga (web-app-1 va web-app-2) readinessProbe qo'shing:
+
+```yaml
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      failureThreshold: 1
+```
+
+Qadamlar:
+1. broken.yaml ni tahrirlang — har ikkala pod ning container spec iga readinessProbe qo'shing
+2. Eski pod larni o'chiring: `kubectl delete pod web-app-1 web-app-2 -n k8squest`
+3. Apply qiling: `kubectl apply -f broken.yaml`
+4. Pod lar tayyor bo'lishini kuzating: `kubectl get pods -n k8squest -l app=web -w`
+
+0/1 → 1/1 o'tishi readiness probe muvaffaqiyat bo'lganda sodir bo'ladi!

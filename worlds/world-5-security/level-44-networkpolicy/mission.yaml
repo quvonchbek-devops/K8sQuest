@@ -1,0 +1,19 @@
+level: 44
+title: "NetworkPolicy: Traffic Blocked"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "NetworkPolicy Izolyatsiyasi"
+difficulty: advanced
+xp: 350
+xp_reward: 350
+world: 5
+concepts:
+  - networkpolicy
+  - ingress
+  - egress
+  - pod-selector
+description: "NetworkPolicy pod lar o'rtasidagi zarur aloqani to'sib qo'ymoqda. Xavfsizlikni saqlab, kerakli trafikka ruxsat beradigan qilib tuzatish kerak."
+learning_objectives:
+  - Understand NetworkPolicy ingress/egress rules
+  - Configure pod selectors and namespace selectors
+  - Allow specific ports while blocking others
+  - Debug network connectivity issues

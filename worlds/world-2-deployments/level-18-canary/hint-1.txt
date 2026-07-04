@@ -1,0 +1,16 @@
+🔍 Kuzatuv maslahat:
+
+Deployment larni tekshiring:
+`kubectl get deployments -n k8squest`
+
+READY ustuniga qarang. Qancha stable pod bor? Qancha canary pod?
+
+Service endpoint larini tekshiring:
+`kubectl get endpoints app-service -n k8squest`
+
+IP larni saning — bu trafik qabul qilayotgan BARCHA pod larni ko'rsatadi (ham stable, ham canary).
+
+Trafik taqsimotini test qiling:
+`for i in $(seq 1 20); do kubectl run -it --rm test-$i --image=busybox --restart=Never -n k8squest -- wget -q -O- app-service; done`
+
+"Stable" va "Canary" necha marta ko'rinishini saning. 50/50 ga yaqinmi? Canary uchun bu noto'g'ri!

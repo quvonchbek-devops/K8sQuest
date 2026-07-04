@@ -1,0 +1,19 @@
+level: 48
+title: "Pod Security Standards: Restricted"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "Pod Xavfsizlik Standarti"
+difficulty: advanced
+xp: 350
+xp_reward: 350
+world: 5
+concepts:
+  - pod-security-standards
+  - pod-security-admission
+  - restricted
+  - securitycontext
+description: "Pod xavfsizlik standartini buzmoqda — imtiyozli konteynerlar yoki xavfli konfiguratsiyalar bilan. Xavfsiz sozlamalar bilan tuzatish kerak."
+learning_objectives:
+  - Understand Pod Security Standards (privileged, baseline, restricted)
+  - Configure pods to meet restricted requirements
+  - Apply security best practices
+  - Debug pod security admission failures

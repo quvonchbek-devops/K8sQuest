@@ -1,0 +1,13 @@
+name: "Qayta Ishga Tushirish Sikli"
+description: "Liveness probe noto'g'ri endpoint ni tekshirayotgani uchun pod lar qayta-qayta ishga tushmoqda"
+objective: "Liveness probe konfiguratsiyasini to'g'rilang, shunda pod lar ishlashda davom etsin"
+xp: 200
+difficulty: o'rta
+expected_time: 12m
+concepts:
+  - liveness probes
+  - health check lar
+  - pod restart lari
+  - HTTP probe lar
+  - probe konfiguratsiyasi
+  - restart policy lari

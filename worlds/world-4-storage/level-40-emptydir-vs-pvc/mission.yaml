@@ -1,0 +1,18 @@
+level: 40
+title: "EmptyDir Lost on Restart"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "EmptyDir Qayta Ishga Tushishda Yo'qoladi"
+world: "Storage & Stateful Apps"
+difficulty: "intermediate"
+xp: 250
+concepts:
+  - emptydir
+  - ephemeral-storage
+  - persistent-storage
+  - volume-lifecycle
+description: "Ma'lumotlar bazasi emptyDir volume ishlatmoqda — pod qayta ishga tushganida barcha ma'lumotlar yo'qoladi. Doimiy saqlash uchun PVC ga o'tish kerak."
+learning_objectives:
+  - Understand emptyDir vs PVC differences
+  - Learn when to use ephemeral vs persistent storage
+  - Recognize data persistence requirements
+  - Choose appropriate volume types

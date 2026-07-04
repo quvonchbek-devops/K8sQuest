@@ -1,0 +1,19 @@
+🔍 Maslahat 1: Kuzatish va Tahlil
+
+Namespace dagi ResourceQuota muammosini tekshiring:
+
+1. Pod holatini ko'ring:
+   ```bash
+   kubectl get pods -n k8squest
+   kubectl describe pod -n k8squest
+   ```
+
+2. ResourceQuota ni tekshiring:
+   ```bash
+   kubectl get resourcequota -n k8squest
+   kubectl describe resourcequota -n k8squest
+   ```
+
+3. Used va Hard qiymatlarini solishtiring — limit oshib ketganmi?
+
+Pod yaratishga uringaningizda "exceeded quota" xatosi chiqqan bo'lishi mumkin.

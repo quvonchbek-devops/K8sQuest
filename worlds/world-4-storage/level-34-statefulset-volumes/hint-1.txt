@@ -1,0 +1,11 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+StatefulSet pod lari ishga tushmayapti.
+
+Tekshiring:
+1. `kubectl get statefulset -n k8squest`
+2. `kubectl get pods -n k8squest` — pod lar qaysi holatda?
+3. `kubectl describe statefulset -n k8squest` — Events ga qarang
+4. `kubectl get pvc -n k8squest` — PVC lar yaratildimi?
+
+StatefulSet da volumeClaimTemplates bo'limi bormi va to'g'ri sozlanganmi?

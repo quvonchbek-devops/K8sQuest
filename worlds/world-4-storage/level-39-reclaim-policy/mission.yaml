@@ -1,0 +1,18 @@
+level: 39
+title: "Reclaim Policy Data Loss"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "Reclaim Policy Ma'lumot Yo'qotishi"
+world: "Storage & Stateful Apps"
+difficulty: "intermediate"
+xp: 250
+concepts:
+  - reclaim-policy
+  - persistent-volume
+  - data-retention
+  - delete-vs-retain
+description: "PersistentVolume ning reclaim policy si 'Delete' ga sozlangan, bu PVC o'chirilganda ma'lumotlar yo'qotilishiga olib kelishi mumkin."
+learning_objectives:
+  - Understand PV reclaim policies
+  - Learn difference between Delete and Retain
+  - Prevent accidental data loss
+  - Configure appropriate retention policies

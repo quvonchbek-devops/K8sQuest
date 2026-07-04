@@ -1,0 +1,13 @@
+💡 Yechimga yaqin maslahat:
+
+Pod 999 ta CPU va 999Gi xotira so'ramoqda — hech qanday node da buncha resurs yo'q!
+
+Tuzatish qadamlari:
+1. Pod ni o'chiring: `kubectl delete pod hungry-app -n k8squest`
+2. broken.yaml dagi resource request larni oqilona qiymatlarga o'zgartiring:
+   - memory: "64Mi" (999Gi o'rniga)
+   - cpu: "100m" (999 o'rniga)
+3. Apply qiling: `kubectl apply -f broken.yaml`
+4. Tekshiring: `kubectl get pod hungry-app -n k8squest`
+
+Endi pod schedule qilinib, ishlashi kerak!

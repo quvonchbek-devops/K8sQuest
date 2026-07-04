@@ -1,0 +1,23 @@
+💡 Yechimga yaqin maslahat:
+
+90/10 taqsimotga erishish uchun replika sonlarini to'g'rilang.
+
+Qadamlar:
+1. Stable ni 9 replikaga scale qiling:
+   `kubectl scale deployment app-stable --replicas=9 -n k8squest`
+
+2. Canary ni 1 replikaga scale qiling:
+   `kubectl scale deployment app-canary --replicas=1 -n k8squest`
+
+3. Pod lar tayyor bo'lishini kuting:
+   `kubectl get deployments -n k8squest -w`
+
+4. Taqsimotni tekshiring:
+   ```bash
+   STABLE=$(kubectl get deployment app-stable -n k8squest -o jsonpath='{.status.readyReplicas}')
+   CANARY=$(kubectl get deployment app-canary -n k8squest -o jsonpath='{.status.readyReplicas}')
+   echo "Stable: $STABLE, Canary: $CANARY"
+   echo "Canary foizi: $((CANARY * 100 / (STABLE + CANARY)))%"
+   ```
+
+Taxminan 10% canary ko'rsatishi kerak!

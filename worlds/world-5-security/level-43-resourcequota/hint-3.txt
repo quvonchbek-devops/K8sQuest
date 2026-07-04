@@ -1,0 +1,19 @@
+✅ Maslahat 3: To'liq Yechim
+
+Pod ning resource request larini namespace quota ga sig'adigan qilib kamaytiring:
+
+```yaml
+resources:
+  requests:
+    cpu: "500m"       # 2 emas, 500m
+    memory: "512Mi"   # 4Gi emas, 512Mi
+  limits:
+    cpu: "1"
+    memory: "1Gi"
+```
+
+```bash
+kubectl delete -f broken.yaml && kubectl apply -f broken.yaml
+kubectl get resourcequota -n k8squest  # Used qiymatlari ko'tarilishi kerak
+kubectl get pods -n k8squest           # Running bo'lishi kerak
+```

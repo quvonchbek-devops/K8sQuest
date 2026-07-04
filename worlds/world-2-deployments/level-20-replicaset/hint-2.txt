@@ -1,0 +1,20 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Muammo: Mustaqil ReplicaSet bor.
+
+ReplicaSet — PAST DARAJA resurs:
+- Kerakli sondagi pod lar ishlashini ta'minlaydi
+- Crash bo'lgan pod larni almashtiradi
+- Lekin yangilanishlarni samarali bajarmaydi
+
+Deployment — YUQORI DARAJA resurs:
+- ReplicaSet larni siz uchun yaratadi va boshqaradi
+- Rolling update larni avtomatik bajaradi
+- Rollback imkoniyatini beradi
+- Rollout tarixini kuzatadi
+
+Shunday tasavvur qiling:
+- ReplicaSet = "3 ta pod ishlashda tur" (oddiy)
+- Deployment = "Versiyalar, yangilanishlar, rollback larni boshqar" (aqlli)
+
+Deyarli HECH QACHON to'g'ridan-to'g'ri ReplicaSet yaratmang. Doim Deployment ishlating!

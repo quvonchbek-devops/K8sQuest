@@ -1,0 +1,25 @@
+✅ Maslahat 3: To'liq Yechim
+
+broken.yaml da PVC ning storageClassName ni o'zgartiring:
+
+```yaml
+storageClassName: fast-storage    # ❌ Mavjud emas
+```
+Quyidagiga:
+```yaml
+storageClassName: standard        # ✅ Klasterda mavjud
+```
+
+Qadamlar:
+1. Mavjud StorageClass larni ko'ring: `kubectl get storageclass`
+2. broken.yaml da storageClassName ni mavjud biriga o'zgartiring
+3. Apply qiling:
+   ```bash
+   kubectl delete -f broken.yaml
+   kubectl apply -f broken.yaml
+   ```
+4. Tekshiring:
+   ```bash
+   kubectl get pvc -n k8squest    # STATUS: Bound bo'lishi kerak
+   kubectl get pod -n k8squest    # Running bo'lishi kerak
+   ```

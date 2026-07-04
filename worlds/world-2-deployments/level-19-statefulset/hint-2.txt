@@ -1,0 +1,17 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Muammo: Ma'lumotlar bazasi uchun Deployment ishlatilmoqda.
+
+Deployment lar STATELESS ilovalar (web server lar, API lar) uchun mo'ljallangan:
+- Har qanday pod almashtirilishi mumkin
+- Pod lar bir-birining o'rnini bosadi
+- Barqaror identifikatsiya kerak emas
+
+Ma'lumotlar bazalari STATEFUL va quyidagilarni talab qiladi:
+- Barqaror pod nomlari (database-0, database-1)
+- Barqaror tarmoq ID lari (database-0.database-service)
+- Har bir pod uchun doimiy storage
+- Tartibli ishga tushish (primary replikalardan oldin)
+- Tartibli to'xtash (replikalar primary dan oldin)
+
+Yechim: Deployment o'rniga StatefulSet ishlating!

@@ -1,0 +1,13 @@
+name: "Canary Og'irlik Nomutanosibligi"
+description: "Canary deployment da replika nisbatlari noto'g'ri, test natijalarini noaniq qilmoqda"
+objective: "Canary test uchun to'g'ri 90/10 trafik taqsimotini ta'minlash uchun replika sonlarini to'g'rilang"
+xp: 200
+difficulty: o'rta
+expected_time: 12m
+concepts:
+  - canary deployment lar
+  - trafik taqsimlash
+  - replika nisbatlari
+  - bosqichma-bosqich rollout
+  - A/B test
+  - deployment pattern lari

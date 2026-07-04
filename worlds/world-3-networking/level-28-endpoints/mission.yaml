@@ -1,0 +1,18 @@
+name: "Service Endpoint lari Yangilanmayapti"
+objective: "Service endpoint lari to'g'ri yangilanishi uchun readiness probe lar qo'shing"
+world: 3
+level: 28
+xp: 200
+difficulty: o'rta
+
+description: |
+  Service ning endpoint lari pod lar qayta ishga tushganida yoki sog'lomsiz bo'lganda
+  yangilanmayapti. Trafik buzilgan pod larga yo'naltirilishda davom etmoqda, bu
+  xatolarga olib kelmoqda. Muammo — readiness probe lar yetishmayapti. Kubernetes
+  pod lar haqiqatan trafik xizmat qilishga tayyor ekanini bilmayapti.
+
+concepts:
+  - Readiness probe lar
+  - Service endpoint lari
+  - Pod health check lari
+  - Trafik yo'naltirish

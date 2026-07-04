@@ -1,0 +1,26 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+PVC nima uchun Pending da qotib turganini tekshiramiz:
+
+1️⃣ PVC holatini tekshiring:
+   kubectl get pvc -n k8squest
+   STATUS ustuniga qarang — nima ko'rsatmoqda?
+
+2️⃣ PVC tafsilotlarini ko'ring:
+   kubectl describe pvc app-storage-claim -n k8squest
+   Qidiring: Status, Events xatolari, so'ralgan storage va storage class
+
+3️⃣ PersistentVolume lar mavjudligini tekshiring:
+   kubectl get pv
+   PVC ni qondira oladigan PV bormi?
+
+4️⃣ Pod holatini tekshiring:
+   kubectl get pod database-pod -n k8squest
+   kubectl describe pod database-pod -n k8squest
+   Volume mount muammolari haqida xabarlarni qidiring.
+
+Asosiy kuzatuvlar:
+- PVC Pending (Bound emas)
+- Pod ContainerCreating (volume kutmoqda)
+- Pod PVC bog'lanmaguncha ishga tusholmaydi
+- PVC mos PV siz bog'lana olmaydi

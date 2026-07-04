@@ -1,0 +1,9 @@
+🔍 Kuzatuv maslahat:
+
+Service tafsilotlarini tekshiring: `kubectl describe svc backend-service -n k8squest`
+
+"Endpoints" maydoniga qarang. Bo'shmi? Demak hech qanday pod service selector ga mos kelmayapti!
+
+Endi pod label larini tekshiring: `kubectl get pod backend-pod -n k8squest --show-labels`
+
+Pod label larini service selector bilan solishtiring.

@@ -1,0 +1,16 @@
+🔍 Kuzatuv maslahat:
+
+HPA holatini tekshiring:
+`kubectl get hpa -n k8squest`
+
+TARGETS ustuniga qarang. "<unknown>/50%" ko'ryapsizmi?
+
+HPA ni describe qiling:
+`kubectl describe hpa web-backend-hpa -n k8squest`
+
+Conditions bo'limiga qarang. Qanday xato xabari ko'ryapsiz?
+
+Pod metrikalarini olishga urining:
+`kubectl top pods -n k8squest`
+
+Ishlayaptimi?

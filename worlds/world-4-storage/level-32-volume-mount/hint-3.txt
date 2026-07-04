@@ -1,0 +1,16 @@
+✅ Maslahat 3: To'liq Yechim
+
+broken.yaml da mountPath ni to'g'rilang:
+
+```yaml
+mountPath: /wrong/path    # ❌
+```
+Quyidagiga:
+```yaml
+mountPath: /data           # ✅
+```
+
+Qadamlar:
+1. broken.yaml dagi volumeMounts.mountPath ni to'g'ri yo'lga o'zgartiring
+2. `kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
+3. `kubectl logs data-app -n k8squest` — xatolar yo'qolishi kerak

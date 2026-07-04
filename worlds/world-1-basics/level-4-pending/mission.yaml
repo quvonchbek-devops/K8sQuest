@@ -1,0 +1,13 @@
+name: "Pending Pod Muammosi"
+description: "Pod mavjud resurslardan ko'proq so'rayotgani uchun Pending holatida qotib qolgan"
+objective: "Resource request larni moslang, shunda pod schedule qilinsin"
+xp: 150
+difficulty: boshlang'ich
+expected_time: 12m
+concepts:
+  - Pod scheduling
+  - Resource requests
+  - Resource limits
+  - kubectl describe
+  - Pending holati
+  - Node sig'imi (capacity)

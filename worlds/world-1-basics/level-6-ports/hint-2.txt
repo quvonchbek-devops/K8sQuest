@@ -1,0 +1,9 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Konteyner 80-portda tinglayapti, lekin service trafikni 8080-portga yo'naltirmoqda.
+
+Service da ikkita port konfiguratsiyasi bor:
+- `port`: Klientlar ulanadigan port (tashqi)
+- `targetPort`: Pod/konteynerdagi qaysi portga yo'naltirish kerak (ichki)
+
+targetPort konteynerning containerPort iga mos bo'lishi shart!

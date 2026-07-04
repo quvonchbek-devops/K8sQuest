@@ -1,0 +1,24 @@
+🧭 Maslahat 2: PV va PVC Bog'lanishini Tushunish
+
+PVC PersistentVolume ga bog'lanishi uchun quyidagilar MOS KELISHI kerak:
+- Storage hajmi (PV >= PVC)
+- Access mode (ReadWriteOnce, ReadWriteMany va boshqalar)
+- StorageClass (nomi aniq mos kelishi kerak)
+
+Hozirgi holat:
+```
+PVC so'rovi:
+  storage: 1Gi
+  accessModes: ReadWriteOnce
+  storageClassName: fast-storage    ← Bu StorageClass bormi?
+```
+
+Tekshiring:
+```bash
+kubectl get storageclass
+```
+
+Agar "fast-storage" yo'q bo'lsa — muammo shu!
+
+Yechim: PVC dagi storageClassName ni klasterda mavjud StorageClass ga o'zgartiring
+(ko'pincha "standard", "local-path" yoki "hostpath").

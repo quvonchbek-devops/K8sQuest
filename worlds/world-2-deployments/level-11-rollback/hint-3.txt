@@ -1,0 +1,16 @@
+💡 Yechimga yaqin maslahat:
+
+Deployment ni avvalgi ishlaydigan versiyaga rollback qiling:
+
+`kubectl rollout undo deployment/web-app -n k8squest`
+
+Bu quyidagilarni qiladi:
+1. Oldingi ReplicaSet ga qaytaradi
+2. Buzilgan pod larni kamaytiradi
+3. Ishlaydigan pod larni ko'paytiradi
+
+Keyin tekshiring:
+`kubectl get deployment web-app -n k8squest`
+`kubectl get pods -n k8squest`
+
+Barcha 3 ta pod Running bo'lishi kerak!

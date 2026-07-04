@@ -1,0 +1,25 @@
+🧭 Maslahat 2: SecurityContext ni Tushunish
+
+SecurityContext pod/konteyner uchun xavfsizlik sozlamalarini belgilaydi:
+
+```yaml
+securityContext:
+  runAsNonRoot: true          # Root sifatida ishlashni taqiqlash
+  runAsUser: 1000             # Aniq foydalanuvchi ID
+  readOnlyRootFilesystem: true  # Fayl tizimiga yozishni taqiqlash
+  allowPrivilegeEscalation: false  # Imtiyoz oshirishni taqiqlash
+  capabilities:
+    drop: ["ALL"]             # Barcha Linux capability larni olib tashlash
+```
+
+Muammo: readOnlyRootFilesystem: true — lekin ilova vaqtincha fayllar yozishi kerak!
+
+Yechim: `/tmp` uchun emptyDir volume qo'shing:
+```yaml
+volumeMounts:
+- name: tmp
+  mountPath: /tmp
+volumes:
+- name: tmp
+  emptyDir: {}
+```

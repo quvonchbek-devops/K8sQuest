@@ -1,0 +1,16 @@
+✅ Maslahat 3: To'liq Yechim
+
+PDB yoki Deployment ni tuzating:
+
+```yaml
+# Variant 1: PDB ni o'zgartiring
+spec:
+  minAvailable: 2    # replika soni-1
+
+# Variant 2: maxUnavailable ishlating
+spec:
+  maxUnavailable: 1
+```
+
+`kubectl apply -f solution.yaml`
+`kubectl get pdb -n k8squest` — ALLOWED > 0 bo'lishi kerak

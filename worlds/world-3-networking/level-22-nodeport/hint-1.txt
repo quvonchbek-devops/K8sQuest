@@ -1,0 +1,9 @@
+🔍 Kuzatuv maslahat:
+
+Service tafsilotlarini tekshiring: `kubectl get svc web-nodeport -n k8squest`
+
+NodePort tayinlanganini ko'rasiz (30000-32767 oralig'ida tasodifiy port).
+
+Muammo? U tasodifiy! Bashorat qilinadigan kirish uchun aniq NodePort ko'rsatish kerak.
+
+Service YAML ga qarang — ports bo'limida nodePort ko'rsatilganmi?

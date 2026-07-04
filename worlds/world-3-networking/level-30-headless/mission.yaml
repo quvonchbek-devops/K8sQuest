@@ -1,0 +1,18 @@
+name: "StatefulSet DNS Ishlamayapti"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+difficulty: o'rta
+xp: 250
+
+description: |
+  StatefulSet pod laringiz bir-biri bilan bashorat qilinadigan DNS nomlari orqali
+  aloqa qila olmayapti. Ilova alohida pod larga pod-0.service-nomi, pod-1.service-nomi
+  orqali yetishni kutadi, lekin DNS hal qilish ishlamayapti. Service ClusterIP bilan
+  sozlangan, lekin StatefulSet larga to'g'ridan-to'g'ri pod-ga-pod DNS hal qilish
+  uchun "headless service" deb ataladigan maxsus service turi kerak.
+
+concepts:
+  - headless-service
+  - statefulset-dns
+  - pod-identity
+  - stable-network-identity
+  - clusterip-none

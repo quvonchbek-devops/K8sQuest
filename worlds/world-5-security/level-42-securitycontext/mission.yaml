@@ -1,0 +1,19 @@
+level: 42
+title: "SecurityContext: Privilege Escalation"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "SecurityContext Cheklovi"
+difficulty: intermediate
+xp: 250
+xp_reward: 250
+world: 5
+concepts:
+  - securitycontext
+  - privilege-escalation
+  - runas-nonroot
+  - container-security
+description: "Pod ning SecurityContext juda cheklangan, bu ilova to'g'ri ishlashi uchun kerakli operatsiyalarni to'sib qo'ymoqda."
+learning_objectives:
+  - Understand container user contexts
+  - Configure runAsNonRoot and runAsUser
+  - Prevent privilege escalation
+  - Apply security best practices

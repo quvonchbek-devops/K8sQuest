@@ -1,0 +1,19 @@
+level: 49
+title: "PriorityClass: Preemption"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "PriorityClass Konfiguratsiyasi"
+difficulty: advanced
+xp: 300
+xp_reward: 300
+world: 5
+concepts:
+  - priorityclass
+  - preemption
+  - scheduling-priority
+  - eviction
+description: "Muhim pod lar past prioritet tufayli chiqarilmoqda (evict). To'g'ri PriorityClass sozlash kerak, shunda muhim ilovalar resurs tanqisligi vaqtida ham ishlashda davom etsin."
+learning_objectives:
+  - Understand PriorityClass and pod priority
+  - Configure preemption for critical workloads
+  - Balance resource allocation by priority
+  - Debug priority-based scheduling

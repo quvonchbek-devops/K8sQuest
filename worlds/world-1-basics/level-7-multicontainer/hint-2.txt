@@ -1,0 +1,11 @@
+🧭 Yo'naltiruvchi maslahat:
+
+"log-sidecar" konteyner ishdan chiqmoqda. Sababini ko'rish uchun:
+
+`kubectl logs app-with-logging -c log-sidecar -n k8squest`
+
+Xato `/var/log/nonexistent.log` fayli mavjud emasligini ko'rsatmoqda. `tail -f` buyrug'i fayl topilmaganda darhol ishdan chiqadi, bu esa konteynerni crash qildiradi.
+
+Buyruqni o'zgartirish kerak:
+1. Avval faylni yarating, yoki
+2. Oldindan mavjud faylni talab qilmaydigan boshqa buyruq ishlating

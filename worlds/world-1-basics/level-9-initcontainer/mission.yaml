@@ -1,0 +1,12 @@
+name: "Init Container Tiqilinchi"
+description: "Init container hech qachon tugamagani uchun pod Init holatida qotib qolgan"
+objective: "Init container ni tuzating, shunda asosiy konteyner ishga tushsin"
+xp: 200
+difficulty: o'rta
+expected_time: 15m
+concepts:
+  - Init containers
+  - Pod initsializatsiyasi
+  - Konteyner bog'liqliklari
+  - kubectl describe
+  - Init container ni debugging qilish

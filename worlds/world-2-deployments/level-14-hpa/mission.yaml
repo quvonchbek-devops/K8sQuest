@@ -1,0 +1,13 @@
+name: "HPA Scale Qila Olmayapti"
+description: "HorizontalPodAutoscaler metrikalar yetishmayotgani uchun pod larni scale qila olmayapti"
+objective: "HPA CPU/xotira metrikalarini o'qib scale qilishi uchun metrics-server o'rnating"
+xp: 250
+difficulty: o'rta
+expected_time: 18m
+concepts:
+  - HorizontalPodAutoscaler
+  - metrics-server
+  - CPU metrikalari
+  - autoscaling
+  - kubectl top
+  - resource requests

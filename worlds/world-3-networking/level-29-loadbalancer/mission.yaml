@@ -1,0 +1,18 @@
+name: "LoadBalancer Pending da Qotib Qoldi"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+difficulty: o'rta
+xp: 250
+
+description: |
+  Jamoangiz LoadBalancer turidagi service deploy qildi, lekin u 10 daqiqadan beri
+  "Pending" holatida qotib turgan. Tashqi klientlar ilovaga kira olmayapti. Service
+  bulutli muhitda yaxshi ishlaydi, lekin lokal ishlab chiqish klasteringiz LoadBalancer
+  ta'minlay olmaydi. Service turlari orasidagi farqni tushunib, lokal ishlab chiqish
+  uchun to'g'ri turni tanlashingiz kerak.
+
+concepts:
+  - service-types
+  - loadbalancer
+  - nodeport
+  - cloud-provider-integration
+  - local-cluster-limitations

@@ -1,0 +1,14 @@
+🔍 Kuzatuv maslahat:
+
+Foydalanuvchilar tasodifiy tizimdan chiqib ketmoqda. Muvaffaqiyatli login qiladilar, lekin keyingi so'rovda autentifikatsiya yo'qoladi.
+
+Tekshiring:
+1. Klient loglarini ko'ring: `kubectl logs client -n k8squest`
+   "Session Pod 1", "Session Pod 2", "Session Pod 3" almashib turyaptimi?
+
+2. Service konfiguratsiyasini ko'ring: `kubectl describe service session-service -n k8squest`
+   Session Affinity: None bo'lsa — load-balancing TASODIFIY
+
+Muammo: Foydalanuvchi Pod 1 da login qiladi → keyingi so'rov Pod 2 ga ketadi → Pod 2 da session yo'q → chiqib ketgandek ko'rinadi!
+
+Yechim: "session affinity" yoki "sticky sessions" — bir xil klient doim bir xil pod ga yo'naltiriladi.

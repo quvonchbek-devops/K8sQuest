@@ -1,0 +1,32 @@
+✅ Maslahat 3: To'liq Yechim
+
+Role va RoleBinding yarating:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+  namespace: k8squest
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-reader-binding
+  namespace: k8squest
+subjects:
+- kind: ServiceAccount
+  name: app-sa          # Pod ning ServiceAccount nomi
+  namespace: k8squest
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+`kubectl apply -f solution.yaml`
+`kubectl logs <pod-nomi> -n k8squest` — "Forbidden" yo'qolishi kerak

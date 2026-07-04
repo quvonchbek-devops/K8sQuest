@@ -1,0 +1,7 @@
+🔍 Kuzatuv maslahat:
+
+Pod holatini tekshiring: `kubectl get pod hungry-app -n k8squest`
+
+"Pending" holatida qotib turganini ko'rasiz. `kubectl describe pod hungry-app -n k8squest` buyrug'ini ishlating va Events bo'limiga qarang.
+
+Scheduling haqida qanday xabar ko'ryapsiz?

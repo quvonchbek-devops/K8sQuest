@@ -1,0 +1,11 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Muammo service selector da!
+
+Service `app: backend-app` label li pod larni qidirmoqda, lekin pod da `app: backend` bor.
+
+Ikki variant bor:
+1. Pod label lariga mos kelish uchun service selector ni o'zgartirish, YOKI
+2. Service selector ga mos kelish uchun pod label larini o'zgartirish
+
+1-variant osonroq — shunchaki service ni tahrirlang!

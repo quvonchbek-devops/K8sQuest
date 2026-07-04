@@ -1,0 +1,19 @@
+🧭 Maslahat 2: NodeAffinity ni Tushunish
+
+NodeAffinity pod larni node label lariga asoslanib ma'lum node larga joylashtiradi:
+
+```yaml
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:  # MAJBURIY
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: disk-type
+          operator: In
+          values: ["ssd"]
+```
+
+Bu degani: "Faqat `disk-type=ssd` label li node larga joylashtir"
+
+Muammo: Pod kerakli label ga ega bo'lmagan node larni talab qilmoqda.
+Yechim: Node ga kerakli label qo'shing YOKI pod dagi affinity qoidasini o'zgartiring.

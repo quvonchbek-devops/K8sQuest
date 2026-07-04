@@ -1,0 +1,9 @@
+🔍 Kuzatuv maslahat:
+
+Deployment holatini tekshiring:
+`kubectl get deployment web-app -n k8squest`
+
+Rollout holatini ko'ring:
+`kubectl rollout status deployment/web-app -n k8squest`
+
+READY ustuni va rollout holatida nimani sezayapsiz?

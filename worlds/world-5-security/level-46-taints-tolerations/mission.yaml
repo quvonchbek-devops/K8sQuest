@@ -1,0 +1,19 @@
+level: 46
+title: "Taints & Tolerations: NoSchedule"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "Taint lar va Toleration lar"
+difficulty: advanced
+xp: 350
+xp_reward: 350
+world: 5
+concepts:
+  - taints
+  - tolerations
+  - noschedule
+  - noexecute
+description: "Node da taint bor lekin pod mos toleration ga ega emas, bu pod ning shu node ga schedule qilinishini to'sib qo'ymoqda."
+learning_objectives:
+  - Understand taints and tolerations
+  - Configure tolerations correctly
+  - Differentiate NoSchedule, PreferNoSchedule, NoExecute
+  - Debug taint-related scheduling failures

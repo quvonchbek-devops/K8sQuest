@@ -1,0 +1,17 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Pod larda readiness probe lar YETISHMAYAPTI. Ularsiz Kubernetes pod larni service endpoint lariga darhol qo'shadi, hatto ilova trafik xizmat qilishga tayyor bo'lmasa ham.
+
+Readiness probe siz: Pod ishga tushdi → darhol endpoint larga qo'shildi → trafik keldi → ERROR!
+Readiness probe bilan: Pod ishga tushdi → probe kutadi → probe muvaffaqiyat → endpoint ga qo'shildi → trafik keldi → OK!
+
+Tuzatish — ikkala pod ga readiness probe qo'shing:
+```yaml
+readinessProbe:
+  httpGet:
+    path: /
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  failureThreshold: 1
+```

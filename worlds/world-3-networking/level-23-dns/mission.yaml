@@ -1,0 +1,12 @@
+name: "DNS Hal Qilish Muvaffaqiyatsiz"
+description: "Pod lar DNS orqali service nomlarini hal qila olmayapti"
+objective: "DNS konfiguratsiyasini tuzating, shunda pod lar service nomlarini hal qilsin"
+xp: 250
+difficulty: "o'rta"
+expected_time: "20m"
+concepts:
+  - Kubernetes DNS
+  - Service DNS nomlari
+  - FQDN formati
+  - CoreDNS
+  - DNS muammolarini aniqlash

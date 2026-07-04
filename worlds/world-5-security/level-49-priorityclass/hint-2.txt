@@ -1,0 +1,20 @@
+🧭 Maslahat 2: PriorityClass ni Tushunish
+
+PriorityClass pod larga ustunlik beradi — resurs tanqisligi vaqtida
+past prioritetli pod lar chiqariladi (evict), yuqori prioritetlilar qoladi.
+
+```yaml
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: critical-priority
+value: 1000000
+globalDefault: false
+description: "Muhim ilovalar uchun"
+```
+
+Pod ga tayinlash:
+```yaml
+spec:
+  priorityClassName: critical-priority
+```

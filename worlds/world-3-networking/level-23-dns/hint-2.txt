@@ -1,0 +1,10 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Kubernetes DNS service lar uchun quyidagi formatda yozuvlar yaratadi:
+`<service-nomi>.<namespace>.svc.cluster.local`
+
+Bir xil namespace ichida qisqa nom ishlatish mumkin: `<service-nomi>`
+
+Klient "database" ishlatmoqda, lekin service "database-service".
+
+Klient pod ni to'g'ri service nomi ishlatadigan qilib tuzatish kerak!

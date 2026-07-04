@@ -1,0 +1,24 @@
+✅ Yechim maslahat:
+
+Aniq NodePort qo'shish uchun service ni tahrirlang:
+
+```bash
+kubectl edit svc web-nodeport -n k8squest
+```
+
+Yoki o'chirib qayta apply qiling:
+```bash
+kubectl delete svc web-nodeport -n k8squest
+kubectl apply -f solution.yaml -n k8squest
+```
+
+ports bo'limiga quyidagini qo'shing:
+```yaml
+ports:
+- protocol: TCP
+  port: 80
+  targetPort: 80
+  nodePort: 30080  # Bu qatorni qo'shing!
+```
+
+To'g'ri NodePort oralig'i: 30000-32767

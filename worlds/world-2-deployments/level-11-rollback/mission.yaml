@@ -1,0 +1,13 @@
+name: "Deployment Yangilanishi Qotib Qoldi"
+description: "Rolling update muvaffaqiyatsiz bo'ldi, chunki yangi konteyner image mavjud emas"
+objective: "Deployment ni avvalgi ishlaydigan versiyaga rollback qiling"
+xp: 200
+difficulty: o'rta
+expected_time: 15m
+concepts:
+  - deployments
+  - rolling updates
+  - rollback
+  - kubectl rollout
+  - deployment tarixi
+  - image versiyalash

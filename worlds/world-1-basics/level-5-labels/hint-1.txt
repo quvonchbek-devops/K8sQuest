@@ -1,0 +1,9 @@
+🔍 Kuzatuv maslahat:
+
+Avval pod ishlayotganini tekshiring: `kubectl get pod backend-app -n k8squest`
+
+Keyin service ni tekshiring: `kubectl get service backend-service -n k8squest`
+
+Nihoyat, service pod larni topganini tekshiring: `kubectl get endpoints backend-service -n k8squest`
+
+Birorta endpoint (IP manzil) ko'ryapsizmi? Agar yo'q bo'lsa, service pod ga ulanmagan.

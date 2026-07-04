@@ -1,0 +1,14 @@
+🧭 Maslahat 2: ConfigMap Key Muammosi
+
+Pod ConfigMap dan ma'lum bir kalit orqali qiymat olmoqda:
+```yaml
+env:
+- name: APP_CONFIG
+  valueFrom:
+    configMapKeyRef:
+      name: app-config
+      key: config.yaml    # ← Bu kalit ConfigMap da bormi?
+```
+
+Agar ConfigMap da bu kalit yo'q bo'lsa — pod ishga tushmaydi!
+ConfigMap dagi mavjud kalitlarni tekshiring va mos keling.

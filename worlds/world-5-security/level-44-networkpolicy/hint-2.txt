@@ -1,0 +1,27 @@
+🧭 Maslahat 2: NetworkPolicy ni Tushunish
+
+NetworkPolicy pod lar orasidagi trafikni nazorat qiladi:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-policy
+spec:
+  podSelector:          # Kimga tegishli (target)
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress            # Kiruvchi trafik qoidalari
+  - Egress             # Chiquvchi trafik qoidalari
+  ingress:
+  - from:              # Kimdan ruxsat
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - port: 8080
+```
+
+Muammo: deny-all policy qo'yilgan, lekin kerakli trafikka ruxsat berilmagan.
+Yechim: Aniq ingress/egress qoidalari bilan kerakli trafikka ruxsat bering.

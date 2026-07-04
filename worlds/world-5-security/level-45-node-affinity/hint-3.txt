@@ -1,0 +1,17 @@
+✅ Maslahat 3: To'liq Yechim
+
+Ikki variantdan birini tanlang:
+
+**Variant 1: Node ga label qo'shing**
+```bash
+kubectl label nodes <node-nomi> disk-type=ssd
+```
+
+**Variant 2: Pod dagi affinity qoidasini o'zgartiring**
+broken.yaml da nodeAffinity ni mavjud node label lariga mos qiling.
+
+```bash
+kubectl get nodes --show-labels    # Mavjud label larni ko'ring
+```
+
+Keyin: `kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`

@@ -1,0 +1,19 @@
+level: 34
+title: "StatefulSet Volume Templates"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "StatefulSet Volume Template lari"
+world: "Storage & Stateful Apps"
+difficulty: "advanced"
+xp: 300
+concepts:
+  - statefulset
+  - volumeclaimtemplates
+  - per-pod-storage
+  - dynamic-provisioning
+  - pod-identity
+description: "StatefulSet ning volumeClaimTemplate lari noto'g'ri sozlangan, har bir pod uchun doimiy storage yaratishga to'sqinlik qilmoqda."
+learning_objectives:
+  - Understand StatefulSet volumeClaimTemplates
+  - Learn per-pod persistent storage
+  - Configure dynamic PVC creation
+  - Understand StatefulSet storage patterns

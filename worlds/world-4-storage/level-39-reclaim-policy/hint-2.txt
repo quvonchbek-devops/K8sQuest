@@ -1,0 +1,9 @@
+🧭 Maslahat 2: Reclaim Policy Tushunish
+
+Reclaim policy PVC o'chirilgandan KEYIN PV ga nima bo'lishini belgilaydi:
+
+- `Delete` — PV va uning ma'lumotlari avtomatik O'CHIRILADI ⚠️
+- `Retain` — PV va ma'lumotlar SAQLANADI, admin qo'lda tozalashi kerak
+- `Recycle` — (eskirgan) Ma'lumotlar o'chiriladi, PV qayta ishlatiladi
+
+Produkciyada muhim ma'lumotlar uchun DOIM `Retain` ishlating!

@@ -1,0 +1,7 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Xato "ImagePullBackOff" yoki "ErrImagePull" ni ko'rsatmoqda. Bu Kubernetes siz ko'rsatgan konteyner image ni topa olmayotganini bildiradi.
+
+Pod spetsifikatsiyasidagi image nomi va tag ni tekshiring. Bu image tag Docker Hub da haqiqatan mavjudmi?
+
+Sinab ko'ring: `kubectl get pod web-app -n k8squest -o yaml | grep image:`

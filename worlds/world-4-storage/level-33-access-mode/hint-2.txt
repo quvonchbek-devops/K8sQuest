@@ -1,0 +1,11 @@
+🧭 Maslahat 2: Access Mode larni Tushunish
+
+Access mode turlari:
+- `ReadWriteOnce (RWO)` — bitta node yoza oladi
+- `ReadOnlyMany (ROX)` — ko'p node lar faqat o'qiy oladi
+- `ReadWriteMany (RWX)` — ko'p node lar yoza oladi
+
+Muammo: PVC bir access mode so'ramoqda, lekin PV boshqasini bermoqda.
+Masalan: PVC `ReadWriteMany` so'raydi, lekin PV faqat `ReadWriteOnce` qo'llab-quvvatlaydi.
+
+Tuzatish: PVC ning accessModes ni PV bilan mos qiling.

@@ -1,0 +1,19 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Frontend QISQA service nomi ishlatmoqda — bu faqat bir xil namespace da ishlaydi. Backend service BOSHQA namespace da, shuning uchun DNS muvaffaqiyatsiz.
+
+Kubernetes DNS formati:
+```
+<service-nomi>.<namespace>.svc.cluster.local
+```
+
+Misollar:
+- Bir xil namespace: `api-service` ✅ Ishlaydi
+- Boshqa namespace: `api-service` ❌ Ishlamaydi
+- Boshqa namespace: `api-service.backend-ns` ✅ Ishlaydi
+- To'liq FQDN: `api-service.backend-ns.svc.cluster.local` ✅ Ishlaydi
+
+Tuzatish: Frontend buyrug'ida qisqa nomni FQDN ga o'zgartiring:
+```
+http://api-service → http://api-service.backend-ns.svc.cluster.local
+```

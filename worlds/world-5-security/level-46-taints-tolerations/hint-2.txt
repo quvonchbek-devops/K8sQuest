@@ -1,0 +1,18 @@
+🧭 Maslahat 2: Taint lar va Toleration lar
+
+Taint lar pod larni node lardan qaytaradi (agar pod tolerate qilmasa):
+```bash
+# Node ga taint qo'shish
+kubectl taint nodes <node> key=value:NoSchedule
+```
+
+Pod ga toleration qo'shish:
+```yaml
+tolerations:
+- key: "key"
+  operator: "Equal"
+  value: "value"
+  effect: "NoSchedule"
+```
+
+Muammo: Node da taint bor, pod da mos toleration yo'q.

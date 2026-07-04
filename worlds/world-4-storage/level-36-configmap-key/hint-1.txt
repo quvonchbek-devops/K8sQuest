@@ -1,0 +1,10 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+Pod ishga tushmayapti — ConfigMap bilan bog'liq xato.
+
+Tekshiring:
+1. `kubectl get pod -n k8squest` — STATUS ga qarang
+2. `kubectl describe pod -n k8squest` — Events dagi xato
+3. `kubectl get configmap -n k8squest -o yaml` — ConfigMap tarkibi
+
+Pod ConfigMap dan qaysi kalit (key) ni kutmoqda? Bu kalit ConfigMap da bormi?

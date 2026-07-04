@@ -1,0 +1,25 @@
+✅ Maslahat 3: To'liq Yechim
+
+broken.yaml ni tuzating — ilova ishlashi uchun zarur o'zgarishlar:
+
+1. readOnlyRootFilesystem saqlang lekin yoziladigan volume qo'shing:
+```yaml
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
+  containers:
+  - name: app
+    securityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - name: tmp
+      mountPath: /tmp
+  volumes:
+  - name: tmp
+    emptyDir: {}
+```
+
+`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`

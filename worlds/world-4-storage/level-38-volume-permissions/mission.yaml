@@ -1,0 +1,19 @@
+level: 38
+title: "Volume Permission Denied"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "Volume Ruxsati Rad Etildi"
+world: "Storage & Stateful Apps"
+difficulty: "advanced"
+xp: 300
+concepts:
+  - volume-permissions
+  - fsgroup
+  - securitycontext
+  - runasuser
+  - pod-security
+description: "Konteyner volume ga yozish uchun ruxsatga ega emas, chunki fsGroup va SecurityContext to'g'ri sozlanmagan."
+learning_objectives:
+  - Understand volume ownership and permissions
+  - Learn to configure fsGroup and runAsUser
+  - Debug permission issues in containers
+  - Properly configure security contexts

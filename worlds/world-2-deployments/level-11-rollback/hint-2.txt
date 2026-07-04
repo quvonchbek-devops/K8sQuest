@@ -1,0 +1,12 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Deployment qotib qolgan, chunki yangi image mavjud emas. Tekshiring:
+
+`kubectl describe deployment web-app -n k8squest`
+
+Events bo'limiga qarang. ImagePullBackOff xatolarini ko'rasiz.
+
+Rollout tarixini tekshiring:
+`kubectl rollout history deployment/web-app -n k8squest`
+
+Oldingi versiyaga rollback qilish mumkin!

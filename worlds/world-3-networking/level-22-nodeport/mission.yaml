@@ -1,0 +1,12 @@
+name: "NodePort ga Kirish Mumkin Emas"
+description: "NodePort service yaratilgan lekin klasterdan tashqaridan kirish mumkin emas"
+objective: "Tashqi kirishni yoqish uchun NodePort service konfiguratsiyasini to'g'rilang"
+xp: 200
+difficulty: "o'rta"
+expected_time: "15m"
+concepts:
+  - NodePort service
+  - port va nodePort va targetPort farqi
+  - tashqi kirish
+  - service turlari
+  - port konfiguratsiyasi

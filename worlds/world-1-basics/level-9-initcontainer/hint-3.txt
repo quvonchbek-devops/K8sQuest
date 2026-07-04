@@ -1,0 +1,26 @@
+💡 Yechimga yaqin maslahat:
+
+To'g'ri yechim — init container kutayotgan service ni yaratish!
+
+Tuzatish qadamlari:
+1. "backend-service" nomli service yarating:
+   ```yaml
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: backend-service
+     namespace: k8squest
+   spec:
+     selector:
+       app: backend
+     ports:
+     - protocol: TCP
+       port: 80
+       targetPort: 8080
+   ```
+
+2. Service ni apply qiling: `kubectl apply -f <service-fayl-nomi.yaml>`
+
+3. Service mavjud bo'lganda, init container ning nslookup buyrug'i muvaffaqiyatli bajariladi va tugaydi!
+
+Service topilgandan keyin pod avtomatik ravishda asosiy konteynerga o'tadi.

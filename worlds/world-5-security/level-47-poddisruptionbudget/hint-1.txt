@@ -1,0 +1,10 @@
+🔍 Maslahat 1: PDB Holatini Tekshiring
+
+```bash
+kubectl get pdb -n k8squest
+kubectl describe pdb -n k8squest
+kubectl get deployment -n k8squest
+```
+
+PDB ning minAvailable qiymati va deployment replika sonini solishtiring.
+ALLOWED = 0 bo'lsa — hech qanday pod evict qilib bo'lmaydi!

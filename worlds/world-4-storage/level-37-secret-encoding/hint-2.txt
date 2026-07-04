@@ -1,0 +1,18 @@
+🧭 Maslahat 2: Secret Kodlash va Shifrlash
+
+Kubernetes Secret lari `data` maydonida base64 KODLANGAN qiymatlarni kutadi:
+```yaml
+data:
+  password: cGFzc3dvcmQ=    # "password" ning base64 kodlashi
+```
+
+Agar oddiy matn yozsangiz — bu YAML xatosi yoki noto'g'ri qiymatga olib keladi.
+
+Muqobil: `stringData` maydonini ishlating — Kubernetes avtomatik kodlaydi:
+```yaml
+stringData:
+  password: password    # Kubernetes o'zi base64 ga aylantiradi
+```
+
+⚠️ MUHIM: base64 bu XAVFSIZLIK EMAS! Bu faqat kodlash. Haqiqiy xavfsizlik uchun
+Vault yoki Sealed Secrets ishlating.

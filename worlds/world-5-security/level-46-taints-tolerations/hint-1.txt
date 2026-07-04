@@ -1,0 +1,11 @@
+🔍 Maslahat 1: Kuzatish
+
+Pod Pending — node taint muammosi.
+
+```bash
+kubectl get pod -n k8squest
+kubectl describe pod -n k8squest   # "node(s) had taint" xabarini qidiring
+kubectl describe nodes | grep Taint   # Node taint larini ko'ring
+```
+
+Node da taint bor — pod esa uni tolerate qilmayapti.

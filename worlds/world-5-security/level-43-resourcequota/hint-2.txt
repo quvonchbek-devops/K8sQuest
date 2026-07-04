@@ -1,0 +1,17 @@
+🧭 Maslahat 2: ResourceQuota ni Tushunish
+
+ResourceQuota namespace uchun resurs iste'moli limitlarini belgilaydi:
+```yaml
+spec:
+  hard:
+    requests.cpu: "2"        # Jami CPU so'rovlar limiti
+    requests.memory: "2Gi"   # Jami xotira so'rovlar limiti
+    limits.cpu: "4"          # Jami CPU limit lari limiti
+    limits.memory: "4Gi"     # Jami xotira limit lari limiti
+    pods: "10"               # Maksimal pod soni
+```
+
+Muammo: Pod ning resource request lari namespace quota dan oshib ketmoqda.
+Masalan: Quota 2Gi xotira beradi, lekin pod 4Gi so'ramoqda.
+
+Yechim: Pod ning requests/limits ni quota ga sig'adigan qilib kamaytiring.

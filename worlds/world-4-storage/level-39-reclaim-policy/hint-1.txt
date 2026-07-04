@@ -1,0 +1,10 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+PersistentVolume ning reclaim policy si bilan bog'liq muammo.
+
+Tekshiring:
+1. `kubectl get pv` — RECLAIM POLICY ustuniga qarang
+2. Reclaim policy "Delete" mi yoki "Retain"?
+3. Agar "Delete" bo'lsa — PVC o'chirilganda MA'LUMOTLAR YO'QOLADI!
+
+Bu produkciya muhitida xavfli — muhim ma'lumotlarni yo'qotishingiz mumkin.

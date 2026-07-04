@@ -1,0 +1,8 @@
+🧭 Maslahat 2: PDB ni Tushunish
+
+PodDisruptionBudget ixtiyoriy buzilishlar vaqtida minimal mavjudlikni ta'minlaydi.
+
+Muammo: minAvailable = replika soni → eviction imkonsiz
+
+Yechim: minAvailable ni kamayting YOKI replika sonini ko'paytiring.
+Masalan: 3 replika, minAvailable: 2 → 1 ta eviction ga ruxsat.

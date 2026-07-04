@@ -1,0 +1,23 @@
+💡 Yechimga yaqin maslahat:
+
+Blue-green deployment larda service selector ni yangilab trafik almashtirasiz.
+
+Qadamlar:
+1. Service ni tahrirlang:
+   `kubectl edit service app-service -n k8squest`
+
+2. Selector ni blue dan green ga o'zgartiring:
+
+```yaml
+spec:
+  selector:
+    app: myapp
+    version: green  # blue dan green ga o'zgartirildi
+```
+
+3. Saqlang va chiqing.
+
+4. Trafik endi green ga yo'naltirilganini tekshiring:
+   `kubectl get endpoints app-service -n k8squest`
+
+Green deployment dan 3 ta IP ko'rinishi kerak!

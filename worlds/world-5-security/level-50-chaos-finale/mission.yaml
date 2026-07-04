@@ -1,0 +1,24 @@
+level: 50
+name: "Xaos Finali — Hamma Narsa Buzilgan!"
+title: "CHAOS FINALE: The Perfect Storm"
+difficulty: expert
+xp: 500
+xp_reward: 500
+world: 5
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+concepts:
+  - rbac
+  - securitycontext
+  - resourcequota
+  - networkpolicy
+  - node-affinity
+  - taints
+  - poddisruptionbudget
+  - pod-security-standards
+  - priorityclass
+description: "Bir nechta resursda bir vaqtda xatolar bor — noto'g'ri image, mos kelmaydigan label lar, yetishmayotgan probe lar, noto'g'ri port lar va boshqalar. Barcha World larda o'rganganlaringizni qo'llab, hammasini tuzating!"
+learning_objectives:
+  - Apply all World 5 concepts together
+  - Debug complex multi-layered failures
+  - Think holistically about Kubernetes security and operations
+  - Demonstrate production-ready expertise

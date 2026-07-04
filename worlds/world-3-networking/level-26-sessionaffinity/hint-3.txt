@@ -1,0 +1,21 @@
+✅ Yechim maslahat:
+
+broken.yaml da Service ga quyidagi qatorlarni qo'shing (ports bo'limidan keyin):
+
+```yaml
+  sessionAffinity: ClientIP           # ✅ Shu qatorni qo'shing
+  sessionAffinityConfig:              # ✅ Shu qatorni qo'shing
+    clientIP:
+      timeoutSeconds: 10800           # ✅ Shu qatorni qo'shing (3 soat)
+```
+
+Qadamlar:
+1. broken.yaml ni tahrirlang va yuqoridagi qatorlarni Service spec ga qo'shing
+2. Apply qiling: `kubectl apply -f broken.yaml`
+3. Tekshiring: `kubectl logs client -n k8squest --tail=20`
+
+Oldin (tasodifiy pod lar): Session Pod 1, Session Pod 3, Session Pod 2...
+Keyin (bitta pod): Session Pod 2, Session Pod 2, Session Pod 2...
+
+Eslatma: Yaxshiroq yechim — Redis yoki JWT ishlatib session larni taqsimlash.
+SessionAffinity vaqtincha yechim yoki legacy ilovalar uchun.

@@ -1,0 +1,27 @@
+✅ Yechim maslahat:
+
+Klient pod ni to'g'ri service nomi ishlatadigan qilib tuzating:
+
+```bash
+kubectl delete pod app-client -n k8squest
+kubectl apply -f solution.yaml -n k8squest
+```
+
+Yoki broken.yaml ni tahrirlang va o'zgartiring:
+```yaml
+args:
+- |
+  pg_isready -h database -p 5432  # Noto'g'ri
+```
+
+Quyidagiga:
+```yaml
+args:
+- |
+  pg_isready -h database-service -p 5432  # To'g'ri!
+```
+
+Keyin pod ni qayta yarating. Ulanish muvaffaqiyatini tekshirish uchun loglarni ko'ring:
+```bash
+kubectl logs app-client -n k8squest
+```

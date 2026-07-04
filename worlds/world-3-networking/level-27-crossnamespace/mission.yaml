@@ -1,0 +1,18 @@
+name: "Namespace Lar Arasi Service Aloqasi"
+objective: "To'g'ri DNS FQDN yordamida namespace lar arasi service aloqasini tuzating"
+world: 3
+level: 27
+xp: 250
+difficulty: o'rta
+
+description: |
+  'k8squest' namespace dagi frontend ilova 'backend-ns' namespace dagi API ga
+  murojaat qilishi kerak, lekin ulana olmayapti. Muammo — to'liq malakali domen
+  nomi (FQDN) o'rniga qisqa service nomi ishlatilmoqda. Namespace lar arasi
+  aloqani ta'minlash uchun DNS nomini tuzating.
+
+concepts:
+  - Namespace lar arasi service aloqasi
+  - Kubernetes DNS FQDN formati
+  - Namespace lar bo'ylab service aniqlash
+  - Kubernetes da DNS hal qilish

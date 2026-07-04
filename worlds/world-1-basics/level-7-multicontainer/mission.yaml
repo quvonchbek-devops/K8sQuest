@@ -1,0 +1,12 @@
+name: "Sidecar Sabotaji"
+description: "Ko'p konteynerli pod da sidecar konteyner qayta-qayta ishdan chiqmoqda"
+objective: "Sidecar konteynerni tuzating, shunda butun pod muvaffaqiyatli ishlasin"
+xp: 200
+difficulty: o'rta
+expected_time: 15m
+concepts:
+  - Ko'p konteynerli pod lar
+  - Sidecar pattern
+  - Konteyner bog'liqliklari
+  - kubectl logs bilan konteyner tanlash
+  - Pod hayot sikli (lifecycle)

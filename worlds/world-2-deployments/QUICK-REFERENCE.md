@@ -1,0 +1,491 @@
+# 🎯 World 2: Deployments & Scaling - Quick Reference Card
+
+> **Advanced deployment patterns and scaling strategies**
+
+## 🔧 Asosiy kubectl Buyruqlari
+
+### Deployment Operations
+```bash
+# List deployments
+kubectl get deployments -n k8squest
+
+# Detailed deployment info
+kubectl describe deployment <name> -n k8squest
+
+# Check deployment rollout status
+kubectl rollout status deployment/<name> -n k8squest
+
+# View rollout history
+kubectl rollout history deployment/<name> -n k8squest
+
+# Rollback to previous version
+kubectl rollout undo deployment/<name> -n k8squest
+
+# Rollback to specific revision
+kubectl rollout undo deployment/<name> --to-revision=2 -n k8squest
+
+# Pause rollout (for canary/staged deployment)
+kubectl rollout pause deployment/<name> -n k8squest
+
+# Resume rollout
+kubectl rollout resume deployment/<name> -n k8squest
+
+# Restart deployment (rolling restart)
+kubectl rollout restart deployment/<name> -n k8squest
+```
+
+### Scaling Operations
+```bash
+# Scale deployment manually
+kubectl scale deployment <name> --replicas=5 -n k8squest
+
+# Check HorizontalPodAutoscaler
+kubectl get hpa -n k8squest
+
+# Detailed HPA status
+kubectl describe hpa <name> -n k8squest
+
+# Watch HPA in action
+kubectl get hpa -n k8squest -w
+
+# Check metrics (requires metrics-server)
+kubectl top nodes
+kubectl top pods -n k8squest
+```
+
+### ReplicaSet Operations
+```bash
+# List ReplicaSets (usually managed by Deployments)
+kubectl get replicasets -n k8squest
+kubectl get rs -n k8squest
+
+# Describe ReplicaSet
+kubectl describe rs <name> -n k8squest
+
+# See which ReplicaSet owns which pods
+kubectl get pods -n k8squest -o wide --show-labels
+```
+
+### StatefulSet Operations
+```bash
+# List StatefulSets
+kubectl get statefulsets -n k8squest
+kubectl get sts -n k8squest
+
+# Describe StatefulSet
+kubectl describe sts <name> -n k8squest
+
+# Check PVCs for StatefulSet
+kubectl get pvc -n k8squest
+```
+
+### PodDisruptionBudget
+```bash
+# List PDBs
+kubectl get pdb -n k8squest
+
+# Describe PDB (shows allowed disruptions)
+kubectl describe pdb <name> -n k8squest
+```
+
+### Probes & Health Checks
+```bash
+# Check pod readiness
+kubectl get pods -n k8squest -o wide
+
+# See why pod is not ready
+kubectl describe pod <name> -n k8squest | grep -A 10 Conditions
+
+# Check recent probe failures
+kubectl describe pod <name> -n k8squest | grep -i probe
+
+# View events for probe failures
+kubectl get events -n k8squest | grep -i probe
+```
+
+---
+
+## 🚨 Debug Qilish Oqimi
+
+```
+Deployment Issues?
+    │
+    ├─→ Pods not starting
+    │   ├─→ Check: kubectl get pods -n k8squest
+    │   ├─→ Check: kubectl describe deployment -n k8squest
+    │   ├─→ Look for: ImagePullBackOff, CrashLoopBackOff
+    │   └─→ Fix: Fix image, fix command, check probes
+    │
+    ├─→ Rollout stuck/slow
+    │   ├─→ Check: kubectl rollout status deployment/<name>
+    │   ├─→ Check: kubectl describe deployment (Strategy section)
+    │   ├─→ Look for: maxUnavailable=0, PDB blocking, failing probes
+    │   └─→ Fix: Adjust strategy, check PDB, fix health checks
+    │
+    ├─→ Old pods still running
+    │   ├─→ Check: kubectl get rs -n k8squest
+    │   ├─→ Check: kubectl describe deployment (Selector)
+    │   ├─→ Look for: Label selector mismatch, manual ReplicaSets
+    │   └─→ Fix: Update labels, delete old ReplicaSets
+    │
+    ├─→ HPA not scaling
+    │   ├─→ Check: kubectl describe hpa -n k8squest
+    │   ├─→ Check: kubectl top pods -n k8squest
+    │   ├─→ Look for: metrics-server missing, no resource requests
+    │   └─→ Fix: Install metrics-server, add requests to pods
+    │
+    ├─→ Probes failing
+    │   ├─→ Check: kubectl describe pod (Events)
+    │   ├─→ Check: kubectl logs <pod>
+    │   ├─→ Look for: Wrong port, slow startup, timeout too short
+    │   └─→ Fix: Correct probe config, add initialDelaySeconds
+    │
+    └─→ Data loss in StatefulSet
+        ├─→ Check: kubectl get pvc -n k8squest
+        ├─→ Check: StatefulSet vs Deployment usage
+        ├─→ Look for: Deployment used instead of StatefulSet
+        └─→ Fix: Convert to StatefulSet, use volumeClaimTemplates
+```
+
+---
+
+## 💡 Keng Tarqalgan Pattern lar va Yechimlar
+
+### Pattern 1: Rollback Gone Wrong
+**Belgilari:** `kubectl rollout undo` doesn't fix the issue  
+**Birinchi Tekshirish:** `kubectl rollout history deployment/<name>`  
+**Keng Tarqalgan Sabablar:**
+- Rolling back to wrong revision
+- Issue exists in multiple revisions
+- History limit too small
+
+**Tezkor Tuzatish Shabloni:**
+```bash
+# See all revisions
+kubectl rollout history deployment/myapp -n k8squest
+
+# Check specific revision
+kubectl rollout history deployment/myapp --revision=3 -n k8squest
+
+# Rollback to known good revision
+kubectl rollout undo deployment/myapp --to-revision=2 -n k8squest
+```
+
+### Pattern 2: Liveness Probe Killing Pods
+**Belgilari:** Pods restart frequently, "Liveness probe failed" in events  
+**Birinchi Tekshirish:** `kubectl describe pod <pod>` (Events section)  
+**Keng Tarqalgan Sabablar:**
+- Probe checks too soon (app still starting)
+- Timeout too short
+- Wrong endpoint or port
+
+**Tezkor Tuzatish Shabloni:**
+```yaml
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 30  # ✅ Wait for app to start
+  periodSeconds: 10
+  timeoutSeconds: 5        # ✅ Give endpoint time to respond
+  failureThreshold: 3      # ✅ Allow some failures before restart
+```
+
+### Pattern 3: Readiness Probe Missing
+**Belgilari:** Traffic sent to pods before ready, 5xx errors  
+**Birinchi Tekshirish:** `kubectl get pods -n k8squest` (READY column)  
+**Keng Tarqalgan Sabablar:**
+- No readiness probe configured
+- Probe always fails
+- Race condition during startup
+
+**Tezkor Tuzatish Shabloni:**
+```yaml
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 10  # ✅ Wait a bit
+  periodSeconds: 5         # ✅ Check frequently
+  successThreshold: 1      # ✅ Ready after 1 success
+  failureThreshold: 3
+```
+
+### Pattern 4: HPA Can't Get Metrics
+**Belgilari:** HPA shows `<unknown>` for metrics  
+**Birinchi Tekshirish:** `kubectl describe hpa <name>`  
+**Keng Tarqalgan Sabablar:**
+- metrics-server not installed
+- No resource requests on pods
+- metrics-server not ready
+
+**Tezkor Tuzatish Shabloni:**
+```yaml
+# Deployment MUST have resource requests for HPA
+resources:
+  requests:
+    cpu: 100m      # ✅ HPA needs this to calculate %
+    memory: 128Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+---
+# HPA references the requests
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+spec:
+  scaleTargetRef:
+    name: myapp
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50  # % of requests.cpu
+```
+
+### Pattern 5: Rollout Strategy Wrong
+**Belgilari:** Downtime during deployment, or rollout too slow  
+**Birinchi Tekshirish:** `kubectl describe deployment` (Strategy section)  
+**Keng Tarqalgan Sabablar:**
+- maxUnavailable set to 0 or too low
+- maxSurge set to 0
+- Wrong strategy type
+
+**Tezkor Tuzatish Shabloni:**
+```yaml
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1    # ✅ Allow 1 pod down at a time
+    maxSurge: 1          # ✅ Allow 1 extra pod during rollout
+# For zero-downtime:
+# maxUnavailable: 0      # Never less than desired
+# maxSurge: 1            # Create new before killing old
+```
+
+### Pattern 6: PodDisruptionBudget Blocking
+**Belgilari:** Can't drain node, evictions blocked  
+**Birinchi Tekshirish:** `kubectl describe pdb -n k8squest`  
+**Keng Tarqalgan Sabablar:**
+- minAvailable too high for number of replicas
+- maxUnavailable too low (0)
+- Selector matches all pods
+
+**Tezkor Tuzatish Shabloni:**
+```yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: myapp-pdb
+spec:
+  minAvailable: 2        # ✅ Need at least 2 running
+  # OR use:
+  # maxUnavailable: 1    # ✅ Allow 1 pod to be down
+  selector:
+    matchLabels:
+      app: myapp
+# Make sure you have MORE replicas than minAvailable!
+```
+
+### Pattern 7: Blue-Green Selector Wrong
+**Belgilari:** Service routes to old version or no pods  
+**Birinchi Tekshirish:** `kubectl get svc <name> -o wide`  
+**Keng Tarqalgan Sabablar:**
+- Service selector doesn't match deployment labels
+- Forgot to update service selector
+- Both versions selected at once
+
+**Tezkor Tuzatish Shabloni:**
+```yaml
+# Blue Deployment
+metadata:
+  labels:
+    app: myapp
+    version: blue
+---
+# Green Deployment  
+metadata:
+  labels:
+    app: myapp
+    version: green
+---
+# Service switches between them
+spec:
+  selector:
+    app: myapp
+    version: green  # ✅ Route to green only
+```
+
+### Pattern 8: Canary Imbalance
+**Belgilari:** Wrong traffic split between versions  
+**Birinchi Tekshirish:** `kubectl get pods -n k8squest --show-labels`  
+**Keng Tarqalgan Sabablar:**
+- Wrong replica counts
+- Labels not matching service selector
+- Both deployments have same labels
+
+**Tezkor Tuzatish Shabloni:**
+```bash
+# 90% stable, 10% canary:
+kubectl scale deployment/stable --replicas=9 -n k8squest
+kubectl scale deployment/canary --replicas=1 -n k8squest
+
+# Both MUST have same service selector labels
+# Service distributes evenly across ALL matching pods
+```
+
+---
+
+## 🎓 Pro Maslahatlar
+
+### Tip 1: Check Rollout Progress
+```bash
+# Watch rollout in real-time
+kubectl rollout status deployment/myapp -n k8squest -w
+
+# See which ReplicaSets are active
+kubectl get rs -n k8squest -l app=myapp
+
+# Old ReplicaSets have 0 pods
+```
+
+### Tip 2: Debug Probe Failures
+```bash
+# Test liveness/readiness endpoint manually
+kubectl exec -it <pod> -n k8squest -- wget -O- http://localhost:8080/healthz
+
+# Check probe configuration
+kubectl get pod <pod> -n k8squest -o yaml | grep -A 10 livenessProbe
+```
+
+### Tip 3: Force Immediate Rollout
+```bash
+# Change something to trigger rollout
+kubectl set image deployment/myapp app=myapp:v2 -n k8squest
+
+# Or force restart
+kubectl rollout restart deployment/myapp -n k8squest
+```
+
+### Tip 4: Check HPA Metrics
+```bash
+# Current CPU/memory usage
+kubectl top pods -n k8squest
+
+# HPA decision-making info
+kubectl describe hpa -n k8squest | grep -A 5 Metrics
+```
+
+### Tip 5: Understand ReplicaSet Ownership
+```bash
+# See which Deployment owns which ReplicaSet
+kubectl get rs -n k8squest -o wide
+
+# ReplicaSet name format: <deployment-name>-<template-hash>
+```
+
+---
+
+## 📊 Deployment Strategy Comparison
+
+| Strategy | Use Case | Downtime | Cost | Rollback Speed |
+|----------|----------|----------|------|----------------|
+| **RollingUpdate** | Most deployments | Zero | Low | Medium |
+| **Recreate** | Stateful apps (old pattern) | Yes | Low | Slow |
+| **Blue-Green** | Zero-downtime critical apps | Zero | High (2x) | Instant |
+| **Canary** | Risk mitigation, gradual rollout | Zero | Medium | Fast |
+
+---
+
+## 🎯 Probe Types Reference
+
+| Probe Type | Purpose | When to Use |
+|------------|---------|-------------|
+| **Liveness** | Is container alive? | Detect deadlocks, restart frozen apps |
+| **Readiness** | Can container serve traffic? | Prevent traffic to unready pods |
+| **Startup** | Has container started? | Slow-starting apps (avoid liveness kill) |
+
+**Rule of Thumb:**
+- Always use **readiness** for apps behind services
+- Use **liveness** only if app can deadlock/freeze
+- Use **startup** for apps that take >30s to start
+
+---
+
+## 📏 Resource Requests vs Limits
+
+```yaml
+resources:
+  requests:      # Guaranteed minimum (for scheduling)
+    cpu: 100m    # 0.1 CPU core
+    memory: 128Mi
+  limits:        # Maximum allowed (for enforcement)
+    cpu: 200m
+    memory: 256Mi
+```
+
+**Key Points:**
+- **Requests**: Used for scheduling and HPA calculations
+- **Limits**: Enforced by kubelet (OOMKill if exceeded)
+- **HPA**: Scales based on % of REQUESTS, not limits
+- **Best Practice**: Set both, limits = 2x requests for burstable workloads
+
+---
+
+## 🎯 Learning Objectives - World 2
+
+By completing World 2, you should be able to:
+
+- ✅ **Rollback Deployments** - Undo failed deployments, find good revisions
+- ✅ **Configure Liveness Probes** - Prevent probe-induced restart loops
+- ✅ **Configure Readiness Probes** - Ensure zero-downtime deployments
+- ✅ **Debug HPA Issues** - Install metrics-server, configure autoscaling
+- ✅ **Optimize Rollout Strategy** - Balance speed vs stability
+- ✅ **Work with PodDisruptionBudgets** - Ensure availability during maintenance
+- ✅ **Implement Blue-Green Deployments** - Instant rollback capability
+- ✅ **Implement Canary Deployments** - Gradual traffic shifting
+- ✅ **Choose StatefulSet vs Deployment** - Understand stateful workloads
+- ✅ **Avoid Manual ReplicaSet Management** - Let Deployments handle it
+
+---
+
+## 📚 Additional Resources
+
+### Official Kubernetes Docs
+- [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+- [Rolling Updates](https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-intro/)
+- [Configure Liveness/Readiness Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+- [HPA Walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
+
+### K8sQuest Resources
+- World 1 Quick Reference (basic kubectl commands)
+- Use `guide` for deployment-specific walkthroughs
+- Read debriefs for production incident case studies
+
+---
+
+## 🚀 Tezkor G'alaba Cheklisti
+
+When stuck on a level, try these in order:
+
+- [ ] `kubectl get deployments,rs,pods -n k8squest` - See the full picture
+- [ ] `kubectl describe deployment <name> -n k8squest` - Check strategy, events
+- [ ] `kubectl rollout status deployment/<name> -n k8squest` - Is it progressing?
+- [ ] `kubectl get events -n k8squest --sort-by='.lastTimestamp'` - Recent activity
+- [ ] `kubectl describe pod <pod> -n k8squest` - Check probe failures, resources
+- [ ] `kubectl logs <pod> -n k8squest` - Application errors?
+- [ ] Compare `broken.yaml` vs expected behavior - What's misconfigured?
+- [ ] Use `hints` in game - Progressive guidance
+- [ ] Use `guide` in game - Complete walkthrough if needed
+
+**Eslab qoling:** Deployments are powerful but complex. Understanding the mental model is more important than memorizing commands!
+
+---
+
+💡 **Pro maslahat:** Practice rolling updates on a test deployment before production. Use `--record` flag to track changes in rollout history!
+
+🎮 **Ready for advanced patterns?** Run `./play.sh` and master deployments!

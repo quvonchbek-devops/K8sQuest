@@ -1,0 +1,20 @@
+level: 33
+title: "Access Mode Mismatch"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "Access Mode Nomuvofiqlik"
+world: "Storage & Stateful Apps"
+difficulty: "intermediate"
+xp: 250
+concepts:
+  - access-modes
+  - readwriteonce
+  - readwritemany
+  - pvc-sharing
+  - multi-pod-access
+description: "PVC ning access mode si PV bilan mos kelmayapti, bu volume bog'lanishini (binding) to'sib qo'ymoqda."
+learning_objectives:
+  - Understand PV/PVC access modes (RWO, RWX, ROX)
+  - Learn when to use ReadWriteOnce vs ReadWriteMany
+  - Configure storage for multi-pod shared access
+  - Experience PVC spec immutability (accessModes cannot be edited)
+  - Learn delete/recreate workflow for fixing immutable fields

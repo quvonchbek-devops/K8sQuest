@@ -1,0 +1,11 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+Secret ma'lumotlar bilan muammo bor.
+
+Tekshiring:
+1. `kubectl get secret -n k8squest -o yaml` — Secret tarkibini ko'ring
+2. `data` maydonidagi qiymatlarni base64 decode qiling:
+   `echo "qiymat" | base64 -d`
+3. Pod loglarini tekshiring: `kubectl logs -n k8squest`
+
+Secret qiymatlari to'g'ri kodlanganmi? Yoki oddiy matn sifatida yozilganmi?

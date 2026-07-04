@@ -1,0 +1,11 @@
+💡 Yechimga yaqin maslahat:
+
+Service selector da `app: frontend` bor, lekin pod da `app: backend` label bor. Ular mos kelmayapti!
+
+Tuzatish qadamlari:
+1. Resurslarni o'chiring: `kubectl delete -f broken.yaml`
+2. broken.yaml da service selector ni `app: frontend` dan `app: backend` ga o'zgartiring
+3. Apply qiling: `kubectl apply -f broken.yaml`
+4. Endpoint larni tekshiring: `kubectl get endpoints backend-service -n k8squest`
+
+Endpoint sifatida IP manzil ko'rinishi kerak!

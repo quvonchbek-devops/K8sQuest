@@ -1,0 +1,8 @@
+🔍 Kuzatuv maslahat:
+
+Pod holatini tekshiring: `kubectl get pod web-with-init -n k8squest`
+
+STATUS ustunida "Init:0/1" ko'rinadi, ya'ni init container hali tugamagan.
+
+`kubectl describe pod web-with-init -n k8squest` buyrug'ini ishlating va Init Containers bo'limiga qarang.
+Loglarni tekshiring: `kubectl logs web-with-init -c wait-for-service -n k8squest`

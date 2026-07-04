@@ -1,0 +1,13 @@
+🧭 Maslahat 2: emptyDir va PVC Farqi
+
+`emptyDir` — vaqtincha storage:
+- Pod bilan birga yaratiladi va O'CHIRILADI
+- Pod restart/delete = MA'LUMOTLAR YO'QOLADI
+- Foydalanish: kesh, vaqtincha fayllar, konteynerlar arasi ulashish
+
+`PersistentVolumeClaim` — doimiy storage:
+- Pod dan MUSTAQIL mavjud
+- Pod o'chirilsa ham ma'lumotlar SAQLANADI
+- Foydalanish: ma'lumotlar bazalari, foydalanuvchi fayllari
+
+Ma'lumotlar bazasi uchun DOIM PVC ishlating!

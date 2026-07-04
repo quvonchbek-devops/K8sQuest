@@ -1,0 +1,19 @@
+✅ Maslahat 3: To'liq Yechim
+
+Pod ga toleration qo'shing:
+
+```yaml
+spec:
+  tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "database"
+    effect: "NoSchedule"
+```
+
+Yoki node dan taint ni olib tashlang:
+```bash
+kubectl taint nodes <node-nomi> dedicated=database:NoSchedule-
+```
+
+`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`

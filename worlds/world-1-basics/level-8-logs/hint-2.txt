@@ -1,0 +1,8 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Loglarda kerakli environment variable haqida xato ko'rinmoqda:
+"Error: Database is uninitialized and superuser password is not specified."
+
+PostgreSQL xavfsizlik uchun POSTGRES_PASSWORD environment variable ni talab qiladi.
+
+Bu environment variable ni pod spetsifikatsiyasiga qo'shish kerak.

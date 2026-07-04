@@ -1,0 +1,31 @@
+name: "Session Affinity Yetishmayapti"
+objective: "Foydalanuvchi session larini saqlash uchun Service da sessionAffinity sozlang"
+world: 3
+level: 26
+xp: 200
+difficulty: o'rta
+
+description: |
+  Stateful ilova foydalanuvchi session larini tasodifiy yo'qotmoqda. Foydalanuvchilar
+  muvaffaqiyatli kiradi (login), lekin keyingi so'rovlarida tizimdan chiqib ketgandek
+  ko'rinadi. Muammo shundaki, Service so'rovlarni bir nechta pod lar bo'ylab taqsimlayapti
+  va session ma'lumotlari ular o'rtasida umumiy emas. Buni tuzatish uchun session affinity
+  ni yoqish kerak.
+
+concepts:
+  - Session affinity (sticky sessions)
+  - Service load balancing
+  - Stateful va stateless ilovalar
+  - ClientIP session affinity
+
+scenario: |
+  Session larni xotirada saqlaydigan veb ilovani deploy qildingiz (ideal emas, lekin
+  eski tizimdan ko'chmoqdasiz). Foydalanuvchilar tasodifiy chiqib ketishlaridan shikoyat
+  qilmoqda. Muammo? Service har bir so'rovni boshqa pod ga yuboradi va session
+  ma'lumotlari faqat login ni bajargan pod da mavjud.
+
+success_criteria:
+  - Service da sessionAffinity ClientIP sozlangan
+  - Bir xil klientdan so'rovlar doimiy bir xil pod ga yo'naltiriladi
+  - Foydalanuvchi session lari bir nechta so'rovlar davomida saqlanadi
+  - Ilova session affinity bilan to'g'ri ishlaydi

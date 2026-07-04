@@ -1,0 +1,17 @@
+🔍 Kuzatuv maslahat:
+
+http://myapp.local ga kirishda 404 xato olayapsiz, lekin Ingress va Service mavjud.
+Muammo Ingress trafikni QANDAY yo'naltirishida.
+
+Tekshiring:
+
+1. **Ingress konfiguratsiyasi**
+   ```bash
+   kubectl describe ingress web-ingress -n k8squest
+   ```
+   "Rules" bo'limiga qarang. Qaysi path sozlangan?
+
+2. **Path mos kelishi**
+   Ingress da path sozlangan, lekin TO'G'RI path mi?
+   Ilovangiz "/" da kontent beradi, lekin Ingress "/api" ga sozlangan bo'lsa nima bo'ladi?
+   So'rov Ingress qoidasiga mos kelmaydi, shuning uchun 404 olasiz!

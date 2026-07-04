@@ -1,0 +1,18 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Kubernetes service turlari:
+
+| Tur | Ichki kirish | Tashqi kirish | Lokal ishlaydi | Bulut kerak |
+|-----|-------------|--------------|----------------|-------------|
+| ClusterIP | ✅ | ❌ | ✅ | ❌ |
+| NodePort | ✅ | ✅ | ✅ | ❌ |
+| LoadBalancer | ✅ | ✅ | ❌ | ✅ |
+
+Muammo: LoadBalancer → lokal klasterda ishlamaydi
+Yechim: NodePort → har qanday klasterda ishlaydi
+
+Service turini LoadBalancer dan NodePort ga o'zgartiring:
+```yaml
+spec:
+  type: NodePort  # LoadBalancer o'rniga
+```

@@ -1,0 +1,14 @@
+🔍 Kuzatuv maslahat:
+
+Deployment larni tekshiring:
+`kubectl get deployments -n k8squest`
+
+app-blue va app-green ni ko'rishingiz kerak, ikkalasi ham 3/3 replika bilan.
+
+Service ni tekshiring:
+`kubectl get service app-service -n k8squest -o yaml | grep -A 5 selector`
+
+Qaysi versiyaga yo'naltirilgan?
+
+Endpoint larni tekshiring:
+`kubectl get endpoints app-service -n k8squest`

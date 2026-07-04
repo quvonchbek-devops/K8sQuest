@@ -1,0 +1,14 @@
+✅ Maslahat 3: To'liq Yechim
+
+broken.yaml da PVC ning storageClassName ni mavjud biriga o'zgartiring:
+
+```bash
+kubectl get sc    # Mavjud StorageClass nomlari
+```
+
+```yaml
+storageClassName: non-existent-class    # ❌
+storageClassName: standard              # ✅ (yoki klasteringizdagi nom)
+```
+
+`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`

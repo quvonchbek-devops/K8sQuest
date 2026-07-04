@@ -1,0 +1,1 @@
+Deployment da `replicas: 0` qo'yilgan, ya'ni hech qanday pod ishlamayapti! Uni ko'paytiring: `kubectl scale deployment web --replicas=1 -n k8squest` (yoki deployment ni tahrirlang va replika sonini 0 dan katta qiymatga o'zgartiring)

@@ -1,0 +1,13 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Muammo: `maxUnavailable: 100%` va `maxSurge: 0`
+
+Bu shuni bildiradi:
+- maxUnavailable: 100% → Kubernetes BARCHA 3 pod ni bir vaqtda to'xtatishi mumkin (3 ning 100% = 3)
+- maxSurge: 0 → Kubernetes rollout vaqtida qo'shimcha pod yarata olmaydi
+
+Natija: Barcha eski pod lar to'xtatiladi, keyin yangilari ishga tushadi → TO'LIQ TO'XTASH!
+
+Nol-to'xtashli deployment lar uchun kerak:
+- maxUnavailable < 100% (ba'zi pod lar doim ishlashini ta'minlash)
+- YOKI maxSurge > 0 (o'tish vaqtida qo'shimcha pod larga ruxsat berish)

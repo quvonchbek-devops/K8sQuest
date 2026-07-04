@@ -1,0 +1,9 @@
+🧭 Maslahat 2: StorageClass ni Tushunish
+
+StorageClass — Kubernetes ga volume ni QANDAY yaratishni aytadi:
+- Qaysi provisioner (hostpath, nfs, aws-ebs, va boshqalar)
+- Qanday parametrlar (disk turi, IOPS)
+- Reclaim policy (Delete yoki Retain)
+
+Muammo: PVC mavjud bo'lmagan StorageClass nomiga murojaat qilmoqda.
+`kubectl get sc` bilan mavjud nomlarni ko'ring va PVC dagi nomni to'g'rilang.

@@ -1,0 +1,34 @@
+✅ Maslahat 3: To'liq Yechim
+
+broken.yaml da emptyDir ni PVC ga almashtiring:
+
+Oldin:
+```yaml
+volumes:
+- name: data
+  emptyDir: {}    # ❌ Pod bilan birga yo'qoladi
+```
+
+Keyin:
+```yaml
+volumes:
+- name: data
+  persistentVolumeClaim:
+    claimName: db-data-pvc    # ✅ Doimiy storage
+```
+
+PVC ham yarating (agar yo'q bo'lsa):
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-data-pvc
+  namespace: k8squest
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`

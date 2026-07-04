@@ -1,0 +1,10 @@
+🧭 Yo'naltiruvchi maslahat:
+
+NodePort service lari pod larni har bir node da statik portda ochadi.
+
+Uchta port ishtirok etadi:
+- **targetPort**: Konteyner porti (80)
+- **port**: Service ClusterIP porti (80)
+- **nodePort**: Tashqi kirish porti (30080 bo'lishi kerak)
+
+Service spec ga `nodePort: 30080` qo'shishingiz kerak!

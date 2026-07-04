@@ -1,0 +1,11 @@
+🔍 Kuzatuv maslahat:
+
+Service mavjud va pod lar ishlayapti, lekin pod lar qayta ishga tushganida vaqti-vaqti bilan xatolar paydo bo'ladi.
+
+Tekshiring:
+1. Service endpoint lari: `kubectl get endpoints web-service -n k8squest`
+2. Pod readiness: `kubectl get pods -n k8squest -l app=web` — READY ustuniga qarang
+3. Pod event lari: `kubectl describe pod web-app-1 -n k8squest`
+   "Readiness probe" xabarlari bormi? Yoki UMUMAN yo'qmi?
+
+Readiness probe siz, Kubernetes "Running = Ready" deb hisoblaydi va hali initsializatsiya qilayotgan pod larga darhol trafik yuboradi!

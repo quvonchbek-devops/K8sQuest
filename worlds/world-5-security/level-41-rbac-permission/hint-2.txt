@@ -1,0 +1,15 @@
+🧭 Maslahat 2: RBAC ni Tushunish
+
+Muammo: Role va RoleBinding yetishmayapti!
+
+RBAC komponentlari:
+- **ServiceAccount** — Pod ning identifikatsiyasi (kim?)
+- **Role** — qanday ruxsatlar bor (nima qilishi mumkin?)
+- **RoleBinding** — ServiceAccount ni Role ga bog'laydi (kimga nima ruxsat?)
+
+```
+ServiceAccount ←── RoleBinding ──→ Role
+   (kim)           (bog'lovchi)    (ruxsatlar)
+```
+
+Pod da ServiceAccount bor, lekin Role va RoleBinding yaratilmagan!

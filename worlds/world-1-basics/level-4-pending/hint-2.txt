@@ -1,0 +1,11 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Events da "0/1 nodes are available: 1 Insufficient cpu" yoki "Insufficient memory" kabi xabar ko'rinadi.
+
+Bu pod klasterdagi hech qanday node taqdim eta olmaydigan darajada ko'p resurs so'rayotganini bildiradi.
+
+Pod qancha resurs so'rayotganini tekshiring:
+`kubectl get pod hungry-app -n k8squest -o yaml | grep -A 4 resources:`
+
+Node sig'imi bilan solishtiring:
+`kubectl describe nodes | grep -A 5 Allocatable`

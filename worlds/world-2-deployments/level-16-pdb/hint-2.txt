@@ -1,0 +1,16 @@
+🧭 Yo'naltiruvchi maslahat:
+
+PDB da `minAvailable: 3` bor, lekin deployment da ham 3 ta replika.
+
+Bu shuni bildiradi:
+- minAvailable: 3 = "Har doim 3 ta pod mavjud bo'lishi shart"
+- Replicas: 3 = "Jami 3 ta pod bor"
+- Natija: Hech qanday pod ni evict qilib bo'lmaydi (3 - 0 < 3) ❌
+
+Bu to'sib qo'yadi:
+- Node drain lar (kubectl drain)
+- Klaster yangilanishlari
+- Autoscaler node olib tashlashlari
+- Har qanday ixtiyoriy buzilishlar
+
+PDB kamida 1 ta eviction ga ruxsat berishi kerak!

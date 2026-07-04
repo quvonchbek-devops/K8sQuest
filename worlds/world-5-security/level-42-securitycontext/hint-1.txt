@@ -1,0 +1,18 @@
+🔍 Maslahat 1: Kuzatish va Tahlil
+
+Pod bilan nima bo'layotganini tekshiring:
+
+1. Pod holatini ko'ring:
+   ```bash
+   kubectl get pod secure-app -n k8squest
+   kubectl describe pod secure-app -n k8squest
+   ```
+
+2. Events va xato xabarlarini o'qing
+3. SecurityContext konfiguratsiyasini tekshiring:
+   ```bash
+   kubectl get pod secure-app -n k8squest -o yaml | grep -A 15 securityContext
+   ```
+
+Qidiring: readOnlyRootFilesystem, runAsNonRoot, allowPrivilegeEscalation
+Pod SecurityContext juda cheklangan bo'lishi mumkin.

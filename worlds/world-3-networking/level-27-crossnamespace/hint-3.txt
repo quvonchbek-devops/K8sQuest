@@ -1,0 +1,22 @@
+✅ Yechim maslahat:
+
+broken.yaml da frontend-app pod ning buyrug'ini toping va URL ni o'zgartiring:
+
+Oldin:
+```yaml
+'wget -q -O- http://api-service'
+```
+
+Keyin:
+```yaml
+'wget -q -O- http://api-service.backend-ns.svc.cluster.local'
+```
+
+Qadamlar:
+1. broken.yaml ni tahrirlang
+2. Eski pod ni o'chiring: `kubectl delete pod frontend-app -n k8squest`
+3. Apply qiling: `kubectl apply -f broken.yaml`
+4. Loglarni tekshiring: `kubectl logs frontend-app -n k8squest -f`
+
+Oldin: "wget: bad address 'api-service'"
+Keyin: "API Response from backend-ns" ✅

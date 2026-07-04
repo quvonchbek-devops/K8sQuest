@@ -1,0 +1,10 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Xato ehtimol shunday: "unable to get metrics for resource cpu" yoki "the server could not find the requested resource"
+
+Bu Kubernetes CPU/xotira metrikalarini ololmayotganini bildiradi, chunki **metrics-server** o'rnatilmagan!
+
+metrics-server mavjudligini tekshiring:
+`kubectl get deployment metrics-server -n kube-system`
+
+Agar "NotFound" olsangiz, muammo shu. HPA ishlashi uchun metrics-server kerak.

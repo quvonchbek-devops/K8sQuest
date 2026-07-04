@@ -1,0 +1,19 @@
+level: 37
+title: "Secret Encoding vs Encryption"
+objective: "Base64 kodlash XAVFSIZLIK emasligini tushuning"
+name: "Secret Kodlash va Shifrlash Farqi"
+world: "Storage & Stateful Apps"
+difficulty: "intermediate"
+xp: 250
+concepts:
+  - secrets
+  - base64-encoding
+  - encryption-at-rest
+  - secret-management
+  - security
+description: "Secret ma'lumotlar noto'g'ri kodlangan yoki to'g'ridan-to'g'ri oddiy matn sifatida saqlangan. Base64 kodlash va haqiqiy shifrlash o'rtasidagi farqni tushuning."
+learning_objectives:
+  - Understand the difference between encoding and encryption
+  - Learn why base64 provides zero security
+  - Discover how easily Secrets can be decoded
+  - Explore proper secret management strategies

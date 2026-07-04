@@ -1,0 +1,25 @@
+💡 Yechimga yaqin maslahat:
+
+Nol to'xtashni ta'minlash uchun rollout strategiyasini tuzating.
+
+Qadamlar:
+1. Deployment ni tahrirlang:
+   `kubectl edit deployment critical-api -n k8squest`
+
+2. `strategy` bo'limini topib o'zgartiring:
+
+```yaml
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1     # Bir vaqtda faqat 1 pod to'xtaydi
+      maxSurge: 1           # Rollout vaqtida 1 ta qo'shimcha pod ga ruxsat
+```
+
+Bu ta'minlaydi:
+- 3 replikada kamida 2 pod doim ishlaydi (3 - 1 = 2)
+- Rollout vaqtida 4 tagacha pod bo'lishi mumkin (3 + 1 = 4)
+- Nol to'xtash kafolatlangan!
+
+3. Saqlang va tekshiring:
+   `kubectl get deployment critical-api -n k8squest -o yaml | grep -A 5 strategy`

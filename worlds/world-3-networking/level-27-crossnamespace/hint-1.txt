@@ -1,0 +1,18 @@
+🔍 Kuzatuv maslahat:
+
+Frontend ilova API service ga ulana olmayapti. Xato: hostname hal qilinmayapti — klassik DNS muammo.
+
+Tekshiring:
+1. Frontend loglar: `kubectl logs frontend-app -n k8squest`
+   "could not resolve host" yoki "bad address" ko'ring
+
+2. Namespace lar: `kubectl get namespaces`
+   Frontend qayerda? Backend service qayerda?
+
+3. Service nomlarni solishtiring:
+   `kubectl get service --all-namespaces`
+   Frontend qaysi nom bilan murojaat qilmoqda?
+
+Kubernetes DNS telefon kontaktlariga o'xshaydi:
+- Qisqa nom ("Asror"): faqat bir xil guruhda ishlaydi
+- To'liq nom ("Asror Marketing bo'limidan"): barcha bo'limlar bo'ylab ishlaydi

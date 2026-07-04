@@ -1,0 +1,1 @@
+`kubectl get deployment web -n k8squest` buyrug'ini ishlating — READY ustuniga e'tibor bering. Qancha replika sozlangan va qanchasi ishlashi kerak?

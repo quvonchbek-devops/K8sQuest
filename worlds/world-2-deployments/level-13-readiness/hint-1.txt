@@ -1,0 +1,11 @@
+🔍 Kuzatuv maslahat:
+
+Pod larni tekshiring:
+`kubectl get pods -n k8squest -l app=slow-app`
+
+READY ustuniga e'tibor bering. Ba'zi pod lar STATUS "Running" bo'lsa ham "0/1" ko'rsatishi mumkin.
+
+Service endpoint larini tekshiring:
+`kubectl get endpoints slow-app-service -n k8squest`
+
+Tayyor bo'lmagan pod lar service ga qo'shilayaptimi? Bu tayyor bo'lmagan pod larga trafik yuborilishiga olib keladi!

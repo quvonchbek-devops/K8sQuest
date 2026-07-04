@@ -1,0 +1,19 @@
+level: 41
+title: "RBAC Permission Denied"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "RBAC Ruxsat Rad Etildi"
+world: "Security & Production Ops"
+difficulty: "advanced"
+xp: 300
+concepts:
+  - rbac
+  - role
+  - rolebinding
+  - serviceaccount
+  - permissions
+description: "ServiceAccount kerakli RBAC ruxsatlariga ega emas, bu pod ning Kubernetes API ga murojaat qilishini to'sib qo'ymoqda."
+learning_objectives:
+  - Understand Kubernetes RBAC (Role-Based Access Control)
+  - Learn to create Roles and RoleBindings
+  - Configure ServiceAccount permissions
+  - Debug permission denied errors

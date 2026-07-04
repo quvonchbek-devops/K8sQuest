@@ -1,0 +1,11 @@
+🔍 Maslahat 1: Kuzatish
+
+Pod Pending holatida — node affinity muammosi.
+
+```bash
+kubectl get pod -n k8squest
+kubectl describe pod -n k8squest    # Events ga qarang
+kubectl get nodes --show-labels     # Node label larini ko'ring
+```
+
+Pod ma'lum label li node ni talab qilmoqda. Bu label biron node da bormi?

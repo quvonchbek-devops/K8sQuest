@@ -1,0 +1,23 @@
+🔍 Kuzatuv maslahat:
+
+Frontend pod backend ga ulanishga urinmoqda, lekin connection timeout xatosi bilan muvaffaqiyatsiz bo'lmoqda. Backend pod sog'lom va service mavjud — unda nima uchun frontend yeta olmayapti?
+
+Tekshiring:
+
+1. **Frontend pod loglar:**
+   ```bash
+   kubectl logs frontend -n k8squest
+   ```
+
+2. **NetworkPolicy konfiguratsiyasi:**
+   ```bash
+   kubectl describe networkpolicy backend-network-policy -n k8squest
+   ```
+   Qarang: Qaysi pod larga tegishli? Qanday trafikka ruxsat beradi? Kirish uchun qanday label lar talab qilinadi?
+
+3. **Frontend pod label lari:**
+   ```bash
+   kubectl get pod frontend -n k8squest --show-labels
+   ```
+
+NetworkPolicy lar klub qo'riqchisiga o'xshaydi — "label badge" ingizni tekshiradi. Agar badge (label) qo'riqchi (NetworkPolicy) qidirayotganiga mos kelmasa, kirolmaysiz!

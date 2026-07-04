@@ -1,0 +1,11 @@
+🔍 Kuzatuv maslahat:
+
+Pod larni tekshiring:
+`kubectl get pods -n k8squest -l app=api`
+
+RESTARTS ustuniga qarang. Pod lar doimiy qayta ishga tushmoqdami?
+
+Pod lardan birini describe qiling:
+`kubectl describe pod <pod-nomi> -n k8squest`
+
+Pastdagi Events bo'limiga qarang. Nima ko'ryapsiz?

@@ -1,0 +1,31 @@
+✅ Yechim maslahat:
+
+Service turini NodePort ga o'zgartiring:
+
+```bash
+kubectl delete service web-service -n k8squest
+kubectl apply -f solution.yaml
+```
+
+Yoki broken.yaml da o'zgartiring:
+```yaml
+spec:
+  type: NodePort      # LoadBalancer → NodePort
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30080   # Ixtiyoriy: aniq port (30000-32767)
+```
+
+Tekshirish:
+```bash
+kubectl get service web-service -n k8squest
+# TYPE: NodePort, boshqa "Pending" yo'q
+
+kubectl port-forward -n k8squest service/web-service 8080:80
+# http://localhost:8080 dan kirish
+```
+
+Lokal da LoadBalancer kerak bo'lsa — MetalLB o'rnating (ilg'or foydalanish).

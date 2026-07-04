@@ -1,0 +1,10 @@
+🔍 Kuzatuv maslahat:
+
+Service ga nima bo'lganini tekshiring:
+1. `kubectl get service web-service -n k8squest` — EXTERNAL-IP ustuniga qarang
+2. `kubectl describe service web-service -n k8squest` — "LoadBalancer Ingress: <pending>"
+
+Muammo: LoadBalancer service lari bulut provayderlaridan tashqi load balancer ta'minotini talab qiladi.
+Lokal klasterlarda (kind, minikube, k3s) ular abadiy "Pending" da qoladi, chunki load balancer yaratadigan bulut provayder yo'q.
+
+Savol: Lokal klasterlarda qaysi service turi ishlaydi?

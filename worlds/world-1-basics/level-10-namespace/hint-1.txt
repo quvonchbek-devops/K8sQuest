@@ -1,0 +1,9 @@
+🔍 Kuzatuv maslahat:
+
+k8squest namespace da qanday resurslar borligini tekshiring:
+`kubectl get all -n k8squest`
+
+Endi default namespace ni tekshiring:
+`kubectl get all -n default`
+
+client-app pod va backend-service qayerda joylashgan?

@@ -1,0 +1,13 @@
+✅ Maslahat 3: To'liq Yechim
+
+broken.yaml da ikki yechimdan birini tanlang:
+
+1. Pod dagi key nomini ConfigMap dagi mavjud key ga o'zgartiring
+2. Yoki ConfigMap ga kerakli key ni qo'shing
+
+```bash
+kubectl get configmap app-config -n k8squest -o yaml    # Mavjud key larni ko'ring
+```
+
+Keyin broken.yaml ni to'g'rilang va:
+`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`

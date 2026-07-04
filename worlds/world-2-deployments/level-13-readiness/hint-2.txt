@@ -1,0 +1,12 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Muammo: Pod lar Running, lekin trafik xizmat qilishga tayyor bo'lish uchun 20 soniya kerak (postStart hook dagi sleep 20 bilan simulyatsiya qilingan).
+
+Readiness probe siz, Kubernetes "Running = Ready" deb hisoblaydi va pod ni darhol Service endpoint lariga qo'shadi.
+
+Bu foydalanuvchilar hali ishga tushayotgan pod larga urilishiga olib keladi → 502 Bad Gateway xatolar!
+
+Deployment ni tekshiring:
+`kubectl get deployment slow-startup-app -n k8squest -o yaml | grep -A 10 readinessProbe`
+
+Hech narsa ko'rmaysiz (yoki faqat livenessProbe). Muammo shu!

@@ -1,0 +1,1 @@
+Xato "nginxzz" uchun "executable file not found" deb ko'rsatmoqda. Bu buyruq mavjud emas! nginx konteyner oddiy holatda maxsus buyruqsiz ishlashi kerak. Pod ni o'chirib, noto'g'ri command override ni olib tashlaydigan solution.yaml ni apply qiling.

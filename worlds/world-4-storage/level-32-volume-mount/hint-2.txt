@@ -1,0 +1,18 @@
+🧭 Maslahat 2: Volume Mount larni Tushunish
+
+Muammo: Volume NOTO'G'RI yo'lga mount qilingan.
+
+Volume mount ikki qismdan iborat:
+```yaml
+volumes:           # Volume MANBA (nima ulash)
+- name: data-vol
+  persistentVolumeClaim:
+    claimName: data-pvc
+
+volumeMounts:      # Volume MANZIL (qayerga mount qilish)
+- name: data-vol
+  mountPath: /wrong/path    # ❌ Noto'g'ri yo'l
+```
+
+Ilova `/data` yo'lida fayllarni kutadi, lekin volume `/wrong/path` ga mount qilingan.
+mountPath ni ilovaning kutgan yo'liga o'zgartiring.

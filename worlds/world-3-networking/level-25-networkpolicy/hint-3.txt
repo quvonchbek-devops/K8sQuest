@@ -1,0 +1,18 @@
+✅ Yechim maslahat:
+
+broken.yaml da NetworkPolicy bo'limini topib, label ni o'zgartiring:
+
+`app: admin-tool` → `app: frontend`
+
+Qadamlar:
+1. broken.yaml ni tahrirlang — faqat bitta qator o'zgaradi
+2. Apply qiling: `kubectl apply -f broken.yaml`
+3. NetworkPolicy ni tekshiring:
+   ```bash
+   kubectl describe networkpolicy backend-network-policy -n k8squest
+   ```
+4. Frontend loglarni tekshiring:
+   ```bash
+   kubectl logs frontend -n k8squest --tail=10
+   ```
+   Endi timeout lar o'rniga "API Response: Success" ko'rinishi kerak!

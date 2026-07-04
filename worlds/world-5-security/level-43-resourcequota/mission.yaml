@@ -1,0 +1,19 @@
+level: 43
+title: "ResourceQuota: Quota Exceeded"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "ResourceQuota Limiti Oshib Ketdi"
+difficulty: advanced
+xp: 300
+xp_reward: 300
+world: 5
+concepts:
+  - resourcequota
+  - limits
+  - requests
+  - namespace-quota
+description: "Namespace dagi ResourceQuota yangi pod yaratishni to'sib qo'ymoqda, chunki resurs so'rovlari ajratilgan limitlardan oshib ketgan."
+learning_objectives:
+  - Understand ResourceQuota constraints
+  - Configure resource requests/limits properly
+  - Balance quotas with application needs
+  - Debug quota-related scheduling failures

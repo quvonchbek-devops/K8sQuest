@@ -1,0 +1,26 @@
+💡 Yechimga yaqin maslahat:
+
+Ilova haqiqatan tayyor bo'lguncha kutadigan readiness probe qo'shish kerak.
+
+Qadamlar:
+1. Deployment ni tahrirlang:
+   `kubectl edit deployment slow-startup-app -n k8squest`
+
+2. `livenessProbe` bo'limini toping va uning pastiga `readinessProbe` qo'shing:
+
+```yaml
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 22  # 20s sleep + 2s zaxira
+          periodSeconds: 5
+          successThreshold: 1
+```
+
+3. Saqlang va chiqing. Pod lar qayta yaratiladi.
+
+4. Pod lar tayyor bo'lishini kuzating:
+   `kubectl get pods -n k8squest -l app=slow-app -w`
+
+Endi pod lar haqiqatan tayyor bo'lguncha trafik qabul qilmaydi!

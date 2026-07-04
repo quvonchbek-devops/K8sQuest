@@ -1,0 +1,11 @@
+name: Buzilgan Pod ni Tuzatish
+description: Pod noto'g'ri buyruq (command) tufayli ishdan chiqmoqda
+objective: Pod "Running" holatida bo'lishi kerak
+xp: 100
+difficulty: boshlang'ich
+expected_time: 10m
+concepts:
+  - pods
+  - kubectl describe
+  - CrashLoopBackOff
+  - container commands

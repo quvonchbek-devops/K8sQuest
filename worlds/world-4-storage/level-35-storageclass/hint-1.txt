@@ -1,0 +1,10 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+PVC Pending da qotib turgan — StorageClass bilan bog'liq muammo.
+
+Tekshiring:
+1. `kubectl get pvc -n k8squest` — STATUS: Pending
+2. `kubectl describe pvc -n k8squest` — Events dagi xato xabarini o'qing
+3. `kubectl get storageclass` — mavjud StorageClass larni ko'ring
+
+PVC qaysi StorageClass ni so'ramoqda? Bu StorageClass klasterda bormi?

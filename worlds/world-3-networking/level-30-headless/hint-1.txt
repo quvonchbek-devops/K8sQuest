@@ -1,0 +1,12 @@
+🔍 Kuzatuv maslahat:
+
+StatefulSet pod lari bir-birini nom orqali topa olmayapti.
+
+Tekshiring:
+1. Pod lar: `kubectl get pods -n k8squest -l app=web-cluster` (web-0, web-1, web-2)
+2. Service: `kubectl get service web-cluster -n k8squest` — CLUSTER-IP ga qarang
+3. DNS test: debug pod da `nslookup web-0.web-cluster.k8squest.svc.cluster.local` sinang
+
+Muammo: Oddiy ClusterIP service faqat `web-cluster` → tasodifiy pod DNS beradi.
+StatefulSet larga har bir pod uchun alohida DNS kerak: web-0.web-cluster, web-1.web-cluster...
+Buning uchun "headless service" (clusterIP: None) kerak!

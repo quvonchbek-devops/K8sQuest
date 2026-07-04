@@ -1,0 +1,8 @@
+🔍 Kuzatuv maslahat:
+
+Pod holatini tekshiring: `kubectl get pod app-with-logging -n k8squest`
+
+READY ustuniga qarang. "1/2" kabi ko'rinishi kerak, ya'ni 2 ta konteynerdan faqat 1 tasi tayyor.
+
+`kubectl describe pod app-with-logging -n k8squest` buyrug'ini ishlating va konteynerlar holatiga qarang.
+Qaysi konteyner ishdan chiqmoqda?

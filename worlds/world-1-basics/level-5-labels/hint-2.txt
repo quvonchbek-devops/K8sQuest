@@ -1,0 +1,11 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Service pod larni **label selector** lar orqali topadi. Service ning selector i pod ning label lariga mos kelishi kerak.
+
+Service selector ni tekshiring:
+`kubectl get service backend-service -n k8squest -o yaml | grep -A 3 selector:`
+
+Pod label larini tekshiring:
+`kubectl get pod backend-app -n k8squest --show-labels`
+
+Label lar mos kelyaptimi? Nomuvofiqlikni toping!

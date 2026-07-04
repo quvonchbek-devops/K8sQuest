@@ -1,0 +1,15 @@
+✅ Maslahat 3: To'liq Yechim
+
+PV ning reclaim policy sini Retain ga o'zgartiring:
+
+```yaml
+persistentVolumeReclaimPolicy: Delete    # ❌ Xavfli
+persistentVolumeReclaimPolicy: Retain    # ✅ Xavfsiz
+```
+
+Yoki mavjud PV ni patch qiling:
+```bash
+kubectl patch pv <pv-nomi> -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
+```
+
+`kubectl get pv` — RECLAIM POLICY: Retain bo'lishi kerak

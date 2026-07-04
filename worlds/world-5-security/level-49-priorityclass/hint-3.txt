@@ -1,0 +1,7 @@
+✅ Maslahat 3: To'liq Yechim
+
+1. Muhim pod lar uchun PriorityClass yarating
+2. Pod spec ga priorityClassName qo'shing
+
+`kubectl apply -f solution.yaml`
+`kubectl get pods -n k8squest` — muhim pod lar Running bo'lishi kerak

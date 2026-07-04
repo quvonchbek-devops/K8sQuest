@@ -1,0 +1,19 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Service da session affinity konfiguratsiyasi yetishmayapti. Usiz har bir so'rov IXTIYORIY pod ga taqsimlanadi.
+
+Tuzatish: Service spec ga `sessionAffinity: ClientIP` qo'shing:
+
+```yaml
+spec:
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800  # 3 soat
+```
+
+Bu qanday ishlaydi:
+1. Klient birinchi so'rovda Pod 2 ga tushadi
+2. Service eslab qoladi: "bu IP → Pod 2"
+3. Keyingi barcha so'rovlar Pod 2 ga ketadi
+4. Mapping timeoutSeconds dan keyin tugaydi

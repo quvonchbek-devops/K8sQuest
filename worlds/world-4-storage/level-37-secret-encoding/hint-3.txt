@@ -1,0 +1,18 @@
+✅ Maslahat 3: To'liq Yechim
+
+broken.yaml dagi Secret ni tuzating:
+
+Variant 1 — `data` bilan (base64 kerak):
+```yaml
+data:
+  password: $(echo -n "to'g'ri-parol" | base64)
+```
+
+Variant 2 — `stringData` bilan (oddiy matn, osonroq):
+```yaml
+stringData:
+  password: "to'g'ri-parol"
+```
+
+`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
+`kubectl get pod -n k8squest` — Running bo'lishi kerak

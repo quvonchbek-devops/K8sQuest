@@ -1,0 +1,5 @@
+🔍 Kuzatuv maslahat:
+
+`kubectl describe pod web-app -n k8squest` buyrug'ini ishlating va pastdagi Events bo'limiga qarang.
+
+Image tortish haqida xabarlar ko'rasiz. Qanday xato bor?

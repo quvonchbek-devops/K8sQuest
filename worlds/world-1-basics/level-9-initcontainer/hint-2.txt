@@ -1,0 +1,9 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Init container `nslookup` orqali "nonexistent-service" ni topishga urinmoqda, lekin bu service mavjud emas. Konteyner uni abadiy kutib turadi.
+
+Init container lar asosiy konteyner ishga tushishidan oldin muvaffaqiyatli tugashi shart. Bu esa hech qachon tugamaydi!
+
+Ikki variant bor:
+1. Buyruqni tugatila oladigan biriga o'zgartirish, yoki
+2. Kutayotgan service ni yaratish

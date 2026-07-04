@@ -1,0 +1,35 @@
+name: "NetworkPolicy Juda Cheklangan"
+objective: "Frontend-dan-backend ga aloqani ta'minlash uchun haddan tashqari cheklangan NetworkPolicy ni tuzating"
+world: 3
+level: 25
+xp: 250
+difficulty: o'rta
+
+description: |
+  NetworkPolicy pod lar orasidagi qonuniy trafikni to'sib qo'ymoqda. Frontend
+  backend API ga yeta olmayapti, garchi ikkala pod ham ishlayotgan va sog'lom bo'lsa ham.
+  Haddan tashqari cheklangan tarmoq siyosatini aniqlang va tuzating.
+
+concepts:
+  - NetworkPolicy
+  - Pod-dan-pod ga aloqa
+  - Tarmoq siyosatlarida label selector lar
+  - Ingress/Egress qoidalari
+
+learning_objectives:
+  - NetworkPolicy pod lar orasidagi trafikni qanday nazorat qilishini tushuning
+  - Tarmoq siyosatlari sabab bo'lgan ulanish muammolarini debug qiling
+  - Pod lar arasi aloqa uchun mos ingress qoidalarini sozlang
+  - Aniq pod-dan-pod trafikga ruxsat berish uchun label selector lar ishlating
+
+scenario: |
+  Klasterda frontend va backend ilovani deploy qildingiz. Backend ruxsatsiz
+  kirishni oldini olish uchun NetworkPolicy bilan himoyalangan. Biroq,
+  NetworkPolicy JUDA cheklangan — frontend dan backend API ga kirishni to'sib
+  qo'ymoqda, bu ilovaning ishdan chiqishiga olib kelmoqda.
+
+success_criteria:
+  - Frontend pod backend service ga muvaffaqiyatli ulana oladi
+  - NetworkPolicy frontend dan backend ga trafikka ruxsat beradi
+  - NetworkPolicy boshqa pod lardan trafikni to'sishda davom etadi (xavfsizlikni saqlaydi)
+  - Barcha pod lar ishlayotgan va sog'lom

@@ -1,0 +1,23 @@
+🧭 Yo'naltiruvchi maslahat:
+
+Oddiy service (ClusterIP bor):
+- web-cluster.ns.svc... → 10.96.100.50 → TASODIFIY pod
+- web-0.web-cluster... → ❌ ISHLAMAYDI
+
+Headless service (clusterIP: None):
+- web-0.web-cluster.ns.svc... → web-0 pod IP ✅
+- web-1.web-cluster.ns.svc... → web-1 pod IP ✅
+- web-2.web-cluster.ns.svc... → web-2 pod IP ✅
+
+Tuzatish — service da `clusterIP: None` qo'ying:
+```yaml
+spec:
+  clusterIP: None  # ✅ Headless qiladi
+  selector:
+    app: web-cluster
+```
+
+StatefulSet larga headless service kerak, chunki:
+- Barqaror pod nomlari (web-0, web-1)
+- Barqaror DNS nomlari (web-0.service-nomi)
+- Ma'lumotlar bazasi klasterlari, Kafka, etcd va boshqalar uchun

@@ -1,0 +1,29 @@
+id: 32
+title: "Volume Mount Path Error"
+objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
+name: "Volume Mount Yo'li Xatosi"
+difficulty: intermediate
+xp: 200
+xp_reward: 200
+estimated_time: "10 minutes"
+
+description: "Konteyner volume ni noto'g'ri yo'lga mount qilmoqda, bu ilovaning ma'lumotlarni o'qiy olmasligiga olib kelmoqda."
+learning_objectives:
+  - Understand volume and volumeMount relationship
+  - Configure correct mountPath in pod specification
+  - Debug volume mounting issues
+  - Understand the difference between volume definition and mount point
+
+concepts:
+  - volumemounts
+  - mount-path
+  - volume-configuration
+  - pod-volumes
+  - container-filesystem
+
+success_criteria:
+  - Volume mounted at correct path /app/config
+  - Pod starts successfully
+  - Application can access config files
+
+hints_available: 3

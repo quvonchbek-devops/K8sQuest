@@ -1,0 +1,10 @@
+🔍 Maslahat 1: Muammoni Kuzatish
+
+PVC Pending da qotib turgan bo'lishi mumkin.
+
+Tekshiring:
+1. `kubectl get pvc -n k8squest` — STATUS ga qarang
+2. `kubectl describe pvc -n k8squest` — Events dagi xatolarni o'qing
+3. `kubectl get pv` — mavjud PV larning access mode lariga qarang
+
+PVC va PV ning access mode lari mos kelyaptimi?
