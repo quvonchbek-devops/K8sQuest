@@ -6,4 +6,4 @@ Reclaim policy PVC o'chirilgandan KEYIN PV ga nima bo'lishini belgilaydi:
 - `Retain` — PV va ma'lumotlar SAQLANADI, admin qo'lda tozalashi kerak
 - `Recycle` — (eskirgan) Ma'lumotlar o'chiriladi, PV qayta ishlatiladi
 
-Produkciyada muhim ma'lumotlar uchun DOIM `Retain` ishlating!
+Production da muhim ma'lumotlar uchun DOIM `Retain` ishlating!

@@ -942,7 +942,7 @@ sum(rate(coredns_dns_response_rcode_count_total{rcode="NXDOMAIN"}[5m])) > 10
    - Typos in service names (DNS fails)
    - Testing in same namespace, deploying cross-namespace
 
-5. **Real-World Lessons:**
+5. **Haqiqiy Dunyo Saboqlari:**
    - Doim test qiling cross-namespace communication before production
    - Use FQDN in all configuration files
    - Document namespace topology

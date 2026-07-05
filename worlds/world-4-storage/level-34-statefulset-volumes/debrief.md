@@ -236,7 +236,7 @@ volumeClaimTemplates:
 
 ---
 
-## 🏗️ Real-World Patterns
+## 🏗️ Haqiqiy Dunyo Pattern lari
 
 ### Pattern 1: PostgreSQL Cluster
 
@@ -445,7 +445,7 @@ spec:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 ### 1. Choose Right Workload Type
 

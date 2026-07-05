@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Check service selector
+# Service selector ni tekshirish
 SELECTOR=$(kubectl get service app-service -n k8squest -o jsonpath='{.spec.selector.version}' 2>/dev/null)
 
-# Get endpoint IPs to see which pods are behind the service
+# Service orqasida qaysi pod lar borligini ko'rish uchun endpoint IP larni olish
 ENDPOINTS=$(kubectl get endpoints app-service -n k8squest -o jsonpath='{.subsets[*].addresses[*].ip}' 2>/dev/null | wc -w | tr -d ' ')
 
 if [ "$SELECTOR" = "green" ] && [ "$ENDPOINTS" -gt 0 ]; then

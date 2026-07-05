@@ -158,7 +158,7 @@ emptyDir:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 1. **Use emptyDir for temporary:**
    ```yaml

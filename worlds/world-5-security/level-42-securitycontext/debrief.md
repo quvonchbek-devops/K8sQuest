@@ -457,7 +457,7 @@ spec:
 
 ---
 
-## 🛡️ XavfsizlikContext Best Practices
+## 🛡️ SecurityContext Eng Yaxshi Amaliyotlari
 
 ### 1. Always Run as Non-Root
 

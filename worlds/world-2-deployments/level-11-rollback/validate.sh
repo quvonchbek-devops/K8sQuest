@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check if deployment is healthy (all replicas ready)
+# Deployment sog'lom ekanligini tekshirish (barcha replica lar tayyor)
 READY_REPLICAS=$(kubectl get deployment web-app -n k8squest -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
 DESIRED_REPLICAS=$(kubectl get deployment web-app -n k8squest -o jsonpath='{.spec.replicas}' 2>/dev/null)
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Check PDB configuration
+# PDB konfiguratsiyasini tekshirish
 MIN_AVAILABLE=$(kubectl get pdb db-proxy-pdb -n k8squest -o jsonpath='{.spec.minAvailable}' 2>/dev/null)
 REPLICAS=$(kubectl get deployment database-proxy -n k8squest -o jsonpath='{.spec.replicas}' 2>/dev/null)
 
-# Check if PDB allows evictions
+# PDB eviction larga ruxsat berishini tekshirish
 ALLOWED=$(kubectl get pdb db-proxy-pdb -n k8squest -o jsonpath='{.status.disruptionsAllowed}' 2>/dev/null)
 
 if [ "$MIN_AVAILABLE" -ge "$REPLICAS" ]; then

@@ -101,7 +101,7 @@ env:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 1. **Validate all required keys exist:**
    ```bash

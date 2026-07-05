@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check pod lar ishlayotganligini and NOT constantly restarting
+# Pod lar ishlayotganligini va doimiy qayta ishga tushmayotganligini tekshirish
 RESTART_COUNT=$(kubectl get pods -n k8squest -l app=api -o jsonpath='{.items[*].status.containerStatuses[*].restartCount}' 2>/dev/null | awk '{for(i=1;i<=NF;i++) sum+=$i} END {print sum}')
 RUNNING_PODS=$(kubectl get pods -n k8squest -l app=api -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}' 2>/dev/null | wc -w | tr -d ' ')
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check if NodePort is explicitly set
+# NodePort aniq sozlanganligini tekshirish
 NODEPORT=$(kubectl get svc web-nodeport -n k8squest -o jsonpath='{.spec.ports[0].nodePort}' 2>/dev/null)
 
 if [[ -z "$NODEPORT" ]]; then
@@ -8,7 +8,7 @@ if [[ -z "$NODEPORT" ]]; then
   exit 1
 fi
 
-# Check if NodePort is in the valid range and explicitly set (30080)
+# NodePort to'g'ri oraliqda va aniq sozlanganligini tekshirish (30080)
 if [[ "$NODEPORT" == "30080" ]]; then
   echo "✅ Level yakunlandi! NodePort aniq sozlangan"
   exit 0

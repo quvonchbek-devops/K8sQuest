@@ -87,7 +87,7 @@ kubectl delete pvc my-data
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 1. **Use Retain for production:**
    ```yaml

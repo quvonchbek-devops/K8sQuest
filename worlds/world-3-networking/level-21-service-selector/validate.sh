@@ -8,7 +8,7 @@ if [[ -z "$ENDPOINTS" ]]; then
   exit 1
 fi
 
-# Test connectivity from test-client pod ni
+# test-client pod dan ulanishni tekshirish
 RESPONSE=$(kubectl exec test-client -n k8squest -- curl -s -o /dev/null -w "%{http_code}" http://backend-service 2>/dev/null)
 
 if [[ "$RESPONSE" == "200" ]]; then

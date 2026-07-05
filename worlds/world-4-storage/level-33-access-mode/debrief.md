@@ -158,7 +158,7 @@ Node3: [Pod-C]  # ✅ Can mount same RWX volume
 
 ---
 
-## 🗄️ Storage Provider Support
+## 🗄️ Storage Provider Qo'llab-quvvatlashi
 
 Not all storage types support all access modes!
 
@@ -328,7 +328,7 @@ accessModes:
 
 ---
 
-## 🔒 Critical Lesson: PVC Spec Immutability
+## 🔒 Muhim Saboq: PVC Spec O'zgarmasligi
 
 **Siz buni levelda kashf qildingiz:** Ko'p PVC maydonlarini yaratilgandan keyin o'zgartirib bo'lmaydi!
 
@@ -391,7 +391,7 @@ kubectl get pods -n k8squest
 
 ### ⚠️ Production Warning
 
-Production da, **deleting a PVC can delete your data!**
+Production da, **PVC ni o'chirish ma'lumotlaringizni o'chirib yuborishi mumkin!**
 
 ```yaml
 # Check reclaim policy first!
@@ -437,7 +437,7 @@ resources:
 
 ---
 
-## 🏗️ Real-World Patterns
+## 🏗️ Haqiqiy Dunyo Pattern lari
 
 ### Pattern 1: Separate Storage for Different Needs
 
@@ -599,7 +599,7 @@ replicas: 20       # Scale for Black Friday
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 ### 1. Document Access Mode Requirements
 

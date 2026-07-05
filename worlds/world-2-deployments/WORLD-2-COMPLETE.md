@@ -49,7 +49,7 @@ World 2 ni tamomlaganlar quyidagilarni o'zlashtiradi:
 - ✅ maxUnavailable and maxSurge parameters
 - ✅ Zero-downtime deployment techniques
 - ✅ Rollout strategy optimization
-- ✅ Avoiding complete service outages during updates
+- ✅ Yangilanishlar paytida to'liq service uzilishlarini oldini olish
 
 ### Availability & Maintenance
 - ✅ PodDisruptionBudgets (PDB) for maintenance windows
@@ -141,10 +141,10 @@ Each debrief.md includes:
 - ✅ **What Happened**: Explanation of the issue
 - ✅ **How Kubernetes Behaved**: Step-by-step flow
 - ✅ **To'g'ri Tushuncha Modeli**: Konseptlar diagrammalar bilan tushuntirilgan
-- ✅ **Real-World Incident Example**: $50K-$5M+ real production failures
+- ✅ **Haqiqiy Dunyo Hodisa Misoli**: $50K-$5M+ real production muvaffaqiyatsizliklar
 - ✅ **Commands You Mastered**: Practical kubectl commands
-- ✅ **Best Practices**: ✅ DO and ❌ DON'T lists
-- ✅ **Advanced Patterns**: Production-ready configurations
+- ✅ **Eng Yaxshi Amaliyotlar**: ✅ QILING va ❌ QILMANG ro'yxatlari
+- ✅ **Murakkab Pattern lar**: Production-ready konfiguratsiyalar
 - ✅ **What's Keyingi**: Bridge to next level
 
 Total debrief content: **~40,000 words** (comprehensive!)
@@ -176,7 +176,7 @@ Level lar K8sQuest engine bilan to'liq mos:
 - Use advanced deployment patterns (blue-green, canary)
 - Protect services during maintenance with PDBs
 - Choose appropriate workload types (Deployment vs StatefulSet)
-- Avoid common production pitfalls ($17M+ worth!)
+- Keng tarqalgan production tuzoqlaridan qoching ($17M+ zarar!)
 
 ## Keyingi Qadamlar
 
@@ -199,15 +199,15 @@ Topics will include:
 - **Total Files**: 80 files (8 files × 10 levels)
 - **Total Lines of Code**: ~45,000+ lines
 - **Documentation**: ~40,000 words
-- **Real-world Examples**: 10 production incidents
+- **Haqiqiy Dunyo Misollari**: 10 ta production hodisa
 - **kubectl Commands**: 200+ practical examples
-- **Best Practices**: 100+ DO/DON'T items
+- **Eng Yaxshi Amaliyotlar**: 100+ QILING/QILMANG bandlari
 - **Validation Scripts**: 10 automated tests
 
 ## Quality Standards Met
 
 ✅ **Comprehensive**: Each level covers topic deeply  
-✅ **Production-Ready**: Real incident examples  
+✅ **Production-Ready**: Haqiqiy hodisa misollari  
 ✅ **Actionable**: Practical commands and configs  
 ✅ **Progressive**: Beginner → Advanced flow  
 ✅ **Tested**: Validation scripts work  

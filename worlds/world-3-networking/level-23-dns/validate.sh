@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Check if client pod ni can resolve service DNS
+# Client pod service DNS ni hal qila olishini tekshirish
 LOGS=$(kubectl logs app-client -n k8squest --tail=10 2>/dev/null)
 
-# Check for pg_isready success message with correct service name
+# pg_isready muvaffaqiyat xabarini to'g'ri service nomi bilan tekshirish
 if echo "$LOGS" | grep -qE "(database-service|database):5432 - accepting connections"; then
   echo "✅ Level yakunlandi! DNS resolution ishlayapti"
   echo "   Client muvaffaqiyatli connected to database-service"

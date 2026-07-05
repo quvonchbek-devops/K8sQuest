@@ -25,7 +25,7 @@ echo "🔍 3-bosqich: Tekshirilmoqda 3 ta pod tayyor ekanligini..."
 READY_PODS=$(kubectl get statefulset "$STATEFULSET" -n "$NAMESPACE" -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
 if [ "$READY_PODS" != "3" ]; then
     echo "❌ Only $READY_PODS out of 3 pods are ready"
-    echo "💡 Check: kubectl get pods -n $NAMESPACE -l app=postgres"
+    echo "💡 Tekshiring: kubectl get pods -n $NAMESPACE -l app=postgres"
     exit 1
 fi
 echo "✅ All 3 pods are ready"

@@ -105,7 +105,7 @@ kubectl label pod <nom> app=frontend -n <namespace>
 kubectl label pod <nom> app=backend --overwrite -n <namespace>
 ```
 
-## Label Best Practice lari
+## Label Eng Yaxshi Amaliyotlari
 
 1. **Kubernetes tavsiya etgan label larni ishlating**:
    ```yaml

@@ -160,7 +160,7 @@ metadata:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 1. **List available classes:**
    ```bash

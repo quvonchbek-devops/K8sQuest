@@ -700,7 +700,7 @@ kubectl get pods -n kube-system
 Create a test pod to diagnose connectivity:
 
 ```bash
-# Create test pod
+# Test pod yaratish
 kubectl run test -n k8squest --image=nicolaka/netshoot -- sleep 3600
 
 # Test connection
@@ -886,7 +886,7 @@ ingress:
    - OR kerak bo'lganda AND logikasi ishlatish
    - Not ruxsat berish ingress controller or monitoring
 
-6. **Real-World Lessons:**
+6. **Haqiqiy Dunyo Saboqlari:**
    - NetworkPolicy ni mistakes can cause complete outages
    - Test with same labels and traffic patterns as production
    - Monitor denied connections

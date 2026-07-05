@@ -51,7 +51,7 @@ echo ""
 # Stage 3: Check if service has external access
 echo "📋 3-bosqich: Tekshirilmoqda service ga kirish imkoniyatini..."
 
-# Get node port
+# Node portni olish
 NODE_PORT=$(kubectl get service web-service -n k8squest -o jsonpath='{.spec.ports[0].nodePort}')
 if [ -z "$NODE_PORT" ]; then
     echo -e "${RED}❌ No nodePort assigned to service${NC}"

@@ -9,8 +9,8 @@ echo ""
 echo "📦 Deploying initial working version (revision 1)..."
 kubectl apply -f setup.yaml
 
-# Wait for deployment to be ready (increased timeout)
-echo "⏳ Waiting for initial deployment to stabilize..."
+# Deployment tayyor bo'lishini kutish (kengaytirilgan timeout)
+echo "⏳ Boshlang'ich deployment barqarorlashishi kutilmoqda..."
 kubectl rollout status deployment/web-app -n k8squest --timeout=120s
 
 if [ $? -ne 0 ]; then
@@ -24,7 +24,7 @@ echo ""
 echo "📦 Updating to broken version (revision 2)..."
 kubectl apply -f broken.yaml
 
-# Wait a moment for the update to start
+# Yangilash boshlanishi uchun bir lahza kutish
 sleep 5
 
 echo ""

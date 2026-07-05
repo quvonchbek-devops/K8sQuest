@@ -25,7 +25,7 @@ echo "✅ PVC Bound holatida"
 
 echo ""
 echo "🔍 3-bosqich: Tekshirilmoqda PV access mode ini..."
-# Use jq for safer array checking
+# Xavfsizroq massiv tekshiruvi uchun jq ishlatish
 if ! kubectl get pv "$PV_NAME" -o json | jq -e '.spec.accessModes | index("ReadWriteMany")' &>/dev/null; then
     CURRENT_MODES=$(kubectl get pv "$PV_NAME" -o jsonpath='{.spec.accessModes[*]}')
     echo "❌ PV does not have ReadWriteMany access mode"
@@ -38,7 +38,7 @@ echo "✅ PV has ReadWriteMany access mode"
 
 echo ""
 echo "🔍 4-bosqich: Tekshirilmoqda PVC access mode ini..."
-# Use jq for safer array checking
+# Xavfsizroq massiv tekshiruvi uchun jq ishlatish
 if ! kubectl get pvc "$PVC_NAME" -n "$NAMESPACE" -o json | jq -e '.spec.accessModes | index("ReadWriteMany")' &>/dev/null; then
     CURRENT_MODES=$(kubectl get pvc "$PVC_NAME" -n "$NAMESPACE" -o jsonpath='{.spec.accessModes[*]}')
     echo "❌ PVC does not have ReadWriteMany access mode"

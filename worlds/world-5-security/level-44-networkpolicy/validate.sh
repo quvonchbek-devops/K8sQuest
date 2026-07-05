@@ -61,7 +61,7 @@ echo "✅ Backend has NetworkPolicy ni: $BACKEND_POLICY"
 echo ""
 echo "🔍 TEKSHIRUV 6-BOSQICH: Tekshirilmoqda Service va Endpoint lar (DNS)"
 
-# Ensure a Service mavjud for the database so the name 'database' resolves
+# 'database' nomi hal bo'lishi uchun database uchun Service mavjudligini ta'minlash
 if ! kubectl get svc database -n $NAMESPACE &>/dev/null; then
     echo "❌ FAILED: Service 'database' topilmadi in namespace $NAMESPACE"
     echo "💡 Maslahat: Create a ClusterIP Service named 'database' selecting the database pod"
@@ -69,7 +69,7 @@ if ! kubectl get svc database -n $NAMESPACE &>/dev/null; then
 fi
 echo "✅ Service 'database' mavjud"
 
-# Check endpoints for the service
+# Endpoint larni tekshirish for the service
 EP_COUNT=$(kubectl get endpoints database -n $NAMESPACE -o json | jq '.subsets | length')
 if [ "$EP_COUNT" = "0" ] || [ "$EP_COUNT" = "null" ]; then
     echo "❌ FAILED: Service 'database' has no endpoints; pods may not match selector"

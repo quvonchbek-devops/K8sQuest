@@ -233,7 +233,7 @@ volumeMounts:
 
 ---
 
-## 🔧 Advanced Mount Options
+## 🔧 Kengaytirilgan Mount Parametrlari
 
 ### Using subPath
 
@@ -290,7 +290,7 @@ volumeMounts:
 
 ---
 
-## 🏗️ Real-World Architecture Patterns
+## 🏗️ Haqiqiy Dunyo Arxitektura Pattern lari
 
 ### Pattern 1: Sidecar Logging
 
@@ -445,7 +445,7 @@ initContainers:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 ### 1. Use Standard Paths
 

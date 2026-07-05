@@ -7,4 +7,4 @@ Tekshiring:
 2. Reclaim policy "Delete" mi yoki "Retain"?
 3. Agar "Delete" bo'lsa — PVC o'chirilganda MA'LUMOTLAR YO'QOLADI!
 
-Bu produkciya muhitida xavfli — muhim ma'lumotlarni yo'qotishingiz mumkin.
+Bu production muhitida xavfli — muhim ma'lumotlarni yo'qotishingiz mumkin.

@@ -2,7 +2,7 @@
 
 echo "🔍 Ko'p konteynerli pod holatini tekshirilmoqda..."
 
-# Check pod ishlayotganligini and all containers are ready
+# Pod ishlayotganligini va barcha konteynerlar tayyor ekanligini tekshirish
 POD_STATUS=$(kubectl get pod app-with-logging -n k8squest -o jsonpath='{.status.phase}' 2>/dev/null)
 READY_CONTAINERS=$(kubectl get pod app-with-logging -n k8squest -o jsonpath='{.status.containerStatuses[?(@.ready==true)].name}' 2>/dev/null | wc -w | tr -d ' ')
 TOTAL_CONTAINERS=$(kubectl get pod app-with-logging -n k8squest -o jsonpath='{.spec.containers[*].name}' 2>/dev/null | wc -w | tr -d ' ')

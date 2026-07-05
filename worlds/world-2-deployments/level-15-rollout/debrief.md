@@ -6,7 +6,7 @@ Deployment `maxUnavailable: 100%` va `maxSurge: 0` bilan sozlangan edi, bu Kuber
 
 Bu har safar yangi versiya deploy qilganingizda xizmatning **to'liq to'xtashiga** olib keldi!
 
-Bu oddiy deployment larni incidentga aylantirishi mumkin bo'lgan jiddiy produksiya xatosi.
+Bu oddiy deployment larni incidentga aylantirishi mumkin bo'lgan jiddiy production xatosi.
 
 ## Kubernetes Qanday Ishladi
 

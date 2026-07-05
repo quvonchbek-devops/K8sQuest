@@ -9,7 +9,7 @@ NC='\033[0m' # No Color
 echo "🔍 Level 31 tekshiruvi: PersistentVolumeClaim Pending..."
 echo ""
 
-# Stage 1: Check PVC mavjudligini
+# 1-bosqich: PVC mavjudligini tekshirish
 echo "📋 1-bosqich: Tekshirilmoqda PVC mavjudligini..."
 if ! kubectl get pvc app-storage-claim -n k8squest &>/dev/null; then
     echo -e "${RED}❌ PVC 'app-storage-claim' topilmadi in namespace 'k8squest'${NC}"
@@ -20,7 +20,7 @@ fi
 echo -e "${GREEN}✓ PVC mavjud${NC}"
 echo ""
 
-# Stage 2: Check PVC status
+# 2-bosqich: PVC holatini tekshirish
 echo "📋 2-bosqich: Tekshirilmoqda PVC bog'lanish holatini..."
 PVC_STATUS=$(kubectl get pvc app-storage-claim -n k8squest -o jsonpath='{.status.phase}')
 
@@ -94,7 +94,7 @@ fi
 echo -e "${GREEN}✓ PVC Bound holatida${NC}"
 echo ""
 
-# Stage 3: Verify PV mavjud and is bound
+# 3-bosqich: PV mavjud va bound ekanligini tekshirish
 echo "📋 3-bosqich: Tekshirilmoqda PersistentVolume..."
 PV_NAME=$(kubectl get pvc app-storage-claim -n k8squest -o jsonpath='{.spec.volumeName}')
 
@@ -117,7 +117,7 @@ fi
 echo -e "${GREEN}✓ PV '$PV_NAME' is bound to PVC${NC}"
 echo ""
 
-# Stage 4: Check saqlash hajmini match
+# 4-bosqich: Saqlash hajmi mosligini tekshirish
 echo "📋 4-bosqich: Tekshirilmoqda saqlash hajmini..."
 PV_CAPACITY=$(kubectl get pv "$PV_NAME" -o jsonpath='{.spec.capacity.storage}')
 PVC_REQUEST=$(kubectl get pvc app-storage-claim -n k8squest -o jsonpath='{.spec.resources.requests.storage}')
@@ -125,7 +125,7 @@ PVC_REQUEST=$(kubectl get pvc app-storage-claim -n k8squest -o jsonpath='{.spec.
 echo "   PV capacity: $PV_CAPACITY"
 echo "   PVC request: $PVC_REQUEST"
 
-# Convert to bytes for comparison (simple check for common cases)
+# Solishtirish uchun byte larga aylantirish (oddiy holat uchun tekshiruv)
 if [[ "$PV_CAPACITY" == *"Mi"* ]] && [[ "$PVC_REQUEST" == *"Gi"* ]]; then
     echo -e "${YELLOW}⚠️  Warning: PV capacity might be too small${NC}"
 fi
@@ -133,14 +133,14 @@ fi
 echo -e "${GREEN}✓ Storage capacity validated${NC}"
 echo ""
 
-# Stage 5: Check pod status
+# 5-bosqich: Pod holatini tekshirish
 echo "📋 5-bosqich: Tekshirilmoqda pod holatini..."
 if ! kubectl get pod database-pod -n k8squest &>/dev/null; then
     echo -e "${RED}❌ Pod 'database-pod' topilmadi${NC}"
     exit 1
 fi
 
-# Wait a bit for pod to start
+# Pod ishga tushishi uchun biroz kutish
 sleep 3
 
 POD_STATUS=$(kubectl get pod database-pod -n k8squest -o jsonpath='{.status.phase}')
@@ -155,7 +155,7 @@ fi
 echo -e "${GREEN}✓ Pod is running${NC}"
 echo ""
 
-# Stage 6: Verify volume ulangan ekanligini
+# 6-bosqich: Volume ulangan ekanligini tekshirish
 echo "📋 6-bosqich: Tekshirilmoqda volume mount..."
 MOUNT_CHECK=$(kubectl exec database-pod -n k8squest -- ls /data 2>&1)
 if [ $? -ne 0 ]; then

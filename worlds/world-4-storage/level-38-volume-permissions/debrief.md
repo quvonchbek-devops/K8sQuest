@@ -112,7 +112,7 @@ spec:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 1. **Always set fsGroup for non-root containers:**
    ```yaml

@@ -297,7 +297,7 @@ curl http://external-db.default.svc.cluster.local
 
 ---
 
-## 💔 Real-World Horror Story: The $45,000 LoadBalancer Bill
+## 💔 HAQIQIY VOQEA: $45,000 LoadBalancer Hisob-Kitobi
 
 **Kompaniya:** StartupCo (SaaS platform)  
 **Date:** March 2023  
@@ -577,7 +577,7 @@ Does the service need external access?
 
 ---
 
-## 📚 Best Practices
+## 📚 Eng Yaxshi Amaliyotlar
 
 ### 1. **Default to ClusterIP**
 ```yaml
@@ -675,7 +675,7 @@ kubectl get services --all-namespaces -o wide | grep LoadBalancer
 # NLB ≈ $16/month + $0.006/hour per LCU
 ```
 
-### 6. **Security Best Practices**
+### 6. **Xavfsizlik Eng Yaxshi Amaliyotlari**
 ```yaml
 # Limit LoadBalancer source ranges
 apiVersion: v1
@@ -810,7 +810,7 @@ curl http://localhost:30080
 | LoadBalancer | ✅ | ✅ | $$$  | Cloud production |
 | Ingress | ✅ | ✅ | $    | Multi-service routing |
 
-### Produkciya Checklist
+### Production Checklist
 
 Production ga deploy qilishdan oldin:
 
@@ -858,7 +858,7 @@ Siz o'zlashtirgansiz Kubernetes service turinis and cloud provider integration. 
 - ✅ Design cost-effective architectures with Ingress
 - ✅ Avoid the $45,000 LoadBalancer mistake
 
-**Eslab qoling:** Production da, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingizll will thank you!
+**Eslab qoling:** Production da, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingiz minnatdor bo'ladi!
 
 ---
 

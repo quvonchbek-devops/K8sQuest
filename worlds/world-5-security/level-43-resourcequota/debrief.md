@@ -304,7 +304,7 @@ spec:
 
 ---
 
-## 🛡️ ResourceQuota Best Practices
+## 🛡️ ResourceQuota Eng Yaxshi Amaliyotlari
 
 ### 1. Set Quotas on All Namespaces
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Get replica counts
+# Replica sonlarini olish
 STABLE=$(kubectl get deployment app-stable -n k8squest -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
 CANARY=$(kubectl get deployment app-canary -n k8squest -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
 

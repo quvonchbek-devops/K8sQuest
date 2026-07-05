@@ -94,7 +94,7 @@ echo "📋 5-bosqich: Har bir pod uchun DNS resolution tekshirilmoqda..."
 kubectl run -n k8squest dns-test --image=busybox:1.28 --restart=Never --rm -i --command -- sleep 1 &>/dev/null || true
 kubectl delete pod dns-test -n k8squest --ignore-not-found=true &>/dev/null
 
-# Create test pod
+# Test pod yaratish
 cat <<EOF | kubectl apply -f - &>/dev/null
 apiVersion: v1
 kind: Pod
@@ -108,11 +108,11 @@ spec:
     command: ['sleep', '3600']
 EOF
 
-# Wait for test pod to be ready
+# Test pod tayyor bo'lishini kutish
 echo "   DNS test pod ishga tushirilmoqda..."
 kubectl wait --for=condition=Ready pod/dns-test -n k8squest --timeout=30s &>/dev/null
 
-# Test DNS for each StatefulSet pod
+# Har bir StatefulSet pod uchun DNS ni tekshirish
 POD_COUNT=$(kubectl get statefulset web -n k8squest -o jsonpath='{.spec.replicas}')
 DNS_SUCCESS=true
 

@@ -48,7 +48,7 @@ spec:
 
 ### Tushunish Ingress Path Matching
 
-Kubernetes Ingress **path-asoslangan yo'naltirish** ishlatib HTTP/HTTPS trafikni turli backend service ni larga yo'naltiradi. `path` maydonield in the Ingress spec determines which requests get routed to which service.
+Kubernetes Ingress **path-asoslangan yo'naltirish** ishlatib HTTP/HTTPS trafikni turli backend service larga yo'naltiradi. `path` maydoni Ingress spec da qaysi so'rovlar qaysi service ga yo'naltirilishini belgilaydi.
 
 **How Path Matching Works:**
 
@@ -715,7 +715,7 @@ paths:
    - Putting catch-all `/` path first (it catches everything!)
    - Forgetting trailing slashes with `Exact` pathType
 
-6. **Real-World Lessons:**
+6. **Haqiqiy Dunyo Saboqlari:**
    - Path misconfigurations can cause complete outages
    - Test ALL API versions, not just one
    - Monitor 404 rates to catch routing issues

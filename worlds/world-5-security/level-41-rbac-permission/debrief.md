@@ -422,7 +422,7 @@ rules:
 
 ---
 
-## 🛡️ RBAC Best Practices
+## 🛡️ RBAC Eng Yaxshi Amaliyotlari
 
 ### 1. Principle of Least Privilege
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check if it's a StatefulSet (not Deployment)
+# StatefulSet ekanligini tekshirish (Deployment emas)
 if kubectl get statefulset database -n k8squest &>/dev/null; then
     READY=$(kubectl get statefulset database -n k8squest -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
     DESIRED=$(kubectl get statefulset database -n k8squest -o jsonpath='{.spec.replicas}' 2>/dev/null)
@@ -20,7 +20,7 @@ if kubectl get statefulset database -n k8squest &>/dev/null; then
         
         exit 0
     else
-        echo "⏳ Waiting for StatefulSet to be ready"
+        echo "⏳ StatefulSet tayyor bo'lishi kutilmoqda"
         echo "   Ready: $READY/$DESIRED"
         exit 1
     fi

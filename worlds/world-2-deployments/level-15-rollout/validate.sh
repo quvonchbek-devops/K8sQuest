@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check rollout strategy
+# Rollout strategiyasini tekshirish
 MAX_UNAVAILABLE=$(kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.strategy.rollingUpdate.maxUnavailable}' 2>/dev/null)
 
 # Convert percentage to number if needed
@@ -13,7 +13,7 @@ if [[ "$MAX_UNAVAILABLE" == *"%"* ]]; then
     fi
 fi
 
-# Check if it's a safe absolute number (for 3 replicas, max 1 or 2 unavailable is safe)
+# Xavfsiz mutlaq son ekanligini tekshirish (3 replica uchun max 1 yoki 2 unavailable xavfsiz)
 REPLICAS=$(kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.replicas}' 2>/dev/null)
 if [ "$MAX_UNAVAILABLE" -ge "$REPLICAS" ]; then
     echo "❌ maxUnavailable ($MAX_UNAVAILABLE) >= replicas ($REPLICAS)"
@@ -21,7 +21,7 @@ if [ "$MAX_UNAVAILABLE" -ge "$REPLICAS" ]; then
     exit 1
 fi
 
-# Check all pods are ready
+# Barcha pod lar tayyor ekanligini tekshirish
 READY=$(kubectl get deployment critical-api -n k8squest -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
 DESIRED=$(kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.replicas}' 2>/dev/null)
 
@@ -31,7 +31,7 @@ if [ "$READY" = "$DESIRED" ] && [ "$MAX_UNAVAILABLE" -lt "$REPLICAS" ]; then
     echo "   All $READY/$DESIRED pods are ready"
     exit 0
 else
-    echo "⏳ Waiting for rollout to complete"
+    echo "⏳ Rollout tugashi kutilmoqda"
     echo "   Ready: $READY/$DESIRED"
     exit 1
 fi

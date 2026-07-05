@@ -159,7 +159,7 @@ startupProbe:
 
 ---
 
-## 💔 Real-World Horror Story: The $1.2M Endpoint Incident
+## 💔 HAQIQIY VOQEA: $1.2M Endpoint Hodisasi
 
 **Kompaniya:** StreamVideo Inc. (Video streaming platform)  
 **Date:** November 2022  
@@ -473,7 +473,7 @@ IP:.status.podIP
 
 ---
 
-## 🎯 Probe Configuration Best Practices
+## 🎯 Probe Konfiguratsiya Eng Yaxshi Amaliyotlari
 
 ### 1. **Choose the Right Probe Type**
 
@@ -736,7 +736,7 @@ kubectl describe pods -l app=web | grep -i "readiness probe failed"
 4. **Endpoints = Ready pods** - Only ready pods receive traffic
 5. **Probe larni test qiling** — production dan oldin to'g'ri ishlashini tekshiring
 
-### Produkciya Checklist
+### Production Checklist
 
 Production ga deploy qilishdan oldin:
 

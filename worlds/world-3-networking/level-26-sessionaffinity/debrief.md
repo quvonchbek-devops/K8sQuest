@@ -375,7 +375,7 @@ sessionAffinity: None       # Default, no affinity
 sessionAffinity: ClientIP   # Route by client IP
 ```
 
-**NOTE:** Kubernetes faqat shu ikki qiymatni qo'llab-quvvatlaydi. Service darajasida boshqa variantlar (cookie-asoslangan affinity kabi) yo'qice level. Kengaytirilgan yo'naltirish uchun Ingress controller ishlating.
+**NOTE:** Kubernetes faqat shu ikki qiymatni qo'llab-quvvatlaydi. Service darajasida boshqa variantlar (cookie-asoslangan affinity kabi) yo'q. Kengaytirilgan yo'naltirish uchun Ingress controller ishlating.
 
 ---
 
@@ -836,7 +836,7 @@ readinessProbe:
    - ✅ Simple setup, works with legacy apps
    - ❌ Uneven load, sessions lost on pod restart, poor scalability
 
-5. **Real-World Lessons:**
+5. **Haqiqiy Dunyo Saboqlari:**
    - Session affinity issues can cause massive customer impact ($4.7M!)
    - Doim test qiling full user journeys with multiple replicas
    - Monitor session behavior and cart abandonment

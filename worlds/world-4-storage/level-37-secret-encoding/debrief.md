@@ -4,7 +4,7 @@
 
 ---
 
-## � The Critical Lesson: Base64 is NOT Security
+## ⚠️ Muhim Saboq: Base64 — bu Xavfsizlik EMAS
 
 **Siz ko'rganingiz:**
 ```yaml
@@ -121,7 +121,7 @@ data:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 1. **Use stringData for simplicity:**
    ```yaml

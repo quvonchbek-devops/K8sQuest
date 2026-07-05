@@ -50,7 +50,7 @@ egress:
 
 ## � Pro Maslahat: Incremental Application
 
-**Good News:** Siz apply NetworkPolicy ni fixes **siz deleting** the existing setup!
+**Yaxshi Yangilik:** Mavjud sozlamalarni **o'chirmasdan** NetworkPolicy ni apply qilishingiz mumkin!
 
 ### Why This Works
 
@@ -625,7 +625,7 @@ spec:
 
 ---
 
-## 🛡️ NetworkPolicy ni Best Practices
+## 🛡️ NetworkPolicy Eng Yaxshi Amaliyotlari
 
 ### 1. Start with Default Deny
 

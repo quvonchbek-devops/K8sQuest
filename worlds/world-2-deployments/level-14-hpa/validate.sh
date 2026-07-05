@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check if HPA can get metrics
+# HPA metrikalar ola olishini tekshirish
 HPA_STATUS=$(kubectl get hpa web-backend-hpa -n k8squest -o jsonpath='{.status.conditions[?(@.type=="ScalingActive")].status}' 2>/dev/null)
 
 if [ "$HPA_STATUS" = "True" ]; then

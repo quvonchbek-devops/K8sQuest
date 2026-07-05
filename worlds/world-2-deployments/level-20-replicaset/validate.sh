@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check if using Deployment (not standalone ReplicaSet)
+# Deployment ishlatilayotganligini tekshirish (mustaqil ReplicaSet emas)
 if kubectl get deployment web-app -n k8squest &>/dev/null; then
     READY=$(kubectl get deployment web-app -n k8squest -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
     DESIRED=$(kubectl get deployment web-app -n k8squest -o jsonpath='{.spec.replicas}' 2>/dev/null)
@@ -15,7 +15,7 @@ if kubectl get deployment web-app -n k8squest &>/dev/null; then
         
         exit 0
     else
-        echo "⏳ Waiting for Deployment to be ready"
+        echo "⏳ Deployment tayyor bo'lishi kutilmoqda"
         echo "   Ready: $READY/$DESIRED"
         exit 1
     fi
