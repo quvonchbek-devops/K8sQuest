@@ -513,7 +513,7 @@ roleRef:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **RBAC = Role + RoleBinding** - Both required for permissions
 2. **ServiceAccount = Identity** - What pods run as

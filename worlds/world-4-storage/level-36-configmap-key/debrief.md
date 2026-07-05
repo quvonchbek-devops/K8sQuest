@@ -68,7 +68,7 @@ volumeMounts:
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: Key Typo
 ```yaml
@@ -131,7 +131,7 @@ env:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **All referenced keys must exist** - Or pod fails to start
 2. **Keys are case-sensitive** - database_host ≠ databaseHost

@@ -642,7 +642,7 @@ kubectl exec <pod-name> -- grep Cap /proc/1/status
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Doim ishlating SecurityContext** - Hech qachon deploy qilmang siz it
 2. **Run as non-root** - runAsUser + runAsNonRoot

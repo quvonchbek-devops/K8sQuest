@@ -238,7 +238,7 @@ kubectl get pod nginx-broken -n k8squest -w
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Always check previous logs** when debugging crashes (`--previous` flag)
 2. **Pod specs are mostly immutable** - delete and recreate to change them

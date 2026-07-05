@@ -694,7 +694,7 @@ provisioner: efs.csi.aws.com
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Access mode lar POD lar emas, NODE lar haqida** — RWO = bitta node, RWX = ko'p node
 2. **Not all storage supports all modes** - Check your storage backend capabilities

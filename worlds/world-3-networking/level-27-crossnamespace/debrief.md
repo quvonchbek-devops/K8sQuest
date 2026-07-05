@@ -30,7 +30,7 @@ command: ['sh', '-c', 'wget -q -O- http://api-service']
 
 ---
 
-## The Root Cause: DNS Namespace Scoping
+## Asosiy Sabab: DNS Namespace Chegaralanishi
 
 ### Tushunish Kubernetes DNS
 
@@ -416,7 +416,7 @@ kubectl run test-frontend -n frontend --image=curlimages/curl -- \
 
 ---
 
-## Kubernetes DNS Deep Dive
+## Kubernetes DNS Chuqur Tahlil
 
 ### DNS Record Types
 
@@ -918,7 +918,7 @@ sum(rate(coredns_dns_response_rcode_count_total{rcode="NXDOMAIN"}[5m])) > 10
 
 ---
 
-## Key Takeaways
+## Asosiy Xulosalar
 
 1. **DNS Naming Rules:**
    - Same namespace: `service-name` (short name works)

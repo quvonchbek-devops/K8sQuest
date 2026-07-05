@@ -333,7 +333,7 @@ nodeSelectorTerms:
 
 ---
 
-## 🚨 Common Mistakes
+## 🚨 Keng Tarqalgan Xatolar
 
 ### Mistake 1: Wrong Label Key
 
@@ -454,7 +454,7 @@ preferred...:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **NodeAffinity = intelligent scheduling** - Match pods to appropriate nodes
 2. **Required vs Preferred** - Hard vs soft constraints

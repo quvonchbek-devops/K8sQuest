@@ -72,7 +72,7 @@ web-cluster.k8squest.svc.cluster.local → [10.244.1.5, 10.244.1.6, 10.244.1.7]
 
 ---
 
-## 🔍 Deep Dive: Headless Services
+## 🔍 Chuqur Tahlil: Headless Service lar
 
 ### What is a Headless Service?
 
@@ -1262,7 +1262,7 @@ rs.reconfig(cfg)
 
 ---
 
-## 🎓 Key Takeaways
+## 🎓 Asosiy Xulosalar
 
 ### Must Eslab qoling
 

@@ -44,7 +44,7 @@ spec:
 
 ---
 
-## The Root Cause: Path Mismatch
+## Asosiy Sabab: Path Nomuvofiqlik
 
 ### Tushunish Ingress Path Matching
 
@@ -687,7 +687,7 @@ paths:
 
 ---
 
-## Key Takeaways
+## Asosiy Xulosalar
 
 1. **Path Matching is Literal:**
    - `/api` does NOT match `/`

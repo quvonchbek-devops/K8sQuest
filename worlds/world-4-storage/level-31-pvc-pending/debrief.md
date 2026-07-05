@@ -73,7 +73,7 @@ spec:
 
 ---
 
-## 🔍 Deep Dive: PersistentVolumes & Claims
+## 🔍 Chuqur Tahlil: PersistentVolume lar va Claim lar
 
 ### What are PersistentVolumes?
 
@@ -866,7 +866,7 @@ spec:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 ### Must Eslab qoling
 

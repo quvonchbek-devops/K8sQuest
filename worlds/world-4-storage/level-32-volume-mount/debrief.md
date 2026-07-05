@@ -537,7 +537,7 @@ volumeMounts:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Mount Path is Critical** - It determines where files appear in the container
 2. **Match Application Expectations** - mountPath must align with app code

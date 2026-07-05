@@ -62,7 +62,7 @@ spec:
 
 ---
 
-## 🔍 Deep Dive: Kubernetes Service Types
+## 🔍 Chuqur Tahlil: Kubernetes Service Turlari
 
 Kubernetes provides **four service types**, each solving different networking needs:
 
@@ -507,7 +507,7 @@ deny[msg] {
 - **Team trained** on Kubernetes service types and costs
 - **Monitoring added** for cloud resource usage
 
-### Key Takeaway
+### Asosiy Xulosa
 **One LoadBalancer per cluster, not one per service!**
 
 Use the Ingress pattern:
@@ -791,7 +791,7 @@ curl http://localhost:30080
 
 ---
 
-## 🎓 Key Takeaways
+## 🎓 Asosiy Xulosalar
 
 ### Must Eslab qoling
 

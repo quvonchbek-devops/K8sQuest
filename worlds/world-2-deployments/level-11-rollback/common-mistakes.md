@@ -282,7 +282,7 @@ kubectl logs deployment/payment-api -n k8squest
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Check history before rollback** - Know which revision to target
 2. **Use `--to-revision=N`** - Don't rely on default "undo"

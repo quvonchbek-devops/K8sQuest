@@ -46,7 +46,7 @@ spec:
 
 ---
 
-## The Root Cause: Label Selector Mismatch
+## Asosiy Sabab: Label Selector Nomuvofiqlik
 
 ### Tushunish NetworkPolicy
 
@@ -311,7 +311,7 @@ ingress:
 
 ---
 
-## NetworkPolicy Deep Dive
+## NetworkPolicy Chuqur Tahlil
 
 ### 1. Ingress vs Egress
 
@@ -859,7 +859,7 @@ ingress:
 
 ---
 
-## Key Takeaways
+## Asosiy Xulosalar
 
 1. **NetworkPolicy Uses Labels:**
    - `podSelector` determines which pods the policy applies TO

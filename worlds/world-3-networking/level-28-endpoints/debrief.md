@@ -65,7 +65,7 @@ spec:
 
 ---
 
-## 🔍 Deep Dive: Readiness vs Liveness Probes
+## 🔍 Chuqur Tahlil: Readiness va Liveness Probe lar
 
 Kubernetes da **uchta turdagi** health check mavjud, har biri turli maqsadga xizmat qiladi:
 
@@ -726,7 +726,7 @@ kubectl describe pods -l app=web | grep -i "readiness probe failed"
 
 ---
 
-## 📚 Key Takeaways
+## 📚 Asosiy Xulosalar
 
 ### Must Eslab qoling
 

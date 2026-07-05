@@ -1,4 +1,4 @@
-# 🎯 World 2: Deployments & Scaling - Quick Reference Card
+# 🎯 World 2: Deployment lar & Scaling — Tezkor Ma'lumotnoma
 
 > **Advanced deployment patterns and scaling strategies**
 

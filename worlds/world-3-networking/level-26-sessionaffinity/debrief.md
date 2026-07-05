@@ -42,7 +42,7 @@ spec:
 
 ---
 
-## The Root Cause: Missing Session Affinity
+## Asosiy Sabab: Session Affinity Yetishmayapti
 
 ### Tushunish Kubernetes Service Load Balancing
 
@@ -319,7 +319,7 @@ Barcha pod lar savat ma'lumotlarini ulashadi → Session affinity kerak emas!
 
 ---
 
-## Session Affinity Deep Dive
+## Session Affinity Chuqur Tahlil
 
 ### Konfiguratsiya Options
 
@@ -375,7 +375,7 @@ sessionAffinity: None       # Default, no affinity
 sessionAffinity: ClientIP   # Route by client IP
 ```
 
-**NOTE:** Kubernetes faqat shu ikki qiymatni qo'llab-quvvatlaydi. Service darajasida boshqa variantlar (cookie-asoslangan affinity kabi) yo'qice level. For advanced routing, use an Ingress controller.
+**NOTE:** Kubernetes faqat shu ikki qiymatni qo'llab-quvvatlaydi. Service darajasida boshqa variantlar (cookie-asoslangan affinity kabi) yo'q. Kengaytirilgan yo'naltirish uchun Ingress controller ishlating.
 
 ---
 
@@ -814,7 +814,7 @@ readinessProbe:
 
 ---
 
-## Key Takeaways
+## Asosiy Xulosalar
 
 1. **Session Affinity Ensures Consistency:**
    - `sessionAffinity: ClientIP` routes requests from same IP to same pod

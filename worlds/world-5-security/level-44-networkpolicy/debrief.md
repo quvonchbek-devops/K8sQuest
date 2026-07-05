@@ -777,7 +777,7 @@ kubectl get pod my-pod --show-labels
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **NetworkPolicy = pod firewall** - Controls ingress/egress
 2. **Default deny** - Start restrictive, open as needed

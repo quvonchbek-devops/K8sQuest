@@ -83,7 +83,7 @@ Benefits:
 
 ---
 
-## 🎯 volumeClaimTemplates Deep Dive
+## 🎯 volumeClaimTemplates Chuqur Tahlil
 
 ### Qanday Ishlaydi
 
@@ -157,7 +157,7 @@ kubectl scale statefulset web --replicas=3
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: Using Static PVC with StatefulSet
 
@@ -533,7 +533,7 @@ spec:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **StatefulSets for stateful apps** - Databases, queues need stable identity
 2. **volumeClaimTemplates for per-pod storage** - Each instance gets own PVC

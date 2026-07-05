@@ -490,7 +490,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Use ResourceQuota everywhere** - Protect against runaway consumption
 2. **Set realistic quotas** - Based on actual needs, not guesses
