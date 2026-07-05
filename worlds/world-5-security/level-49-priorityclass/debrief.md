@@ -35,7 +35,7 @@ preemptionPolicy: PreemptLowerPriority
 
 1. **Higher value = higher priority**
 2. **Preemption evicts lower priority** pods
-3. **Use for critical workloads** only
+3. Faqat **muhim ish yuklari uchun** ishlating
 4. **Assign via priorityClassName**
 5. **Balance**: Don't make everything high priority!
 

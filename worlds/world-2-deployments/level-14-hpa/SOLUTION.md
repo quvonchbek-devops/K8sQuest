@@ -1,7 +1,7 @@
 # Solution for Level 14: HPA Can't Scale
 
 ## Muammo
-The HorizontalPodAutoscaler (HPA) cannot scale because metrics-server is not installed in the cluster.
+HorizontalPodAutoscaler (HPA) scale qila olmaydi chunki klasterda metrics-server o'rnatilmagan.
 
 ## Yechim
 

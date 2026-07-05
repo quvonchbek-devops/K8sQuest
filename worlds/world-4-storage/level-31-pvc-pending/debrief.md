@@ -914,4 +914,4 @@ When PVC is Pending:
 
 *"A PersistentVolumeClaim is a promise. A PersistentVolume is the fulfillment. Both must agree on the terms."* - Kubernetes Storage Handbook
 
-**Eslab qoling:** For production databases, always use `persistentVolumeReclaimPolicy: Retain`. Your data's survival depends on it!
+**Eslab qoling:** Production ma'lumotlar bazalari uchun doim `persistentVolumeReclaimPolicy: Retain` ishlating. Ma'lumotlaringizning saqlanishi bunga bog'liq!

@@ -6,7 +6,7 @@
 
 ## � The Critical Lesson: Base64 is NOT Security
 
-**What You Saw:**
+**Siz ko'rganingiz:**
 ```yaml
 data:
   username: YWRtaW4=  # Looks encrypted... but it's not!

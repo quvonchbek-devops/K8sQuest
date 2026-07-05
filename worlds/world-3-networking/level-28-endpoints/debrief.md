@@ -1,6 +1,6 @@
 # 🎓 Missiya Yakuni: Service Endpoints & Readiness Probes
 
-**Tabriklaymiz!** Siz o'zlashtirgansiz production Kubernetes dagi eng muhim konseptlardan birini: **readiness probes and service endpoint management**. This seemingly simple configuration detail has to'sib qo'ydi countless outages and saved millions in revenue.
+**Tabriklaymiz!** Siz o'zlashtirgansiz production Kubernetes dagi eng muhim konseptlardan birini: **readiness probe lar va service endpoint boshqaruvini**. This seemingly simple configuration detail has to'sib qo'ydi countless outages and saved millions in revenue.
 
 ---
 
@@ -203,12 +203,12 @@ spec:
 **11:47 AM - The Rollout Begins**
 - New deployment rolls out with improved ML model
 - Rolling update strategy: 25% pods at a time
-- First 125 pods are terminated, new pods start
+- Birinchi 125 pod to'xtatiladi, yangi pod lar boshlanadi
 
 **11:48 AM - Traffic Hits Unprepared Pods**
-- New pods get IP addresses and are added to service endpoints **immediately**
+- Yangi pod lar IP manzillar oladi va service endpoint larga **darhol** qo'shiladi
 - Load balancer starts sending 25% of traffic to new pods
-- Pods are still loading the 2GB ML model (45 seconds into 90-second startup)
+- Pod lar hali 2GB ML modelni yuklayapti (90 soniyalik ishga tushishning 45-soniyasi)
 - Users get **500 Internal Server Error** responses
 
 **11:49 AM - Cascade Begins**
@@ -227,7 +227,7 @@ spec:
 **11:55 AM - The "Fix" Makes It Worse**
 - On-call engineer sees high CPU on healthy pods
 - Scales deployment from 500 to 700 pods (thinking it's a capacity issue)
-- **200 new pods start**, all receiving traffic immediately
+- **200 yangi pod ishga tushadi**, hammasi darhol trafik qabul qiladi
 - Failure rate jumps to **65%**
 - Now trending #1 on Twitter
 
@@ -261,7 +261,7 @@ kubectl patch deployment transcoder -p '{
 ```
 
 **12:08 PM - Rollout Continues**
-- New pods now wait 100 seconds before being marked ready
+- Yangi pod lar endi tayyor deb belgilanishdan oldin 100 soniya kutadi
 - Only ready pods added to endpoints
 - Failure rate drops to 15%
 
@@ -734,7 +734,7 @@ kubectl describe pods -l app=web | grep -i "readiness probe failed"
 2. **Liveness probes restart pods** - Use conservatively to avoid restart loops
 3. **Startup probes for slow apps** - Handle long initialization times
 4. **Endpoints = Ready pods** - Only ready pods receive traffic
-5. **Test your probes** - Tekshirish they work correctly before production
+5. **Probe larni test qiling** — production dan oldin to'g'ri ishlashini tekshiring
 
 ### Produkciya Checklist
 

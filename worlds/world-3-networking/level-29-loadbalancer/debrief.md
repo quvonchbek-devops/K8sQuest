@@ -11,7 +11,7 @@ Service ingiz sozlangan edi as type `LoadBalancer` in a local development cluste
 - **Service stuck in "Pending" state** indefinitely
 - **No external IP assigned** to the service
 - **Application completely inaccessible** from outside the cluster
-- **Confusion** about why it works in cloud but not locally
+- Cloud da nima uchun ishlaydi lekin lokal da ishlamaydi degan **chalkashlik**
 
 ### The Root Cause
 ```yaml
@@ -838,7 +838,7 @@ Before deploying to production:
 
 Siz o'zlashtirgansiz Kubernetes service types and cloud provider integration. Keyingi:
 
-**Level 30: Headless Services** - Learn about StatefulSet DNS and when `clusterIP: None` is the answer
+**Level 30: Headless Service lar** — StatefulSet DNS va `clusterIP: None` qachon yechim ekanini o'rganing
 
 ### Further Learning
 
@@ -862,5 +862,5 @@ Siz o'zlashtirgansiz Kubernetes service types and cloud provider integration. Ke
 
 ---
 
-*"The difference between a $50/month and $5,000/month cloud bill often comes down to understanding service types."* - Kubernetes Cost Optimization Guide
+*"Oyiga $50 va $5,000 cloud hisob orasidagi farq ko'pincha service turlarini tushunishga bog'liq."* - Kubernetes Cost Optimization Guide
 

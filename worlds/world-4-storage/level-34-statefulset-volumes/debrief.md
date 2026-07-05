@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 # All pods sharing ONE PVC
 volumes:
@@ -17,7 +17,7 @@ volumes:
 
 **Natija:** Database corruption - all 3 postgres pods writing to same files!
 
-**The Solution:**
+**Yechim:**
 ```yaml
 # Each pod gets its OWN PVC
 volumeClaimTemplates:
@@ -204,7 +204,7 @@ volumeClaimTemplates:
     accessModes: [ReadWriteMany]  # Unnecessary!
 ```
 
-**Problem:** More expensive storage, not needed for per-pod PVCs
+**Muammo:** Qimmatroq storage, har pod uchun PVC larda kerak emas
 
 **Fix:** Use ReadWriteOnce (each PVC mounted by single pod)
 
@@ -437,7 +437,7 @@ spec:
 ### Lessons Learned
 
 1. **Use StatefulSet for stateful apps:** Hech qachon ishlatmang Deployment for databases
-2. **Each instance needs own storage:** volumeClaimTemplates, not shared PVC
+2. **Har bir instance o'z storage ga ega bo'lishi kerak:** umumiy PVC emas, volumeClaimTemplates
 3. **Test HA configurations:** Tekshirish replicas work before production
 4. **Monitor file locking:** Alert on database file conflicts
 5. **Validate backups:** Test restoration regularly
@@ -538,7 +538,7 @@ spec:
 1. **StatefulSets for stateful apps** - Databases, queues need stable identity
 2. **volumeClaimTemplates for per-pod storage** - Each instance gets own PVC
 3. **PVCs persist across pod restarts** - Data survives pod lifecycle
-4. **Never share single PVC for databases** - Causes corruption and conflicts
+4. **Ma'lumotlar bazalari uchun bitta PVC ni ulashmang** — buzilish va to'qnashuvlarga olib keladi
 5. **Plan storage capacity upfront** - Resizing is complex
 6. **Use headless services** - Enable stable network identity
 7. **Test HA before production** - Tekshirish multiple replicas work correctly

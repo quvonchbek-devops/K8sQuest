@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 # Deny-all policy to'sib qo'yish everything
 spec:
@@ -19,7 +19,7 @@ spec:
 
 **Natija:** Backend ulana olmadi to database, connection refused
 
-**The Solution:**
+**Yechim:**
 ```yaml
 # Database ingress: Allow from backend
 ingress:

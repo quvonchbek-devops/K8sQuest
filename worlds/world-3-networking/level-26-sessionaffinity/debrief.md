@@ -32,7 +32,7 @@ spec:
   # ❌ MISSING: sessionAffinity: ClientIP
 ```
 
-**The Problem:**
+**Muammo:**
 - Service uses default load-balancing (random/round-robin)
 - So'rov 1: Foydalanuvchi login qiladi → Pod 1 (session Pod 1 xotirasida saqlanadi)
 - Request 2: User loads page → Pod 2 (no session! User appears logged out)
@@ -135,7 +135,7 @@ spec:
       timeoutSeconds: 10800          # 3 hours (default)
 ```
 
-**How It Works:**
+**Qanday ishlaydi:**
 
 1. **First Request:**
    - Client IP: 10.244.0.5
@@ -150,7 +150,7 @@ spec:
 
 3. **Timeout:**
    - Mapping expires after `timeoutSeconds` (default: 10800s / 3 hours)
-   - Next request creates new mapping (may go to different pod)
+   - Keyingi so'rov yangi xaritalash yaratadi (boshqa pod ga tushishi mumkin)
 
 **Implementation:**
 
@@ -693,7 +693,7 @@ sessionAffinityConfig:
 kubectl exec client -n k8squest -- sh -c 'for i in 1 2 3 4 5; do wget -q -O- http://session-service; echo; done'
 ```
 
-All responses bo'lishi kerak from the **same pod**.
+Barcha javoblar **bitta pod** dan bo'lishi kerak.
 
 ### 3. Test Different IPs Get Different Pods
 

@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 # Quota allows only 2 CPUs total
 spec:
@@ -21,7 +21,7 @@ resources:
 
 **Natija:** Pod stuck in Pending, "exceeded quota" error
 
-**The Solution:**
+**Yechim:**
 ```yaml
 # Reduced to fit within quota
 resources:
@@ -51,7 +51,7 @@ resources:
 
 ### Scope
 
-- **Per-namespace:** Each namespace has its own quota
+- **Har bir namespace uchun:** Har bir namespace o'z quota siga ega
 - **Aggregate:** Total across all objects in namespace
 - **Enforced at creation:** Kubernetes rejects objects that would exceed quota
 
@@ -150,7 +150,7 @@ resources:
 **When pod scheduled:**
 - Kubernetes finds node with ≥500m CPU available
 - Reserves 500m CPU and 512Mi memory
-- Other pods can't use these reserved resources
+- Boshqa pod lar bu zaxiralangan resurslarni ishlata olmaydi
 
 ### Limits (Maximum Resources)
 
@@ -237,13 +237,13 @@ resources:
 **Monday 09:20** - Each pod requests 2 CPUs + 4Gi memory  
 **Monday 09:25** - Cluster autoscaler sees resource pressure  
 **Monday 09:30** - Autoscaler adds 50 new nodes (r5.4xlarge, $1.34/hr each)  
-**Monday 09:35** - Still not enough, adds 50 more nodes  
+**Dushanba 09:35** — Hali ham yetarli emas, yana 50 ta node qo'shadi  
 **Monday 10:00** - 150 nodes running ($201/hour total)  
 **Monday 11:00** - Other teams' pods evicted (resource pressure)  
 **Monday 12:00** - Production services impacted  
 **Monday 13:00** - Alarms finally noticed  
 **Monday 13:30** - Emergency response, pods killed  
-**Weekly Bill** - $28,944 for test workload (should have been ~$500)  
+**Haftalik hisob** — test ish yuki uchun $28,944 (taxminan $500 bo'lishi kerak edi)  
 **Final Damage** - $200K over subscription bills before limits set
 
 ### Root Causes

@@ -1,263 +1,263 @@
-# Keng Tarqalgan Xatolar - Level 1: CrashLoopBackOff
+# Keng Tarqalgan Xatolar — Level 1: CrashLoopBackOff
 
-## ❌ Mistake #1: Not Checking Previous Logs
+## ❌ Xato #1: Oldingi Loglarni Tekshirmaslik
 
-**What players try:**
+**O'yinchilar nima qiladi:**
 ```bash
 kubectl logs nginx-broken -n k8squest
 ```
 
-**Why it fails:**
+**Nima uchun ishlamaydi:**
 Konteyner shunchalik tez crash bo'ladiki, bu buyruqni ishlatganingizda yangi konteynerda hali log yo'q (yoki juda kam). OLDINGI crash bo'lgan konteyner loglarini ko'rishingiz kerak.
 
-**Correct approach:**
+**To'g'ri yondashuv:**
 ```bash
 kubectl logs nginx-broken --previous -n k8squest
 ```
 
-**Key Learning:**
+**Asosiy saboq:**
 `--previous` bayrog'i oxirgi to'xtatilgan konteyner loglarini ko'rsatadi — crash larni debug qilayotganda aynan shu kerak.
 
 ---
 
-## ❌ Mistake #2: Trying to Edit a Running Pod
+## ❌ Xato #2: Ishlayotgan Pod ni Tahrirlashga Urinish
 
-**What players try:**
+**O'yinchilar nima qiladi:**
 ```bash
 kubectl edit pod nginx-broken -n k8squest
-# Try to change the command field
+# command maydonini o'zgartirishga urinish
 ```
 
-**Why it fails:**
+**Nima uchun ishlamaydi:**
 Ko'p pod spec maydonlari (`command` ni o'z ichiga olgan holda) yaratilgandan keyin **o'zgartirib bo'lmaydi** (immutable). Kubernetes o'zgarishlaringizni rad etadi yoki ular ta'sir qilmaydi.
 
-**Correct approach:**
+**To'g'ri yondashuv:**
 ```bash
-# Delete the broken pod
+# Buzilgan pod ni o'chirish
 kubectl delete pod nginx-broken -n k8squest
 
-# Apply the fixed YAML
+# Tuzatilgan YAML ni apply qilish
 kubectl apply -f solution.yaml -n k8squest
 ```
 
-**Key Learning:**
+**Asosiy saboq:**
 Pod spec o'zgarishi kerak bo'lganda, pod ni qayta yaratishingiz shart. Deployment lar aynan shuning uchun mavjud — ular buni siz uchun boshqaradi!
 
 ---
 
-## ❌ Mistake #3: Fixing the Wrong Container
+## ❌ Xato #3: Noto'g'ri Konteynerni Tuzatish
 
-**What players try:**
+**O'yinchilar nima qiladi:**
 Ko'p konteynerli pod larda, o'yinchilar ko'pincha qaysi biri haqiqatan crash bo'layotganini tekshirmasdan YAML dagi birinchi konteynerni tuzatadi.
 
-**Why it fails:**
+**Nima uchun ishlamaydi:**
 Event lar va status ko'rsatadi "Container 'app' is crashing" lekin siz konteynerni tuzatdingiz 'nginx'. Doim qaysi aniq konteyner muvaffaqiyatsiz ekanini tekshiring.
 
-**Correct approach:**
+**To'g'ri yondashuv:**
 ```bash
-# Check which container is failing
+# Qaysi konteyner muvaffaqiyatsiz ekanini tekshirish
 kubectl describe pod nginx-broken -n k8squest | grep -A 5 "State:"
 
-# Or look at container status
+# Yoki konteyner holatini ko'rish
 kubectl get pod nginx-broken -n k8squest -o jsonpath='{.status.containerStatuses[*].name}'
 ```
 
-**Key Learning:**
+**Asosiy saboq:**
 O'zgarish kiritishdan oldin doim muvaffaqiyatsiz bo'lgan aniq konteynerni aniqlang.
 
 ---
 
-## ❌ Mistake #4: Not Understanding Exit Codes
+## ❌ Xato #4: Chiqish Kodlarini Tushunmaslik
 
-**What players try:**
-See "Exit Code: 127" in describe output but don't understand what it means.
+**O'yinchilar nima qiladi:**
+"Exit Code: 127" ni describe natijasida ko'rasiz lekin nimani bildirshini tushunmaysiz.
 
-**Why it fails:**
+**Nima uchun ishlamaydi:**
 Chiqish kodlari konteyner NIMA UCHUN crash bo'lganini aytadi:
-- **Exit 0**: Normal exit (success)
-- **Exit 1**: General error
-- **Exit 127**: Command not found
-- **Exit 137**: Killed by OOM (Out of Memory)
-- **Exit 143**: Terminated (SIGTERM)
+- **Exit 0**: Normal chiqish (muvaffaqiyat)
+- **Exit 1**: Umumiy xato
+- **Exit 127**: Buyruq topilmadi
+- **Exit 137**: OOM tomonidan o'ldirildi (xotira yetishmovchiligi)
+- **Exit 143**: To'xtatildi (SIGTERM)
 
-**Correct approach:**
+**To'g'ri yondashuv:**
 ```bash
 kubectl describe pod nginx-broken -n k8squest | grep "Exit Code"
 ```
 
-If you see **Exit Code: 127**, the command doesn't exist or isn't in PATH.
+Agar **Exit Code: 127** ko'rsangiz, buyruq mavjud emas yoki PATH da yo'q.
 
-**Key Learning:**
-- **127 → Command not found** (typo in command or missing binary)
-- **137 → OOMKilled** (memory limit too low)
-- **1 → Application error** (check logs for details)
+**Asosiy saboq:**
+- **127 → Buyruq topilmadi** (buyruqda imlo xatosi yoki binary topilmadi)
+- **137 → OOMKilled** (xotira limiti juda past)
+- **1 → Application error** (tafsilotlar uchun loglarni tekshiring)
 
 ---
 
-## ❌ Mistake #5: Applying broken.yaml Again
+## ❌ Xato #5: broken.yaml ni Qayta Apply Qilish
 
-**What players try:**
+**O'yinchilar nima qiladi:**
 ```bash
 kubectl apply -f broken.yaml -n k8squest
-# Hope it works this time?
+# Bu safar ishlaydi deb umid qilish?
 ```
 
-**Why it fails:**
+**Nima uchun ishlamaydi:**
 Bir xil buzilgan konfiguratsiyani apply qilish muammoni tuzatmaydi! YAML ni o'zgartirish yoki tuzatilgan versiya yaratish kerak.
 
-**Correct approach:**
-1. Copy broken.yaml to a new file
-2. Edit the new file with fixes
-3. Apply the fixed file
+**To'g'ri yondashuv:**
+1. broken.yaml ni yangi faylga nusxalang
+2. Yangi faylni tuzatishlar bilan tahrirlang
+3. Tuzatilgan faylni apply qiling
 
 ```bash
 cp broken.yaml my-fix.yaml
-# Edit my-fix.yaml
+# my-fix.yaml ni tahrirlash
 kubectl apply -f my-fix.yaml -n k8squest
 ```
 
-**Key Learning:**
-`kubectl apply` doesn't "retry" - it enforces whatever config you give it. Fix the config first!
+**Asosiy saboq:**
+`kubectl apply` "qayta urinmaydi" — u siz bergan konfiguratsiyani majbur qiladi. Avval konfiguratsiyani tuzating!
 
 ---
 
-## ❌ Mistake #6: Ignoring Events
+## ❌ Xato #6: Event larni E'tiborsiz Qoldirish
 
-**What players try:**
+**O'yinchilar nima qiladi:**
 Faqat pod holati va loglarga e'tibor berish, event larni o'tkazib yuborish.
 
-**Why it fails:**
+**Nima uchun ishlamaydi:**
 Event larda muhim debug ma'lumotlari bor:
-- Why scheduling failed
-- When probes failed
-- Image pull errors
-- Resource quota violations
+- Nima uchun scheduling muvaffaqiyatsiz bo'ldi
+- Probe lar qachon muvaffaqiyatsiz bo'ldi
+- Image pull xatolari
+- Resource quota buzilishlari
 
-**Correct approach:**
+**To'g'ri yondashuv:**
 ```bash
-# Always check events as part of debugging
+# Debug qilishda doim event larni tekshiring
 kubectl get events -n k8squest --sort-by='.lastTimestamp'
 
-# Or check events for specific pod
+# Yoki aniq pod uchun event larni tekshiring
 kubectl describe pod nginx-broken -n k8squest | grep -A 20 Events
 ```
 
-**Key Learning:**
+**Asosiy saboq:**
 Event lar — Kubernetes ning nima noto'g'ri ketganini aytish usuli. Ular vaqt bo'yicha tartiblangan va nosozliklar ketma-ketligini ko'rsatadi.
 
 ---
 
-## ❌ Mistake #7: Not Testing the Fix
+## ❌ Xato #7: Tuzatishni Test Qilmaslik
 
-**What players try:**
-Change the YAML and immediately run validate.
+**O'yinchilar nima qiladi:**
+YAML ni o'zgartirib darhol validate qilish.
 
-**Why it fails:**
+**Nima uchun ishlamaydi:**
 O'zgarishlarni haqiqatan apply qilish va validatsiyadan oldin pod ishlayotganini tekshirish kerak.
 
-**Correct approach:**
+**To'g'ri yondashuv:**
 ```bash
-# 1. Delete old pod
+# 1. Eski pod ni o'chirish
 kubectl delete pod nginx-broken -n k8squest
 
-# 2. Apply fix
+# 2. Tuzatishni apply qilish
 kubectl apply -f solution.yaml -n k8squest
 
-# 3. Verify it's running
+# 3. Ishlayotganini tekshirish
 kubectl get pod nginx-broken -n k8squest
 
-# 4. Wait for Running status
+# 4. Running holatini kutish
 kubectl wait --for=condition=ready pod/nginx-broken -n k8squest --timeout=60s
 
-# 5. NOW validate
+# 5. ENDI tekshirish
 ./validate.sh
 ```
 
-**Key Learning:**
-Validatsiyani ishga tushirishdan oldin doim tuzatishingizni qo'lda tekshiring. kubectl get/describe/logs are your friends!
+**Asosiy saboq:**
+Validatsiyani ishga tushirishdan oldin doim tuzatishingizni qo'lda tekshiring. kubectl get/describe/logs — eng yaxshi do'stlaringiz!
 
 ---
 
-## ❌ Mistake #8: Forgetting Namespace
+## ❌ Xato #8: Namespace ni Unutish
 
-**What players try:**
+**O'yinchilar nima qiladi:**
 ```bash
 kubectl get pods
 # No pods found!
 ```
 
-**Why it fails:**
-Standart holatda kubectl `default` namespace ga qaraydi. K8sQuest uses the `k8squest` namespace.
+**Nima uchun ishlamaydi:**
+Standart holatda kubectl `default` namespace ga qaraydi. K8sQuest `k8squest` namespace ni ishlatadi.
 
-**Correct approach:**
+**To'g'ri yondashuv:**
 ```bash
-# Always specify namespace
+# Doim namespace ko'rsating
 kubectl get pods -n k8squest
 
-# Or set default namespace for session
+# Yoki sessiya uchun standart namespace o'rnating
 kubectl config set-context --current --namespace=k8squest
 ```
 
-**Key Learning:**
-Namespace lar resurslarni izolyatsiya qiladi. Doim ishlating `-n k8squest` or set it as default.
+**Asosiy saboq:**
+Namespace lar resurslarni izolyatsiya qiladi. Doim ishlating `-n k8squest` yoki uni standart qilib o'rnating.
 
 ---
 
-## 💡 Debugging Workflow - The Right Way
+## 💡 Debug Qilish Tartibi — To'g'ri Usul
 
-Here's the systematic approach that works:
+Mana ishlaydigan tizimli yondashuv:
 
 ```bash
-# 1. Check current status
+# 1. Joriy holatni tekshiring
 kubectl get pods -n k8squest
 
-# 2. Get detailed info
+# 2. Batafsil ma'lumot oling
 kubectl describe pod nginx-broken -n k8squest
 
-# 3. Check PREVIOUS logs (for crashes)
+# 3. OLDINGI loglarni tekshiring (crash lar uchun)
 kubectl logs nginx-broken --previous -n k8squest
 
-# 4. Check events
+# 4. Event larni tekshiring
 kubectl get events -n k8squest --sort-by='.lastTimestamp' | tail -20
 
-# 5. Identify the issue from above info
+# 5. Yuqoridagi ma'lumotlardan muammoni aniqlang
 
-# 6. Fix the YAML
+# 6. YAML ni tuzating
 
-# 7. Delete and recreate
+# 7. O'chirib qayta yarating
 kubectl delete pod nginx-broken -n k8squest
 kubectl apply -f solution.yaml -n k8squest
 
-# 8. Verify fix
+# 8. Tuzatishni tekshiring
 kubectl get pod nginx-broken -n k8squest -w
-# Wait for Running status (Ctrl+C to stop)
+# Running holatini kuting (Ctrl+C bilan to'xtatish)
 
-# 9. Validate
+# 9. Validatsiya
 ./validate.sh
 ```
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
-1. **Always check previous logs** when debugging crashes (`--previous` flag)
-2. **Pod specs are mostly immutable** - delete and recreate to change them
+1. **Crash larni debug qilayotganda doim oldingi loglarni tekshiring** (`--previous` bayrog'i)
+2. **Pod spec lar asosan o'zgartirib bo'lmaydi** — o'zgartirish uchun o'chirib qayta yarating
 3. **Event lar — do'stingiz** — ular nima noto'g'ri ketganining vaqt jadvalini ko'rsatadi
-4. **Exit codes matter** - 127 = command not found, 137 = OOMKilled
-5. **Specify namespace** - use `-n k8squest` or set default context
-6. **Test before validate** - verify with kubectl before running validation
+4. **Chiqish kodlari muhim** — 127 = buyruq topilmadi, 137 = OOMKilled
+5. **Namespace ko'rsating** — `-n k8squest` ishlating yoki standart kontekst o'rnating
+6. **Validatsiyadan oldin test qiling** — validatsiya ishga tushirishdan oldin kubectl bilan tekshiring
 7. **Faqat simptomni emas, konfiguratsiyani tuzating** — NIMA UCHUN crash bo'lganini tushuning
 
 ---
 
-## 📚 What You Should Know After This Level
+## 📚 Bu Leveldan Keyin Bilishingiz Kerak
 
-✅ How to read previous container logs  
-✅ How to interpret CrashLoopBackOff status  
-✅ How to identify which container is failing  
-✅ How to fix command errors in pod specs  
-✅ How to delete and recreate pods  
-✅ How to use events for debugging  
-✅ Understanding of exit codes  
+✅ Oldingi konteyner loglarini qanday o'qish  
+✅ CrashLoopBackOff holatini qanday talqin qilish  
+✅ Qaysi konteyner muvaffaqiyatsiz ekanini qanday aniqlash  
+✅ Pod spec lardagi buyruq xatolarini qanday tuzatish  
+✅ Pod larni qanday o'chirib qayta yaratish  
+✅ Debug qilish uchun event larni qanday ishlatish  
+✅ Chiqish kodlarini tushunish  
 
-**Keyingi Level Preview:** Level 2 teaches ImagePullBackOff debugging - different symptoms, similar systematic approach!
+**Keyingi Level:** Level 2 da ImagePullBackOff debug qilishni o'rganasiz — boshqa simptomlar, lekin shunga o'xshash tizimli yondashuv!

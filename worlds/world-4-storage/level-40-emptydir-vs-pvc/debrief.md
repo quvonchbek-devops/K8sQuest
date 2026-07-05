@@ -1,12 +1,12 @@
 # 🎓 Missiya Yakuni: emptyDir vs PersistentVolumeClaim
 
-**Tabriklaymiz!** Siz yakunladingiz World 4 and mastered the difference between ephemeral and persistent storage!
+**Tabriklaymiz!** Siz yakunladingiz World 4 va vaqtincha va doimiy storage o'rtasidagi farqni o'zlashtirgansiz!
 
 ---
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 volumes:
 - name: data
@@ -14,7 +14,7 @@ volumes:
 ```
 Result: All data disappears when pod restarts
 
-**The Solution:**
+**Yechim:**
 ```yaml
 volumes:
 - name: data

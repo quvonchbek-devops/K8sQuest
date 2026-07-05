@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 nodeAffinity:
   requiredDuringSchedulingIgnoredDuringExecution:
@@ -18,7 +18,7 @@ nodeAffinity:
 
 **Natija:** Pod stuck Pending, "mos kelmadi node affinity"
 
-**The Solution:**
+**Yechim:**
 ```yaml
 # 1. Label node
 kubectl label nodes kind-control-plane accelerator=gpu

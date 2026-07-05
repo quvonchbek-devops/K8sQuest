@@ -57,7 +57,7 @@ spec:
 3. DNS returns pod IPs directly
 4. **Per-pod DNS names work!** (web-0.web-cluster → web-0's IP)
 5. Each pod has a stable network identity
-6. Pods can find each other by predictable names
+6. Pod lar bir-birini bashorat qilinadigan nomlar bilan topishi mumkin
 
 **DNS Resolution:**
 ```
@@ -407,7 +407,7 @@ rs.initiate({
 ```
 
 **Muammo:**
-- Replica set configured with OLD IP: 10.244.1.6
+- Replica set ESKI IP bilan sozlangan: 10.244.1.6
 - New pod has NEW IP: 10.244.2.8
 - Primary can't reach secondary
 - **Replica set loses quorum!**

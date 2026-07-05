@@ -6,14 +6,14 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 spec:
   storageClassName: premium-ssd  # ❌ Doesn't exist!
 ```
 Result: PVC stuck in Pending forever
 
-**The Solution:**
+**Yechim:**
 ```yaml
 spec:
   storageClassName: standard  # ✅ Use existing StorageClass
@@ -194,7 +194,7 @@ metadata:
 
 1. **StorageClass enables dynamic provisioning** - No manual PV creation
 2. **Must exist before PVC creation** - Or PVC stays Pending
-3. **Different classes for different needs** - Fast/slow, cheap/expensive
+3. **Turli ehtiyojlar uchun turli class lar** — tez/sekin, arzon/qimmat
 4. **Cloud-specific provisioners** - AWS EBS, GCE PD, Azure Disk
 5. **Check availability first** - `kubectl get sc`
 

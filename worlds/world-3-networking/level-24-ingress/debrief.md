@@ -14,7 +14,7 @@
 
 Siz oddiy web ilovani (nginx) `http://myapp.local` da deploy qildingiz. Hamma narsa to'g'ri sozlangandek ko'rindi— Pod ishlayotgan edi, Service da endpoint lar mavjud edi, va Ingress resursi ham bor edi — lekin URL ga kirganda 404 xato oldingiz. Ingress path `/api` ga sozlangan edi, aslida `/` bo'lishi kerak edi.
 
-The culprit? A subtle but critical misconfiguration in the Ingress path.
+Aybdor? Ingress path dagi nozik lekin jiddiy noto'g'ri konfiguratsiya.
 
 **The Broken Configuration:**
 ```yaml
@@ -36,7 +36,7 @@ spec:
               number: 80
 ```
 
-**The Problem:**
+**Muammo:**
 - The application serves content at the **root path** (`/`)
 - The Ingress sozlangan edi to route traffic for **`/api`**
 - When users accessed `http://myapp.local/`, the request mos kelmadi any Ingress rule
@@ -164,7 +164,7 @@ paths:
    - Request: `http://myapp.local/`
    - Extracted path: `/`
    - Ingress rule: `path: /api`, `pathType: Prefix`
-   - Match: `/` does NOT start with `/api` ❌
+   - Moslik: `/` `/api` bilan BOSHLANMAYDI ❌
    - Result: 404 Not Found (no matching rule)
 
 ---
@@ -280,13 +280,13 @@ Now:
 
 2. **Order Matters:**
    - Ingress rules are evaluated in order
-   - Most specific paths should come FIRST
-   - More general paths should come LAST
+   - Eng aniq path lar BIRINCHI kelishi kerak
+   - Umumiyroq path lar OXIRIDA kelishi kerak
 
 3. **Monitor Path Coverage:**
    - Track which paths are getting 404s
    - Alert on unexpected 404 spikes
-   - Differentiate between "resource not found" and "route not found"
+   - "Resurs topilmadi" va "yo'nalish topilmadi" ni farqlang
 
 4. **Use Integration Tests:**
    - Test qiling full request path: DNS → Ingress → Service → Pod
@@ -329,7 +329,7 @@ spec:
               number: 8080
 ```
 
-**How It Works:**
+**Qanday ishlaydi:**
 - Request: `http://api.example.com/api/users`
 - Regex captures: `$2 = "users"`
 - Rewritten to: `http://api-service:8080/users`
@@ -355,7 +355,7 @@ paths:
         number: 80
 ```
 
-Both `/app/*` and `/application/*` route to the same service.
+Ham `/app/*` ham `/application/*` bitta service ga yo'naltiriladi.
 
 ### 3. **Multiple Services on Same Host**
 
@@ -559,7 +559,7 @@ pathType: Exact
 # Does NOT match: /login/ (has trailing slash!)
 ```
 
-For `Exact` paths, `/login` and `/login/` are DIFFERENT.
+`Exact` path larda `/login` va `/login/` FARQLI.
 
 **Recommendation:** `Exact` ishlatish uchun aniq sabab bo'lmasa `Prefix` ishlating.
 
@@ -711,7 +711,7 @@ paths:
 
 5. **Common Mistakes:**
    - Using `/api` when app serves at `/`
-   - Using `Exact` when you need `Prefix`
+   - `Prefix` kerak bo'lganda `Exact` ishlatish
    - Putting catch-all `/` path first (it catches everything!)
    - Forgetting trailing slashes with `Exact` pathType
 

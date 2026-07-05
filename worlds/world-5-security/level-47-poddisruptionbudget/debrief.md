@@ -74,7 +74,7 @@ spec:
 ## 💥 Common Mistakes
 
 1. **minAvailable > replicas**: Impossible to satisfy
-2. **Both min and max**: Use one only
+2. **min va max ikkalasi**: Faqat bittasini ishlating
 3. **PDB siz selector**: Won't match pods
 4. **Forgetting to scale**: PDB blocks if not enough pods
 

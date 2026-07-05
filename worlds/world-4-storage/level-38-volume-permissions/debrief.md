@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 spec:
   containers:
@@ -16,7 +16,7 @@ spec:
 ```
 Result: Permission denied when writing to volume
 
-**The Solution:**
+**Yechim:**
 ```yaml
 spec:
   securityContext:  # ✅ Pod-level
@@ -154,7 +154,7 @@ spec:
 1. **fsGroup changes volume group ownership** - Enables write access
 2. **Set at pod level** - Not container level
 3. **Match with runAsGroup** - For consistency
-4. **Required for non-root containers** - That need to write to volumes
+4. **Non-root konteynerlar uchun zarur** — volume larga yozish kerak bo'lganda
 5. **Check with ls -la** - Tekshirish permissions in pod
 
 ---

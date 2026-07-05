@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 data:
   app_name: "MyApp"
@@ -20,7 +20,7 @@ env:
       key: database_host  # ❌ Key mavjud emas!
 ```
 
-**The Solution:**
+**Yechim:**
 ```yaml
 data:
   app_name: "MyApp"

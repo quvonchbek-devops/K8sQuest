@@ -6,14 +6,14 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 # PersistentVolume & PersistentVolumeClaim
 accessModes:
   - ReadWriteOnce  # ❌ Only one node can mount at a time!
 ```
 
-**The Solution:**
+**Yechim:**
 ```yaml
 # PersistentVolume & PersistentVolumeClaim
 accessModes:
@@ -22,7 +22,7 @@ accessModes:
 
 ### ⚠️ About This Level
 
-**Muhim Context:** Bu level Kind da (bitta node li klaster) ishlaydi, shuning uchun ReadWriteOnce bilan ham 3 ta pod muvaffaqiyatlissfully start chunkiy're all on the same node.
+**Muhim Context:** Bu level Kind da (bitta node li klaster) ishlaydi, shuning uchun ReadWriteOnce bilan ham 3 ta pod muvaffaqiyatliqiyatli ishga tushadi chunkiy're all on the same node.
 
 **In a real multi-node production cluster:**
 - ReadWriteOnce with 3 replicas would cause pods on different nodes to fail mounting
@@ -591,7 +591,7 @@ replicas: 20       # Scale for Black Friday
 ### Lessons Learned
 
 1. **Storage backend ingizni biling:** Turli xil turlarda turli xil imkoniyatlar bor
-2. **Test before production:** Especially during critical periods
+2. **Production dan oldin test qiling:** Ayniqsa muhim davrlarda
 3. **Validate configurations:** Tekshiring storage class supports required access modes
 4. **Have rollback plan:** Test rollback procedures beforehand
 5. **Monitor PVC status:** Alert when PVCs stuck in Pending
@@ -697,9 +697,9 @@ provisioner: efs.csi.aws.com
 ## 🎯 Key Takeaways
 
 1. **Access mode lar POD lar emas, NODE lar haqida** — RWO = bitta node, RWX = ko'p node
-2. **Not all storage supports all modes** - Check your storage backend capabilities
+2. **Barcha storage barcha mode larni qo'llab-quvvatlamaydi** — Storage backend imkoniyatlarini tekshiring
 3. **PV and PVC must match** - Access modes must be compatible
-4. **Choose based on your needs** - RWO for single-pod, RWX for shared access
+4. **Ehtiyojingiz asosida tanlang** — bitta pod uchun RWO, umumiy kirish uchun RWX
 5. **Test before production** - Especially when migrating storage systems
 6. **Monitor PVC status** - Alert on Pending state
 7. **Document requirements** - Make access mode needs explicit
@@ -730,4 +730,4 @@ Endi access mode larni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 ---
 
-**Yaxshi ish!** Siz o'zlashtirgansiz PV/PVC access modes. Eslab qoling: choose the right access mode for your application's needs! 🎉
+**Yaxshi ish!** Siz o'zlashtirgansiz PV/PVC access modes. Eslab qoling: ilovangiz ehtiyojlari uchun to'g'ri access mode ni tanlang! 🎉

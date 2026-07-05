@@ -125,7 +125,7 @@ worlds/world-2-deployments/
     └── [same structure]
 ```
 
-Each level follows the proven pattern from World 1:
+Har bir level World 1 dan tasdiqlangan pattern ga amal qiladi:
 - 📋 **mission.yaml**: Metadata (name, XP, difficulty, concepts)
 - 💥 **broken.yaml**: The broken K8s configuration
 - ✅ **solution.yaml**: The fixed configuration

@@ -22,7 +22,7 @@ Aybdor? Frontend faqat bir xil namespace ichida hal qilinadigan qisqa service no
 command: ['sh', '-c', 'wget -q -O- http://api-service']
 ```
 
-**The Problem:**
+**Muammo:**
 - Frontend tries to resolve: `api-service`
 - Kubernetes DNS searches: `api-service.k8squest.svc.cluster.local`
 - But service is actually in: `backend-ns` namespace
@@ -171,7 +171,7 @@ Ko'chirish rejasi — service larni birma-bir monolitdan microservice larga ko'c
 
 **Phase 1: Backend Migration (Week 1)**
 
-The team deployed the first microservice: `user-service` in the `backend` namespace.
+Jamoa birinchi microservice ni deploy qildi: `backend` namespace da `user-service`.
 
 ```yaml
 apiVersion: v1
@@ -394,8 +394,8 @@ kubectl run test-frontend -n frontend --image=curlimages/curl -- \
    - Test actual communication paths
    - Include integration tests in CI/CD
 
-2. **Always Use FQDN for Different Namespaces:**
-   - Short names only work within same namespace
+2. **Boshqa Namespace lar Uchun Doim FQDN Ishlating:**
+   - Qisqa nomlar faqat bir xil namespace ichida ishlaydi
    - FQDN is explicit and to'sib qo'yadi errors
    - Document service locations
 

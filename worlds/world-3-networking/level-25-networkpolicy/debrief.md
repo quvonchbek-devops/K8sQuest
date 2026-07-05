@@ -38,7 +38,7 @@ spec:
       port: 8080
 ```
 
-**The Problem:**
+**Muammo:**
 - Frontend pod has label: `app: frontend`
 - NetworkPolicy allows traffic from: `app: admin-tool`
 - Match? NO! → All frontend traffic DENIED
@@ -56,7 +56,7 @@ NetworkPolicy — bu Kubernetes ning pod-dan-pod trafikni boshqarish uchun firew
 
 1. **podSelector** - WHO the policy applies TO (target pods)
 2. **policyTypes** - What types of traffic to control (Ingress, Egress, or both)
-3. **ingress/egress rules** - WHO can send traffic and WHAT ports
+3. **ingress/egress qoidalar** — KIM trafik yuborishi mumkin va QAYSI port lar
 
 ```yaml
 spec:
@@ -77,7 +77,7 @@ spec:
       port: 8080        # PORT: Only this port allowed
 ```
 
-**How It Works:**
+**Qanday ishlaydi:**
 
 ```
 ┌─────────────────────┐
@@ -117,7 +117,7 @@ spec:
 
 ### Default Deny Behavior
 
-**CRITICAL:** Pod uchun NetworkPolicy yaratganingizda, bu pod "himoyalangan" bo'ladi va BARCHA trafik rad etiladid standart holatda EXCEPT what you explicitly allow.
+**CRITICAL:** Pod uchun NetworkPolicy yaratganingizda, bu pod "himoyalangan" bo'ladi va BARCHA trafik rad etiladid standart holatda, faqat siz aniq ruxsat berganlari TASHQARIplicitly allow.
 
 ```yaml
 # NO NetworkPolicy
@@ -386,7 +386,7 @@ ingress:
         env: production
 ```
 
-**Meaning:** Allow traffic from pods with `app: frontend` AND in namespace labeled `env: production`
+**Ma'nosi:** `app: frontend` label li pod lardan VA `env: production` label li namespace dan trafikka ruxsat berish
 
 ### 4. Namespace Selectors
 
@@ -872,7 +872,7 @@ ingress:
 
 3. **Multiple NetworkPolicies Are Additive:**
    - If multiple NetworkPolicies match a pod, their rules are combined (OR logic)
-   - Siz have one policy for frontend access, another for monitoring
+   - Siz frontend kirishi uchun bitta policy, monitoring uchun boshqasini qo'yasiz
 
 4. **Testing is Critical:**
    - Doim test qiling NetworkPolicies in staging first

@@ -6,14 +6,14 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 spec:
   persistentVolumeReclaimPolicy: Delete  # ❌ Dangerous!
 ```
 Result: When PVC deleted → PV deleted → All data permanently lost!
 
-**The Solution:**
+**Yechim:**
 ```yaml
 spec:
   persistentVolumeReclaimPolicy: Retain  # ✅ Safe!

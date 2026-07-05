@@ -1,12 +1,12 @@
 # 🎓 Missiya Yakuni: Container SecurityContext & Privilege Escalation
 
-**Tabriklaymiz!** You've secured containers using Kubernetes SecurityContext - a critical skill for production deployments!
+**Tabriklaymiz!** Siz Kubernetes SecurityContext yordamida konteynerlarni himoyaladingiz — production deployment lar uchun juda muhim ko'nikma!
 
 ---
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 securityContext:
   runAsNonRoot: true  # Enforced but...
@@ -16,7 +16,7 @@ securityContext:
 
 **Natija:** Pod rejected with "konteyner da runAsNonRoot bor va image root sifatida ishlaydi"
 
-**The Solution:**
+**Yechim:**
 ```yaml
 securityContext:
   runAsNonRoot: true  # ✅ Validate
@@ -40,7 +40,7 @@ SecurityContext pod lar va konteynerlar uchun **imtiyoz va kirish nazorati sozla
 **Buni shunday tasavvur qiling:**
 - **WHO** the container runs as (user ID)
 - **WHAT** privileges it has (capabilities)
-- **HOW** it can interact with the host (privilege escalation)
+- Host bilan **QANDAY** muloqot qilishi mumkinligi (privilege escalation)
 
 ### Two Levels of SecurityContext
 

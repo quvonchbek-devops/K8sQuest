@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 # ServiceAccount exists
 apiVersion: v1
@@ -20,7 +20,7 @@ metadata:
 
 **Natija:** Pod crashes with "Forbidden: pods is forbidden"
 
-**The Solution:**
+**Yechim:**
 ```yaml
 # 1. Define permissions
 kind: Role
@@ -388,7 +388,7 @@ rules:
 1. **Typo in RBAC configuration:** `["*"]` o'rniga of `[""]`
 2. **No review process:** Direct apply siz peer review
 3. **No RBAC auditing:** Overly broad permissions not detected
-4. **Insufficient testing:** Never tested what permissions were actually granted
+4. **Yetarlicha test qilinmagan:** Qanday ruxsatlar berilganini hech qachon test qilishmagan
 5. **No least privilege:** Should have used specific resourceNames
 
 ### Tuzatish

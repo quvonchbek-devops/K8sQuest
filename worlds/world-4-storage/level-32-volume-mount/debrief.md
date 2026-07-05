@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**The Problem:**
+**Muammo:**
 ```yaml
 volumeMounts:
 - name: config-volume
@@ -20,7 +20,7 @@ volumeMounts:
 
 **Natija:** Pod crashed with "Config file not found"
 
-**The Solution:**
+**Yechim:**
 ```yaml
 volumeMounts:
 - name: config-volume
@@ -437,7 +437,7 @@ initContainers:
 
 ### Lessons Learned
 
-1. **Mount paths are critical:** Treat them as part of the API contract
+1. **Mount path lar juda muhim:** Ularni API shartnomasi sifatida ko'ring
 2. **To'liq yo'lni test qiling:** Volume mount qilinganini emas, QAYERGA mount qilinganini
 3. **Use constants:** Define paths in one place (env vars or config)
 4. **Validate early:** Check paths in init containers or startup probes
@@ -541,7 +541,7 @@ volumeMounts:
 
 1. **Mount Path is Critical** - It determines where files appear in the container
 2. **Match Application Expectations** - mountPath must align with app code
-3. **Be Consistent** - Use same paths across init and main containers
+3. **Izchil bo'ling** — init va asosiy konteyner larda bir xil path lar ishlating
 4. **Validate Early** - Check paths in init containers or probes
 5. **Follow Conventions** - Use standard filesystem hierarchy
 6. **Document Paths** - Make mount requirements explicit
@@ -567,7 +567,7 @@ Endi volume mount yo'llarini tushunganingizdan keyin, quyidagilarga tayyorsiz:
 - [Volume Mounts](https://kubernetes.io/docs/concepts/storage/volumes/#using-volumes)
 - [Filesystem Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html)
 
-**Common Applications and Their Expected Paths:**
+**Keng Tarqalgan Ilovalar va Ularning Kutilgan Path lari:**
 - PostgreSQL: `/var/lib/postgresql/data`
 - MySQL: `/var/lib/mysql`
 - MongoDB: `/data/db`
