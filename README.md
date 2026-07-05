@@ -119,7 +119,7 @@ Xatolarni topsangiz yoki yaxshilash takliflaringiz bo'lsa, Issue yoki Pull Reque
 
 ## 📜 Litsenziya
 
-MIT License — tafsilotlar uchun [License](License) faylini ko'ring.
+Apache-2.0 License — Original: [K8sQuest by Manoj-engineer](https://github.com/Manoj-engineer/k8squest). O'zbekcha tarjima va modifikatsiyalar Quvonchbek (nosirbekdev) tomonidan.
 
 ## 🙏 Minnatdorchilik
 
