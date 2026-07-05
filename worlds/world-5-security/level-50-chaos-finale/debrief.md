@@ -2,7 +2,7 @@
 
 ## 🏆 TABRIKLAYMIZ, KUBERNETES MASTER! 🏆
 
-Siz yenga oldingiz the **CHAOS FINALE** - World 5 ning BARCHA konseptlarini birlashtirgan yakuniy sinov!
+Siz **CHAOS FINALE** ni yenga oldingiz — World 5 ning BARCHA konseptlarini birlashtirgan yakuniy sinov!
 
 ---
 
@@ -63,7 +63,7 @@ Siz bir vaqtda tuzatdingiz:
 - **Total XP**: 10,200 XP
 - **Concepts Mastered**: 50+
 - **Files Created**: 400
-- **Real-World Incidents Studied**: 10+
+- **O'rganilgan Haqiqiy Dunyo Hodisalari**: 10+
 
 ---
 
@@ -73,7 +73,7 @@ Siz bir vaqtda tuzatdingiz:
 ✅ **Production-Ready** - Can handle complex multi-layered issues  
 ✅ **Security-Minded** - Apply defense-in-depth strategies  
 ✅ **Troubleshooting Master** - Debug qilish the toughest problems  
-✅ **Best Practices Follower** - Production-grade configurations
+✅ **Eng Yaxshi Amaliyotlarga Amal Qiluvchi** — Production-grade konfiguratsiyalar
 
 ---
 

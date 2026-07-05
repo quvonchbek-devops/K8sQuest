@@ -236,7 +236,7 @@ volumeClaimTemplates:
 
 ---
 
-## 🏗️ Real-World Patterns
+## 🏗️ Haqiqiy Dunyo Pattern lari
 
 ### Pattern 1: PostgreSQL Cluster
 
@@ -343,7 +343,7 @@ spec:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The Shared Database Volume
+## 🚨 HAQIQIY VOQEA: Umumiy Database Volume
 
 ### The Incident: $3.2M Data Corruption Disaster
 
@@ -445,7 +445,7 @@ spec:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 ### 1. Choose Right Workload Type
 

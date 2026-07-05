@@ -215,7 +215,7 @@ resources:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The $200K Cloud Bill
+## 🚨 HAQIQIY VOQEA: $200K Cloud Hisob-Kitob
 
 ### The Incident: Runaway Resource Consumption
 
@@ -304,7 +304,7 @@ spec:
 
 ---
 
-## 🛡️ ResourceQuota Best Practices
+## 🛡️ ResourceQuota Eng Yaxshi Amaliyotlari
 
 ### 1. Set Quotas on All Namespaces
 
@@ -469,7 +469,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 ---
 
-## 📚 Quick Reference
+## 📚 Tezkor Ma'lumotnoma
 
 ### Keng Tarqalgan Quota Configurations
 

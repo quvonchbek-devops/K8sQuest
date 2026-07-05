@@ -6,19 +6,19 @@
 
 ## Pod Security Standards
 
-Three levels of security enforcement:
+Xavfsizlikni ta'minlashning uch darajasi:
 
 ### 1. Privileged (Unrestricted)
 No restrictions - use with caution!
 
 ### 2. Baseline (Minimal)
-Prevents known privilege escalations:
+Ma'lum privilege escalation larning oldini oladi:
 - No privileged containers
 - No host path volumes
 - No host networking
 
 ### 3. Restricted (Hardened)
-Security best practices (what you just implemented):
+Xavfsizlik eng yaxshi amaliyotlari (siz hozirgina amalga oshirgansiz):
 - ✅ runAsNonRoot ni: true
 - ✅ allowPrivilegeEscalation ni: false
 - ✅ capabilities drop qilinganligini
@@ -48,7 +48,7 @@ metadata:
 1. **Restricted = most secure** - use in production
 2. **Requires complete SecurityContext** - all fields
 3. **Enforced at admission** - pods rejected if non-compliant
-4. **Best practice** - always run as non-root
+4. **Eng yaxshi amaliyot** — doim non-root sifatida ishlating
 5. **Defense in depth** - layer with NetworkPolicy ni, RBAC
 
 ---

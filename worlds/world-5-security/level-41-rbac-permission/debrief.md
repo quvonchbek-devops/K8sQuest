@@ -337,7 +337,7 @@ rules:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The RBAC Misconfiguration
+## 🚨 HAQIQIY VOQEA: RBAC Noto'g'ri Konfiguratsiyasi
 
 ### The Incident: $2.1M Data Breach
 
@@ -422,7 +422,7 @@ rules:
 
 ---
 
-## 🛡️ RBAC Best Practices
+## 🛡️ RBAC Eng Yaxshi Amaliyotlari
 
 ### 1. Principle of Least Privilege
 

@@ -297,7 +297,7 @@ curl http://external-db.default.svc.cluster.local
 
 ---
 
-## 💔 Real-World Horror Story: The $45,000 LoadBalancer Bill
+## 💔 HAQIQIY VOQEA: $45,000 LoadBalancer Hisob-Kitobi
 
 **Kompaniya:** StartupCo (SaaS platform)  
 **Date:** March 2023  
@@ -335,7 +335,7 @@ spec:
 - Team didn't notice for **3 months**
 - Total damage: **$7,200** + increased bandwidth costs
 
-But it got worse...
+Lekin ahvol yomonlashdi...
 
 ### The Scaling Disaster
 
@@ -539,7 +539,7 @@ This pattern:
 Use this decision tree to choose the right service type:
 
 ```
-Does the service need external access?
+Service ga tashqi kirish kerakmi?
 │
 ├─ NO → Use ClusterIP
 │        • Internal microservices
@@ -577,7 +577,7 @@ Does the service need external access?
 
 ---
 
-## 📚 Best Practices
+## 📚 Eng Yaxshi Amaliyotlar
 
 ### 1. **Default to ClusterIP**
 ```yaml
@@ -586,7 +586,7 @@ spec:
   type: ClusterIP
 ```
 
-Only expose externally when necessary.
+Faqat kerak bo'lganda tashqariga oching.
 
 ### 2. **Use Ingress for External Access**
 ```yaml
@@ -675,7 +675,7 @@ kubectl get services --all-namespaces -o wide | grep LoadBalancer
 # NLB ≈ $16/month + $0.006/hour per LCU
 ```
 
-### 6. **Security Best Practices**
+### 6. **Xavfsizlik Eng Yaxshi Amaliyotlari**
 ```yaml
 # Limit LoadBalancer source ranges
 apiVersion: v1
@@ -798,7 +798,7 @@ curl http://localhost:30080
 1. **ClusterIP = Internal only** (default, eng keng tarqalgan)
 2. **NodePort = Works everywhere** (local dev, testing)
 3. **LoadBalancer = Cloud only** (AWS, GCP, Azure)
-4. **Ingress = Best practice** (1 LB, many services)
+4. **Ingress = Eng yaxshi amaliyot** (1 LB, many services)
 5. **Local clusters can't provision LoadBalancers** (stays pending forever)
 
 ### Service Type Comparison
@@ -810,7 +810,7 @@ curl http://localhost:30080
 | LoadBalancer | ✅ | ✅ | $$$  | Cloud production |
 | Ingress | ✅ | ✅ | $    | Multi-service routing |
 
-### Produkciya Checklist
+### Production Checklist
 
 Before deploying to production:
 
@@ -858,7 +858,7 @@ Siz o'zlashtirgansiz Kubernetes service types and cloud provider integration. Ke
 - ✅ Design cost-effective architectures with Ingress
 - ✅ Avoid the $45,000 LoadBalancer mistake
 
-**Eslab qoling:** Produkciyada, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingizll will thank you!
+**Eslab qoling:** Production da, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingiz minnatdor bo'ladi!
 
 ---
 

@@ -12,7 +12,7 @@
 
 ## What You Encountered
 
-Siz foydalanuvchi session larni xotirada saqlaydigan web ilovani deploy qildingiz — legacy ilovalarda keng tarqalgan pattern. Foydalanuvchilar muvaffaqiyatli login qildi, lekin keyingi so'rovlarida them as logged out. The application worked intermittently, with users randomly logged in or out.
+Siz foydalanuvchi session larni xotirada saqlaydigan web ilovani deploy qildingiz — legacy ilovalarda keng tarqalgan pattern. Foydalanuvchilar muvaffaqiyatli login qildi, lekin keyingi so'rovlarida tizim ularni chiqib ketgan deb ko'rsatardi. Ilova notekis ishlardi — foydalanuvchilar tasodifiy ravishda tizimga kirgan yoki chiqib ketgan holatda bo'lardi.
 
 Aybdor? Service so'rovlarni bir nechta pod lar bo'ylab tasodifiy taqsimlayotgan edi va session ma'lumotlari faqat login ni bajargan pod da mavjud edi.
 
@@ -176,7 +176,7 @@ iptables -t nat -A KUBE-SVC-XXX -m recent --rcheck --seconds 10800 --name POD1 -
 
 ### Nima Sodir Bo'ldi
 
-Kompaniya monolit ilovadan microservice larga ko'chayotgan edi. Legacy savat service savat ma'lumotlariniata in memory (not ideal, but it worked with a single server).
+Kompaniya monolit ilovadan microservice larga ko'chayotgan edi. Legacy savat service savat ma'lumotlarini xotirada saqlardi (ideal emas, lekin bitta server bilan ishlardi).
 
 Qora Juma tayyorligi vaqtida jamoa savat service ni kutilgan trafikni boshqarish uchun 1 pod dan 10 pod ga scale qildi. Ular tested checkout, and it worked fine. They didn't test the full user journey.
 
@@ -287,7 +287,7 @@ The team didn't stop at session affinity—they refactored the cart service:
 │  Pod 3  │────▶│         │◀────│  Pod 4  │
 └─────────┘     └─────────┘     └─────────┘
 
-All pods share cart data → No session affinity needed!
+Barcha pod lar savat ma'lumotlarini ulashadi → Session affinity kerak emas!
 ```
 
 ### Lessons Learned
@@ -836,7 +836,7 @@ readinessProbe:
    - ✅ Simple setup, works with legacy apps
    - ❌ Uneven load, sessions lost on pod restart, poor scalability
 
-5. **Real-World Lessons:**
+5. **Haqiqiy Dunyo Saboqlari:**
    - Session affinity issues can cause massive customer impact ($4.7M!)
    - Doim test qiling full user journeys with multiple replicas
    - Monitor session behavior and cart abandonment
@@ -852,7 +852,7 @@ Siz o'zlashtirgansiz session affinity and understand stateful vs stateless desig
 - ✅ Tradeoffs between stateful and stateless architectures
 - ✅ How to migrate from stateful to stateless
 
-Keyingi level larda siz namespace lar arasi service aloqasi, service endpoint yangilanishlari, and more advanced networking patterns.
+Keyingi level larda siz namespace lar arasi service aloqasi, service endpoint yangilanishlari va boshqa murakkab networking pattern larni o'rganasiz.
 
 **Continue your K8sQuest journey to unlock the next challenge!** 🚀
 

@@ -1,28 +1,28 @@
 #!/bin/bash
-# Setup script for level 45 - Node Affinity
-# Labels a node with accelerator=gpu for the affinity rule
+# O'rnatish skripti
+# Node ga accelerator=gpu label qo'yadi
 
 set -e
 
 NAMESPACE=${1:-k8squest}
-echo "🔧 Setting up Node Affinity level..."
+echo "🔧 Node Affinity level o'rnatilmoqda..."
 
-# Get the first node (works for both kind and k3s)
+# Birinchi node ni olish
 NODE_NAME=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')
 
 if [ -z "$NODE_NAME" ]; then
-    echo "❌ No nodes found in the cluster"
+    echo "❌ Cluster da hech qanday node topilmadi"
     exit 1
 fi
 
-echo "📍 Found node: $NODE_NAME"
+echo "📍 Node topildi: $NODE_NAME"
 
-# Label the node for GPU workload affinity
-echo "🏷️  Labeling node $NODE_NAME with accelerator=gpu..."
+# Node ni label lash
+echo "🏷️  Node ga accelerator=gpu..."
 kubectl label node "$NODE_NAME" accelerator=gpu --overwrite
 
-# Verify the label
-echo "✅ Node labels:"
+# Label ni tekshirish
+echo "✅ Node label lari:"
 kubectl get node "$NODE_NAME" --show-labels
 
 echo ""

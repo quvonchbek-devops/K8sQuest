@@ -99,7 +99,7 @@ deny-all (podSelector: {})
 
 **siz NetworkPolicy:**
 ```
-All pods can communicate freely (open)
+Barcha pod lar erkin aloqa qila oladi (ochiq)
 ```
 
 **With empty NetworkPolicy:**
@@ -531,7 +531,7 @@ ports:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The Cryptocurrency Heist
+## 🚨 HAQIQIY VOQEA: Kriptovalyuta O'g'irligi
 
 ### The Incident: $4.2M Stolen
 
@@ -625,7 +625,7 @@ spec:
 
 ---
 
-## 🛡️ NetworkPolicy Best Practices
+## 🛡️ NetworkPolicy Eng Yaxshi Amaliyotlari
 
 ### 1. Start with Default Deny
 
@@ -642,7 +642,7 @@ spec:
   - Egress
 ```
 
-Then add specific allow rules.
+Keyin aniq ruxsat qoidalarini qo'shing.
 
 ### 2. Always Allow DNS
 
@@ -751,7 +751,7 @@ kubectl get pod my-pod --show-labels
 
 ---
 
-## 📚 Quick Reference
+## 📚 Tezkor Ma'lumotnoma
 
 ### Allow Patterns
 

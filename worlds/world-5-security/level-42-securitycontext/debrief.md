@@ -340,7 +340,7 @@ securityContext:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The Cryptomining Container Escape
+## 🚨 HAQIQIY VOQEA: Cryptomining Container Qochishi
 
 ### The Incident: $400K in Compute Costs + Data Breach
 
@@ -350,7 +350,7 @@ securityContext:
 
 ### Nima Sodir Bo'ldi
 
-Development team deployed a web application:
+Dasturlash jamoasi web ilovani deploy qildi:
 
 ```yaml
 # Production deployment - NO SecurityContext!
@@ -457,7 +457,7 @@ spec:
 
 ---
 
-## 🛡️ XavfsizlikContext Best Practices
+## 🛡️ SecurityContext Eng Yaxshi Amaliyotlari
 
 ### 1. Always Run as Non-Root
 
@@ -628,7 +628,7 @@ kubectl exec <pod-name> -- grep Cap /proc/1/status
 
 ---
 
-## 📚 Quick Reference
+## 📚 Tezkor Ma'lumotnoma
 
 | Setting | Purpose | Recommended Value |
 |---------|---------|-------------------|

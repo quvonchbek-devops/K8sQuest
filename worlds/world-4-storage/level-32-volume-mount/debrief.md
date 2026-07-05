@@ -233,11 +233,11 @@ volumeMounts:
 
 ---
 
-## 🔧 Advanced Mount Options
+## 🔧 Kengaytirilgan Mount Parametrlari
 
 ### Using subPath
 
-Mount a specific file or directory from the volume:
+Volume dan aniq fayl yoki papkani ulash:
 
 ```yaml
 volumes:
@@ -257,7 +257,7 @@ volumeMounts:
 
 ### Using subPathExpr
 
-Use environment variables in subPath:
+subPath da muhit o'zgaruvchilarini ishlatish:
 
 ```yaml
 env:
@@ -290,7 +290,7 @@ volumeMounts:
 
 ---
 
-## 🏗️ Real-World Architecture Patterns
+## 🏗️ Haqiqiy Dunyo Arxitektura Pattern lari
 
 ### Pattern 1: Sidecar Logging
 
@@ -361,7 +361,7 @@ containers:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The Wrong Mount Path
+## 🚨 HAQIQIY VOQEA: Noto'g'ri Mount Path
 
 ### The Incident: $850,000 Trading Platform Outage
 
@@ -371,7 +371,7 @@ containers:
 
 ### Nima Sodir Bo'ldi
 
-After a routine deployment:
+Oddiy deployment dan keyin:
 ```yaml
 # OLD (working)
 volumeMounts:
@@ -445,11 +445,11 @@ initContainers:
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 ### 1. Use Standard Paths
 
-Follow filesystem hierarchy conventions:
+Fayl tizimi iyerarxiya konvensiyalariga amal qiling:
 
 ```yaml
 # Yaxshi - Standard locations

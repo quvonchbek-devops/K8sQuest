@@ -161,7 +161,7 @@ api-service                                 (Short name - only same namespace!)
 
 ### Nima Sodir Bo'ldi
 
-Kompaniya monolit arxitekturadan microservice larga ko'chayotgan edi. Turli jamoalar uchun namespace izolyatsiyasini ishlatishga qaror qildiifferent service tiers:
+Kompaniya monolit arxitekturadan microservice larga ko'chayotgan edi. Turli jamoalar uchun namespace izolyatsiyasini ishlatishga qaror qildi — turli service darajalari uchun:
 
 - `frontend` namespace: Web UI, mobile API
 - `backend` namespace: Business logic services
@@ -213,7 +213,7 @@ data:
 
 ### Muammo
 
-The frontend and backend teams tested independently:
+Frontend va backend jamoalari mustaqil ravishda test qildi:
 
 **Backend Team Testing:**
 ```bash
@@ -242,7 +242,7 @@ kubectl port-forward -n frontend service/web-frontend 3000:80
 
 **User Experience:**
 ```
-User tries to login → Frontend calls http://user-service:8080/auth
+Foydalanuvchi login qilishga urinadi → Frontend http://user-service:8080/auth ga murojaat qiladi
                    → DNS: "could not resolve host: user-service"
                    → Error: "Service temporarily unavailable"
 ```
@@ -942,7 +942,7 @@ sum(rate(coredns_dns_response_rcode_count_total{rcode="NXDOMAIN"}[5m])) > 10
    - Typos in service names (DNS fails)
    - Testing in same namespace, deploying cross-namespace
 
-5. **Real-World Lessons:**
+5. **Haqiqiy Dunyo Saboqlari:**
    - Doim test qiling cross-namespace communication before production
    - Use FQDN in all configuration files
    - Document namespace topology

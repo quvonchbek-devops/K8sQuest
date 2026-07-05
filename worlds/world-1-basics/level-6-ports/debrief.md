@@ -128,7 +128,7 @@ ports:
 - targetPort: 8080
 ```
 
-**Nomli port lar** (best practice):
+**Nomli port lar** (eng yaxshi amaliyot):
 ```yaml
 # Pod da
 ports:

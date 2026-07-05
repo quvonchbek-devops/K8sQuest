@@ -674,7 +674,7 @@ kubectl logs -n kube-system -l k8s-app=cilium
 kubectl logs -n kube-system -l name=weave-net
 ```
 
-Qidiring denied connection logs.
+Rad etilgan ulanish log larini qidiring.
 
 ### 5. Tekshirish CNI Plugin Supports NetworkPolicy
 
@@ -697,10 +697,10 @@ kubectl get pods -n kube-system
 
 ### 6. Test with curl Pod
 
-Create a test pod to diagnose connectivity:
+Ulanishni diagnostika qilish uchun test pod yarating:
 
 ```bash
-# Create test pod
+# Test pod yaratish
 kubectl run test -n k8squest --image=nicolaka/netshoot -- sleep 3600
 
 # Test connection
@@ -767,7 +767,7 @@ metadata:
     env: production           # Environment
 ```
 
-Use these labels consistently in NetworkPolicies.
+Bu label larni NetworkPolicy larda izchil ishlating.
 
 ### 3. Document Service Dependencies
 
@@ -795,7 +795,7 @@ Set up monitoring for NetworkPolicy denials:
 kubectl logs -n kube-system -l k8s-app=calico-node | grep "DENY"
 ```
 
-Alert on unexpected denials.
+Kutilmagan rad etishlar haqida alert sozlang.
 
 ### 6. Use Namespace Isolation
 
@@ -886,7 +886,7 @@ ingress:
    - OR kerak bo'lganda AND logikasi ishlatish
    - Not ruxsat berish ingress controller or monitoring
 
-6. **Real-World Lessons:**
+6. **Haqiqiy Dunyo Saboqlari:**
    - NetworkPolicy mistakes can cause complete outages
    - Test with same labels and traffic patterns as production
    - Monitor denied connections

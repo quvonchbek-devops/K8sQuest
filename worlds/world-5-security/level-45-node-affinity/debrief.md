@@ -194,7 +194,7 @@ nodeAffinity:
 
 ---
 
-## 🎯 Real-World Examples
+## 🎯 Haqiqiy Dunyo Misollari
 
 ### Misol 1: GPU Workload
 
@@ -389,7 +389,7 @@ If no GPU nodes available, pod might schedule on non-GPU node!
 
 ---
 
-## 🛡️ Best Practices
+## 🛡️ Eng Yaxshi Amaliyotlar
 
 ### 1. Use Standard Labels
 

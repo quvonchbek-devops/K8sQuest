@@ -397,7 +397,7 @@ spec:
 
 ---
 
-## 💔 Real-World Horror Story: The $2.8M Database Migration Failure
+## 💔 HAQIQIY VOQEA: $2.8M Database Migratsiya Muvaffaqiyatsizligi
 
 **Kompaniya:** FinTech Solutions Inc. (Payment processing)  
 **Date:** March 2024  
@@ -573,7 +573,7 @@ Error from server (NotFound): persistentvolumeclaims "postgres-claim" not found
 
 **4:00 AM - The Horrifying Discovery**
 
-Engineer checks recent events:
+Muhandis oxirgi event larni tekshiradi:
 ```bash
 $ kubectl get events --all-namespaces --sort-by='.lastTimestamp'
 
@@ -789,7 +789,7 @@ echo "✅ All validation checks passed!"
 
 ---
 
-## 🎓 Best Practices
+## 🎓 Eng Yaxshi Amaliyotlar
 
 ### 1. Use Appropriate Reclaim Policies
 
@@ -886,7 +886,7 @@ spec:
 | Status: Available/Bound/Released | Status: Pending/Bound/Lost |
 | Like: Parking spot | Like: Parking reservation |
 
-### Muammolarni Aniqlash Checklist
+### Muammolarni Aniqlash Tekshiruv Ro'yxati
 
 When PVC is Pending:
 - [ ] Tekshiring any PVs exist: `kubectl get pv`

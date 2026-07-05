@@ -1,12 +1,12 @@
 #!/bin/bash
-# Level 11 Setup Script - Creates rollback history
-# This ensures there's a previous revision to rollback to
+# Level 11 O'rnatish Skripti
+# Bu rollback uchun oldingi revision borligini ta'minlaydi
 
-echo "🔧 Setting up Level 11: Rollback scenario..."
+echo "🔧 Level 11 o'rnatilmoqda: Rollback stsenariy..."
 echo ""
 
-# Step 1: Deploy working version (revision 1)
-echo "📦 Deploying initial working version (revision 1)..."
+# 1-qadam: Ishlaydigan versiyani deploy qilish
+echo "📦 Boshlang'ich ishlaydigan versiya deploy qilinmoqda (revision 1)..."
 kubectl apply -f setup.yaml
 
 # Deployment tayyor bo'lishini kutish (kengaytirilgan timeout)
@@ -14,24 +14,24 @@ echo "⏳ Boshlang'ich deployment barqarorlashishi kutilmoqda..."
 kubectl rollout status deployment/web-app -n k8squest --timeout=120s
 
 if [ $? -ne 0 ]; then
-    echo "⚠️  Initial deployment taking longer than expected, but continuing..."
+    echo "⚠️  Boshlang'ich deployment kutilganidan uzoqroq, lekin davom etilmoqda..."
 fi
 
-echo "✅ Revision 1 deployed"
+echo "✅ Revision 1 deploy qilindi"
 echo ""
 
-# Step 2: Update to broken version (revision 2)
-echo "📦 Updating to broken version (revision 2)..."
+# 2-qadam: Buzilgan versiyaga yangilash
+echo "📦 Buzilgan versiyaga yangilanmoqda (revision 2)..."
 kubectl apply -f broken.yaml
 
 # Yangilash boshlanishi uchun bir lahza kutish
 sleep 5
 
 echo ""
-echo "✅ Level 11 setup complete!"
+echo "✅ Level 11 o'rnatish tugadi!"
 echo ""
-echo "📊 Rollback history:"
+echo "📊 Rollback tarixi:"
 kubectl rollout history deployment/web-app -n k8squest
 echo ""
-echo "🎯 Your mission: The deployment is stuck on a bad update."
-echo "   Use 'kubectl rollout undo' to rollback to the working version!"
+echo "🎯 Vazifangiz: Deployment noto'g'ri yangilanishda qotib qolgan."
+echo "   Ishlaydigan versiyaga qaytish uchun 'kubectl rollout undo' ishlating!"

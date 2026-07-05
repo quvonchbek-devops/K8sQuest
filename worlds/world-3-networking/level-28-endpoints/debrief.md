@@ -159,7 +159,7 @@ startupProbe:
 
 ---
 
-## 💔 Real-World Horror Story: The $1.2M Endpoint Incident
+## 💔 HAQIQIY VOQEA: $1.2M Endpoint Hodisasi
 
 **Kompaniya:** StreamVideo Inc. (Video streaming platform)  
 **Date:** November 2022  
@@ -473,7 +473,7 @@ IP:.status.podIP
 
 ---
 
-## 🎯 Probe Configuration Best Practices
+## 🎯 Probe Konfiguratsiya Eng Yaxshi Amaliyotlari
 
 ### 1. **Choose the Right Probe Type**
 
@@ -736,7 +736,7 @@ kubectl describe pods -l app=web | grep -i "readiness probe failed"
 4. **Endpoints = Ready pods** - Only ready pods receive traffic
 5. **Test your probes** - Tekshirish they work correctly before production
 
-### Produkciya Checklist
+### Production Checklist
 
 Before deploying to production:
 
@@ -791,5 +791,5 @@ Siz o'zlashtirgansiz readiness probes and endpoint management. Next, you'll tack
 
 ---
 
-*"Produkciyada, trafik faqat tayyor pod larga yo'naltirilishi kerak. Readiness probe lar ixtiyoriy emas — ular muhential."* - Kubernetes SRE Handbook
+*"Production da, trafik faqat tayyor pod larga yo'naltirilishi kerak. Readiness probe lar ixtiyoriy emas — ular muhim."* - Kubernetes SRE Handbook
 

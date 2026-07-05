@@ -285,7 +285,7 @@ ping mysql-0.mysql-service
 
 ---
 
-## 💔 Real-World Horror Story: The $3.2M MongoDB Migration Disaster
+## 💔 HAQIQIY VOQEA: $3.2M MongoDB Migratsiya Falokati
 
 **Kompaniya:** DataFlow Inc. (Analytics platform)  
 **Date:** August 2023  
@@ -430,7 +430,7 @@ MongoError: not master and slaveOk=false
 - Management escalates to VP level
 
 **7:15 AM - Realization**
-Senior engineer joins war room:
+Katta muhandis favqulodda yig'ilishga qo'shildi:
 ```bash
 # Service ni tekshirish
 kubectl get service mongodb
@@ -692,7 +692,7 @@ kubectl delete pod mongodb-1
    ```
 
 5. **Document StatefulSet requirements**
-   - Checklist for headless services
+   - Headless service lar uchun tekshiruv ro'yxati
    - Runbook for common issues
    - Training for all engineers
 
@@ -1013,7 +1013,7 @@ spec:
 
 ---
 
-## 🎯 Best Practices
+## 🎯 Eng Yaxshi Amaliyotlar
 
 ### 1. Always Use Headless Services for StatefulSets
 
@@ -1272,7 +1272,7 @@ rs.reconfig(cfg)
 4. **Hech qachon ishlatmang pod IPs in config** - They change on reschedule, use DNS names
 5. **Regular service returns random pod** - Headless service allows targeting specific pods
 
-### StatefulSet + Headless Service Checklist
+### StatefulSet + Headless Service Tekshiruv Ro'yxati
 
 Before deploying to production:
 

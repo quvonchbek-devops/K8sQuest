@@ -111,37 +111,37 @@ kubectl get events -n k8squest | grep -i probe
 Deployment Issues?
     │
     ├─→ Pods not starting
-    │   ├─→ Check: kubectl get pods -n k8squest
-    │   ├─→ Check: kubectl describe deployment -n k8squest
+    │   ├─→ Tekshiring: kubectl get pods -n k8squest
+    │   ├─→ Tekshiring: kubectl describe deployment -n k8squest
     │   ├─→ Look for: ImagePullBackOff, CrashLoopBackOff
     │   └─→ Fix: Fix image, fix command, check probes
     │
     ├─→ Rollout stuck/slow
-    │   ├─→ Check: kubectl rollout status deployment/<name>
-    │   ├─→ Check: kubectl describe deployment (Strategy section)
+    │   ├─→ Tekshiring: kubectl rollout status deployment/<name>
+    │   ├─→ Tekshiring: kubectl describe deployment (Strategy section)
     │   ├─→ Look for: maxUnavailable=0, PDB blocking, failing probes
     │   └─→ Fix: Adjust strategy, check PDB, fix health checks
     │
     ├─→ Old pods still running
-    │   ├─→ Check: kubectl get rs -n k8squest
-    │   ├─→ Check: kubectl describe deployment (Selector)
+    │   ├─→ Tekshiring: kubectl get rs -n k8squest
+    │   ├─→ Tekshiring: kubectl describe deployment (Selector)
     │   ├─→ Look for: Label selector mismatch, manual ReplicaSets
     │   └─→ Fix: Update labels, delete old ReplicaSets
     │
     ├─→ HPA not scaling
-    │   ├─→ Check: kubectl describe hpa -n k8squest
-    │   ├─→ Check: kubectl top pods -n k8squest
+    │   ├─→ Tekshiring: kubectl describe hpa -n k8squest
+    │   ├─→ Tekshiring: kubectl top pods -n k8squest
     │   ├─→ Look for: metrics-server missing, no resource requests
     │   └─→ Fix: Install metrics-server, add requests to pods
     │
     ├─→ Probes failing
-    │   ├─→ Check: kubectl describe pod (Events)
-    │   ├─→ Check: kubectl logs <pod>
+    │   ├─→ Tekshiring: kubectl describe pod (Events)
+    │   ├─→ Tekshiring: kubectl logs <pod>
     │   ├─→ Look for: Wrong port, slow startup, timeout too short
     │   └─→ Fix: Correct probe config, add initialDelaySeconds
     │
     └─→ Data loss in StatefulSet
-        ├─→ Check: kubectl get pvc -n k8squest
+        ├─→ Tekshiring: kubectl get pvc -n k8squest
         ├─→ Check: StatefulSet vs Deployment usage
         ├─→ Look for: Deployment used instead of StatefulSet
         └─→ Fix: Convert to StatefulSet, use volumeClaimTemplates
@@ -432,7 +432,7 @@ resources:
 - **Requests**: Used for scheduling and HPA calculations
 - **Limits**: Enforced by kubelet (OOMKill if exceeded)
 - **HPA**: Scales based on % of REQUESTS, not limits
-- **Best Practice**: Set both, limits = 2x requests for burstable workloads
+- **Eng Yaxshi Amaliyot**: Ikkalasini ham sozlang, limits = requests ning 2 baravaridagi burstable workload lar uchun
 
 ---
 
@@ -464,7 +464,7 @@ By completing World 2, you should be able to:
 ### K8sQuest Resources
 - World 1 Quick Reference (basic kubectl commands)
 - Use `guide` for deployment-specific walkthroughs
-- Read debriefs for production incident case studies
+- Production hodisa case study lari uchun debrief larni o'qing
 
 ---
 
@@ -486,6 +486,6 @@ When stuck on a level, try these in order:
 
 ---
 
-💡 **Pro maslahat:** Practice rolling updates on a test deployment before production. Use `--record` flag to track changes in rollout history!
+💡 **Pro maslahat:** Production dan oldin test deployment da rolling update larni mashq qiling. Rollout tarixidagi o'zgarishlarni kuzatish uchun `--record` flag ni ishlating!
 
 🎮 **Ready for advanced patterns?** Run `./play.sh` and master deployments!
