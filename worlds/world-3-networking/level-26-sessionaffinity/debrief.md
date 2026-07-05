@@ -16,7 +16,7 @@ Siz foydalanuvchi session larni xotirada saqlaydigan web ilovani deploy qildingi
 
 Aybdor? Service so'rovlarni bir nechta pod lar bo'ylab tasodifiy taqsimlayotgan edi va session ma'lumotlari faqat login ni bajargan pod da mavjud edi.
 
-**The Broken Konfiguratsiya:**
+**The Broken Configuration:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -32,7 +32,7 @@ spec:
   # ❌ MISSING: sessionAffinity: ClientIP
 ```
 
-**Muammo:**
+**The Problem:**
 - Service uses default load-balancing (random/round-robin)
 - So'rov 1: Foydalanuvchi login qiladi → Pod 1 (session Pod 1 xotirasida saqlanadi)
 - Request 2: User loads page → Pod 2 (no session! User appears logged out)
@@ -42,7 +42,7 @@ spec:
 
 ---
 
-## Asosiy Sabab: Session Affinity Yetishmayapti
+## The Root Cause: Missing Session Affinity
 
 ### Tushunish Kubernetes Service Load Balancing
 
@@ -135,7 +135,7 @@ spec:
       timeoutSeconds: 10800          # 3 hours (default)
 ```
 
-**Qanday ishlaydi:**
+**How It Works:**
 
 1. **First Request:**
    - Client IP: 10.244.0.5
@@ -150,7 +150,7 @@ spec:
 
 3. **Timeout:**
    - Mapping expires after `timeoutSeconds` (default: 10800s / 3 hours)
-   - Keyingi so'rov yangi xaritalash yaratadi (boshqa pod ga tushishi mumkin)
+   - Next request creates new mapping (may go to different pod)
 
 **Implementation:**
 
@@ -222,7 +222,7 @@ spec:
 **7:30 AM:** Team identifies pattern: carts randomly emptying  
 **8:00 AM:** Database team checks for data loss (nothing wrong)  
 **9:00 AM:** Someone suggests: "Are we load-balancing across pods?"  
-**9:30 AM:** Root cause identified: Session affinity topilmadi  
+**9:30 AM:** Root cause identified: Session affinity missing  
 **10:00 AM:** Hotfix deployed: Added sessionAffinity: ClientIP  
 **10:30 AM:** Validation: Cart behavior normalized  
 **6:00 PM:** Full recovery, support backlog cleared  
@@ -319,11 +319,11 @@ All pods share cart data → No session affinity needed!
 
 ---
 
-## Session Affinity Chuqur Tahlil
+## Session Affinity Deep Dive
 
 ### Konfiguratsiya Options
 
-**Basic Konfiguratsiya:**
+**Basic Configuration:**
 ```yaml
 spec:
   sessionAffinity: ClientIP
@@ -375,7 +375,7 @@ sessionAffinity: None       # Default, no affinity
 sessionAffinity: ClientIP   # Route by client IP
 ```
 
-**NOTE:** Kubernetes faqat shu ikki qiymatni qo'llab-quvvatlaydi. Service darajasida boshqa variantlar (cookie-asoslangan affinity kabi) yo'q. Kengaytirilgan yo'naltirish uchun Ingress controller ishlating.
+**NOTE:** Kubernetes faqat shu ikki qiymatni qo'llab-quvvatlaydi. Service darajasida boshqa variantlar (cookie-asoslangan affinity kabi) yo'qice level. For advanced routing, use an Ingress controller.
 
 ---
 
@@ -590,7 +590,7 @@ All pods read/write to the same database.
 
 ---
 
-## Afzallik va Kamchiliklar: Session Affinity ni Qachon Ishlatish
+## Tradeoffs and When to Use Session Affinity
 
 ### When to USE Session Affinity ✅
 
@@ -669,7 +669,7 @@ Result: Pod 1 overloaded, others idle
 
 ---
 
-## Session Affinity ni Debug Qilish
+## Debug qilish Qilish Session Affinity
 
 ### 1. Tekshirish Configuration
 
@@ -693,12 +693,12 @@ sessionAffinityConfig:
 kubectl exec client -n k8squest -- sh -c 'for i in 1 2 3 4 5; do wget -q -O- http://session-service; echo; done'
 ```
 
-Barcha javoblar **bitta pod** dan bo'lishi kerak.
+All responses bo'lishi kerak from the **same pod**.
 
 ### 3. Test Different IPs Get Different Pods
 
 ```bash
-# Create second client pod ni
+# Create second client pod
 kubectl run client2 -n k8squest --image=busybox:1.36 -- sleep 3600
 
 # Request from client2 (different source IP)
@@ -731,7 +731,7 @@ After timeout expires, requests MAY go to different pod.
 ### 6. Force New Session Mapping
 
 ```bash
-# O'chirib qayta yaratish client pod ni (new IP = new mapping)
+# O'chirib qayta yaratish client pod (new IP = new mapping)
 kubectl delete pod client -n k8squest
 kubectl run client -n k8squest --image=busybox:1.36 --command -- sh -c 'while true; do wget -q -O- http://session-service 2>&1; sleep 2; done'
 ```
@@ -814,7 +814,7 @@ readinessProbe:
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## Key Takeaways
 
 1. **Session Affinity Ensures Consistency:**
    - `sessionAffinity: ClientIP` routes requests from same IP to same pod
@@ -832,11 +832,11 @@ readinessProbe:
    - Or token-based authentication (JWT) for full statelessness
    - Cloud-native = stateless standart holatda
 
-4. **Afzallik va Kamchiliklar:**
+4. **Tradeoffs:**
    - ✅ Simple setup, works with legacy apps
    - ❌ Uneven load, sessions lost on pod restart, poor scalability
 
-5. **Haqiqiy Dunyo Saboqlari:**
+5. **Real-World Lessons:**
    - Session affinity issues can cause massive customer impact ($4.7M!)
    - Doim test qiling full user journeys with multiple replicas
    - Monitor session behavior and cart abandonment

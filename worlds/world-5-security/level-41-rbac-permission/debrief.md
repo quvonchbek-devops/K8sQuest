@@ -6,9 +6,9 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**Muammo:**
+**The Problem:**
 ```yaml
-# ServiceAccount mavjud
+# ServiceAccount exists
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -20,7 +20,7 @@ metadata:
 
 **Natija:** Pod crashes with "Forbidden: pods is forbidden"
 
-**Yechim:**
+**The Solution:**
 ```yaml
 # 1. Define permissions
 kind: Role
@@ -266,7 +266,7 @@ rules:
 
 ---
 
-## 💥 Keng Tarqalgan RBAC Xatolari
+## 💥 Common RBAC Mistakes
 
 ### Mistake 1: No RoleBinding
 
@@ -330,14 +330,14 @@ rules:
 - apiGroups: ["*"]  # ❌ All API groups!
   resources: ["*"]  # ❌ All resources!
   verbs: ["*"]  # ❌ All actions!
-# Bu cluster-admin ekvivalenti — juda xavfli!
+# This is cluster-admin equivalent - too dangerous!
 ```
 
 **Fix:** Grant only needed permissions (principle of least privilege)
 
 ---
 
-## 🚨 HAQIQIY VOQEA: RBAC Noto'g'ri Konfiguratsiyasi
+## 🚨 REAL-WORLD HORROR STORY: The RBAC Misconfiguration
 
 ### The Incident: $2.1M Data Breach
 
@@ -388,7 +388,7 @@ rules:
 1. **Typo in RBAC configuration:** `["*"]` o'rniga of `[""]`
 2. **No review process:** Direct apply siz peer review
 3. **No RBAC auditing:** Overly broad permissions not detected
-4. **Yetarlicha test qilinmagan:** Qanday ruxsatlar berilganini hech qachon test qilishmagan
+4. **Insufficient testing:** Never tested what permissions were actually granted
 5. **No least privilege:** Should have used specific resourceNames
 
 ### Tuzatish
@@ -422,7 +422,7 @@ rules:
 
 ---
 
-## 🛡️ RBAC Eng Yaxshi Amaliyotlari
+## 🛡️ RBAC Best Practices
 
 ### 1. Principle of Least Privilege
 
@@ -513,7 +513,7 @@ roleRef:
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
 1. **RBAC = Role + RoleBinding** - Both required for permissions
 2. **ServiceAccount = Identity** - What pods run as
@@ -532,7 +532,7 @@ Endi RBAC ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 42:** SecurityContext and privilege escalation
 - **Level 43:** ResourceQuotas and limits
-- **Level 44:** NetworkPolicy ni for traffic control
+- **Level 44:** NetworkPolicy for traffic control
 
 ---
 

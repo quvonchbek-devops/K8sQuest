@@ -1,12 +1,12 @@
-# 🎓 Missiya Yakuni: Kubernetes NetworkPolicy ni
+# 🎓 Missiya Yakuni: Kubernetes NetworkPolicy
 
-**Tabriklaymiz!** Siz o'zlashtirgansiz NetworkPolicy ni - the firewall for your Kubernetes pods!
+**Tabriklaymiz!** Siz o'zlashtirgansiz NetworkPolicy - the firewall for your Kubernetes pods!
 
 ---
 
 ## 📊 Nimani Tuzatdingiz
 
-**Muammo:**
+**The Problem:**
 ```yaml
 # Deny-all policy to'sib qo'yish everything
 spec:
@@ -19,7 +19,7 @@ spec:
 
 **Natija:** Backend ulana olmadi to database, connection refused
 
-**Yechim:**
+**The Solution:**
 ```yaml
 # Database ingress: Allow from backend
 ingress:
@@ -50,7 +50,7 @@ egress:
 
 ## � Pro Maslahat: Incremental Application
 
-**Yaxshi Yangilik:** Mavjud sozlamalarni **o'chirmasdan** NetworkPolicy ni apply qilishingiz mumkin!
+**Good News:** Siz apply NetworkPolicy fixes **siz deleting** the existing setup!
 
 ### Why This Works
 
@@ -79,13 +79,13 @@ deny-all (podSelector: {})
   = Backend and database can communicate!
 ```
 
-**Eslatma:** Backend pod apply vaqtida xato ko'rsatishi mumkin chunki uning command i broken/solution, lekin bu zararsiz — NetworkPolicy ni lar baribir to'g'ri apply bo'ladi.
+**Eslatma:** Backend pod apply vaqtida xato ko'rsatishi mumkin chunki uning command i broken/solution, lekin bu zararsiz — NetworkPolicy lar baribir to'g'ri apply bo'ladi.
 
 ---
 
-## �🔒 Understanding NetworkPolicy ni
+## �🔒 Understanding NetworkPolicy
 
-### What is NetworkPolicy ni?
+### What is NetworkPolicy?
 
 **Definition:** Kubernetes firewall rules controlling pod-to-pod communication
 
@@ -97,12 +97,12 @@ deny-all (podSelector: {})
 
 ### Default Behavior
 
-**siz NetworkPolicy ni:**
+**siz NetworkPolicy:**
 ```
 All pods can communicate freely (open)
 ```
 
-**With empty NetworkPolicy ni:**
+**With empty NetworkPolicy:**
 ```yaml
 spec:
   podSelector: {}
@@ -114,13 +114,13 @@ Result: Complete isolation
 
 ---
 
-## 📝 NetworkPolicy ni Structure
+## 📝 NetworkPolicy Structure
 
 ### Complete Example
 
 ```yaml
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: api-policy
   namespace: production
@@ -176,7 +176,7 @@ spec:
 spec:
   podSelector:
     matchLabels:
-      app: backend  # Apply to backend pod larni
+      app: backend  # Apply to backend pods
   policyTypes:
   - Ingress
   ingress:
@@ -189,7 +189,7 @@ spec:
       port: 8080
 ```
 
-**Means:** Backend pods accept connections from frontend pod nis on port 8080
+**Means:** Backend pods accept connections from frontend pods on port 8080
 
 ### Multiple Sources (OR logic)
 
@@ -223,7 +223,7 @@ ingress:
   - port: 8080
 ```
 
-**Means:** frontend pod ni lardan VA production namespace dan ruxsat berish (ikkalasi ham talab qilinadi)
+**Means:** frontend pod lardan VA production namespace dan ruxsat berish (ikkalasi ham talab qilinadi)
 
 ### Allow from Specific IPs
 
@@ -261,7 +261,7 @@ spec:
       port: 8080
 ```
 
-**Means:** Frontend pods can connect to backend pod larni on port 8080
+**Means:** Frontend pods can connect to backend pods on port 8080
 
 ### Critical: DNS Egress
 
@@ -310,7 +310,7 @@ spec:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: default-deny-all
 spec:
@@ -325,7 +325,7 @@ spec:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: allow-dns
 spec:
@@ -348,7 +348,7 @@ spec:
 # Frontend → Backend
 ---
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: frontend-to-backend
 spec:
@@ -368,7 +368,7 @@ spec:
 ---
 # Backend → Database
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: backend-to-database
 spec:
@@ -390,7 +390,7 @@ spec:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: allow-from-monitoring
 spec:
@@ -408,7 +408,7 @@ spec:
 
 ---
 
-## 💥 Keng Tarqalgan NetworkPolicy ni Xatolari
+## 💥 Common NetworkPolicy Mistakes
 
 ### Mistake 1: Forgetting DNS
 
@@ -531,7 +531,7 @@ ports:
 
 ---
 
-## 🚨 HAQIQIY VOQEA: Kriptovalyuta O'g'irligi
+## 🚨 REAL-WORLD HORROR STORY: The Cryptocurrency Heist
 
 ### The Incident: $4.2M Stolen
 
@@ -550,7 +550,7 @@ ports:
 
 **Day 1, 14:00** - Attacker exploits vulnerability in public-facing web app  
 **14:10** - Gains shell in web pod (least privileged service)  
-**14:15** - No NetworkPolicy ni to'sib qo'yish lateral movement  
+**14:15** - No NetworkPolicy to'sib qo'yish lateral movement  
 **14:20** - Web pod scans internal network, finds database pods  
 **14:30** - Connects directly to database pod (port 5432)  
 **14:35** - Database accepts connection (no ingress policy!)  
@@ -560,12 +560,12 @@ ports:
 **18:00** - $4.2M transferred to attacker wallets  
 **20:00** - Anomaly detected, too late  
 
-### What NetworkPolicy ni Would Have Prevented
+### What NetworkPolicy Would Have Prevented
 
 ```yaml
 # Database should ONLY accept from backend
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: database-ingress
 spec:
@@ -585,7 +585,7 @@ spec:
 ---
 # Web frontend should NOT connect to database
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: web-egress
 spec:
@@ -619,20 +619,20 @@ spec:
 
 1. **Default deny** - Block all, allow specific
 2. **Least privilege** - Only necessary connections
-3. **Defense in depth** - NetworkPolicy ni + RBAC + more
+3. **Defense in depth** - NetworkPolicy + RBAC + more
 4. **Monitor violations** - Alert on policy blocks
 5. **Regular audits** - Review policies quarterly
 
 ---
 
-## 🛡️ NetworkPolicy Eng Yaxshi Amaliyotlari
+## 🛡️ NetworkPolicy Best Practices
 
 ### 1. Start with Default Deny
 
 ```yaml
 # Apply to every namespace
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: default-deny-all
 spec:
@@ -709,7 +709,7 @@ cilium monitor --type policy-verdict
 
 ---
 
-## 🔍 Debug Qilish Qilish qilishging NetworkPolicy ni
+## 🔍 Debug Qilish Qilish qilishging NetworkPolicy
 
 ### Check Policies
 
@@ -751,7 +751,7 @@ kubectl get pod my-pod --show-labels
 
 ---
 
-## 📚 Tezkor Ma'lumotnoma
+## 📚 Quick Reference
 
 ### Allow Patterns
 
@@ -777,14 +777,14 @@ kubectl get pod my-pod --show-labels
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
-1. **NetworkPolicy ni = pod firewall** - Controls ingress/egress
+1. **NetworkPolicy = pod firewall** - Controls ingress/egress
 2. **Default deny** - Start restrictive, open as needed
 3. **Always allow DNS** - Pods need name resolution
 4. **Use labels** - podSelector and namespaceSelector
 5. **Test thoroughly** - Tekshirish connectivity works
-6. **Defense in depth** - NetworkPolicy ni + RBAC + SecurityContext
+6. **Defense in depth** - NetworkPolicy + RBAC + SecurityContext
 7. **Document policies** - Clear naming and annotations
 8. **Monitor violations** - Track what's being blocked
 
@@ -792,7 +792,7 @@ kubectl get pod my-pod --show-labels
 
 ## 🚀 Keyingi Qadamlar
 
-Endi NetworkPolicy ni ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
+Endi NetworkPolicy ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 45:** Node Affinity - advanced pod scheduling
 - **Level 46:** Taints and Tolerations - node scheduling constraints

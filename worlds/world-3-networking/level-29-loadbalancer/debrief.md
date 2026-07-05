@@ -11,9 +11,9 @@ Service ingiz sozlangan edi as type `LoadBalancer` in a local development cluste
 - **Service stuck in "Pending" state** indefinitely
 - **No external IP assigned** to the service
 - **Application completely inaccessible** from outside the cluster
-- Cloud da nima uchun ishlaydi lekin lokal da ishlamaydi degan **chalkashlik**
+- **Confusion** about why it works in cloud but not locally
 
-### Asosiy Sabab
+### The Root Cause
 ```yaml
 # ❌ BROKEN: LoadBalancer in local cluster
 apiVersion: v1
@@ -62,9 +62,9 @@ spec:
 
 ---
 
-## 🔍 Chuqur Tahlil: Kubernetes Service Turlari
+## 🔍 Deep Dive: Kubernetes Service Types
 
-Kubernetes provides **four service turinis**, each solving different networking needs:
+Kubernetes provides **four service types**, each solving different networking needs:
 
 ### 1. **ClusterIP** (Default)
 
@@ -82,7 +82,7 @@ Kubernetes provides **four service turinis**, each solving different networking 
 - Internal message queues
 - Services that should never be exposed externally
 
-**Konfiguratsiya:**
+**Configuration:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -132,7 +132,7 @@ curl http://localhost:5432
 - On-premises deployments
 - Cost-conscious deployments (no LB charges)
 
-**Konfiguratsiya:**
+**Configuration:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -199,7 +199,7 @@ curl http://localhost:8080
 - Auto-scaling applications
 - High-availability services
 
-**Konfiguratsiya:**
+**Configuration:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -278,7 +278,7 @@ curl http://52.123.45.67
 - Migrating services to/from cluster
 - Aliasing external APIs
 
-**Konfiguratsiya:**
+**Configuration:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -297,7 +297,7 @@ curl http://external-db.default.svc.cluster.local
 
 ---
 
-## 💔 HAQIQIY VOQEA: $45,000 LoadBalancer Hisob-Kitobi
+## 💔 Real-World Horror Story: The $45,000 LoadBalancer Bill
 
 **Kompaniya:** StartupCo (SaaS platform)  
 **Date:** March 2023  
@@ -504,10 +504,10 @@ deny[msg] {
 - **Costs reduced** from $7,200/month to $48/month
 - **Architecture improved** with single Ingress controller
 - **Policies enforced** to prevent future mistakes
-- **Team trained** on Kubernetes service turinis and costs
+- **Team trained** on Kubernetes service types and costs
 - **Monitoring added** for cloud resource usage
 
-### 🎯 Asosiy Xulosa
+### Key Takeaway
 **One LoadBalancer per cluster, not one per service!**
 
 Use the Ingress pattern:
@@ -536,7 +536,7 @@ This pattern:
 
 ## 🎯 Service Type Decision Tree
 
-Use this decision tree to choose the right service turini:
+Use this decision tree to choose the right service type:
 
 ```
 Does the service need external access?
@@ -577,7 +577,7 @@ Does the service need external access?
 
 ---
 
-## 📚 Eng Yaxshi Amaliyotlar
+## 📚 Best Practices
 
 ### 1. **Default to ClusterIP**
 ```yaml
@@ -675,7 +675,7 @@ kubectl get services --all-namespaces -o wide | grep LoadBalancer
 # NLB ≈ $16/month + $0.006/hour per LCU
 ```
 
-### 6. **Xavfsizlik Eng Yaxshi Amaliyotlari**
+### 6. **Security Best Practices**
 ```yaml
 # Limit LoadBalancer source ranges
 apiVersion: v1
@@ -791,7 +791,7 @@ curl http://localhost:30080
 
 ---
 
-## 🎓 Asosiy Xulosalar
+## 🎓 Key Takeaways
 
 ### Must Eslab qoling
 
@@ -810,9 +810,9 @@ curl http://localhost:30080
 | LoadBalancer | ✅ | ✅ | $$$  | Cloud production |
 | Ingress | ✅ | ✅ | $    | Multi-service routing |
 
-### Production Checklist
+### Produkciya Checklist
 
-Production ga deploy qilishdan oldin:
+Before deploying to production:
 
 - [ ] **Use ClusterIP** for internal services
 - [ ] **Use single Ingress** for external access (not LoadBalancer per service)
@@ -836,9 +836,9 @@ Production ga deploy qilishdan oldin:
 
 ## 🎯 What's Next?
 
-Siz o'zlashtirgansiz Kubernetes service turinis and cloud provider integration. Keyingi:
+Siz o'zlashtirgansiz Kubernetes service types and cloud provider integration. Keyingi:
 
-**Level 30: Headless Service lar** — StatefulSet DNS va `clusterIP: None` qachon yechim ekanini o'rganing
+**Level 30: Headless Services** - Learn about StatefulSet DNS and when `clusterIP: None` is the answer
 
 ### Further Learning
 
@@ -852,15 +852,15 @@ Siz o'zlashtirgansiz Kubernetes service turinis and cloud provider integration. 
 ## 🏆 Achievement Unlocked!
 
 **Service Type Expert** - Siz now:
-- ✅ Choose the right service turini for any scenario
+- ✅ Choose the right service type for any scenario
 - ✅ Understand why LoadBalancer requires cloud provider
 - ✅ Use NodePort for local development
 - ✅ Design cost-effective architectures with Ingress
 - ✅ Avoid the $45,000 LoadBalancer mistake
 
-**Eslab qoling:** Production da, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingiz minnatdor bo'ladi!
+**Eslab qoling:** Produkciyada, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingizll will thank you!
 
 ---
 
-*"Oyiga $50 va $5,000 cloud hisob orasidagi farq ko'pincha service turlarini tushunishga bog'liq."* - Kubernetes Cost Optimization Guide
+*"The difference between a $50/month and $5,000/month cloud bill often comes down to understanding service types."* - Kubernetes Cost Optimization Guide
 

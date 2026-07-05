@@ -1,12 +1,12 @@
 # 🎓 Missiya Yakuni: Volume Mount Path Configuration
 
-**Tabriklaymiz!** You've successfully fixed a volume mount path ini misconfiguration. Bu eng keng tarqalgan storage errors Kubernetes da!
+**Tabriklaymiz!** You've successfully fixed a volume mount path misconfiguration. Bu eng keng tarqalgan storage errors Kubernetes da!
 
 ---
 
 ## 📊 Nimani Tuzatdingiz
 
-**Muammo:**
+**The Problem:**
 ```yaml
 volumeMounts:
 - name: config-volume
@@ -18,9 +18,9 @@ volumeMounts:
 /app/config/app.conf
 ```
 
-**Natija:** Pod crashed with "Config file topilmadi"
+**Natija:** Pod crashed with "Config file not found"
 
-**Yechim:**
+**The Solution:**
 ```yaml
 volumeMounts:
 - name: config-volume
@@ -164,7 +164,7 @@ containers:
 
 ---
 
-## 💥 Keng Tarqalgan Mount Path Xatolari
+## 💥 Common Mount Path Mistakes
 
 ### Mistake 1: Path Mismatch
 
@@ -233,7 +233,7 @@ volumeMounts:
 
 ---
 
-## 🔧 Kengaytirilgan Mount Parametrlari
+## 🔧 Advanced Mount Options
 
 ### Using subPath
 
@@ -290,7 +290,7 @@ volumeMounts:
 
 ---
 
-## 🏗️ Haqiqiy Dunyo Arxitektura Pattern lari
+## 🏗️ Real-World Architecture Patterns
 
 ### Pattern 1: Sidecar Logging
 
@@ -361,7 +361,7 @@ containers:
 
 ---
 
-## 🚨 HAQIQIY VOQEA: Noto'g'ri Mount Path
+## 🚨 REAL-WORLD HORROR STORY: The Wrong Mount Path
 
 ### The Incident: $850,000 Trading Platform Outage
 
@@ -394,7 +394,7 @@ order_db = f"{DATA_DIR}/orders.db"
 ### The Timeline
 
 **14:00** - Deployment started (rolling update)  
-**14:05** - First pod crashed with "Database topilmadi"  
+**14:05** - First pod crashed with "Database not found"  
 **14:07** - All trading pods restarting continuously  
 **14:10** - Trading halted, emergency rollback initiated  
 **14:45** - Rollback failed (kubectl version mismatch)  
@@ -437,15 +437,15 @@ initContainers:
 
 ### Lessons Learned
 
-1. **Mount path lar juda muhim:** Ularni API shartnomasi sifatida ko'ring
+1. **Mount paths are critical:** Treat them as part of the API contract
 2. **To'liq yo'lni test qiling:** Volume mount qilinganini emas, QAYERGA mount qilinganini
 3. **Use constants:** Define paths in one place (env vars or config)
 4. **Validate early:** Check paths in init containers or startup probes
-5. **Monitor file access:** Alert on "file topilmadi" errors
+5. **Monitor file access:** Alert on "file not found" errors
 
 ---
 
-## 🛡️ Eng Yaxshi Amaliyotlar
+## 🛡️ Best Practices
 
 ### 1. Use Standard Paths
 
@@ -537,16 +537,16 @@ volumeMounts:
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
 1. **Mount Path is Critical** - It determines where files appear in the container
 2. **Match Application Expectations** - mountPath must align with app code
-3. **Izchil bo'ling** — init va asosiy konteyner larda bir xil path lar ishlating
+3. **Be Consistent** - Use same paths across init and main containers
 4. **Validate Early** - Check paths in init containers or probes
 5. **Follow Conventions** - Use standard filesystem hierarchy
 6. **Document Paths** - Make mount requirements explicit
 7. **Test Integration** - Tekshirish actual file access, not just mounts
-8. **Monitor Access** - Alert on file topilmadi errors
+8. **Monitor Access** - Alert on file not found errors
 
 ---
 
@@ -567,7 +567,7 @@ Endi volume mount yo'llarini tushunganingizdan keyin, quyidagilarga tayyorsiz:
 - [Volume Mounts](https://kubernetes.io/docs/concepts/storage/volumes/#using-volumes)
 - [Filesystem Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html)
 
-**Keng Tarqalgan Ilovalar va Ularning Kutilgan Path lari:**
+**Common Applications and Their Expected Paths:**
 - PostgreSQL: `/var/lib/postgresql/data`
 - MySQL: `/var/lib/mysql`
 - MongoDB: `/data/db`
@@ -577,4 +577,4 @@ Endi volume mount yo'llarini tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 ---
 
-**Yaxshi ish!** Siz o'zlashtirgansiz volume mount path ini configuration. Eslab qoling: the path is part of your application's contract! 🎉
+**Yaxshi ish!** Siz o'zlashtirgansiz volume mount path configuration. Eslab qoling: the path is part of your application's contract! 🎉

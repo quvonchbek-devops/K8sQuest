@@ -1,27 +1,27 @@
 # 🎓 Missiya Yakuni: Container SecurityContext & Privilege Escalation
 
-**Tabriklaymiz!** Siz Kubernetes SecurityContext yordamida konteynerlarni himoyaladingiz — production deployment lar uchun juda muhim ko'nikma!
+**Tabriklaymiz!** You've secured containers using Kubernetes SecurityContext - a critical skill for production deployments!
 
 ---
 
 ## 📊 Nimani Tuzatdingiz
 
-**Muammo:**
+**The Problem:**
 ```yaml
 securityContext:
-  runAsNonRoot ni: true  # Enforced but...
+  runAsNonRoot: true  # Enforced but...
   # ❌ No runAsUser specified!
-  # ❌ No allowPrivilegeEscalation ni setting!
+  # ❌ No allowPrivilegeEscalation setting!
 ```
 
-**Natija:** Pod rejected with "konteyner da runAsNonRoot ni bor va image root sifatida ishlaydi"
+**Natija:** Pod rejected with "konteyner da runAsNonRoot bor va image root sifatida ishlaydi"
 
-**Yechim:**
+**The Solution:**
 ```yaml
 securityContext:
-  runAsNonRoot ni: true  # ✅ Validate
+  runAsNonRoot: true  # ✅ Validate
   runAsUser: 1000  # ✅ Specify non-root UID
-  allowPrivilegeEscalation ni: false  # ✅ Prevent escalation
+  allowPrivilegeEscalation: false  # ✅ Prevent escalation
   capabilities:
     drop:
     - ALL  # ✅ Minimal permissions
@@ -40,7 +40,7 @@ SecurityContext pod lar va konteynerlar uchun **imtiyoz va kirish nazorati sozla
 **Buni shunday tasavvur qiling:**
 - **WHO** the container runs as (user ID)
 - **WHAT** privileges it has (capabilities)
-- Host bilan **QANDAY** muloqot qilishi mumkinligi (privilege escalation)
+- **HOW** it can interact with the host (privilege escalation)
 
 ### Two Levels of SecurityContext
 
@@ -73,7 +73,7 @@ spec:
   - name: app
     securityContext:  # ← Container level (overrides pod level)
       runAsUser: 2000
-      allowPrivilegeEscalation ni: false
+      allowPrivilegeEscalation: false
 ```
 
 **Applies to:**
@@ -101,7 +101,7 @@ securityContext:
 - `1000+` = non-root users (recommended)
 - `65534` = nobody (minimal permissions)
 
-**Foydalanish holatlari:**
+**Use cases:**
 - Override image's default user
 - Enforce non-root execution
 - Match file ownership requirements
@@ -117,11 +117,11 @@ securityContext:
 
 **Use with:** File access, shared volumes
 
-#### runAsNonRoot ni
+#### runAsNonRoot
 
 ```yaml
 securityContext:
-  runAsNonRoot ni: true  # Enforce non-root
+  runAsNonRoot: true  # Enforce non-root
 ```
 
 **Purpose:** Validates container doesn't run as UID 0
@@ -150,11 +150,11 @@ spec:
 
 ### Privilege Settings
 
-#### allowPrivilegeEscalation ni
+#### allowPrivilegeEscalation
 
 ```yaml
 securityContext:
-  allowPrivilegeEscalation ni: false
+  allowPrivilegeEscalation: false
 ```
 
 **Purpose:** Controls if process can gain more privileges
@@ -235,14 +235,14 @@ securityContext:
 
 ---
 
-## 💥 Keng Tarqalgan SecurityContext Xatolari
+## 💥 Common SecurityContext Mistakes
 
-### Mistake 1: runAsNonRoot ni siz runAsUser
+### Mistake 1: runAsNonRoot siz runAsUser
 
 ```yaml
 # ❌ Wrong
 securityContext:
-  runAsNonRoot ni: true  # Enforces non-root...
+  runAsNonRoot: true  # Enforces non-root...
   # But image defaults to root!
 # Result: Pod rejected
 ```
@@ -251,17 +251,17 @@ securityContext:
 ```yaml
 # ✅ Correct
 securityContext:
-  runAsNonRoot ni: true
+  runAsNonRoot: true
   runAsUser: 1000  # Specify which user
 ```
 
-### Mistake 2: Forgetting allowPrivilegeEscalation ni
+### Mistake 2: Forgetting allowPrivilegeEscalation
 
 ```yaml
 # ❌ Incomplete security
 securityContext:
   runAsUser: 1000
-  # Missing: allowPrivilegeEscalation ni: false
+  # Missing: allowPrivilegeEscalation: false
 # Container can still escalate to root!
 ```
 
@@ -270,7 +270,7 @@ securityContext:
 # ✅ Complete security
 securityContext:
   runAsUser: 1000
-  allowPrivilegeEscalation ni: false
+  allowPrivilegeEscalation: false
 ```
 
 ### Mistake 3: Using Privileged Mode
@@ -303,7 +303,7 @@ securityContext:
 # ✅ Non-root
 securityContext:
   runAsUser: 1000
-  runAsNonRoot ni: true
+  runAsNonRoot: true
 ```
 
 ### Mistake 5: Port < 1024 as Non-Root
@@ -340,7 +340,7 @@ securityContext:
 
 ---
 
-## 🚨 HAQIQIY VOQEA: Cryptomining Container Qochishi
+## 🚨 REAL-WORLD HORROR STORY: The Cryptomining Container Escape
 
 ### The Incident: $400K in Compute Costs + Data Breach
 
@@ -369,7 +369,7 @@ spec:
 **The Vulnerabilities:**
 1. Container running as **root** (UID 0)
 2. **privileged: true** (left from debugging!)
-3. No **allowPrivilegeEscalation ni: false**
+3. No **allowPrivilegeEscalation: false**
 4. Full capabilities (none dropped)
 
 **The Attack Chain:**
@@ -424,9 +424,9 @@ spec:
       - name: web-app
         image: company/web-app:latest
         securityContext:
-          runAsNonRoot ni: true  # ✅ Prevents root
+          runAsNonRoot: true  # ✅ Prevents root
           runAsUser: 1000  # ✅ Specific non-root user
-          allowPrivilegeEscalation ni: false  # ✅ Blocks escalation
+          allowPrivilegeEscalation: false  # ✅ Blocks escalation
           readOnlyRootFilesystem: true  # ✅ Prevents persistence
           capabilities:
             drop:
@@ -436,7 +436,7 @@ spec:
 **With this SecurityContext:**
 1. Container wouldn't run as root → harder to exploit
 2. privileged: false (default) → can't escape to host
-3. allowPrivilegeEscalation ni: false → can't gain root
+3. allowPrivilegeEscalation: false → can't gain root
 4. No capabilities → limited damage
 5. Attack stopped at container boundary
 
@@ -457,14 +457,14 @@ spec:
 
 ---
 
-## 🛡️ SecurityContext Eng Yaxshi Amaliyotlari
+## 🛡️ XavfsizlikContext Best Practices
 
 ### 1. Always Run as Non-Root
 
 ```yaml
 # ✅ Secure default for all containers
 securityContext:
-  runAsNonRoot ni: true
+  runAsNonRoot: true
   runAsUser: 1000
 ```
 
@@ -472,7 +472,7 @@ securityContext:
 
 ```yaml
 securityContext:
-  allowPrivilegeEscalation ni: false
+  allowPrivilegeEscalation: false
 ```
 
 ### 3. Drop All Capabilities
@@ -533,14 +533,14 @@ spec:
     runAsUser: 1000
     runAsGroup: 3000
     fsGroup: 2000
-    seccompProfile ni:
+    seccompProfile:
       type: RuntimeDefault
   containers:
   - name: app
     image: myapp:latest
     securityContext:  # Container-level
-      runAsNonRoot ni: true
-      allowPrivilegeEscalation ni: false
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
       readOnlyRootFilesystem: true
       capabilities:
         drop:
@@ -578,12 +578,12 @@ Kubernetes defines three security profiles:
 ```yaml
 # Must have all of Baseline plus:
 securityContext:
-  runAsNonRoot ni: true
-  allowPrivilegeEscalation ni: false
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
   capabilities:
     drop:
     - ALL
-  seccompProfile ni:
+  seccompProfile:
     type: RuntimeDefault
 ```
 
@@ -600,7 +600,7 @@ kubectl describe pod <pod-name>
 ```
 
 Qidiring:
-- "konteyner da runAsNonRoot ni bor va image root sifatida ishlaydi"
+- "konteyner da runAsNonRoot bor va image root sifatida ishlaydi"
 - "containers must run as non-root"
 
 ### Tekshirish Current Settings
@@ -628,13 +628,13 @@ kubectl exec <pod-name> -- grep Cap /proc/1/status
 
 ---
 
-## 📚 Tezkor Ma'lumotnoma
+## 📚 Quick Reference
 
 | Setting | Purpose | Recommended Value |
 |---------|---------|-------------------|
 | `runAsUser` | User ID to run as | `1000` (non-root) |
-| `runAsNonRoot ni` | Validate non-root | `true` |
-| `allowPrivilegeEscalation ni` | Block privilege gain | `false` |
+| `runAsNonRoot` | Validate non-root | `true` |
+| `allowPrivilegeEscalation` | Block privilege gain | `false` |
 | `readOnlyRootFilesystem` | Read-only root | `true` |
 | `capabilities.drop` | Remove capabilities | `["ALL"]` |
 | `fsGroup` | Volume group ownership | `2000` |
@@ -642,11 +642,11 @@ kubectl exec <pod-name> -- grep Cap /proc/1/status
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
 1. **Doim ishlating SecurityContext** - Hech qachon deploy qilmang siz it
-2. **Run as non-root** - runAsUser + runAsNonRoot ni
-3. **Disable privilege escalation** - allowPrivilegeEscalation ni: false
+2. **Run as non-root** - runAsUser + runAsNonRoot
+3. **Disable privilege escalation** - allowPrivilegeEscalation: false
 4. **Drop all capabilities** - Minimal permissions
 5. **Use Pod Security Standards** - Enforce cluster-wide
 6. **Read-only filesystem** - Prevents malware persistence
@@ -660,7 +660,7 @@ kubectl exec <pod-name> -- grep Cap /proc/1/status
 Endi SecurityContext ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 43:** ResourceQuota - controlling resource consumption
-- **Level 44:** NetworkPolicy ni - controlling network traffic
+- **Level 44:** NetworkPolicy - controlling network traffic
 - **Level 45:** Node Affinity - advanced scheduling
 
 ---

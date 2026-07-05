@@ -1,12 +1,12 @@
-# 🎓 Missiya Yakuni: NetworkPolicy ni Too Restrictive - Missiya Yakuni
+# 🎓 Missiya Yakuni: NetworkPolicy Too Restrictive - Missiya Yakuni
 
 ## Missiya Umumiy Ko'rinishi
 
-**Maqsad:** Haddan tashqari cheklangan NetworkPolicy ni ni tuzating — u frontend va backend pod lar orasidagi qonuniy trafikni to'sib qo'ygan.
+**Maqsad:** Haddan tashqari cheklangan NetworkPolicy ni tuzating — u frontend va backend pod lar orasidagi qonuniy trafikni to'sib qo'ygan.
 
 **XP berildi:** 250 XP  
 **Qiyinlik:** Intermediate  
-**Konseptlar:** Kubernetes NetworkPolicy ni, Pod-to-pod Communication, Label Selectors, Ingress Rules
+**Konseptlar:** Kubernetes NetworkPolicy, Pod-to-pod Communication, Label Selectors, Ingress Rules
 
 ---
 
@@ -14,18 +14,18 @@
 
 Siz backend API bilan aloqa qilishi kerak bo'lgan frontend ilovani deploy qildingiz. Ikkala pod ishlayotgan, service to'g'ri sozlangan va endpoint lar mavjud edi. Lekin frontend backend ga yeta olmadi — barcha ulanish urinishlari timeout bo'ldi.
 
-Aybdor? Noto'g'ri label selector ga ega NetworkPolicy ni — u frontend dan barcha trafikni to'sib qo'ydi.
+Aybdor? Noto'g'ri label selector ga ega NetworkPolicy — u frontend dan barcha trafikni to'sib qo'ydi.
 
-**The Broken Konfiguratsiya:**
+**The Broken Configuration:**
 ```yaml
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: backend-network-policy
 spec:
   podSelector:
     matchLabels:
-      app: backend        # Applies to backend pod larni
+      app: backend        # Applies to backend pods
   policyTypes:
   - Ingress
   ingress:
@@ -38,25 +38,25 @@ spec:
       port: 8080
 ```
 
-**Muammo:**
+**The Problem:**
 - Frontend pod has label: `app: frontend`
-- NetworkPolicy ni allows traffic from: `app: admin-tool`
+- NetworkPolicy allows traffic from: `app: admin-tool`
 - Match? NO! → All frontend traffic DENIED
 - Result: Connection timeouts
 
 ---
 
-## Asosiy Sabab: Label Selector Nomuvofiqlik
+## The Root Cause: Label Selector Mismatch
 
-### Tushunish NetworkPolicy ni
+### Tushunish NetworkPolicy
 
-NetworkPolicy ni — bu Kubernetes ning pod-dan-pod trafikni boshqarish uchun firewall i. U qaysi pod lar bir-biri bilan aloqa qilishi mumkinligini label selector lar orqali nazorat qiladi.
+NetworkPolicy — bu Kubernetes ning pod-dan-pod trafikni boshqarish uchun firewall i. U qaysi pod lar bir-biri bilan aloqa qilishi mumkinligini label selector lar orqali nazorat qiladi.
 
 **Three Key Components:**
 
 1. **podSelector** - WHO the policy applies TO (target pods)
 2. **policyTypes** - What types of traffic to control (Ingress, Egress, or both)
-3. **ingress/egress qoidalar** — KIM trafik yuborishi mumkin va QAYSI port lar
+3. **ingress/egress rules** - WHO can send traffic and WHAT ports
 
 ```yaml
 spec:
@@ -77,7 +77,7 @@ spec:
       port: 8080        # PORT: Only this port allowed
 ```
 
-**Qanday ishlaydi:**
+**How It Works:**
 
 ```
 ┌─────────────────────┐
@@ -89,7 +89,7 @@ spec:
                            │
                            ▼
                     ┌──────────────────────────┐
-                    │ NetworkPolicy ni Check      │
+                    │ NetworkPolicy Check      │
                     │ Does label "app:         │
                     │ frontend" match ingress  │
                     │ podSelector?             │
@@ -117,13 +117,13 @@ spec:
 
 ### Default Deny Behavior
 
-**CRITICAL:** Pod uchun NetworkPolicy ni yaratganingizda, bu pod "himoyalangan" bo'ladi va BARCHA trafik rad etiladid standart holatda, faqat siz aniq ruxsat berganlari TASHQARIplicitly allow.
+**CRITICAL:** Pod uchun NetworkPolicy yaratganingizda, bu pod "himoyalangan" bo'ladi va BARCHA trafik rad etiladid standart holatda EXCEPT what you explicitly allow.
 
 ```yaml
-# NO NetworkPolicy ni
+# NO NetworkPolicy
 # Result: All traffic allowed (open)
 
-# NetworkPolicy ni with empty ingress
+# NetworkPolicy with empty ingress
 spec:
   podSelector:
     matchLabels:
@@ -162,11 +162,11 @@ ingress:
 **Why This Works:**
 
 1. **Frontend pod** has label `app: frontend`
-2. **NetworkPolicy ni** endi pod lardan trafikka ruxsat beradi: `app: frontend`
+2. **NetworkPolicy** endi pod lardan trafikka ruxsat beradi: `app: frontend`
 3. **Match:** YES ✅
 4. **Natija:** Frontend can connect to backend
 
-NetworkPolicy ni endi frontend ni vakolatli manba sifatida to'g'ri aniqlaydi va uning trafigining backend ga yetishiga ruxsat beradiend on port 8080.
+NetworkPolicy endi frontend ni vakolatli manba sifatida to'g'ri aniqlaydi va uning trafigining backend ga yetishiga ruxsat beradiend on port 8080.
 
 ---
 
@@ -178,12 +178,12 @@ NetworkPolicy ni endi frontend ni vakolatli manba sifatida to'g'ri aniqlaydi va 
 
 ### Nima Sodir Bo'ldi
 
-Xavfsizlik jamoasi xavfsizlik holatini yaxshilash uchun barcha production namespace larda NetworkPolicy ni larni joriy qilishga qaror qildisture. They created policies to restrict database access to only authorized applications.
+Xavfsizlik jamoasi xavfsizlik holatini yaxshilash uchun barcha production namespace larda NetworkPolicy larni joriy qilishga qaror qildisture. They created policies to restrict database access to only authorized applications.
 
-**The Broken NetworkPolicy ni:**
+**The Broken NetworkPolicy:**
 ```yaml
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: postgres-access-policy
   namespace: production
@@ -220,7 +220,7 @@ metadata:
 
 ### Muammo
 
-NetworkPolicy ni `tier: backend` label selector ishlatdi, lekin ilova pod larining HECH BIRIDA bu label yo'q edi! Ular `app: payment-service`, `app: user-service`, etc.
+NetworkPolicy `tier: backend` label selector ishlatdi, lekin ilova pod larining HECH BIRIDA bu label yo'q edi! Ular `app: payment-service`, `app: user-service`, etc.
 
 **Natija:**
 - ALL application pods were denied database access
@@ -236,7 +236,7 @@ NetworkPolicy ni `tier: backend` label selector ishlatdi, lekin ilova pod larini
 **11:10 PM:** All database-dependent services failed  
 **11:15 PM:** On-call engineer paged (monitoring detected massive error spike)  
 **11:30 PM:** Team identified database connection timeouts  
-**11:45 PM:** Suspected network issue, tekshirildi firewall rules (nothing wrong)  
+**11:45 PM:** Suspected network issue, checked firewall rules (nothing wrong)  
 **12:15 AM:** Checked NetworkPolicies, found label mismatch  
 **12:30 AM:** Hotfix deployed with correct labels  
 **1:00 AM:** Services restored, transactions processing again  
@@ -244,7 +244,7 @@ NetworkPolicy ni `tier: backend` label selector ishlatdi, lekin ilova pod larini
 
 ### The Hotfix
 
-**Option 1: Fix the NetworkPolicy ni**
+**Option 1: Fix the NetworkPolicy**
 ```yaml
 ingress:
 - from:
@@ -259,13 +259,13 @@ ingress:
 
 **Option 2: Use a common label** (better approach)
 ```yaml
-# Add consistent labels to all backend service nis
+# Add consistent labels to all backend services
 metadata:
   labels:
     app: payment-service
-    tier: backend          # ✅ Add this to all backend pod larni
+    tier: backend          # ✅ Add this to all backend pods
 
-# NetworkPolicy ni can now use it
+# NetworkPolicy can now use it
 ingress:
 - from:
   - podSelector:
@@ -291,11 +291,11 @@ ingress:
 
 2. **Use Consistent Labeling:**
    - Establish label conventions across organization
-   - Document required labels for NetworkPolicy ni access
+   - Document required labels for NetworkPolicy access
    - Automate label validation in CI/CD
 
 3. **Monitor Denied Connections:**
-   - Log NetworkPolicy ni denials
+   - Log NetworkPolicy denials
    - Alert on unexpected connection failures
    - Track denied connections by source/destination
 
@@ -307,11 +307,11 @@ ingress:
 5. **Documentation:**
    - Document which services need to communicate
    - Maintain service dependency maps
-   - Include NetworkPolicy ni requirements in service documentation
+   - Include NetworkPolicy requirements in service documentation
 
 ---
 
-## NetworkPolicy ni Chuqur Tahlil
+## NetworkPolicy Deep Dive
 
 ### 1. Ingress vs Egress
 
@@ -386,7 +386,7 @@ ingress:
         env: production
 ```
 
-**Ma'nosi:** `app: frontend` label li pod lardan VA `env: production` label li namespace dan trafikka ruxsat berish
+**Meaning:** Allow traffic from pods with `app: frontend` AND in namespace labeled `env: production`
 
 ### 4. Namespace Selectors
 
@@ -433,7 +433,7 @@ ingress:
 ```yaml
 # Deny all ingress traffic
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: deny-all-ingress
 spec:
@@ -446,7 +446,7 @@ spec:
 ```yaml
 # Deny all egress traffic
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: deny-all-egress
 spec:
@@ -461,7 +461,7 @@ spec:
 ```yaml
 # Allow all ingress traffic
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: allow-all-ingress
 spec:
@@ -474,14 +474,14 @@ spec:
 
 ---
 
-## Keng Tarqalgan NetworkPolicy ni Patterns
+## Keng Tarqalgan NetworkPolicy Patterns
 
 ### Pattern 1: Frontend → Backend → Database
 
 ```yaml
 # Allow frontend to access backend
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: backend-policy
 spec:
@@ -501,7 +501,7 @@ spec:
 ---
 # Allow backend to access database
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: database-policy
 spec:
@@ -525,7 +525,7 @@ spec:
 ```yaml
 # Allow ingress controller to access all services
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: allow-ingress-controller
 spec:
@@ -549,7 +549,7 @@ spec:
 ```yaml
 # Allow Prometheus to scrape metrics
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: allow-prometheus
 spec:
@@ -574,7 +574,7 @@ spec:
 ```yaml
 # Allow all pods to query DNS
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: allow-dns
 spec:
@@ -599,7 +599,7 @@ spec:
 ```yaml
 # Allow frontend in "app" namespace to access backend in "services" namespace
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: allow-frontend-cross-namespace
   namespace: services
@@ -621,15 +621,15 @@ spec:
 
 ---
 
-## Debug qilish Qilish NetworkPolicy ni Issues
+## Debug qilish Qilish NetworkPolicy Issues
 
-### 1. Tekshiring NetworkPolicy ni Exists
+### 1. Tekshiring NetworkPolicy Exists
 
 ```bash
 # List all NetworkPolicies in namespace
 kubectl get networkpolicy -n k8squest
 
-# Describe specific NetworkPolicy ni
+# Describe specific NetworkPolicy
 kubectl describe networkpolicy backend-network-policy -n k8squest
 ```
 
@@ -644,11 +644,11 @@ Qidiring:
 # View pod labels
 kubectl get pod frontend -n k8squest --show-labels
 
-# Tekshiring labels match NetworkPolicy ni selector
+# Tekshiring labels match NetworkPolicy selector
 kubectl get pod -n k8squest -l app=frontend
 ```
 
-If no pods match the NetworkPolicy ni selector, it's not being applied!
+If no pods match the NetworkPolicy selector, it's not being applied!
 
 ### 3. Test Connectivity
 
@@ -660,10 +660,10 @@ kubectl exec frontend -n k8squest -- wget -q -O- http://backend-service:8080 --t
 # Failure: Timeout or connection refused
 ```
 
-### 4. Check NetworkPolicy ni Controller Logs
+### 4. Check NetworkPolicy Controller Logs
 
 ```bash
-# Find NetworkPolicy ni controller pods (depends on CNI)
+# Find NetworkPolicy controller pods (depends on CNI)
 # For Calico:
 kubectl logs -n kube-system -l k8s-app=calico-node
 
@@ -676,11 +676,11 @@ kubectl logs -n kube-system -l name=weave-net
 
 Qidiring denied connection logs.
 
-### 5. Tekshirish CNI Plugin Supports NetworkPolicy ni
+### 5. Tekshirish CNI Plugin Supports NetworkPolicy
 
-Not all CNI plugins support NetworkPolicy ni!
+Not all CNI plugins support NetworkPolicy!
 
-**Support NetworkPolicy ni:**
+**Support NetworkPolicy:**
 - Calico ✅
 - Cilium ✅
 - Weave Net ✅
@@ -700,29 +700,29 @@ kubectl get pods -n kube-system
 Create a test pod to diagnose connectivity:
 
 ```bash
-# Test pod yaratish
+# Create test pod
 kubectl run test -n k8squest --image=nicolaka/netshoot -- sleep 3600
 
 # Test connection
 kubectl exec test -n k8squest -- curl http://backend-service:8080
 
-# Tekshiring NetworkPolicy ni affects test pod
+# Tekshiring NetworkPolicy affects test pod
 kubectl label pod test -n k8squest app=frontend
 
-# Try again (ishlashi kerak if NetworkPolicy ni allows app=frontend)
+# Try again (ishlashi kerak if NetworkPolicy allows app=frontend)
 kubectl exec test -n k8squest -- curl http://backend-service:8080
 ```
 
-### 7. Temporarily Remove NetworkPolicy ni
+### 7. Temporarily Remove NetworkPolicy
 
 ```bash
-# Delete NetworkPolicy ni to test if it's the issue
+# Delete NetworkPolicy to test if it's the issue
 kubectl delete networkpolicy backend-network-policy -n k8squest
 
 # Test connection (ishlashi kerak now)
 kubectl exec frontend -n k8squest -- wget -q -O- http://backend-service:8080
 
-# If it works now, NetworkPolicy ni was the problem
+# If it works now, NetworkPolicy was the problem
 # Reapply with correct configuration
 ```
 
@@ -733,12 +733,12 @@ kubectl exec frontend -n k8squest -- wget -q -O- http://backend-service:8080
 ### 1. Start Permissive, Then Tighten
 
 ```bash
-# Phase 1: No NetworkPolicy ni (allow all)
+# Phase 1: No NetworkPolicy (allow all)
 # Deploy application, verify it works
 
 # Phase 2: Default deny with broad allow
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 spec:
   podSelector:
     matchLabels:
@@ -788,7 +788,7 @@ metadata:
 
 ### 5. Monitor Denied Connections
 
-Set up monitoring for NetworkPolicy ni denials:
+Set up monitoring for NetworkPolicy denials:
 
 ```bash
 # Calico example: View denied connections
@@ -802,7 +802,7 @@ Alert on unexpected denials.
 ```yaml
 # Deny all cross-namespace traffic standart holatda
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy ni
+kind: NetworkPolicy
 metadata:
   name: deny-cross-namespace
 spec:
@@ -859,35 +859,35 @@ ingress:
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## Key Takeaways
 
-1. **NetworkPolicy ni Uses Labels:**
+1. **NetworkPolicy Uses Labels:**
    - `podSelector` determines which pods the policy applies TO
    - `ingress.from.podSelector` determines which pods can send traffic (source)
    - Labels must match EXACTLY for traffic to be allowed
 
 2. **Default Deny Behavior:**
-   - Once a NetworkPolicy ni is applied, ALL traffic is denied except what's explicitly allowed
+   - Once a NetworkPolicy is applied, ALL traffic is denied except what's explicitly allowed
    - Empty ingress/egress rules mean DENY ALL
 
 3. **Multiple NetworkPolicies Are Additive:**
    - If multiple NetworkPolicies match a pod, their rules are combined (OR logic)
-   - Siz frontend kirishi uchun bitta policy, monitoring uchun boshqasini qo'yasiz
+   - Siz have one policy for frontend access, another for monitoring
 
 4. **Testing is Critical:**
    - Doim test qiling NetworkPolicies in staging first
    - Tekshirish connectivity after applying
    - Have rollback plan ready
 
-5. **Keng Tarqalgan Xatolar:**
+5. **Common Mistakes:**
    - Label mismatch (eng keng tarqalgan!)
    - Forgetting to allow DNS (egress to kube-dns)
    - Applying policy to wrong pods (podSelector mistake)
    - OR kerak bo'lganda AND logikasi ishlatish
    - Not ruxsat berish ingress controller or monitoring
 
-6. **Haqiqiy Dunyo Saboqlari:**
-   - NetworkPolicy ni mistakes can cause complete outages
+6. **Real-World Lessons:**
+   - NetworkPolicy mistakes can cause complete outages
    - Test with same labels and traffic patterns as production
    - Monitor denied connections
    - Document service dependencies
@@ -897,8 +897,8 @@ ingress:
 
 ## Keyingi Qadam?
 
-Siz o'zlashtirgansiz NetworkPolicy ni fundamentals! Endi siz tushunasiz:
-- ✅ How NetworkPolicy ni controls pod-to-pod traffic
+Siz o'zlashtirgansiz NetworkPolicy fundamentals! Endi siz tushunasiz:
+- ✅ How NetworkPolicy controls pod-to-pod traffic
 - ✅ Label selector matching for ingress/egress rules
 - ✅ Default deny behavior
 - ✅ Debug qilishging connectivity issues sabab bo'ldi by NetworkPolicies
@@ -911,12 +911,12 @@ Keyingi level larda siz stateful ilovalar uchun session affinity, namespace lar 
 
 ## Qo'shimcha Resources
 
-- [Kubernetes NetworkPolicy ni Documentation](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
-- [NetworkPolicy ni Recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes)
-- [Calico NetworkPolicy ni](https://docs.projectcalico.org/security/kubernetes-network-policy)
-- [Cilium NetworkPolicy ni](https://docs.cilium.io/en/stable/policy/)
+- [Kubernetes NetworkPolicy Documentation](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+- [NetworkPolicy Recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes)
+- [Calico NetworkPolicy](https://docs.projectcalico.org/security/kubernetes-network-policy)
+- [Cilium NetworkPolicy](https://docs.cilium.io/en/stable/policy/)
 
 ---
 
 **Mission Complete!** 🎉  
-You've earned 250 XP and mastered Kubernetes NetworkPolicy ni!
+You've earned 250 XP and mastered Kubernetes NetworkPolicy!

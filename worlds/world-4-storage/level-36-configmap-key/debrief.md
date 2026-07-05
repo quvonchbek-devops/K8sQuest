@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**Muammo:**
+**The Problem:**
 ```yaml
 data:
   app_name: "MyApp"
@@ -20,7 +20,7 @@ env:
       key: database_host  # ❌ Key mavjud emas!
 ```
 
-**Yechim:**
+**The Solution:**
 ```yaml
 data:
   app_name: "MyApp"
@@ -68,7 +68,7 @@ volumeMounts:
 
 ---
 
-## 💥 Keng Tarqalgan Xatolar
+## 💥 Common Mistakes
 
 ### Mistake 1: Key Typo
 ```yaml
@@ -95,13 +95,13 @@ env:
   valueFrom:
     configMapKeyRef:
       name: config
-      key: optional_key  # ❌ If topilmadi, pod fails
+      key: optional_key  # ❌ If missing, pod fails
       # Should add: optional: true
 ```
 
 ---
 
-## 🛡️ Eng Yaxshi Amaliyotlar
+## 🛡️ Best Practices
 
 1. **Validate all required keys exist:**
    ```bash
@@ -131,7 +131,7 @@ env:
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
 1. **All referenced keys must exist** - Or pod fails to start
 2. **Keys are case-sensitive** - database_host ≠ databaseHost

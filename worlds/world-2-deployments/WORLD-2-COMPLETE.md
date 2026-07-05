@@ -2,32 +2,32 @@
 
 ## Xulosa
 
-**World 2** barcha 10 ta level bilan to'liq amalga oshirildi — deployment pattern lar, scaling strategiyalari va Kubernetes da workload boshqaruvi.
+**World 2** barcha 10 ta level bilan to'liq amalga oshirildi — deployment pattern lar, scaling strategiyalari vad workload management in Kubernetes.
 
-## Amalga Oshirilgan Level lar (11-20)
+## Levels Implemented (11-20)
 
-| Level | Nomi | XP | Qiyinlik | Konseptlar |
+| Level | Name | XP | Difficulty | Concepts |
 |-------|------|-----|-----------|----------|
-| **11** | Rollback | 200 | O'rta | Deployments, rolling updates, rollback, kubectl rollout |
-| **12** | Qayta Ishga Tushish Halqasi | 200 | O'rta | Liveness probes, health checks, pod restarts, HTTP probes |
-| **13** | Tayyor Emas Pod larga Traffic | 200 | O'rta | Readiness probes, service endpoint larni, traffic routing |
-| **14** | HPA Scaling Qila Olmaydi | 250 | O'rta | HorizontalPodAutoscaler, metrics-server, autoscaling |
-| **15** | Nol-Tanaffusli Deployment Muvaffaqiyatsizligi | 200 | O'rta | Rolling updates, maxUnavailable, maxSurge |
-| **16** | PDB Barcha Eviction larni Bloklaydi | 250 | Murakkab | PodDisruptionBudget, node maintenance, pod eviction |
-| **17** | Blue-Green Noto'g'ri Ketdi | 200 | O'rta | Blue-green deployments, service selectors, labels |
-| **18** | Canary Vazn Nomutanosibligi | 200 | O'rta | Canary deployments, traffic splitting, replica ratios |
-| **19** | Stateful Ilova Ma'lumot Yo'qotishi | 200 | Murakkab | StatefulSet vs Deployment, persistent storage, pod identity |
-| **20** | Deployment siz ReplicaSet | 150 | Boshlang'ich | ReplicaSet, Deployment, resource ownership, rollouts |
+| **11** | The Rollback | 200 | Intermediate | Deployments, rolling updates, rollback, kubectl rollout |
+| **12** | The Restart Loop | 200 | Intermediate | Liveness probes, health checks, pod restarts, HTTP probes |
+| **13** | Traffic to Unready Pods | 200 | Intermediate | Readiness probes, service endpoints, traffic routing |
+| **14** | HPA Can't Scale | 250 | Intermediate | HorizontalPodAutoscaler, metrics-server, autoscaling |
+| **15** | Zero-Downtime Deployment Failure | 200 | Intermediate | Rolling updates, maxUnavailable, maxSurge |
+| **16** | PDB Blocks All Evictions | 250 | Advanced | PodDisruptionBudget, node maintenance, pod eviction |
+| **17** | Blue-Green Gone Wrong | 200 | Intermediate | Blue-green deployments, service selectors, labels |
+| **18** | Canary Weight Imbalance | 200 | Intermediate | Canary deployments, traffic splitting, replica ratios |
+| **19** | Stateful App Data Loss | 200 | Advanced | StatefulSet vs Deployment, persistent storage, pod identity |
+| **20** | ReplicaSet Without Deployment | 150 | Beginner | ReplicaSet, Deployment, resource ownership, rollouts |
 
-**Jami XP**: 2,000 XP  
-**Jami Level lar**: 10  
-**O'rtacha Vaqt**: har bir level uchun 13.5 daqiqa  
+**Total XP**: 2,000 XP  
+**Total Levels**: 10  
+**Average Time**: 13.5 minutes per level  
 
-## Asosiy O'rganish Natijalari
+## Key Learning Outcomes
 
-World 2 ni tamomlaganlar quyidagilarni o'zlashtiradi:
+Players who complete World 2 will master:
 
-### Deployment Boshqaruvi
+### Deployment Management
 - ✅ Rolling updates and rollback strategies
 - ✅ Declarative deployment updates
 - ✅ Rollout history and undo operations
@@ -49,7 +49,7 @@ World 2 ni tamomlaganlar quyidagilarni o'zlashtiradi:
 - ✅ maxUnavailable and maxSurge parameters
 - ✅ Zero-downtime deployment techniques
 - ✅ Rollout strategy optimization
-- ✅ Yangilanishlar paytida to'liq service uzilishlarini oldini olish
+- ✅ Avoiding complete service outages during updates
 
 ### Availability & Maintenance
 - ✅ PodDisruptionBudgets (PDB) for maintenance windows
@@ -71,7 +71,7 @@ World 2 ni tamomlaganlar quyidagilarni o'zlashtiradi:
 
 ### Resource Hierarchy
 - ✅ Deployment → ReplicaSet → Pod abstraction
-- ✅ Nima uchun Deployment lar ishlatish kerak (to'g'ridan-to'g'ri ReplicaSet emas)
+- ✅ Why to use Deployments (not ReplicaSets directly)
 - ✅ Rollout management through Deployments
 - ✅ Resource ownership and lifecycle
 
@@ -81,7 +81,7 @@ Each level includes comprehensive real-world incident stories:
 
 - **Level 11**: $1.2M Black Friday incident (bad deployment rollout)
 - **Level 12**: $1.95M outage (liveness probe misconfiguration)
-- **Level 13**: $2.8M Black Friday losses (readiness probe topilmadi)
+- **Level 13**: $2.8M Black Friday losses (readiness probe missing)
 - **Level 14**: $3.5M game launch failure (HPA without metrics-server)
 - **Level 15**: $450K SLA penalties (maxUnavailable: 100% downtime)
 - **Level 16**: $250K compliance fine (PDB blocking node upgrades)
@@ -125,9 +125,9 @@ worlds/world-2-deployments/
     └── [same structure]
 ```
 
-Har bir level World 1 dan tasdiqlangan pattern ga amal qiladi:
+Each level follows the proven pattern from World 1:
 - 📋 **mission.yaml**: Metadata (name, XP, difficulty, concepts)
-- 💥 **broken.yaml**: Buzilgan K8s konfiguratsiyasi
+- 💥 **broken.yaml**: The broken K8s configuration
 - ✅ **solution.yaml**: The fixed configuration
 - 🧪 **validate.sh**: Automated validation script
 - 💡 **hint-1.txt**: Observation hint (what to check)
@@ -140,11 +140,11 @@ Har bir level World 1 dan tasdiqlangan pattern ga amal qiladi:
 Each debrief.md includes:
 - ✅ **What Happened**: Explanation of the issue
 - ✅ **How Kubernetes Behaved**: Step-by-step flow
-- ✅ **To'g'ri Tushuncha Modeli**: Konseptlar diagrammalar bilan tushuntirilgan
-- ✅ **Haqiqiy Dunyo Hodisa Misoli**: $50K-$5M+ real production muvaffaqiyatsizliklar
+- ✅ **The Correct Mental Model**: Concepts explained with diagrams
+- ✅ **Real-World Incident Example**: $50K-$5M+ real production failures
 - ✅ **Commands You Mastered**: Practical kubectl commands
-- ✅ **Eng Yaxshi Amaliyotlar**: ✅ QILING va ❌ QILMANG ro'yxatlari
-- ✅ **Murakkab Pattern lar**: Production-ready konfiguratsiyalar
+- ✅ **Best Practices**: ✅ DO and ❌ DON'T lists
+- ✅ **Advanced Patterns**: Production-ready configurations
 - ✅ **What's Keyingi**: Bridge to next level
 
 Total debrief content: **~40,000 words** (comprehensive!)
@@ -159,7 +159,7 @@ All levels include:
 
 ## Integration with Game Engine
 
-Level lar K8sQuest engine bilan to'liq mos:
+Levels are fully compatible with the K8sQuest engine:
 - ✅ Progressive hint system (3 tiers)
 - ✅ XP tracking (200-250 XP per level)
 - ✅ Difficulty ratings (beginner → advanced)
@@ -176,7 +176,7 @@ Level lar K8sQuest engine bilan to'liq mos:
 - Use advanced deployment patterns (blue-green, canary)
 - Protect services during maintenance with PDBs
 - Choose appropriate workload types (Deployment vs StatefulSet)
-- Keng tarqalgan production tuzoqlaridan qoching ($17M+ zarar!)
+- Avoid common production pitfalls ($17M+ worth!)
 
 ## Keyingi Qadamlar
 
@@ -199,15 +199,15 @@ Topics will include:
 - **Total Files**: 80 files (8 files × 10 levels)
 - **Total Lines of Code**: ~45,000+ lines
 - **Documentation**: ~40,000 words
-- **Haqiqiy Dunyo Misollari**: 10 ta production hodisa
+- **Real-world Examples**: 10 production incidents
 - **kubectl Commands**: 200+ practical examples
-- **Eng Yaxshi Amaliyotlar**: 100+ QILING/QILMANG bandlari
+- **Best Practices**: 100+ DO/DON'T items
 - **Validation Scripts**: 10 automated tests
 
 ## Quality Standards Met
 
 ✅ **Comprehensive**: Each level covers topic deeply  
-✅ **Production-Ready**: Haqiqiy hodisa misollari  
+✅ **Production-Ready**: Real incident examples  
 ✅ **Actionable**: Practical commands and configs  
 ✅ **Progressive**: Beginner → Advanced flow  
 ✅ **Tested**: Validation scripts work  

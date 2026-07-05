@@ -6,14 +6,14 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**Muammo:**
+**The Problem:**
 ```yaml
 # PersistentVolume & PersistentVolumeClaim
 accessModes:
   - ReadWriteOnce  # ❌ Only one node can mount at a time!
 ```
 
-**Yechim:**
+**The Solution:**
 ```yaml
 # PersistentVolume & PersistentVolumeClaim
 accessModes:
@@ -22,7 +22,7 @@ accessModes:
 
 ### ⚠️ About This Level
 
-**Muhim Context:** Bu level Kind da (bitta node li klaster) ishlaydi, shuning uchun ReadWriteOnce bilan ham 3 ta pod muvaffaqiyatliqiyatli ishga tushadi chunkiy're all on the same node.
+**Muhim Context:** Bu level Kind da (bitta node li klaster) ishlaydi, shuning uchun ReadWriteOnce bilan ham 3 ta pod muvaffaqiyatlissfully start chunkiy're all on the same node.
 
 **In a real multi-node production cluster:**
 - ReadWriteOnce with 3 replicas would cause pods on different nodes to fail mounting
@@ -158,7 +158,7 @@ Node3: [Pod-C]  # ✅ Can mount same RWX volume
 
 ---
 
-## 🗄️ Storage Provider Qo'llab-quvvatlashi
+## 🗄️ Storage Provider Support
 
 Not all storage types support all access modes!
 
@@ -169,7 +169,7 @@ Not all storage types support all access modes!
 - Bu Kind da (bitta node li klaster) ishlaydi, chunki barcha pod lar bitta node ga tushadi
 - The `hostPath` *represents* shared network storage (like NFS/EFS)
 
-**Production da:**
+**Produkciyada:**
 - `hostPath` is **node-local** and does **NOT** support true ReadWriteMany
 - For real RWX, you need network-attached storage (NFS, EFS, CephFS, etc.)
 - This level teaches the *concept* of access modes in a multi-pod scenario
@@ -182,7 +182,7 @@ hostPath:                      # But hostPath is node-local!
   path: /data
 # Result: Pods on different nodes kira olmaydi the same data
 
-# ✅ Production da for true RWX:
+# ✅ Produkciyada for true RWX:
 accessModes: [ReadWriteMany]
 nfs:                          # Use network storage
   server: nfs.example.com
@@ -256,7 +256,7 @@ nfs:                          # Use network storage
 
 ---
 
-## Keng Tarqalgan Access Mode Xatolari
+##  Common Access Mode Mistakes
 
 ### Mistake 1: Assuming All Storage Supports RWX
 
@@ -328,7 +328,7 @@ accessModes:
 
 ---
 
-## 🔒 Muhim Saboq: PVC Spec O'zgarmasligi
+## 🔒 Critical Lesson: PVC Spec Immutability
 
 **Siz buni levelda kashf qildingiz:** Ko'p PVC maydonlarini yaratilgandan keyin o'zgartirib bo'lmaydi!
 
@@ -350,7 +350,7 @@ spec:
 
 ### The Error You Saw
 
-Yechimni o'chirmasdan apply qilishga harakat qilganingizda:
+When you tried to apply the solution siz deleting:
 
 ```bash
 $ kubectl apply -f solution.yaml
@@ -391,7 +391,7 @@ kubectl get pods -n k8squest
 
 ### ⚠️ Production Warning
 
-Production da, **PVC ni o'chirish ma'lumotlaringizni o'chirib yuborishi mumkin!**
+Produkciyada, **deleting a PVC can delete your data!**
 
 ```yaml
 # Check reclaim policy first!
@@ -401,7 +401,7 @@ persistentVolumeReclaimPolicy: Retain   # ✅ PV kept, data safe
 
 **Safe workflow for production:**
 1. Backup your data first
-2. Check PV reclaim policy sini is `Retain`
+2. Check PV reclaim policy is `Retain`
 3. Delete PVC (PV remains with data)
 4. Create new PVC with correct access mode
 5. Manually bind to existing PV (if needed)
@@ -437,7 +437,7 @@ resources:
 
 ---
 
-## 🏗️ Haqiqiy Dunyo Pattern lari
+## 🏗️ Real-World Patterns
 
 ### Pattern 1: Separate Storage for Different Needs
 
@@ -525,7 +525,7 @@ volumeClaimTemplate:
 
 ---
 
-## 🚨 HAQIQIY VOQEA: Access Mode Taxmini
+## 🚨 REAL-WORLD HORROR STORY: The Access Mode Assumption
 
 ### The Incident: $1.2M E-commerce Site Crash
 
@@ -591,7 +591,7 @@ replicas: 20       # Scale for Black Friday
 ### Lessons Learned
 
 1. **Storage backend ingizni biling:** Turli xil turlarda turli xil imkoniyatlar bor
-2. **Production dan oldin test qiling:** Ayniqsa muhim davrlarda
+2. **Test before production:** Especially during critical periods
 3. **Validate configurations:** Tekshiring storage class supports required access modes
 4. **Have rollback plan:** Test rollback procedures beforehand
 5. **Monitor PVC status:** Alert when PVCs stuck in Pending
@@ -599,7 +599,7 @@ replicas: 20       # Scale for Black Friday
 
 ---
 
-## 🛡️ Eng Yaxshi Amaliyotlar
+## 🛡️ Best Practices
 
 ### 1. Document Access Mode Requirements
 
@@ -694,12 +694,12 @@ provisioner: efs.csi.aws.com
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
 1. **Access mode lar POD lar emas, NODE lar haqida** — RWO = bitta node, RWX = ko'p node
-2. **Barcha storage barcha mode larni qo'llab-quvvatlamaydi** — Storage backend imkoniyatlarini tekshiring
+2. **Not all storage supports all modes** - Check your storage backend capabilities
 3. **PV and PVC must match** - Access modes must be compatible
-4. **Ehtiyojingiz asosida tanlang** — bitta pod uchun RWO, umumiy kirish uchun RWX
+4. **Choose based on your needs** - RWO for single-pod, RWX for shared access
 5. **Test before production** - Especially when migrating storage systems
 6. **Monitor PVC status** - Alert on Pending state
 7. **Document requirements** - Make access mode needs explicit
@@ -730,4 +730,4 @@ Endi access mode larni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 ---
 
-**Yaxshi ish!** Siz o'zlashtirgansiz PV/PVC access mode inis. Eslab qoling: ilovangiz ehtiyojlari uchun to'g'ri access mode ni tanlang! 🎉
+**Yaxshi ish!** Siz o'zlashtirgansiz PV/PVC access modes. Eslab qoling: choose the right access mode for your application's needs! 🎉

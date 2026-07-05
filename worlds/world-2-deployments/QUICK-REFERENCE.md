@@ -111,37 +111,37 @@ kubectl get events -n k8squest | grep -i probe
 Deployment Issues?
     │
     ├─→ Pods not starting
-    │   ├─→ Tekshiring: kubectl get pods -n k8squest
-    │   ├─→ Tekshiring: kubectl describe deployment -n k8squest
+    │   ├─→ Check: kubectl get pods -n k8squest
+    │   ├─→ Check: kubectl describe deployment -n k8squest
     │   ├─→ Look for: ImagePullBackOff, CrashLoopBackOff
     │   └─→ Fix: Fix image, fix command, check probes
     │
     ├─→ Rollout stuck/slow
-    │   ├─→ Tekshiring: kubectl rollout status deployment/<name>
-    │   ├─→ Tekshiring: kubectl describe deployment (Strategy section)
+    │   ├─→ Check: kubectl rollout status deployment/<name>
+    │   ├─→ Check: kubectl describe deployment (Strategy section)
     │   ├─→ Look for: maxUnavailable=0, PDB blocking, failing probes
     │   └─→ Fix: Adjust strategy, check PDB, fix health checks
     │
     ├─→ Old pods still running
-    │   ├─→ Tekshiring: kubectl get rs -n k8squest
-    │   ├─→ Tekshiring: kubectl describe deployment (Selector)
+    │   ├─→ Check: kubectl get rs -n k8squest
+    │   ├─→ Check: kubectl describe deployment (Selector)
     │   ├─→ Look for: Label selector mismatch, manual ReplicaSets
     │   └─→ Fix: Update labels, delete old ReplicaSets
     │
     ├─→ HPA not scaling
-    │   ├─→ Tekshiring: kubectl describe hpa -n k8squest
-    │   ├─→ Tekshiring: kubectl top pods -n k8squest
-    │   ├─→ Look for: metrics-server topilmadi, no resource requests
+    │   ├─→ Check: kubectl describe hpa -n k8squest
+    │   ├─→ Check: kubectl top pods -n k8squest
+    │   ├─→ Look for: metrics-server missing, no resource requests
     │   └─→ Fix: Install metrics-server, add requests to pods
     │
     ├─→ Probes failing
-    │   ├─→ Tekshiring: kubectl describe pod (Events)
-    │   ├─→ Tekshiring: kubectl logs <pod>
+    │   ├─→ Check: kubectl describe pod (Events)
+    │   ├─→ Check: kubectl logs <pod>
     │   ├─→ Look for: Wrong port, slow startup, timeout too short
     │   └─→ Fix: Correct probe config, add initialDelaySeconds
     │
     └─→ Data loss in StatefulSet
-        ├─→ Tekshiring: kubectl get pvc -n k8squest
+        ├─→ Check: kubectl get pvc -n k8squest
         ├─→ Check: StatefulSet vs Deployment usage
         ├─→ Look for: Deployment used instead of StatefulSet
         └─→ Fix: Convert to StatefulSet, use volumeClaimTemplates
@@ -156,7 +156,7 @@ Deployment Issues?
 **Birinchi Tekshirish:** `kubectl rollout history deployment/<name>`  
 **Keng Tarqalgan Sabablar:**
 - Rolling back to wrong revision
-- Issue mavjud in multiple revisions
+- Issue exists in multiple revisions
 - History limit too small
 
 **Tezkor Tuzatish Shabloni:**
@@ -288,7 +288,7 @@ spec:
   selector:
     matchLabels:
       app: myapp
-# minAvailable dan KO'PROQ replica lar borligiga ishonch hosil qiling!
+# Make sure you have MORE replicas than minAvailable!
 ```
 
 ### Pattern 7: Blue-Green Selector Wrong
@@ -326,7 +326,7 @@ spec:
 **Keng Tarqalgan Sabablar:**
 - Wrong replica counts
 - Labels not matching service selector
-- Ikkala deployment da bir xil label lar bor
+- Both deployments have same labels
 
 **Tezkor Tuzatish Shabloni:**
 ```bash
@@ -410,8 +410,8 @@ kubectl get rs -n k8squest -o wide
 | **Startup** | Has container started? | Slow-starting apps (avoid liveness kill) |
 
 **Rule of Thumb:**
-- Service lar ortidagi ilovalar uchun doim **readiness** ishlating
-- **liveness** ni faqat ilova deadlock/freeze bo'lishi mumkin bo'lsa ishlating
+- Always use **readiness** for apps behind services
+- Use **liveness** only if app can deadlock/freeze
 - Ishga tushishi >30s dan ko'p vaqt oladigan ilovalar uchun **startup** ishlating
 
 ---
@@ -432,7 +432,7 @@ resources:
 - **Requests**: Used for scheduling and HPA calculations
 - **Limits**: Enforced by kubelet (OOMKill if exceeded)
 - **HPA**: Scales based on % of REQUESTS, not limits
-- **Eng yaxshi amaliyot**: Ikkalasini qo'ying, burstable workload lar uchun limits = 2x requests
+- **Best Practice**: Set both, limits = 2x requests for burstable workloads
 
 ---
 
@@ -445,7 +445,7 @@ By completing World 2, you should be able to:
 - ✅ **Configure Readiness Probes** - Ensure zero-downtime deployments
 - ✅ **Debug HPA Issues** - Install metrics-server, configure autoscaling
 - ✅ **Optimize Rollout Strategy** - Balance speed vs stability
-- ✅ **PodDisruptionBudget lar bilan ishlash** — texnik xizmat vaqtida mavjudlikni ta'minlash
+- ✅ **Work with PodDisruptionBudgets** - Ensure availability during maintenance
 - ✅ **Implement Blue-Green Deployments** - Instant rollback capability
 - ✅ **Implement Canary Deployments** - Gradual traffic shifting
 - ✅ **Choose StatefulSet vs Deployment** - Understand stateful workloads
@@ -464,13 +464,13 @@ By completing World 2, you should be able to:
 ### K8sQuest Resources
 - World 1 Quick Reference (basic kubectl commands)
 - Use `guide` for deployment-specific walkthroughs
-- Production hodisa case study lari uchun debrief larni o'qing
+- Read debriefs for production incident case studies
 
 ---
 
 ## 🚀 Tezkor G'alaba Cheklisti
 
-Levelda qotib qolganingizda, quyidagilarni tartib bilan sinab ko'ring:
+When stuck on a level, try these in order:
 
 - [ ] `kubectl get deployments,rs,pods -n k8squest` - See the full picture
 - [ ] `kubectl describe deployment <name> -n k8squest` - Check strategy, events
@@ -478,7 +478,7 @@ Levelda qotib qolganingizda, quyidagilarni tartib bilan sinab ko'ring:
 - [ ] `kubectl get events -n k8squest --sort-by='.lastTimestamp'` - Recent activity
 - [ ] `kubectl describe pod <pod> -n k8squest` - Check probe failures, resources
 - [ ] `kubectl logs <pod> -n k8squest` - Application errors?
-- [ ] `broken.yaml` ni kutilgan xatti-harakat bilan solishtiring — nima noto'g'ri sozlangan?
+- [ ] Compare `broken.yaml` vs expected behavior - What's misconfigured?
 - [ ] Use `hints` in game - Progressive guidance
 - [ ] Use `guide` in game - Complete walkthrough if needed
 
@@ -486,6 +486,6 @@ Levelda qotib qolganingizda, quyidagilarni tartib bilan sinab ko'ring:
 
 ---
 
-💡 **Pro maslahat:** Production dan oldin test deployment da rolling update larni mashq qiling. Rollout tarixidagi o'zgarishlarni kuzatish uchun `--record` flag ni ishlating!
+💡 **Pro maslahat:** Practice rolling updates on a test deployment before production. Use `--record` flag to track changes in rollout history!
 
-🎮 **Ilg'or pattern larga tayyormisiz?** `./play.sh` ni ishga tushiring va deployment larni o'zlashtirig!
+🎮 **Ready for advanced patterns?** Run `./play.sh` and master deployments!

@@ -13,7 +13,7 @@ Your PersistentVolumeClaim qotib qoldi in Pending state, preventing the pod from
 - **Application ishga tusha olmaydi** siz persistent storage
 - **Data can't be persisted** across pod restarts
 
-### Asosiy Sabab
+### The Root Cause
 ```yaml
 # ❌ BROKEN: PV mos kelmaydi PVC requirements
 apiVersion: v1
@@ -73,7 +73,7 @@ spec:
 
 ---
 
-## 🔍 Chuqur Tahlil: PersistentVolume lar va Claim lar
+## 🔍 Deep Dive: PersistentVolumes & Claims
 
 ### What are PersistentVolumes?
 
@@ -279,7 +279,7 @@ metadata:
     tier: database
 Result: Binds (if other criteria met)
 
-# ❌ INVALID: PV topilmadi labels
+# ❌ INVALID: PV missing labels
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -397,7 +397,7 @@ spec:
 
 ---
 
-## 💔 HAQIQIY VOQEA: $2.8M Database Migratsiya Muvaffaqiyatsizligi
+## 💔 Real-World Horror Story: The $2.8M Database Migration Failure
 
 **Kompaniya:** FinTech Solutions Inc. (Payment processing)  
 **Date:** March 2024  
@@ -504,11 +504,11 @@ PVC description shows:
 ```
 Events:
   Type     Reason              Message
-  Warning  ProvisioningFailed  storageclass "fast-ssd" topilmadi
+  Warning  ProvisioningFailed  storageclass "fast-ssd" not found
 ```
 
 **11:40 PM - Create StorageClass**
-Senior engineer creates topilmadi StorageClass:
+Senior engineer creates missing StorageClass:
 ```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -562,11 +562,11 @@ total 0
 ```bash
 # Check PV status
 $ kubectl get pv postgres-pv
-Error from server (NotFound): persistentvolumes "postgres-pv" topilmadi
+Error from server (NotFound): persistentvolumes "postgres-pv" not found
 
 # Check PVC
 $ kubectl get pvc postgres-claim
-Error from server (NotFound): persistentvolumeclaims "postgres-claim" topilmadi
+Error from server (NotFound): persistentvolumeclaims "postgres-claim" not found
 ```
 
 **Both PV and PVC deleted!**
@@ -615,8 +615,8 @@ When pod crashed:
 - **$200K/hour revenue loss**
 
 **2:00 PM - Partial Recovery**
-- Reconstructed 85% of topilmadi transactions
-- 15% of data still topilmadi
+- Reconstructed 85% of missing transactions
+- 15% of data still missing
 - Bring database online with partial data
 
 **Monday, 6:00 PM - Full Recovery**
@@ -676,7 +676,7 @@ When pod crashed:
 
 ### What Should Have Been Done
 
-**✅ Correct PV Konfiguratsiya:**
+**✅ Correct PV Configuration:**
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
@@ -701,9 +701,9 @@ spec:
 
 echo "Validating PV/PVC configuration..."
 
-# Check 1: PV mavjud
+# Check 1: PV exists
 if ! kubectl get pv postgres-pv &>/dev/null; then
-  echo "ERROR: PV postgres-pv topilmadi"
+  echo "ERROR: PV postgres-pv not found"
   exit 1
 fi
 
@@ -789,7 +789,7 @@ echo "✅ All validation checks passed!"
 
 ---
 
-## 🎓 Eng Yaxshi Amaliyotlar
+## 🎓 Best Practices
 
 ### 1. Use Appropriate Reclaim Policies
 
@@ -827,7 +827,7 @@ spec:
 # Tekshiring PVC will bind
 kubectl describe pvc my-claim
 
-# Qidiring warnings about topilmadi PVs or mismatches
+# Qidiring warnings about missing PVs or mismatches
 ```
 
 ### 4. Monitor PVC Status
@@ -866,7 +866,7 @@ spec:
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
 ### Must Eslab qoling
 
@@ -886,7 +886,7 @@ spec:
 | Status: Available/Bound/Released | Status: Pending/Bound/Lost |
 | Like: Parking spot | Like: Parking reservation |
 
-### Muammolarni Aniqlash Tekshiruv Ro'yxati
+### Muammolarni Aniqlash Checklist
 
 When PVC is Pending:
 - [ ] Tekshiring any PVs exist: `kubectl get pv`
@@ -914,4 +914,4 @@ When PVC is Pending:
 
 *"A PersistentVolumeClaim is a promise. A PersistentVolume is the fulfillment. Both must agree on the terms."* - Kubernetes Storage Handbook
 
-**Eslab qoling:** Production ma'lumotlar bazalari uchun doim `persistentVolumeReclaimPolicy: Retain` ishlating. Ma'lumotlaringizning saqlanishi bunga bog'liq!
+**Eslab qoling:** For production databases, always use `persistentVolumeReclaimPolicy: Retain`. Your data's survival depends on it!

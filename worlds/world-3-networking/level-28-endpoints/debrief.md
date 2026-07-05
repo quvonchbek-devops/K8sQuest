@@ -1,6 +1,6 @@
 # 🎓 Missiya Yakuni: Service Endpoints & Readiness Probes
 
-**Tabriklaymiz!** Siz o'zlashtirgansiz production Kubernetes dagi eng muhim konseptlardan birini: **readiness probe lar va service endpoint boshqaruvini**. This seemingly simple configuration detail has to'sib qo'ydi countless outages and saved millions in revenue.
+**Tabriklaymiz!** Siz o'zlashtirgansiz production Kubernetes dagi eng muhim konseptlardan birini: **readiness probes and service endpoint management**. This seemingly simple configuration detail has to'sib qo'ydi countless outages and saved millions in revenue.
 
 ---
 
@@ -13,7 +13,7 @@ Service ingiz pod larga **ular so'rovlarni qayta ishlashga tayyor bo'lmasdan** t
 - **Inconsistent behavior** as some pods worked while others didn't
 - **Poor user experience** with intermittent failures
 
-### Asosiy Sabab
+### The Root Cause
 ```yaml
 # ❌ BROKEN: No readiness probe
 apiVersion: v1
@@ -30,7 +30,7 @@ spec:
 
 **Why this fails:**
 1. Pod starts and gets an IP address
-2. Kubernetes immediately adds pod to service endpoint larni
+2. Kubernetes immediately adds pod to service endpoints
 3. Service starts routing traffic to the pod
 4. Pod is still initializing (loading config, warming cache, etc.)
 5. Requests fail with 500 errors or timeouts
@@ -60,12 +60,12 @@ spec:
 2. After 5 seconds (initialDelaySeconds), Kubernetes checks `/` endpoint
 3. Every 5 seconds (periodSeconds), the probe runs again
 4. If the probe succeeds, pod is marked "Ready"
-5. **Only then** is the pod added to service endpoint larni
+5. **Only then** is the pod added to service endpoints
 6. Traffic flows only to ready pods
 
 ---
 
-## 🔍 Chuqur Tahlil: Readiness va Liveness Probe lar
+## 🔍 Deep Dive: Readiness vs Liveness Probes
 
 Kubernetes da **uchta turdagi** health check mavjud, har biri turli maqsadga xizmat qiladi:
 
@@ -73,12 +73,12 @@ Kubernetes da **uchta turdagi** health check mavjud, har biri turli maqsadga xiz
 **Purpose:** Determine if a pod tayyor to receive traffic
 
 **When it fails:**
-- Pod is **removed from service endpoint larni**
+- Pod is **removed from service endpoints**
 - Pod continues running
 - No traffic is sent to the pod
 - Kubernetes keeps checking until pod recovers
 
-**Foydalanish holatlari:**
+**Use cases:**
 - Application initialization (loading config, warming cache)
 - External dependency checks (database connection, API availability)
 - Temporary overload (too many connections, high CPU)
@@ -104,7 +104,7 @@ readinessProbe:
 - Drastic action for deadlocked or hung processes
 - Traffic may be disrupted during restart
 
-**Foydalanish holatlari:**
+**Use cases:**
 - Deadlock detection (app ishlayapti but not responding)
 - Memory leaks (app degraded beyond recovery)
 - Fatal errors (app in unrecoverable state)
@@ -131,7 +131,7 @@ livenessProbe:
 - Disables liveness probe until startup succeeds
 - Prevents premature restarts during long initialization
 
-**Foydalanish holatlari:**
+**Use cases:**
 - Legacy applications with long startup times
 - Applications with unpredictable initialization duration
 - Prevent liveness probe from killing slow-starting pods
@@ -159,7 +159,7 @@ startupProbe:
 
 ---
 
-## 💔 HAQIQIY VOQEA: $1.2M Endpoint Hodisasi
+## 💔 Real-World Horror Story: The $1.2M Endpoint Incident
 
 **Kompaniya:** StreamVideo Inc. (Video streaming platform)  
 **Date:** November 2022  
@@ -203,12 +203,12 @@ spec:
 **11:47 AM - The Rollout Begins**
 - New deployment rolls out with improved ML model
 - Rolling update strategy: 25% pods at a time
-- Birinchi 125 pod to'xtatiladi, yangi pod lar boshlanadi
+- First 125 pods are terminated, new pods start
 
 **11:48 AM - Traffic Hits Unprepared Pods**
-- Yangi pod lar IP manzillar oladi va service endpoint larga **darhol** qo'shiladi
+- New pods get IP addresses and are added to service endpoints **immediately**
 - Load balancer starts sending 25% of traffic to new pods
-- Pod lar hali 2GB ML modelni yuklayapti (90 soniyalik ishga tushishning 45-soniyasi)
+- Pods are still loading the 2GB ML model (45 seconds into 90-second startup)
 - Users get **500 Internal Server Error** responses
 
 **11:49 AM - Cascade Begins**
@@ -227,13 +227,13 @@ spec:
 **11:55 AM - The "Fix" Makes It Worse**
 - On-call engineer sees high CPU on healthy pods
 - Scales deployment from 500 to 700 pods (thinking it's a capacity issue)
-- **200 yangi pod ishga tushadi**, hammasi darhol trafik qabul qiladi
+- **200 new pods start**, all receiving traffic immediately
 - Failure rate jumps to **65%**
 - Now trending #1 on Twitter
 
 **12:03 PM - The Realization**
 - Senior engineer joins war room
-- Checks service endpoint larni: sees unready pods receiving traffic
+- Checks service endpoints: sees unready pods receiving traffic
 - Realizes: **no readiness probe configured!**
 
 **12:05 PM - Emergency Fix**
@@ -261,7 +261,7 @@ kubectl patch deployment transcoder -p '{
 ```
 
 **12:08 PM - Rollout Continues**
-- Yangi pod lar endi tayyor deb belgilanishdan oldin 100 soniya kutadi
+- New pods now wait 100 seconds before being marked ready
 - Only ready pods added to endpoints
 - Failure rate drops to 15%
 
@@ -289,7 +289,7 @@ kubectl get pods -l app=transcoder -o json | \
 - **#1 trending** on Twitter for wrong reasons
 - **15% customer churn** in following week
 
-### Asosiy Sabab Analysis
+### The Root Cause Analysis
 
 **Immediate cause:**
 - Missing readiness probe allowed traffic to unready pods
@@ -350,7 +350,7 @@ spec:
 
 ### Lessons Learned
 
-1. **Doim ishlating readiness probe larni** - Never assume pods are ready immediately
+1. **Doim ishlating readiness probes** - Never assume pods are ready immediately
 2. **Measure startup time** - Know how long your app takes to initialize
 3. **Test rollouts** - Simulate deployments in staging with realistic load
 4. **Monitor endpoints** - Alert on unready pods receiving traffic
@@ -364,7 +364,7 @@ spec:
 
 ### How Endpoints Work
 
-Service yaratganingizda, Kubernetes avtomatik ravishda **Endpoints** obyektini yaratadi:
+When you create a Service, Kubernetes automatically creates an **Endpoints** object:
 
 ```yaml
 # Service definition
@@ -473,7 +473,7 @@ IP:.status.podIP
 
 ---
 
-## 🎯 Probe Konfiguratsiya Eng Yaxshi Amaliyotlari
+## 🎯 Probe Configuration Best Practices
 
 ### 1. **Choose the Right Probe Type**
 
@@ -667,7 +667,7 @@ kubectl describe endpoints web-backend
 ```
 
 **Common sabab bo'ladi:**
-- Pods siz readiness probe larni
+- Pods siz readiness probes
 - Readiness probe too aggressive (timing out)
 - Application not responding to probe path
 
@@ -726,19 +726,19 @@ kubectl describe pods -l app=web | grep -i "readiness probe failed"
 
 ---
 
-## 📚 Asosiy Xulosalar
+## 📚 Key Takeaways
 
 ### Must Eslab qoling
 
-1. **Readiness probes control traffic** - Pods siz readiness probe larni receive traffic immediately
+1. **Readiness probes control traffic** - Pods siz readiness probes receive traffic immediately
 2. **Liveness probes restart pods** - Use conservatively to avoid restart loops
 3. **Startup probes for slow apps** - Handle long initialization times
 4. **Endpoints = Ready pods** - Only ready pods receive traffic
-5. **Probe larni test qiling** — production dan oldin to'g'ri ishlashini tekshiring
+5. **Test your probes** - Tekshirish they work correctly before production
 
-### Production Checklist
+### Produkciya Checklist
 
-Production ga deploy qilishdan oldin:
+Before deploying to production:
 
 - [ ] **Readiness probe configured** on all pods
 - [ ] **Liveness probe configured** (if needed)
@@ -765,9 +765,9 @@ Production ga deploy qilishdan oldin:
 
 ## 🎓 What's Next?
 
-Siz o'zlashtirgansiz readiness probe larni and endpoint management. Next, you'll tackle:
+Siz o'zlashtirgansiz readiness probes and endpoint management. Next, you'll tackle:
 
-**Level 29: LoadBalancer vs NodePort** - Understanding service turinis and cloud provider integration  
+**Level 29: LoadBalancer vs NodePort** - Understanding service types and cloud provider integration  
 **Level 30: Headless Services** - StatefulSet DNS and direct pod access
 
 ### Further Learning
@@ -781,7 +781,7 @@ Siz o'zlashtirgansiz readiness probe larni and endpoint management. Next, you'll
 ## 🏆 Achievement Unlocked!
 
 **Endpoint Master** - Siz now:
-- ✅ Configure readiness probe larni to control traffic flow
+- ✅ Configure readiness probes to control traffic flow
 - ✅ Understand the difference between readiness, liveness, and startup probes
 - ✅ Implement smart health check endpoints
 - ✅ Debug qilish service endpoint issues
@@ -791,5 +791,5 @@ Siz o'zlashtirgansiz readiness probe larni and endpoint management. Next, you'll
 
 ---
 
-*"Production da, trafik faqat tayyor pod larga yo'naltirilishi kerak. Readiness probe lar ixtiyoriy emas — ular muhential."* - Kubernetes SRE Handbook
+*"Produkciyada, trafik faqat tayyor pod larga yo'naltirilishi kerak. Readiness probe lar ixtiyoriy emas — ular muhential."* - Kubernetes SRE Handbook
 

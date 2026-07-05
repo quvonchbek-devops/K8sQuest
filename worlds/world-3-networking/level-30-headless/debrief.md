@@ -13,7 +13,7 @@ StatefulSet pod laringiz bashorat qilinadigan DNS nomlari orqali bir-biri bilan 
 - **Distributed systems broken** (peers can't coordinate)
 - **Random pod assignment** o'rniga of specific pod targeting
 
-### Asosiy Sabab
+### The Root Cause
 ```yaml
 # ❌ BROKEN: Regular ClusterIP service
 apiVersion: v1
@@ -57,7 +57,7 @@ spec:
 3. DNS returns pod IPs directly
 4. **Per-pod DNS names work!** (web-0.web-cluster → web-0's IP)
 5. Each pod has a stable network identity
-6. Pod lar bir-birini bashorat qilinadigan nomlar bilan topishi mumkin
+6. Pods can find each other by predictable names
 
 **DNS Resolution:**
 ```
@@ -72,7 +72,7 @@ web-cluster.k8squest.svc.cluster.local → [10.244.1.5, 10.244.1.6, 10.244.1.7]
 
 ---
 
-## 🔍 Chuqur Tahlil: Headless Service lar
+## 🔍 Deep Dive: Headless Services
 
 ### What is a Headless Service?
 
@@ -85,7 +85,7 @@ kind: Service
 metadata:
   name: my-service
 spec:
-  clusterIP: None  # ← Bu uni "headless" qiladi
+  clusterIP: None  # ← This makes it "headless"
   selector:
     app: my-app
   ports:
@@ -285,7 +285,7 @@ ping mysql-0.mysql-service
 
 ---
 
-## 💔 HAQIQIY VOQEA: $3.2M MongoDB Migratsiya Falokati
+## 💔 Real-World Horror Story: The $3.2M MongoDB Migration Disaster
 
 **Kompaniya:** DataFlow Inc. (Analytics platform)  
 **Date:** August 2023  
@@ -407,7 +407,7 @@ rs.initiate({
 ```
 
 **Muammo:**
-- Replica set ESKI IP bilan sozlangan: 10.244.1.6
+- Replica set configured with OLD IP: 10.244.1.6
 - New pod has NEW IP: 10.244.2.8
 - Primary can't reach secondary
 - **Replica set loses quorum!**
@@ -560,7 +560,7 @@ db.analytics.count()  # mongodb-2: 12,448,905  (1,477 docs behind)
 
 **Contributing Factors:**
 
-1. **Insufficient Test qilinmoqda:**
+1. **Insufficient Testing:**
    - Never tested pod rescheduling in staging
    - Didn't validate per-pod DNS before production
    - No chaos engineering (pod deletion tests)
@@ -582,7 +582,7 @@ db.analytics.count()  # mongodb-2: 12,448,905  (1,477 docs behind)
 
 ### What Should Have Been Done
 
-**Correct Konfiguratsiya:**
+**Correct Configuration:**
 ```yaml
 # ✅ CORRECT: Headless service
 apiVersion: v1
@@ -692,7 +692,7 @@ kubectl delete pod mongodb-1
    ```
 
 5. **Document StatefulSet requirements**
-   - Headless service lar uchun tekshiruv ro'yxati
+   - Checklist for headless services
    - Runbook for common issues
    - Training for all engineers
 
@@ -1013,7 +1013,7 @@ spec:
 
 ---
 
-## 🎯 Eng Yaxshi Amaliyotlar
+## 🎯 Best Practices
 
 ### 1. Always Use Headless Services for StatefulSets
 
@@ -1262,7 +1262,7 @@ rs.reconfig(cfg)
 
 ---
 
-## 🎓 Asosiy Xulosalar
+## 🎓 Key Takeaways
 
 ### Must Eslab qoling
 
@@ -1272,14 +1272,14 @@ rs.reconfig(cfg)
 4. **Hech qachon ishlatmang pod IPs in config** - They change on reschedule, use DNS names
 5. **Regular service returns random pod** - Headless service allows targeting specific pods
 
-### StatefulSet + Headless Service Tekshiruv Ro'yxati
+### StatefulSet + Headless Service Checklist
 
-Production ga deploy qilishdan oldin:
+Before deploying to production:
 
 - [ ] **Service has `clusterIP: None`**
 - [ ] **StatefulSet `serviceName` matches Service name**
 - [ ] **Application uses DNS names** (not pod IPs)
-- [ ] **Tested har bir pod uchun DNS resolution ni**
+- [ ] **Tested per-pod DNS resolution**
 - [ ] **Tested pod rescheduling** (delete pod, verify app still works)
 - [ ] **Init containers verify DNS** before app starts
 - [ ] **Monitoring on DNS resolution**
@@ -1310,7 +1310,7 @@ Production ga deploy qilishdan oldin:
 - NodePort for external access
 - DNS resolution and naming
 - Ingress routing
-- NetworkPolicy ni for traffic control
+- NetworkPolicy for traffic control
 - Session affinity for stateful apps
 - Cross-namespace communication
 - Readiness probes and endpoints

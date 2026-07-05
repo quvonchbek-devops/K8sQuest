@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**Muammo:**
+**The Problem:**
 ```yaml
 nodeAffinity:
   requiredDuringSchedulingIgnoredDuringExecution:
@@ -18,7 +18,7 @@ nodeAffinity:
 
 **Natija:** Pod stuck Pending, "mos kelmadi node affinity"
 
-**Yechim:**
+**The Solution:**
 ```yaml
 # 1. Label node
 kubectl label nodes kind-control-plane accelerator=gpu
@@ -194,7 +194,7 @@ nodeAffinity:
 
 ---
 
-## 🎯 Haqiqiy Dunyo Misollari
+## 🎯 Real-World Examples
 
 ### Misol 1: GPU Workload
 
@@ -333,7 +333,7 @@ nodeSelectorTerms:
 
 ---
 
-## 🚨 Keng Tarqalgan Xatolar
+## 🚨 Common Mistakes
 
 ### Mistake 1: Wrong Label Key
 
@@ -389,7 +389,7 @@ If no GPU nodes available, pod might schedule on non-GPU node!
 
 ---
 
-## 🛡️ Eng Yaxshi Amaliyotlar
+## 🛡️ Best Practices
 
 ### 1. Use Standard Labels
 
@@ -454,7 +454,7 @@ preferred...:
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
 1. **NodeAffinity = intelligent scheduling** - Match pods to appropriate nodes
 2. **Required vs Preferred** - Hard vs soft constraints

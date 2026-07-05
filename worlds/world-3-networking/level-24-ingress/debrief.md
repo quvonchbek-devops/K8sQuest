@@ -14,9 +14,9 @@
 
 Siz oddiy web ilovani (nginx) `http://myapp.local` da deploy qildingiz. Hamma narsa to'g'ri sozlangandek ko'rindi— Pod ishlayotgan edi, Service da endpoint lar mavjud edi, va Ingress resursi ham bor edi — lekin URL ga kirganda 404 xato oldingiz. Ingress path `/api` ga sozlangan edi, aslida `/` bo'lishi kerak edi.
 
-Aybdor? Ingress path dagi nozik lekin jiddiy noto'g'ri konfiguratsiya.
+The culprit? A subtle but critical misconfiguration in the Ingress path.
 
-**The Broken Konfiguratsiya:**
+**The Broken Configuration:**
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -36,7 +36,7 @@ spec:
               number: 80
 ```
 
-**Muammo:**
+**The Problem:**
 - The application serves content at the **root path** (`/`)
 - The Ingress sozlangan edi to route traffic for **`/api`**
 - When users accessed `http://myapp.local/`, the request mos kelmadi any Ingress rule
@@ -44,11 +44,11 @@ spec:
 
 ---
 
-## Asosiy Sabab: Path Nomuvofiqlik
+## The Root Cause: Path Mismatch
 
 ### Tushunish Ingress Path Matching
 
-Kubernetes Ingress **path-asoslangan yo'naltirish** ishlatib HTTP/HTTPS trafikni turli backend service larga yo'naltiradi. `path` maydoni Ingress spec da qaysi so'rovlar qaysi service ga yo'naltirilishini belgilaydi.
+Kubernetes Ingress **path-asoslangan yo'naltirish** ishlatib HTTP/HTTPS trafikni turli backend service larga yo'naltiradi. `path` maydonield in the Ingress spec determines which requests get routed to which service.
 
 **How Path Matching Works:**
 
@@ -164,7 +164,7 @@ paths:
    - Request: `http://myapp.local/`
    - Extracted path: `/`
    - Ingress rule: `path: /api`, `pathType: Prefix`
-   - Moslik: `/` `/api` bilan BOSHLANMAYDI ❌
+   - Match: `/` does NOT start with `/api` ❌
    - Result: 404 Not Found (no matching rule)
 
 ---
@@ -185,7 +185,7 @@ Platforma monolit ilovadan microservice larga ko'chayotgan edi. Infrastruktura j
 # /api → backend-service (API)
 ```
 
-**The Broken Konfiguratsiya:**
+**The Broken Configuration:**
 ```yaml
 spec:
   rules:
@@ -280,13 +280,13 @@ Now:
 
 2. **Order Matters:**
    - Ingress rules are evaluated in order
-   - Eng aniq path lar BIRINCHI kelishi kerak
-   - Umumiyroq path lar OXIRIDA kelishi kerak
+   - Most specific paths should come FIRST
+   - More general paths should come LAST
 
 3. **Monitor Path Coverage:**
    - Track which paths are getting 404s
    - Alert on unexpected 404 spikes
-   - "Resurs topilmadi" va "yo'nalish topilmadi" ni farqlang
+   - Differentiate between "resource not found" and "route not found"
 
 4. **Use Integration Tests:**
    - Test qiling full request path: DNS → Ingress → Service → Pod
@@ -329,7 +329,7 @@ spec:
               number: 8080
 ```
 
-**Qanday ishlaydi:**
+**How It Works:**
 - Request: `http://api.example.com/api/users`
 - Regex captures: `$2 = "users"`
 - Rewritten to: `http://api-service:8080/users`
@@ -355,7 +355,7 @@ paths:
         number: 80
 ```
 
-Ham `/app/*` ham `/application/*` bitta service ga yo'naltiriladi.
+Both `/app/*` and `/application/*` route to the same service.
 
 ### 3. **Multiple Services on Same Host**
 
@@ -483,7 +483,7 @@ Qidiring:
 ### 4. **Tekshirish Backend Service**
 
 ```bash
-# Service ni tekshirish mavjud
+# Service ni tekshirish exists
 kubectl get service web-service -n k8squest
 
 # Service ni tekshirish has endpoints
@@ -505,7 +505,7 @@ kubectl port-forward -n k8squest service/web-service 8080:80
 curl http://localhost:8080/
 ```
 
-This bypasses the Ingress to test if the backend service ni works.
+This bypasses the Ingress to test if the backend service works.
 
 ---
 
@@ -559,7 +559,7 @@ pathType: Exact
 # Does NOT match: /login/ (has trailing slash!)
 ```
 
-`Exact` path larda `/login` va `/login/` FARQLI.
+For `Exact` paths, `/login` and `/login/` are DIFFERENT.
 
 **Recommendation:** `Exact` ishlatish uchun aniq sabab bo'lmasa `Prefix` ishlating.
 
@@ -687,7 +687,7 @@ paths:
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## Key Takeaways
 
 1. **Path Matching is Literal:**
    - `/api` does NOT match `/`
@@ -702,20 +702,20 @@ paths:
 3. **Test Your Paths:**
    - Use `curl` to test different paths
    - Check Ingress controller logs
-   - Tekshirish service endpoint larni exist
+   - Tekshirish service endpoints exist
 
 4. **Path Order Matters:**
    - Most specific paths first
    - General catch-all paths last
    - `/` should almost always be last
 
-5. **Keng Tarqalgan Xatolar:**
+5. **Common Mistakes:**
    - Using `/api` when app serves at `/`
-   - `Prefix` kerak bo'lganda `Exact` ishlatish
+   - Using `Exact` when you need `Prefix`
    - Putting catch-all `/` path first (it catches everything!)
    - Forgetting trailing slashes with `Exact` pathType
 
-6. **Haqiqiy Dunyo Saboqlari:**
+6. **Real-World Lessons:**
    - Path misconfigurations can cause complete outages
    - Test ALL API versions, not just one
    - Monitor 404 rates to catch routing issues
@@ -731,7 +731,7 @@ Siz o'zlashtirgansiz Ingress path-based routing! Endi siz tushunasiz:
 - ✅ How to debug path mismatch issues
 - ✅ Best practices for configuring Ingress paths
 
-Keyingi level larda siz yanada ilg'or networking konseptlarini o'rganasiz: pod lar orasidagi trafikni boshqarish uchun NetworkPolicy ni pods, session affinity for stateful applications, and cross-namespace service communication.
+Keyingi level larda siz yanada ilg'or networking konseptlarini o'rganasiz: pod lar orasidagi trafikni boshqarish uchun NetworkPolicy pods, session affinity for stateful applications, and cross-namespace service communication.
 
 **Keyingi topshiriqni ochish uchun K8sQuest sayohatingizni davom eting!** 🚀
 

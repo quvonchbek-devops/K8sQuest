@@ -1,7 +1,7 @@
 # Solution for Level 14: HPA Can't Scale
 
 ## Muammo
-HorizontalPodAutoscaler (HPA) scale qila olmaydi chunki klasterda metrics-server o'rnatilmagan.
+The HorizontalPodAutoscaler (HPA) cannot scale because metrics-server is not installed in the cluster.
 
 ## Yechim
 
@@ -32,7 +32,7 @@ Wait for metrics-server to be ready:
 kubectl wait --for=condition=ready pod -l k8s-app=metrics-server -n kube-system --timeout=60s
 ```
 
-Metrikalar mavjudligini tekshiring:
+Check if metrics are available:
 ```bash
 kubectl top nodes
 kubectl top pods -n k8squest

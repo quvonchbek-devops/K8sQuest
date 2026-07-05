@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**Muammo:**
+**The Problem:**
 ```yaml
 # Quota allows only 2 CPUs total
 spec:
@@ -21,7 +21,7 @@ resources:
 
 **Natija:** Pod stuck in Pending, "exceeded quota" error
 
-**Yechim:**
+**The Solution:**
 ```yaml
 # Reduced to fit within quota
 resources:
@@ -51,7 +51,7 @@ resources:
 
 ### Scope
 
-- **Har bir namespace uchun:** Har bir namespace o'z quota siga ega
+- **Per-namespace:** Each namespace has its own quota
 - **Aggregate:** Total across all objects in namespace
 - **Enforced at creation:** Kubernetes rejects objects that would exceed quota
 
@@ -150,7 +150,7 @@ resources:
 **When pod scheduled:**
 - Kubernetes finds node with ≥500m CPU available
 - Reserves 500m CPU and 512Mi memory
-- Boshqa pod lar bu zaxiralangan resurslarni ishlata olmaydi
+- Other pods can't use these reserved resources
 
 ### Limits (Maximum Resources)
 
@@ -215,7 +215,7 @@ resources:
 
 ---
 
-## 🚨 HAQIQIY VOQEA: $200K Cloud Hisob-Kitob
+## 🚨 REAL-WORLD HORROR STORY: The $200K Cloud Bill
 
 ### The Incident: Runaway Resource Consumption
 
@@ -237,13 +237,13 @@ resources:
 **Monday 09:20** - Each pod requests 2 CPUs + 4Gi memory  
 **Monday 09:25** - Cluster autoscaler sees resource pressure  
 **Monday 09:30** - Autoscaler adds 50 new nodes (r5.4xlarge, $1.34/hr each)  
-**Dushanba 09:35** — Hali ham yetarli emas, yana 50 ta node qo'shadi  
+**Monday 09:35** - Still not enough, adds 50 more nodes  
 **Monday 10:00** - 150 nodes running ($201/hour total)  
 **Monday 11:00** - Other teams' pods evicted (resource pressure)  
 **Monday 12:00** - Production services impacted  
 **Monday 13:00** - Alarms finally noticed  
 **Monday 13:30** - Emergency response, pods killed  
-**Haftalik hisob** — test ish yuki uchun $28,944 (taxminan $500 bo'lishi kerak edi)  
+**Weekly Bill** - $28,944 for test workload (should have been ~$500)  
 **Final Damage** - $200K over subscription bills before limits set
 
 ### Root Causes
@@ -304,7 +304,7 @@ spec:
 
 ---
 
-## 🛡️ ResourceQuota Eng Yaxshi Amaliyotlari
+## 🛡️ ResourceQuota Best Practices
 
 ### 1. Set Quotas on All Namespaces
 
@@ -365,7 +365,7 @@ spec:
 # Check all quotas
 kubectl get resourcequota --all-namespaces
 
-# Detailed quota holatini
+# Detailed quota status
 kubectl describe resourcequota -n production
 
 # Watch quota usage
@@ -469,7 +469,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 ---
 
-## 📚 Tezkor Ma'lumotnoma
+## 📚 Quick Reference
 
 ### Keng Tarqalgan Quota Configurations
 
@@ -490,7 +490,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 ---
 
-## 🎯 Asosiy Xulosalar
+## 🎯 Key Takeaways
 
 1. **Use ResourceQuota everywhere** - Protect against runaway consumption
 2. **Set realistic quotas** - Based on actual needs, not guesses
@@ -507,7 +507,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 Endi ResourceQuota larni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
-- **Level 44:** NetworkPolicy ni - controlling network traffic
+- **Level 44:** NetworkPolicy - controlling network traffic
 - **Level 45:** Node Affinity - advanced pod scheduling
 - **Level 46:** Taints and Tolerations - node scheduling constraints
 
