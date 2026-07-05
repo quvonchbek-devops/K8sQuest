@@ -66,12 +66,12 @@ spec:
 ```yaml
 # Keep all but one
 spec:
-  minAvailable: "N-1"  # If you have N replicas
+  minAvailable: "N-1"  # Agar N ta replica bo'lsa
 ```
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 1. **minAvailable > replicas**: Impossible to satisfy
 2. **min va max ikkalasi**: Faqat bittasini ishlating
@@ -80,7 +80,7 @@ spec:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **PDB = availability during disruptions**
 2. **minAvailable** or **maxUnavailable** (not both)

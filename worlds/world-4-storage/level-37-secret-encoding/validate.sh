@@ -4,15 +4,15 @@ NAMESPACE="k8squest"
 SECRET="db-credentials"
 POD_NAME="database-client"
 
-echo "🔍 Stage 1: Tekshirilmoqda if Secret exists..."
+echo "🔍 1-bosqich: Tekshirilmoqda Secret mavjudligini..."
 if ! kubectl get secret "$SECRET" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ Secret '$SECRET' not found"
+    echo "❌ Secret '$SECRET' topilmadi"
     exit 1
 fi
-echo "✅ Secret exists"
+echo "✅ Secret mavjud"
 
 echo ""
-echo "🔍 Stage 2: Tekshirilmoqda if username is base64 encoded..."
+echo "🔍 2-bosqich: Tekshirilmoqda username base64 kodlanganligini..."
 USERNAME_RAW=$(kubectl get secret "$SECRET" -n "$NAMESPACE" -o jsonpath='{.data.username}')
 if [ -z "$USERNAME_RAW" ]; then
     echo "❌ username key topilmadi in Secret data"
@@ -29,7 +29,7 @@ fi
 echo "✅ username is base64 encoded (decodes to: $USERNAME_DECODED)"
 
 echo ""
-echo "🔍 Stage 3: Tekshirilmoqda if password is base64 encoded..."
+echo "🔍 3-bosqich: Tekshirilmoqda password base64 kodlanganligini..."
 PASSWORD_RAW=$(kubectl get secret "$SECRET" -n "$NAMESPACE" -o jsonpath='{.data.password}')
 if [ -z "$PASSWORD_RAW" ]; then
     echo "❌ password key topilmadi in Secret data"
@@ -41,39 +41,39 @@ if [ $? -ne 0 ]; then
     echo "❌ password is not properly base64 encoded"
     exit 1
 fi
-echo "✅ password is base64 encoded"
+echo "✅ password base64 kodlangan"
 
 echo ""
-echo "🔍 Stage 4: Tekshirilmoqda if pod exists..."
+echo "🔍 4-bosqich: Tekshirilmoqda pod mavjudligini..."
 if ! kubectl get pod "$POD_NAME" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ Pod '$POD_NAME' not found"
+    echo "❌ Pod '$POD_NAME' topilmadi"
     exit 1
 fi
-echo "✅ Pod exists"
+echo "✅ Pod mavjud"
 
 echo ""
-echo "🔍 Stage 5: Tekshirilmoqda if pod is Running..."
+echo "🔍 5-bosqich: Tekshirilmoqda pod Running holatida ekanligini..."
 POD_STATUS=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" -o jsonpath='{.status.phase}')
 if [ "$POD_STATUS" != "Running" ]; then
     echo "❌ Pod is in '$POD_STATUS' state (expected Running)"
     exit 1
 fi
-echo "✅ Pod is Running"
+echo "✅ Pod Running holatida"
 
 echo ""
-echo "🔍 Stage 6: Verifying credentials were properly decoded in pod..."
+echo "🔍 6-bosqich: Tekshirilmoqda credentials pod da to'g'ri dekodlanganligini..."
 if ! kubectl logs "$POD_NAME" -n "$NAMESPACE" 2>/dev/null | grep -q "Connected successfully"; then
-    echo "❌ Pod did not connect muvaffaqiyatli"
+    echo "❌ Pod muvaffaqiyatli ulana olmadi"
     echo "💡 Tekshiring: logs: kubectl logs $POD_NAME -n $NAMESPACE"
     exit 1
 fi
-echo "✅ Credentials properly decoded and used"
+echo "✅ Credentials to'g'ri dekodlandi va ishlatildi"
 
 echo ""
-echo "🔍 Stage 7: Validating secret values..."
+echo "🔍 7-bosqich: Secret qiymatlar tekshirilmoqda..."
 POD_USERNAME=$(kubectl exec "$POD_NAME" -n "$NAMESPACE" -- sh -c 'echo $DB_USER' 2>/dev/null)
 if [ "$POD_USERNAME" != "$USERNAME_DECODED" ]; then
-    echo "❌ Pod received incorrect username"
+    echo "❌ Pod noto'g'ri username oldi"
     exit 1
 fi
 echo "✅ Secret values to'g'ri decoded in pod"

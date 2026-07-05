@@ -68,7 +68,7 @@ volumeMounts:
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: Key Typo
 ```yaml
@@ -95,7 +95,7 @@ env:
   valueFrom:
     configMapKeyRef:
       name: config
-      key: optional_key  # ❌ If missing, pod fails
+      key: optional_key  # ❌ If topilmadi, pod fails
       # Should add: optional: true
 ```
 
@@ -131,7 +131,7 @@ env:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **All referenced keys must exist** - Or pod fails to start
 2. **Keys are case-sensitive** - database_host ≠ databaseHost

@@ -44,14 +44,14 @@ def reset_level_any_world(level):
         if not world_dir.is_dir():
             continue
         level_path = world_dir / level
-        if level_path.exists():
+        if level_path.mavjud():
             found = True
             break
-    if not found:
-        console.print(f"[red]Error: Level not found in any world: {level}[/red]")
+    if topilmadi:
+        console.print(f"[red]Error: Level topilmadi in any world: {level}[/red]")
         return False
     broken_file = level_path / "broken.yaml"
-    if not broken_file.exists():
+    if not broken_file.mavjud():
         console.print(f"[red]Error: No broken.yaml found in {level}[/red]")
         return False
     console.print(f"[yellow]Resetting {world_dir.name}/{level}...[/yellow]\n")
@@ -96,7 +96,7 @@ def reset_all():
     # Remove progress file
     base_dir = Path(__file__).parent.parent
     progress_file = base_dir / "progress.json"
-    if progress_file.exists():
+    if progress_file.mavjud():
         progress_file.unlink()
     
     console.print("[green]✅ Game reset complete![/green]\n")

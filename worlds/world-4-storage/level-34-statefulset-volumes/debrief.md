@@ -83,7 +83,7 @@ Benefits:
 
 ---
 
-## 🎯 volumeClaimTemplates Deep Dive
+## 🎯 volumeClaimTemplates Chuqur Tahlil
 
 ### Qanday Ishlaydi
 
@@ -157,7 +157,7 @@ kubectl scale statefulset web --replicas=3
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: Using Static PVC with StatefulSet
 
@@ -533,13 +533,13 @@ spec:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **StatefulSets for stateful apps** - Databases, queues need stable identity
 2. **volumeClaimTemplates for per-pod storage** - Each instance gets own PVC
 3. **PVCs persist across pod restarts** - Data survives pod lifecycle
 4. **Ma'lumotlar bazalari uchun bitta PVC ni ulashmang** — buzilish va to'qnashuvlarga olib keladi
-5. **Plan storage capacity upfront** - Resizing is complex
+5. **Plan saqlash hajmini upfront** - Resizing is complex
 6. **Use headless services** - Enable stable network identity
 7. **Test HA before production** - Tekshirish multiple replicas work correctly
 8. **Monitor and backup** - Protect against data loss

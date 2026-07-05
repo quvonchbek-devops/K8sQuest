@@ -9,7 +9,7 @@ Tekshiring:
    kubectl logs frontend -n k8squest
    ```
 
-2. **NetworkPolicy konfiguratsiyasi:**
+2. **NetworkPolicy ni konfiguratsiyasi:**
    ```bash
    kubectl describe networkpolicy backend-network-policy -n k8squest
    ```
@@ -20,4 +20,4 @@ Tekshiring:
    kubectl get pod frontend -n k8squest --show-labels
    ```
 
-NetworkPolicy lar klub qo'riqchisiga o'xshaydi — "label badge" ingizni tekshiradi. Agar badge (label) qo'riqchi (NetworkPolicy) qidirayotganiga mos kelmasa, kirolmaysiz!
+NetworkPolicy ni lar klub qo'riqchisiga o'xshaydi — "label badge" ingizni tekshiradi. Agar badge (label) qo'riqchi (NetworkPolicy ni) qidirayotganiga mos kelmasa, kirolmaysiz!

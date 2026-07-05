@@ -14,5 +14,5 @@ Pod bilan nima bo'layotganini tekshiring:
    kubectl get pod secure-app -n k8squest -o yaml | grep -A 15 securityContext
    ```
 
-Qidiring: readOnlyRootFilesystem, runAsNonRoot, allowPrivilegeEscalation
+Qidiring: readOnlyRootFilesystem, runAsNonRoot ni, allowPrivilegeEscalation ni
 Pod SecurityContext juda cheklangan bo'lishi mumkin.

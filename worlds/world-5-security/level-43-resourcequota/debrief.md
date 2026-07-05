@@ -215,7 +215,7 @@ resources:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The $200K Cloud Bill
+## 🚨 HAQIQIY VOQEA: $200K Cloud Hisob-Kitob
 
 ### The Incident: Runaway Resource Consumption
 
@@ -365,7 +365,7 @@ spec:
 # Check all quotas
 kubectl get resourcequota --all-namespaces
 
-# Detailed quota status
+# Detailed quota holatini
 kubectl describe resourcequota -n production
 
 # Watch quota usage
@@ -469,7 +469,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 ---
 
-## 📚 Quick Reference
+## 📚 Tezkor Ma'lumotnoma
 
 ### Keng Tarqalgan Quota Configurations
 
@@ -490,7 +490,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Use ResourceQuota everywhere** - Protect against runaway consumption
 2. **Set realistic quotas** - Based on actual needs, not guesses
@@ -507,7 +507,7 @@ kubectl get pods -n k8squest -o jsonpath='{range .items[*]}{.spec.containers[*].
 
 Endi ResourceQuota larni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
-- **Level 44:** NetworkPolicy - controlling network traffic
+- **Level 44:** NetworkPolicy ni - controlling network traffic
 - **Level 45:** Node Affinity - advanced pod scheduling
 - **Level 46:** Taints and Tolerations - node scheduling constraints
 

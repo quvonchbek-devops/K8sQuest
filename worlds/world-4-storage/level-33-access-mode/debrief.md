@@ -256,7 +256,7 @@ nfs:                          # Use network storage
 
 ---
 
-##  Common Access Mode Mistakes
+## Keng Tarqalgan Access Mode Xatolari
 
 ### Mistake 1: Assuming All Storage Supports RWX
 
@@ -350,7 +350,7 @@ spec:
 
 ### The Error You Saw
 
-When you tried to apply the solution siz deleting:
+Yechimni o'chirmasdan apply qilishga harakat qilganingizda:
 
 ```bash
 $ kubectl apply -f solution.yaml
@@ -401,7 +401,7 @@ persistentVolumeReclaimPolicy: Retain   # ✅ PV kept, data safe
 
 **Safe workflow for production:**
 1. Backup your data first
-2. Check PV reclaim policy is `Retain`
+2. Check PV reclaim policy sini is `Retain`
 3. Delete PVC (PV remains with data)
 4. Create new PVC with correct access mode
 5. Manually bind to existing PV (if needed)
@@ -694,7 +694,7 @@ provisioner: efs.csi.aws.com
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Access mode lar POD lar emas, NODE lar haqida** — RWO = bitta node, RWX = ko'p node
 2. **Barcha storage barcha mode larni qo'llab-quvvatlamaydi** — Storage backend imkoniyatlarini tekshiring
@@ -730,4 +730,4 @@ Endi access mode larni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 ---
 
-**Yaxshi ish!** Siz o'zlashtirgansiz PV/PVC access modes. Eslab qoling: ilovangiz ehtiyojlari uchun to'g'ri access mode ni tanlang! 🎉
+**Yaxshi ish!** Siz o'zlashtirgansiz PV/PVC access mode inis. Eslab qoling: ilovangiz ehtiyojlari uchun to'g'ri access mode ni tanlang! 🎉

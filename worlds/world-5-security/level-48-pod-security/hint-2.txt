@@ -10,7 +10,7 @@ securityContext:
 # ✅ Xavfsiz
 securityContext:
   privileged: false
-  runAsNonRoot: true
+  runAsNonRoot ni: true
   runAsUser: 1000
-  allowPrivilegeEscalation: false
+  allowPrivilegeEscalation ni: false
 ```

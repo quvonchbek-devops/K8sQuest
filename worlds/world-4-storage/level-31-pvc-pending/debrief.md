@@ -13,7 +13,7 @@ Your PersistentVolumeClaim qotib qoldi in Pending state, preventing the pod from
 - **Application ishga tusha olmaydi** siz persistent storage
 - **Data can't be persisted** across pod restarts
 
-### The Root Cause
+### Asosiy Sabab
 ```yaml
 # ❌ BROKEN: PV mos kelmaydi PVC requirements
 apiVersion: v1
@@ -73,7 +73,7 @@ spec:
 
 ---
 
-## 🔍 Deep Dive: PersistentVolumes & Claims
+## 🔍 Chuqur Tahlil: PersistentVolume lar va Claim lar
 
 ### What are PersistentVolumes?
 
@@ -279,7 +279,7 @@ metadata:
     tier: database
 Result: Binds (if other criteria met)
 
-# ❌ INVALID: PV missing labels
+# ❌ INVALID: PV topilmadi labels
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -504,11 +504,11 @@ PVC description shows:
 ```
 Events:
   Type     Reason              Message
-  Warning  ProvisioningFailed  storageclass "fast-ssd" not found
+  Warning  ProvisioningFailed  storageclass "fast-ssd" topilmadi
 ```
 
 **11:40 PM - Create StorageClass**
-Senior engineer creates missing StorageClass:
+Senior engineer creates topilmadi StorageClass:
 ```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -562,11 +562,11 @@ total 0
 ```bash
 # Check PV status
 $ kubectl get pv postgres-pv
-Error from server (NotFound): persistentvolumes "postgres-pv" not found
+Error from server (NotFound): persistentvolumes "postgres-pv" topilmadi
 
 # Check PVC
 $ kubectl get pvc postgres-claim
-Error from server (NotFound): persistentvolumeclaims "postgres-claim" not found
+Error from server (NotFound): persistentvolumeclaims "postgres-claim" topilmadi
 ```
 
 **Both PV and PVC deleted!**
@@ -615,8 +615,8 @@ When pod crashed:
 - **$200K/hour revenue loss**
 
 **2:00 PM - Partial Recovery**
-- Reconstructed 85% of missing transactions
-- 15% of data still missing
+- Reconstructed 85% of topilmadi transactions
+- 15% of data still topilmadi
 - Bring database online with partial data
 
 **Monday, 6:00 PM - Full Recovery**
@@ -676,7 +676,7 @@ When pod crashed:
 
 ### What Should Have Been Done
 
-**✅ Correct PV Configuration:**
+**✅ Correct PV Konfiguratsiya:**
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
@@ -701,9 +701,9 @@ spec:
 
 echo "Validating PV/PVC configuration..."
 
-# Check 1: PV exists
+# Check 1: PV mavjud
 if ! kubectl get pv postgres-pv &>/dev/null; then
-  echo "ERROR: PV postgres-pv not found"
+  echo "ERROR: PV postgres-pv topilmadi"
   exit 1
 fi
 
@@ -827,7 +827,7 @@ spec:
 # Tekshiring PVC will bind
 kubectl describe pvc my-claim
 
-# Qidiring warnings about missing PVs or mismatches
+# Qidiring warnings about topilmadi PVs or mismatches
 ```
 
 ### 4. Monitor PVC Status
@@ -866,7 +866,7 @@ spec:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 ### Must Eslab qoling
 

@@ -120,11 +120,11 @@ Pod lar Pending da qolishining keng tarqalgan sabablari:
 | Xotira yetishmayapti | `Insufficient memory` | Xotira request ni kamaytiring yoki node qo'shing |
 | Selector ga mos node yo'q | `node(s) didn't match node selector` | nodeSelector label larini to'g'rilang |
 | Taint lar to'sqinlik qilmoqda | `node(s) had taint that pod didn't tolerate` | Toleration qo'shing yoki taint larni olib tashlang |
-| Volume mavjud emas | `persistentvolumeclaim not found` | Avval PVC yarating |
+| Volume mavjud emas | `persistentvolumeclaim topilmadi` | Avval PVC yarating |
 
 ## Keyingi Qadam
 
-Siz uchta pod holatini o'zlashtirgansiz:
+Siz uchta pod holatinini o'zlashtirgansiz:
 - ✅ CrashLoopBackOff (noto'g'ri konteyner buyrug'i)
 - ✅ ImagePullBackOff (noto'g'ri image manzili)
 - ✅ Pending (resurs cheklovlari)

@@ -19,11 +19,11 @@ Standart holatda `undo` BITTA revision ga qaytadi. Lekin agar:
 # AVVAL: Tarixni tekshiring
 kubectl rollout history deployment/payment-api -n k8squest
 
-# See what changed in each revision
+# Har bir revision da nimalar o'zgarganini ko'ring
 kubectl rollout history deployment/payment-api --revision=2 -n k8squest
 kubectl rollout history deployment/payment-api --revision=3 -n k8squest
 
-# THEN: Rollback to known good revision
+# KEYIN: Ma'lum yaxshi revision ga rollback qiling
 kubectl rollout undo deployment/payment-api --to-revision=2 -n k8squest
 ```
 
@@ -48,14 +48,14 @@ Rollout lar **asinxron**. Undo buyrug'i darhol qaytadi, lekin haqiqiy rollout va
 # Rollback ni boshlash
 kubectl rollout undo deployment/payment-api --to-revision=2 -n k8squest
 
-# WAIT for it to complete
+# Tugashini KUTING
 kubectl rollout status deployment/payment-api -n k8squest
 
-# Or watch pods change
+# Yoki pod o'zgarishlarini kuzating
 kubectl get pods -n k8squest -w
 # Press Ctrl+C when all pods are Running
 
-# NOW validate
+# ENDI tekshiring
 ./validate.sh
 ```
 
@@ -64,39 +64,39 @@ kubectl get pods -n k8squest -w
 
 ---
 
-## ❌ Mistake #3: Confusing ReplicaSets with Revisions
+## ❌ Xato #3: ReplicaSet larni Revision lar Bilan Aralashtirish
 
 **O'yinchilar nima qiladi:**
 ```bash
 kubectl get rs -n k8squest
 # See multiple ReplicaSets
-# Delete the old ones thinking it will help
+# Eskilarni o'chirish yordam beradi deb o'ylash
 kubectl delete rs payment-api-abc123 -n k8squest
 ```
 
 **Nima uchun ishlamaydi:**
 Har bir deployment revision ReplicaSet yaratadi. Eski ReplicaSet lar rollback tarixi uchun saqlanadi. Ularni o'chirish:
-- Removes your rollback ability
-- Doesn't fix the current deployment
-- Can cause issues with rollout management
+- Rollback qilish imkoniyatingizni yo'qotadi
+- Joriy deployment ni tuzatmaydi
+- Rollout boshqaruvida muammolar keltirib chiqarishi mumkin
 
 **To'g'ri yondashuv:**
 ```bash
-# View ReplicaSets (but don't delete them)
+# ReplicaSet larni ko'ring (lekin o'chirmang)
 kubectl get rs -n k8squest -l app=payment-api
 
-# See which ReplicaSet is active (has pods)
+# Qaysi ReplicaSet faol ekanini ko'ring (pod larga ega)
 kubectl describe deployment payment-api -n k8squest | grep -A 5 "NewReplicaSet"
 
-# Let Deployment manage ReplicaSets - never delete manually
+# Deployment ReplicaSet larni boshqarsin — hech qachon qo'lda o'chirmang
 ```
 
 **Asosiy saboq:**
-ReplicaSets = Deployment's internal mechanism for version control. Don't touch them directly!
+ReplicaSets = Deployment's internal mechanism for version control. Ularni bevosita boshqarmang!
 
 ---
 
-## ❌ Mistake #4: Forgetting Why Rollback is Needed
+## ❌ Xato #4: Rollback Nima Uchun Kerakligini Unutish
 
 **O'yinchilar nima qiladi:**
 Faqat rollback buyrug'ini bajarishga e'tibor berish, deployment NIMA UCHUN muvaffaqiyatsiz bo'lganini tushunishni unutish.
@@ -105,19 +105,19 @@ Faqat rollback buyrug'ini bajarishga e'tibor berish, deployment NIMA UCHUN muvaf
 Siz muvaffaqiyatli rollback qilishingiz mumkin, lekin o'rganmasligingiz mumkin:
 - Yangi versiyada nima noto'g'ri ketdi?
 - Kelajakda buni qanday oldini olish?
-- What to check before deploying?
+- Deploy qilishdan oldin nimani tekshirish kerak?
 
 **To'g'ri yondashuv:**
 ```bash
-# BEFORE rollback: Understand the failure
+# ROLLBACK DAN OLDIN: Nosozlikni tushuning
 kubectl describe deployment payment-api -n k8squest
 kubectl get pods -n k8squest
 kubectl logs deployment/payment-api -n k8squest
 
-# THEN rollback
+# KEYIN rollback qiling
 kubectl rollout undo deployment/payment-api --to-revision=2 -n k8squest
 
-# AFTER rollback: Verify the difference
+# ROLLBACK DAN KEYIN: Farqni tekshiring
 kubectl rollout history deployment/payment-api --revision=2 -n k8squest
 kubectl rollout history deployment/payment-api --revision=3 -n k8squest
 ```
@@ -127,10 +127,10 @@ Rollback — tiklash mexanizmi, o'rganish yorlig'i emas. Takrorlanishni oldini o
 
 ---
 
-## ❌ Mistake #5: Not Checking Rollout History Limit
+## ❌ Xato #5: Rollout Tarix Limitini Tekshirmaslik
 
 **O'yinchilar nima qiladi:**
-Expect to roll back 10 revisions ago.
+10 ta revision oldingi holatga qaytishni kutish.
 
 **Nima uchun ishlamaydi:**
 Deployment larda `revisionHistoryLimit` bor (standart: 10). 10 ta deployment dan keyin eski ReplicaSet lar avtomatik tozalanadi.
@@ -156,7 +156,7 @@ Faqat `revisionHistoryLimit` ruxsat bergancha orqaga qaytishingiz mumkin. Standa
 
 ---
 
-## ❌ Mistake #6: Using `kubectl edit` for Rollback
+## ❌ Xato #6: Rollback Uchun `kubectl edit` Ishlatish
 
 **O'yinchilar nima qiladi:**
 ```bash
@@ -166,24 +166,24 @@ kubectl edit deployment payment-api -n k8squest
 
 **Nima uchun ishlamaydi:**
 Bu rollback emas, YANGI revision yaratadi. Siz:
-- Lose the clean rollback history
+- Toza rollback tarixini yo'qotasiz
 - Qaysi revision qaysi ekanini aralashtirish
-- May introduce typos
+- Imlo xatolari kiritishingiz mumkin
 
 **To'g'ri yondashuv:**
 ```bash
-# Use the proper rollback command
+# To'g'ri rollback buyrug'ini ishlating
 kubectl rollout undo deployment/payment-api --to-revision=2 -n k8squest
 
-# NOT kubectl edit!
+# kubectl edit EMAS!
 ```
 
 **Asosiy saboq:**
-`kubectl edit` = new deployment. `kubectl rollout undo` = proper rollback with history intact.
+`kubectl edit` = yangi deployment. `kubectl rollout undo` = tarix saqlanib qoladigan to'g'ri rollback.
 
 ---
 
-## ❌ Mistake #7: Checking Wrong Resource
+## ❌ Xato #7: Noto'g'ri Resursni Tekshirish
 
 **O'yinchilar nima qiladi:**
 ```bash
@@ -195,13 +195,13 @@ kubectl get pods -n k8squest
 
 **Nima uchun ishlamaydi:**
 Rollout lar vaqtida pod lar keladi va ketadi. Deployment quyidagilar uchun haqiqat manbai:
-- Desired state
-- Rollout progress
-- Available replicas
+- Kerakli holat
+- Rollout jarayoni
+- Mavjud replica lar
 
 **To'g'ri yondashuv:**
 ```bash
-# Check Deployment first
+# Avval Deployment ni tekshiring
 kubectl get deployment payment-api -n k8squest
 
 # Output shows:
@@ -218,7 +218,7 @@ Deployment lar pod larni boshqaradi. Faqat alohida pod larni emas, Deployment ho
 
 ---
 
-## ❌ Mistake #8: Not Understanding Rollout Status Output
+## ❌ Xato #8: Rollout Status Natijasini Tushunmaslik
 
 **O'yinchilar nima qiladi:**
 ```bash
@@ -229,27 +229,27 @@ kubectl rollout status deployment/payment-api -n k8squest
 
 **Nima uchun ishlamaydi:**
 Bu xabar normal! Bu Kubernetes rollback ingizni qayta ishlayotganini bildiradi. Boshqa normal xabarlar:
-- "Waiting for deployment spec update..."
-- "Waiting for rollout to finish: X out of Y new replicas..."
-- "deployment successfully rolled out" ← Success!
+- "Waiting for deployment spec update..." (Deployment spec yangilanishini kutish)
+- "Waiting for rollout to finish: X out of Y new replicas..." (Rollout tugashini kutish)
+- "deployment successfully rolled out" ← Muvaffaqiyat!
 
 **To'g'ri yondashuv:**
 ```bash
 kubectl rollout status deployment/payment-api -n k8squest
-# WAIT for: "deployment successfully rolled out"
+# KUTING: "deployment successfully rolled out" xabari chiqguncha
 # If it hangs, Ctrl+C and check:
 kubectl describe deployment payment-api -n k8squest
 kubectl get events -n k8squest --sort-by='.lastTimestamp'
 ```
 
 **Asosiy saboq:**
-`kubectl rollout status` shows real-time progress. Wait for "successfully rolled out" message.
+`kubectl rollout status` real-time jarayonni ko'rsatadi. "successfully rolled out" xabarini kuting.
 
 ---
 
 ## 💡 Debug Qilish Tartibi — To'g'ri Usul
 
-Here's the systematic rollback approach:
+Mana tizimli rollback yondashuvi:
 
 ```bash
 # 1. Identify the problem
@@ -266,7 +266,7 @@ kubectl rollout history deployment/payment-api --revision=2 -n k8squest
 # 4. Initiate rollback to specific revision
 kubectl rollout undo deployment/payment-api --to-revision=2 -n k8squest
 
-# 5. Wait for completion
+# 5. Tugashini kuting
 kubectl rollout status deployment/payment-api -n k8squest
 
 # 6. Verify success
@@ -285,17 +285,17 @@ kubectl logs deployment/payment-api -n k8squest
 ## 🎯 Asosiy Xulosalar
 
 1. **Rollback dan oldin tarixni tekshiring** — maqsadli revision ni biling
-2. **Use `--to-revision=N`** - Don't rely on default "undo"
+2. **`--to-revision=N` ishlating** — standart "undo" ga tayanmang
 3. **Wait for rollout completion** - Use `kubectl rollout status`
-4. **Don't delete ReplicaSets manually** - Deployment manages them
+4. **ReplicaSet larni qo'lda o'chirmang** — Deployment ularni boshqaradi
 5. **Nosozlikni tushuning** — rollback qilishdan oldin nima noto'g'ri ketganini o'rganing
-6. **Check Deployment status** - Not just individual pods
-7. **Use proper rollback commands** - Not `kubectl edit`
-8. **Revision history is limited** - Default 10, can't roll back forever
+6. **Deployment holatini tekshiring** — faqat alohida pod larni emas
+7. **To'g'ri rollback buyruqlarini ishlating** — `kubectl edit` emas
+8. **Revision tarixi cheklangan** — standart 10, abadiy orqaga qaytib bo'lmaydi
 
 ---
 
-## 📊 Rollout History Explained
+## 📊 Rollout Tarixi Tushuntirish
 
 ```bash
 $ kubectl rollout history deployment/payment-api -n k8squest
@@ -309,12 +309,12 @@ REVISION  CHANGE-CAUSE
 # kubectl rollout undo --to-revision=1 → Goes to Revision 1
 ```
 
-**Each revision is stored as a ReplicaSet:**
+**Har bir revision ReplicaSet sifatida saqlanadi:**
 - Revision 1 → payment-api-abc123 (0 pods)
 - Revision 2 → payment-api-def456 (0 pods)
 - Revision 3 → payment-api-ghi789 (3 pods) ← Current
 
-**After rollback to revision 2:**
+**Revision 2 ga rollback qilingandan keyin:**
 - Revision 2 → payment-api-def456 (3 pods) ← Now current
 - Revision 3 → payment-api-ghi789 (0 pods)
 - Revision 4 created (same as revision 2)
@@ -323,12 +323,12 @@ REVISION  CHANGE-CAUSE
 
 ## 📚 Bu Leveldan Keyin Bilishingiz Kerak
 
-✅ How to view deployment rollout history  
-✅ How to rollback to specific revision  
-✅ How to wait for rollout completion  
-✅ Understanding of ReplicaSet relationship to revisions  
-✅ How to verify successful rollback  
-✅ Difference between `undo` and `edit`  
-✅ How to read deployment status output  
+✅ Deployment rollout tarixini qanday ko'rish  
+✅ Aniq revision ga qanday rollback qilish  
+✅ Rollout tugashini qanday kutish  
+✅ ReplicaSet va revision lar o'rtasidagi aloqani tushunish  
+✅ Muvaffaqiyatli rollback ni qanday tekshirish  
+✅ `undo` va `edit` o'rtasidagi farq  
+✅ Deployment status natijasini qanday o'qish  
 
 **Keyingi Level:** Level 12 da liveness probe lar — deployment muvaffaqiyatli lekin pod lar qayta ishga tusha berayotganda!

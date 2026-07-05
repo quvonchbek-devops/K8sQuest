@@ -2,7 +2,7 @@
 
 echo "🔍 Pod holati tekshirilmoqda..."
 
-# Check if pod exists
+# Check pod mavjudligini
 if ! kubectl get pod nginx-broken -n k8squest &>/dev/null; then
   echo "❌ Pod 'nginx-broken' k8squest namespace da topilmadi"
   exit 1
@@ -15,9 +15,9 @@ READY=$(kubectl get pod nginx-broken -n k8squest -o jsonpath='{.status.container
 echo "   Phase: $STATUS"
 echo "   Ready: $READY"
 
-# Check if pod is running AND ready
+# Check pod ishlayotganligini AND ready
 if [[ "$STATUS" == "Running" ]] && [[ "$READY" == "true" ]]; then
-  # Verify the command is correct (not the broken "nginxzz")
+  # Buyruq to'g'ri ekanligini tekshirish (not the broken "nginxzz")
   COMMAND=$(kubectl get pod nginx-broken -n k8squest -o jsonpath='{.spec.containers[0].command[0]}' 2>/dev/null)
   
   if [[ "$COMMAND" == "nginxzz" ]]; then

@@ -18,7 +18,7 @@ else
         echo "   Should be: version=green"
     fi
     if [ "$ENDPOINTS" -eq 0 ]; then
-        echo "❌ Service has no endpoints (no pods match selector)"
+        echo "❌ Service da endpoint lar yo'q (no pods match selector)"
     fi
     exit 1
 fi

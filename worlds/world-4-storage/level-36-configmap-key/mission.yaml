@@ -14,5 +14,5 @@ description: "Pod ConfigMap dan mavjud bo'lmagan kalitga murojaat qilmoqda, bu k
 learning_objectives:
   - Understand ConfigMap structure and keys
   - Learn to reference ConfigMap data in pods
-  - Debug missing configuration issues
+  - Debug topilmadi configuration issues
   - Properly manage application configuration

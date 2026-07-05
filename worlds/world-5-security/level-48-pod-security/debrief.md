@@ -19,10 +19,10 @@ Prevents known privilege escalations:
 
 ### 3. Restricted (Hardened)
 Security best practices (what you just implemented):
-- ✅ runAsNonRoot: true
-- ✅ allowPrivilegeEscalation: false
-- ✅ capabilities dropped
-- ✅ seccompProfile
+- ✅ runAsNonRoot ni: true
+- ✅ allowPrivilegeEscalation ni: false
+- ✅ capabilities drop qilinganligini
+- ✅ seccompProfile ni
 - ✅ Non-root user
 
 ---
@@ -43,13 +43,13 @@ metadata:
 
 ---
 
-## Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Restricted = most secure** - use in production
 2. **Requires complete SecurityContext** - all fields
 3. **Enforced at admission** - pods rejected if non-compliant
 4. **Best practice** - always run as non-root
-5. **Defense in depth** - layer with NetworkPolicy, RBAC
+5. **Defense in depth** - layer with NetworkPolicy ni, RBAC
 
 ---
 

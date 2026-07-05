@@ -5,34 +5,34 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo "🔍 Validating Level 32: Volume Mount Path Error..."
+echo "🔍 Level 32 tekshiruvi: Volume Mount Path Xatosi..."
 echo ""
 
-echo "📋 Stage 1: Tekshirilmoqda pod exists..."
+echo "📋 1-bosqich: Tekshirilmoqda pod mavjud..."
 if ! kubectl get pod web-app -n k8squest &>/dev/null; then
-    echo -e "${RED}❌ Pod 'web-app' not found${NC}"
+    echo -e "${RED}❌ Pod 'web-app' topilmadi${NC}"
     exit 1
 fi
-echo -e "${GREEN}✓ Pod exists${NC}"
+echo -e "${GREEN}✓ Pod mavjud${NC}"
 echo ""
 
-echo "📋 Stage 2: Tekshirilmoqda pod holati..."
+echo "📋 2-bosqich: Tekshirilmoqda pod holatini..."
 sleep 5
 POD_STATUS=$(kubectl get pod web-app -n k8squest -o jsonpath='{.status.phase}')
 
 if [ "$POD_STATUS" != "Running" ]; then
-    echo -e "${RED}❌ Pod is not running (status: $POD_STATUS)${NC}"
+    echo -e "${RED}❌ Pod is ishlamayapti (status: $POD_STATUS)${NC}"
     echo ""
     echo "💡 Tekshiring: pod logs:"
     echo "   kubectl logs web-app -n k8squest"
     echo ""
-    echo "   If you see 'Config file not found', the volume is mounted at wrong path"
+    echo "   If you see 'Config file topilmadi', the volume ulangan ekanligini at wrong path"
     exit 1
 fi
 echo -e "${GREEN}✓ Pod is running${NC}"
 echo ""
 
-echo "📋 Stage 3: Verifying volume mount path..."
+echo "📋 3-bosqich: Tekshirilmoqda volume mount path ini..."
 MOUNT_PATH=$(kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].volumeMounts[0].mountPath}')
 
 if [ "$MOUNT_PATH" != "/app/config" ]; then
@@ -45,30 +45,30 @@ fi
 echo -e "${GREEN}✓ Volume mounted at /app/config${NC}"
 echo ""
 
-echo "📋 Stage 4: Verifying config file exists..."
+echo "📋 4-bosqich: Tekshirilmoqda konfiguratsiya fayli mavjudligini..."
 if ! kubectl exec web-app -n k8squest -- test -f /app/config/app.conf 2>/dev/null; then
-    echo -e "${RED}❌ Config file not found at /app/config/app.conf${NC}"
+    echo -e "${RED}❌ Config file topilmadi at /app/config/app.conf${NC}"
     exit 1
 fi
-echo -e "${GREEN}✓ Config file exists at /app/config/app.conf${NC}"
+echo -e "${GREEN}✓ Config file mavjud at /app/config/app.conf${NC}"
 echo ""
 
-echo "📋 Stage 5: Verifying app can read config..."
+echo "📋 5-bosqich: Tekshirilmoqda app can read config..."
 CONFIG_CONTENT=$(kubectl exec web-app -n k8squest -- cat /app/config/app.conf 2>/dev/null)
 if [ -z "$CONFIG_CONTENT" ]; then
     echo -e "${RED}❌ Cannot read config file${NC}"
     exit 1
 fi
-echo -e "${GREEN}✓ App can read config file${NC}"
+echo -e "${GREEN}✓ Ilova konfiguratsiyani o'qiy olishini file${NC}"
 echo "   Content: $CONFIG_CONTENT"
 echo ""
 
-echo "📋 Stage 6: Final validation..."
+echo "📋 6-bosqich: Yakuniy tekshiruv..."
 echo -e "${GREEN}✓ All checks passed!${NC}"
 echo ""
 echo "🎉 Success! Volume is mounted at the correct path"
 echo ""
-echo "📊 Configuration:"
+echo "📊 Konfiguratsiya:"
 echo "   • Mount Path: /app/config"
 echo "   • Config File: app.conf"
 echo "   • Pod Status: Running"

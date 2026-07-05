@@ -8,7 +8,7 @@
 
 **Muammo:**
 ```yaml
-# ServiceAccount exists
+# ServiceAccount mavjud
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -266,7 +266,7 @@ rules:
 
 ---
 
-## 💥 Common RBAC Mistakes
+## 💥 Keng Tarqalgan RBAC Xatolari
 
 ### Mistake 1: No RoleBinding
 
@@ -330,14 +330,14 @@ rules:
 - apiGroups: ["*"]  # ❌ All API groups!
   resources: ["*"]  # ❌ All resources!
   verbs: ["*"]  # ❌ All actions!
-# This is cluster-admin equivalent - too dangerous!
+# Bu cluster-admin ekvivalenti — juda xavfli!
 ```
 
 **Fix:** Grant only needed permissions (principle of least privilege)
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The RBAC Misconfiguration
+## 🚨 HAQIQIY VOQEA: RBAC Noto'g'ri Konfiguratsiyasi
 
 ### The Incident: $2.1M Data Breach
 
@@ -513,7 +513,7 @@ roleRef:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **RBAC = Role + RoleBinding** - Both required for permissions
 2. **ServiceAccount = Identity** - What pods run as
@@ -532,7 +532,7 @@ Endi RBAC ni tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 - **Level 42:** SecurityContext and privilege escalation
 - **Level 43:** ResourceQuotas and limits
-- **Level 44:** NetworkPolicy for traffic control
+- **Level 44:** NetworkPolicy ni for traffic control
 
 ---
 

@@ -2,7 +2,7 @@
 
 echo "🔍 Pod va service konfiguratsiyasi tekshirilmoqda..."
 
-# Check if pod is running
+# Check pod ishlayotganligini
 POD_STATUS=$(kubectl get pod web-server -n k8squest -o jsonpath='{.status.phase}' 2>/dev/null)
 READY=$(kubectl get pod web-server -n k8squest -o jsonpath='{.status.containerStatuses[0].ready}' 2>/dev/null)
 

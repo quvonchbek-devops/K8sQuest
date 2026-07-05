@@ -14,5 +14,5 @@ description: "Ma'lumotlar bazasi emptyDir volume ishlatmoqda — pod qayta ishga
 learning_objectives:
   - Understand emptyDir vs PVC differences
   - Learn when to use ephemeral vs persistent storage
-  - Recognize data persistence requirements
+  - Recognize ma'lumotlar saqlanishini requirements
   - Choose appropriate volume types

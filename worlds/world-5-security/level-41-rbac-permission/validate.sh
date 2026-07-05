@@ -6,43 +6,43 @@ SA_NAME="pod-reader"
 ROLE_NAME="pod-reader-role"
 ROLEBINDING_NAME="pod-reader-binding"
 
-echo "🔍 Stage 1: Tekshirilmoqda if ServiceAccount exists..."
+echo "🔍 1-bosqich: Tekshirilmoqda ServiceAccount mavjudligini..."
 if ! kubectl get serviceaccount "$SA_NAME" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ ServiceAccount '$SA_NAME' not found"
+    echo "❌ ServiceAccount '$SA_NAME' topilmadi"
     exit 1
 fi
-echo "✅ ServiceAccount exists"
+echo "✅ ServiceAccount mavjud"
 
 echo ""
-echo "🔍 Stage 2: Tekshirilmoqda if Role exists..."
+echo "🔍 2-bosqich: Tekshirilmoqda Role mavjudligini..."
 if ! kubectl get role "$ROLE_NAME" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ Role '$ROLE_NAME' not found"
+    echo "❌ Role '$ROLE_NAME' topilmadi"
     echo "💡 Maslahat: Create a Role with permissions to list pods"
     exit 1
 fi
-echo "✅ Role exists"
+echo "✅ Role mavjud"
 
 echo ""
-echo "🔍 Stage 3: Verifying Role has correct permissions..."
+echo "🔍 3-bosqich: Tekshirilmoqda Role to'g'ri ruxsatlarga ega ekanligini..."
 ROLE_VERBS=$(kubectl get role "$ROLE_NAME" -n "$NAMESPACE" -o jsonpath='{.rules[0].verbs}' | grep -o 'list')
 if [ -z "$ROLE_VERBS" ]; then
-    echo "❌ Role missing 'list' permission for pods"
+    echo "❌ Role topilmadi 'list' permission for pods"
     echo "💡 Maslahat: Role needs verbs: [get, list, watch]"
     exit 1
 fi
-echo "✅ Role has list permission"
+echo "✅ Role list ruxsatiga ega"
 
 echo ""
-echo "🔍 Stage 4: Tekshirilmoqda if RoleBinding exists..."
+echo "🔍 4-bosqich: Tekshirilmoqda RoleBinding mavjudligini..."
 if ! kubectl get rolebinding "$ROLEBINDING_NAME" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ RoleBinding '$ROLEBINDING_NAME' not found"
+    echo "❌ RoleBinding '$ROLEBINDING_NAME' topilmadi"
     echo "💡 Maslahat: Create RoleBinding to connect ServiceAccount to Role"
     exit 1
 fi
-echo "✅ RoleBinding exists"
+echo "✅ RoleBinding mavjud"
 
 echo ""
-echo "🔍 Stage 5: Verifying RoleBinding connects SA to Role..."
+echo "🔍 5-bosqich: Tekshirilmoqda RoleBinding SA ni Role ga bog'lashini..."
 BINDING_ROLE=$(kubectl get rolebinding "$ROLEBINDING_NAME" -n "$NAMESPACE" -o jsonpath='{.roleRef.name}')
 BINDING_SA=$(kubectl get rolebinding "$ROLEBINDING_NAME" -n "$NAMESPACE" -o jsonpath='{.subjects[0].name}')
 
@@ -58,35 +58,35 @@ fi
 echo "✅ RoleBinding to'g'ri configured"
 
 echo ""
-echo "🔍 Stage 6: Tekshirilmoqda if pod exists..."
+echo "🔍 6-bosqich: Tekshirilmoqda pod mavjudligini..."
 if ! kubectl get pod "$POD_NAME" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ Pod '$POD_NAME' not found"
+    echo "❌ Pod '$POD_NAME' topilmadi"
     exit 1
 fi
-echo "✅ Pod exists"
+echo "✅ Pod mavjud"
 
 echo ""
-echo "🔍 Stage 7: Tekshirilmoqda if pod is Running..."
+echo "🔍 7-bosqich: Tekshirilmoqda pod Running holatida ekanligini..."
 POD_STATUS=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" -o jsonpath='{.status.phase}')
 if [ "$POD_STATUS" != "Running" ]; then
     echo "❌ Pod is in '$POD_STATUS' state (expected Running)"
     echo "💡 Tekshiring: logs: kubectl logs $POD_NAME -n $NAMESPACE"
     exit 1
 fi
-echo "✅ Pod is Running"
+echo "✅ Pod Running holatida"
 
 echo ""
-echo "🔍 Stage 8: Verifying pod muvaffaqiyatli lists pods..."
+echo "🔍 8-bosqich: Tekshirilmoqda pod muvaffaqiyatli pod larni ro'yxatini olganligini..."
 sleep 2  # Give pod time to execute kubectl command
 if ! kubectl logs "$POD_NAME" -n "$NAMESPACE" 2>/dev/null | grep -q "Success! Can list pods"; then
-    echo "❌ Pod unable to list pods - RBAC permissions not working"
+    echo "❌ Pod pod larni ko'ra olmadi — RBAC ruxsatlari ishlamayapti"
     echo "💡 Tekshiring: logs: kubectl logs $POD_NAME -n $NAMESPACE"
     exit 1
 fi
 echo "✅ Pod muvaffaqiyatli listed pods with RBAC permissions"
 
 echo ""
-echo "🔍 Stage 9: Testing RBAC permissions directly..."
+echo "🔍 9-bosqich: Tekshirilmoqda RBAC ruxsatlarini bevosita..."
 kubectl auth can-i list pods --as=system:serviceaccount:k8squest:pod-reader -n k8squest &>/dev/null
 if [ $? -ne 0 ]; then
     echo "❌ ServiceAccount cannot list pods according to RBAC check"

@@ -6,36 +6,36 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo "🔍 Validating Level 29: LoadBalancer vs NodePort..."
+echo "🔍 Level 29 tekshiruvi: LoadBalancer va NodePort..."
 echo ""
 
-# Stage 1: Check if service exists
-echo "📋 Stage 1: Tekshirilmoqda if service exists..."
+# Stage 1: Check service mavjudligini
+echo "📋 1-bosqich: Tekshirilmoqda service mavjudligini..."
 if ! kubectl get service web-service -n k8squest &>/dev/null; then
-    echo -e "${RED}❌ Service 'web-service' not found in namespace 'k8squest'${NC}"
+    echo -e "${RED}❌ Service 'web-service' topilmadi in namespace 'k8squest'${NC}"
     echo ""
     echo "💡 The service might have been deleted. Make sure to apply your fixed konfiguratsiya."
     exit 1
 fi
-echo -e "${GREEN}✓ Service exists${NC}"
+echo -e "${GREEN}✓ Service mavjud${NC}"
 echo ""
 
-# Stage 2: Check service type
-echo "📋 Stage 2: Tekshirilmoqda service type..."
+# Stage 2: Check service turini
+echo "📋 2-bosqich: Tekshirilmoqda service turini..."
 SERVICE_TYPE=$(kubectl get service web-service -n k8squest -o jsonpath='{.spec.type}')
 
 if [ "$SERVICE_TYPE" == "LoadBalancer" ]; then
     echo -e "${RED}❌ Service is still type LoadBalancer${NC}"
     echo ""
     echo "💡 Problem: LoadBalancer services require cloud provider integration"
-    echo "   In local clusters (kind, minikube, k3d), LoadBalancer services stay in 'Pending' state"
+    echo "   Local cluster larda (kind, minikube, k3d), LoadBalancer service lar 'Pending' holatida qoladi"
     echo ""
-    echo "📚 Service types in Kubernetes:"
+    echo "📚 Kubernetes dagi Service turlari:"
     echo "   • ClusterIP (default): Only accessible within cluster"
     echo "   • NodePort: Accessible via <NodeIP>:<NodePort> (works in local clusters)"
     echo "   • LoadBalancer: Provisions external LB (needs cloud provider like AWS, GCP, Azure)"
     echo ""
-    echo "🔧 For local development, change the service type to NodePort"
+    echo "🔧 For local development, change the service turini to NodePort"
     exit 1
 fi
 
@@ -49,7 +49,7 @@ echo -e "${GREEN}✓ Service type is NodePort${NC}"
 echo ""
 
 # Stage 3: Check if service has external access
-echo "📋 Stage 3: Tekshirilmoqda service accessibility..."
+echo "📋 3-bosqich: Tekshirilmoqda service ga kirish imkoniyatini..."
 
 # Get node port
 NODE_PORT=$(kubectl get service web-service -n k8squest -o jsonpath='{.spec.ports[0].nodePort}')
@@ -64,25 +64,25 @@ echo -e "${GREEN}✓ NodePort assigned: $NODE_PORT${NC}"
 echo ""
 
 # Stage 4: Verify pod is running
-echo "📋 Stage 4: Tekshirilmoqda if backend pod is running..."
+echo "📋 4-bosqich: Tekshirilmoqda backend pod ishlayotganligini..."
 if ! kubectl get pod web-app -n k8squest &>/dev/null; then
-    echo -e "${RED}❌ Pod 'web-app' not found${NC}"
+    echo -e "${RED}❌ Pod 'web-app' topilmadi${NC}"
     exit 1
 fi
 
 POD_STATUS=$(kubectl get pod web-app -n k8squest -o jsonpath='{.status.phase}')
 if [ "$POD_STATUS" != "Running" ]; then
-    echo -e "${RED}❌ Pod is not running (status: $POD_STATUS)${NC}"
+    echo -e "${RED}❌ Pod is ishlamayapti (status: $POD_STATUS)${NC}"
     exit 1
 fi
 echo -e "${GREEN}✓ Backend pod is running${NC}"
 echo ""
 
-# Stage 5: Check service endpoints
-echo "📋 Stage 5: Verifying service endpoints..."
+# Stage 5: Check service endpoint larni
+echo "📋 5-bosqich: Tekshirilmoqda service endpoint larni..."
 ENDPOINTS=$(kubectl get endpoints web-service -n k8squest -o jsonpath='{.subsets[*].addresses[*].ip}')
 if [ -z "$ENDPOINTS" ]; then
-    echo -e "${RED}❌ Service has no endpoints${NC}"
+    echo -e "${RED}❌ Service da endpoint lar yo'q${NC}"
     echo ""
     echo "💡 Tekshiring: if:"
     echo "   • Pod labels match service selector"
@@ -92,18 +92,18 @@ fi
 echo -e "${GREEN}✓ Service has endpoints: $ENDPOINTS${NC}"
 echo ""
 
-# Stage 6: Final validation
-echo "📋 Stage 6: Final validation..."
+# 6-bosqich: Yakuniy tekshiruv
+echo "📋 6-bosqich: Yakuniy tekshiruv..."
 echo -e "${GREEN}✓ All checks passed!${NC}"
 echo ""
 echo "🎉 Success! Your service is now accessible via NodePort"
 echo ""
-echo "📊 Service Details:"
+echo "📊 Service Tafsilotlari:"
 echo "   • Type: NodePort"
 echo "   • Port: 80"
 echo "   • NodePort: $NODE_PORT"
 echo ""
-echo "🔗 Access the service:"
+echo "🔗 Service ga kirish:"
 echo "   From within cluster: http://web-service.k8squest.svc.cluster.local"
 echo "   From your machine: http://localhost:$NODE_PORT (if port-forwarded)"
 echo "   Via kubectl: kubectl port-forward -n k8squest service/web-service 8080:80"

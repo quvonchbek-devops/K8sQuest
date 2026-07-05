@@ -13,7 +13,7 @@ StatefulSet pod laringiz bashorat qilinadigan DNS nomlari orqali bir-biri bilan 
 - **Distributed systems broken** (peers can't coordinate)
 - **Random pod assignment** o'rniga of specific pod targeting
 
-### The Root Cause
+### Asosiy Sabab
 ```yaml
 # ❌ BROKEN: Regular ClusterIP service
 apiVersion: v1
@@ -72,7 +72,7 @@ web-cluster.k8squest.svc.cluster.local → [10.244.1.5, 10.244.1.6, 10.244.1.7]
 
 ---
 
-## 🔍 Deep Dive: Headless Services
+## 🔍 Chuqur Tahlil: Headless Service lar
 
 ### What is a Headless Service?
 
@@ -85,7 +85,7 @@ kind: Service
 metadata:
   name: my-service
 spec:
-  clusterIP: None  # ← This makes it "headless"
+  clusterIP: None  # ← Bu uni "headless" qiladi
   selector:
     app: my-app
   ports:
@@ -560,7 +560,7 @@ db.analytics.count()  # mongodb-2: 12,448,905  (1,477 docs behind)
 
 **Contributing Factors:**
 
-1. **Insufficient Testing:**
+1. **Insufficient Test qilinmoqda:**
    - Never tested pod rescheduling in staging
    - Didn't validate per-pod DNS before production
    - No chaos engineering (pod deletion tests)
@@ -582,7 +582,7 @@ db.analytics.count()  # mongodb-2: 12,448,905  (1,477 docs behind)
 
 ### What Should Have Been Done
 
-**Correct Configuration:**
+**Correct Konfiguratsiya:**
 ```yaml
 # ✅ CORRECT: Headless service
 apiVersion: v1
@@ -1262,7 +1262,7 @@ rs.reconfig(cfg)
 
 ---
 
-## 🎓 Key Takeaways
+## 🎓 Asosiy Xulosalar
 
 ### Must Eslab qoling
 
@@ -1274,12 +1274,12 @@ rs.reconfig(cfg)
 
 ### StatefulSet + Headless Service Checklist
 
-Before deploying to production:
+Production ga deploy qilishdan oldin:
 
 - [ ] **Service has `clusterIP: None`**
 - [ ] **StatefulSet `serviceName` matches Service name**
 - [ ] **Application uses DNS names** (not pod IPs)
-- [ ] **Tested per-pod DNS resolution**
+- [ ] **Tested har bir pod uchun DNS resolution ni**
 - [ ] **Tested pod rescheduling** (delete pod, verify app still works)
 - [ ] **Init containers verify DNS** before app starts
 - [ ] **Monitoring on DNS resolution**
@@ -1310,7 +1310,7 @@ Before deploying to production:
 - NodePort for external access
 - DNS resolution and naming
 - Ingress routing
-- NetworkPolicy for traffic control
+- NetworkPolicy ni for traffic control
 - Session affinity for stateful apps
 - Cross-namespace communication
 - Readiness probes and endpoints

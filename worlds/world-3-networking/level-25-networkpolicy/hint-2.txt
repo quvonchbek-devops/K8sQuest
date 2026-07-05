@@ -1,9 +1,9 @@
 🧭 Yo'naltiruvchi maslahat:
 
-NetworkPolicy da NOTO'G'RI label selector bor.
+NetworkPolicy ni da NOTO'G'RI label selector bor.
 
 **Frontend Pod:** `app: frontend` label ga ega
-**NetworkPolicy:** faqat `app: admin-tool` label li pod lardan trafikka ruxsat beradi
+**NetworkPolicy ni:** faqat `app: admin-tool` label li pod lardan trafikka ruxsat beradi
 
 ```yaml
 ingress:
@@ -15,7 +15,7 @@ ingress:
 
 `frontend` ≠ `admin-tool` → Frontend dan barcha trafik RAD ETILADI
 
-Tuzatish: NetworkPolicy ni `app: admin-tool` o'rniga `app: frontend` label li pod lardan trafikka ruxsat beradigan qilib o'zgartiring.
+Tuzatish: NetworkPolicy ni ni `app: admin-tool` o'rniga `app: frontend` label li pod lardan trafikka ruxsat beradigan qilib o'zgartiring.
 
 ```yaml
 # OLDIN (buzilgan):

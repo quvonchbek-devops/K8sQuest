@@ -7,6 +7,6 @@ expected_time: "15m"
 concepts:
   - services
   - label selectors
-  - service endpoints
+  - service endpoint larni
   - kubectl describe svc
   - ClusterIP

@@ -86,14 +86,14 @@ echo -n "admin" | base64
 echo "YWRtaW4=" | base64 -d
 # admin
 
-# IMPORTANT: Use -n to avoid encoding newline!
+# MUHIM: Yangi qator kodlanishini oldini olish uchun -n ishlating!
 echo "admin" | base64     # ❌ Includes newline
 echo -n "admin" | base64  # ✅ Correct
 ```
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: Forgetting -n Flag
 ```bash
@@ -227,7 +227,7 @@ rules:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Base64 is encoding, NOT encryption** - Provides zero security
 2. **Anyone with kubectl access can decode secrets** - RBAC is critical

@@ -12,7 +12,7 @@ Umumiy muammolar ro'yxati:
 - ❌ RBAC ruxsatlari yetishmayapti
 - ❌ SecurityContext juda cheklangan
 - ❌ ResourceQuota limiti oshib ketgan
-- ❌ NetworkPolicy trafikni to'sib qo'ygan
+- ❌ NetworkPolicy ni trafikni to'sib qo'ygan
 - ❌ Node affinity mos kelmayapti
 - ❌ Taint toleration yetishmayapti
 - ❌ PDB eviction ni to'sib qo'ygan

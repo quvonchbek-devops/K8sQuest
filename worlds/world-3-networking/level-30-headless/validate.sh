@@ -6,22 +6,22 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo "🔍 Validating Level 30: Headless Service for StatefulSet..."
+echo "🔍 Level 30 tekshiruvi: StatefulSet uchun Headless Service..."
 echo ""
 
-# Stage 1: Check if service exists
-echo "📋 Stage 1: Tekshirilmoqda if service exists..."
+# Stage 1: Check service mavjudligini
+echo "📋 1-bosqich: Tekshirilmoqda service mavjudligini..."
 if ! kubectl get service web-cluster -n k8squest &>/dev/null; then
-    echo -e "${RED}❌ Service 'web-cluster' not found in namespace 'k8squest'${NC}"
+    echo -e "${RED}❌ Service 'web-cluster' topilmadi in namespace 'k8squest'${NC}"
     echo ""
     echo "💡 Make sure to apply your fixed konfiguratsiya with the service definition."
     exit 1
 fi
-echo -e "${GREEN}✓ Service exists${NC}"
+echo -e "${GREEN}✓ Service mavjud${NC}"
 echo ""
 
 # Stage 2: Check if service is headless
-echo "📋 Stage 2: Tekshirilmoqda if service is headless (clusterIP: None)..."
+echo "📋 2-bosqich: Tekshirilmoqda service headless ekanligini (clusterIP: None)..."
 CLUSTER_IP=$(kubectl get service web-cluster -n k8squest -o jsonpath='{.spec.clusterIP}')
 
 if [ "$CLUSTER_IP" != "None" ]; then
@@ -29,7 +29,7 @@ if [ "$CLUSTER_IP" != "None" ]; then
     echo ""
     echo "💡 Problem: StatefulSets need headless services for per-pod DNS"
     echo ""
-    echo "📚 What's a headless service?"
+    echo "📚 Headless service nima?"
     echo "   • Regular service: clusterIP assigned (e.g., 10.96.100.50)"
     echo "   • Headless service: clusterIP: None"
     echo ""
@@ -45,23 +45,23 @@ if [ "$CLUSTER_IP" != "None" ]; then
     echo ""
     echo "🔧 Fix: Set clusterIP to None:"
     echo "   spec:"
-    echo "     clusterIP: None  # Makes it headless"
+    echo "     clusterIP: None  # Headless qiladi"
     exit 1
 fi
 echo -e "${GREEN}✓ Service is headless (clusterIP: None)${NC}"
 echo ""
 
-# Stage 3: Check if StatefulSet exists
-echo "📋 Stage 3: Tekshirilmoqda if StatefulSet exists..."
+# Stage 3: Check StatefulSet mavjudligini
+echo "📋 3-bosqich: Tekshirilmoqda StatefulSet mavjudligini..."
 if ! kubectl get statefulset web -n k8squest &>/dev/null; then
-    echo -e "${RED}❌ StatefulSet 'web' not found in namespace 'k8squest'${NC}"
+    echo -e "${RED}❌ StatefulSet 'web' topilmadi in namespace 'k8squest'${NC}"
     exit 1
 fi
-echo -e "${GREEN}✓ StatefulSet exists${NC}"
+echo -e "${GREEN}✓ StatefulSet mavjud${NC}"
 echo ""
 
 # Stage 4: Check StatefulSet pods
-echo "📋 Stage 4: Waiting for StatefulSet pods to be ready..."
+echo "📋 4-bosqich: Kutilmoqda for StatefulSet pods to be ready..."
 TIMEOUT=60
 ELAPSED=0
 while [ $ELAPSED -lt $TIMEOUT ]; do
@@ -72,7 +72,7 @@ while [ $ELAPSED -lt $TIMEOUT ]; do
         break
     fi
     
-    echo "   Waiting for pods... ($READY_PODS/$EXPECTED_PODS ready)"
+    echo "   Pod lar kutilmoqda... ($READY_PODS/$EXPECTED_PODS ready)"
     sleep 3
     ELAPSED=$((ELAPSED + 3))
 done
@@ -80,15 +80,15 @@ done
 if [ "$READY_PODS" -ne "$EXPECTED_PODS" ]; then
     echo -e "${RED}❌ Not all StatefulSet pods are ready ($READY_PODS/$EXPECTED_PODS)${NC}"
     echo ""
-    echo "💡 Tekshiring: pod holati:"
+    echo "💡 Tekshiring: pod holatini:"
     echo "   kubectl get pods -n k8squest -l app=web-cluster"
     exit 1
 fi
 echo -e "${GREEN}✓ All $EXPECTED_PODS StatefulSet pods are ready${NC}"
 echo ""
 
-# Stage 5: Verify per-pod DNS resolution
-echo "📋 Stage 5: Testing per-pod DNS resolution..."
+# Stage 5: Verify har bir pod uchun DNS resolution ni
+echo "📋 5-bosqich: Har bir pod uchun DNS resolution tekshirilmoqda..."
 
 # Deploy a test pod to check DNS
 kubectl run -n k8squest dns-test --image=busybox:1.28 --restart=Never --rm -i --command -- sleep 1 &>/dev/null || true
@@ -109,7 +109,7 @@ spec:
 EOF
 
 # Wait for test pod to be ready
-echo "   Starting DNS test pod..."
+echo "   DNS test pod ishga tushirilmoqda..."
 kubectl wait --for=condition=Ready pod/dns-test -n k8squest --timeout=30s &>/dev/null
 
 # Test DNS for each StatefulSet pod
@@ -118,7 +118,7 @@ DNS_SUCCESS=true
 
 for i in $(seq 0 $((POD_COUNT - 1))); do
     POD_DNS="web-$i.web-cluster.k8squest.svc.cluster.local"
-    echo "   Testing: $POD_DNS"
+    echo "   Test qilinmoqda: $POD_DNS"
     
     if ! kubectl exec -n k8squest dns-test -- nslookup "$POD_DNS" &>/dev/null; then
         echo -e "${RED}   ❌ DNS resolution failed for $POD_DNS${NC}"
@@ -149,8 +149,8 @@ if [ "$DNS_SUCCESS" = false ]; then
 fi
 echo ""
 
-# Stage 6: Verify service endpoints
-echo "📋 Stage 6: Verifying service endpoints..."
+# Stage 6: Verify service endpoint larni
+echo "📋 6-bosqich: Tekshirilmoqda service endpoint larni..."
 ENDPOINTS=$(kubectl get endpoints web-cluster -n k8squest -o jsonpath='{.subsets[*].addresses[*].ip}' | wc -w)
 if [ "$ENDPOINTS" -ne "$POD_COUNT" ]; then
     echo -e "${RED}❌ Expected $POD_COUNT endpoints, found $ENDPOINTS${NC}"
@@ -159,30 +159,30 @@ fi
 echo -e "${GREEN}✓ Service has $ENDPOINTS endpoints (matches pod count)${NC}"
 echo ""
 
-# Stage 7: Final validation
-echo "📋 Stage 7: Final validation..."
+# 7-bosqich: Yakuniy tekshiruv
+echo "📋 7-bosqich: Yakuniy tekshiruv..."
 echo -e "${GREEN}✓ All checks passed!${NC}"
 echo ""
 echo "🎉 Success! Your StatefulSet has stable network identities"
 echo ""
-echo "📊 StatefulSet Details:"
+echo "📊 StatefulSet Tafsilotlari:"
 echo "   • Pods: $POD_COUNT"
 echo "   • Service: web-cluster (headless)"
 echo "   • ClusterIP: None"
 echo ""
-echo "🔗 Per-Pod DNS Names:"
+echo "🔗 Har Bir Pod Uchun DNS Nomlari:"
 for i in $(seq 0 $((POD_COUNT - 1))); do
     POD_IP=$(kubectl get pod "web-$i" -n k8squest -o jsonpath='{.status.podIP}')
     echo "   • web-$i.web-cluster.k8squest.svc.cluster.local → $POD_IP"
 done
 echo ""
-echo "💡 Headless Service Benefits:"
+echo "💡 Headless Service Afzalliklari:"
 echo "   ✅ Each pod gets a stable DNS name"
 echo "   ✅ Direct pod-to-pod communication"
 echo "   ✅ No load balancing (connect to specific pod)"
 echo "   ✅ Perfect for StatefulSets, databases, clustered apps"
 echo ""
-echo "📚 Use cases:"
+echo "📚 Foydalanish holatlari:"
 echo "   • Databases (MySQL replication, MongoDB replica sets)"
 echo "   • Message queues (Kafka, RabbitMQ clusters)"
 echo "   • Distributed systems (etcd, Zookeeper)"

@@ -31,7 +31,7 @@ preemptionPolicy: PreemptLowerPriority
 
 ---
 
-## Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Higher value = higher priority**
 2. **Preemption evicts lower priority** pods

@@ -56,7 +56,7 @@ _setup_k3s_kubeconfig() {
   
   # Check if k3s is running
   if ! systemctl is-active --quiet k3s 2>/dev/null; then
-    echo "ℹ️  k3s is installed but not running. Starting..."
+    echo "ℹ️  k3s is installed but ishlamayapti. Starting..."
     sudo systemctl start k3s
     echo "⏳ Waiting for k3s to start..."
     local k3s_attempt=0
@@ -187,7 +187,7 @@ _install_k3s() {
       sleep 2
     done
   else
-    echo "ℹ️  k3s is already installed. Starting service if not running..."
+    echo "ℹ️  k3s is already installed. Starting service if ishlamayapti..."
     sudo systemctl start k3s || true
   fi
   _setup_k3s_kubeconfig

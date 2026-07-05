@@ -18,10 +18,10 @@ if [ "$ALLOWED" -gt 0 ]; then
     echo "✅ PDB allows evictions"
     echo "   minAvailable: $MIN_AVAILABLE (keeps $MIN_AVAILABLE pods running)"
     echo "   Replicas: $REPLICAS"
-    echo "   Disruptions allowed: $ALLOWED"
+    echo "   Ruxsat etilgan uzilishlar: $ALLOWED"
     exit 0
 else
     echo "❌ PDB currently blocks all disruptions"
-    echo "   Disruptions allowed: $ALLOWED"
+    echo "   Ruxsat etilgan uzilishlar: $ALLOWED"
     exit 1
 fi

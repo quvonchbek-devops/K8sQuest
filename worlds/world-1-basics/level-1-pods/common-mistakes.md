@@ -124,7 +124,7 @@ kubectl apply -f my-fix.yaml -n k8squest
 ## ❌ Xato #6: Event larni E'tiborsiz Qoldirish
 
 **O'yinchilar nima qiladi:**
-Faqat pod holati va loglarga e'tibor berish, event larni o'tkazib yuborish.
+Faqat pod holatini va loglarga e'tibor berish, event larni o'tkazib yuborish.
 
 **Nima uchun ishlamaydi:**
 Event larda muhim debug ma'lumotlari bor:

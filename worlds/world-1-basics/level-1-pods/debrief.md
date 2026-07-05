@@ -6,7 +6,7 @@ Pod `nginxzz` degan buyruqni ishga tushirishga urinib ishdan chiqdi — lekin bu
 
 Pod ni `kubectl describe` bilan tekshirganingizda quyidagini ko'rgansiz:
 ```
-Error: failed to create containerd task: exec: "nginxzz": executable file not found in $PATH
+Error: failed to create containerd task: exec: "nginxzz": executable file topilmadi in $PATH
 ```
 
 Kubernetes sizga shuni aytmoqda: "Image ni topdim, tortdim, konteyner yaratdim... lekin siz aytgan buyruq mavjud emas."

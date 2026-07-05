@@ -4,7 +4,7 @@ NAMESPACE="k8squest"
 DB_POD="database"
 BACKEND_POD="backend"
 
-echo "🔍 VALIDATION STAGE 1: Tekshirilmoqda if pods exist..."
+echo "🔍 TEKSHIRUV 1-BOSQICH: Tekshirilmoqda pod lar mavjudligini..."
 if ! kubectl get pod $DB_POD -n $NAMESPACE &>/dev/null; then
     echo "❌ FAILED: Database pod topilmadi"
     exit 1
@@ -13,61 +13,61 @@ if ! kubectl get pod $BACKEND_POD -n $NAMESPACE &>/dev/null; then
     echo "❌ FAILED: Backend pod topilmadi"
     exit 1
 fi
-echo "✅ Both pods exist"
+echo "✅ Ikkala pod ham mavjud"
 
 echo ""
-echo "🔍 VALIDATION STAGE 2: Tekshirilmoqda if pods are running..."
+echo "🔍 TEKSHIRUV 2-BOSQICH: Tekshirilmoqda pod lar ishlayotganligini..."
 DB_STATUS=$(kubectl get pod $DB_POD -n $NAMESPACE -o jsonpath='{.status.phase}')
 BACKEND_STATUS=$(kubectl get pod $BACKEND_POD -n $NAMESPACE -o jsonpath='{.status.phase}')
 if [ "$DB_STATUS" != "Running" ]; then
-    echo "❌ FAILED: Database pod is $DB_STATUS, not Running"
+    echo "❌ FAILED: Database pod is $DB_STATUS, Running emas"
     exit 1
 fi
 if [ "$BACKEND_STATUS" != "Running" ]; then
-    echo "❌ FAILED: Backend pod is $BACKEND_STATUS, not Running"
+    echo "❌ FAILED: Backend pod is $BACKEND_STATUS, Running emas"
     exit 1
 fi
-echo "✅ Both pods are running"
+echo "✅ Both pod lar ishlayotganligini"
 
 echo ""
-echo "🔍 VALIDATION STAGE 3: Tekshirilmoqda if NetworkPolicies exist..."
+echo "🔍 TEKSHIRUV 3-BOSQICH: Tekshirilmoqda NetworkPolicy ni lar mavjudligini..."
 if ! kubectl get networkpolicy -n $NAMESPACE | grep -q "allow"; then
-    echo "❌ FAILED: No NetworkPolicy with 'allow' found"
-    echo "💡 Maslahat: Create NetworkPolicy to allow traffic between pods"
+    echo "❌ FAILED: No NetworkPolicy ni with 'allow' found"
+    echo "💡 Maslahat: Create NetworkPolicy ni to allow traffic between pods"
     exit 1
 fi
-echo "✅ NetworkPolicies exist"
+echo "✅ NetworkPolicy lar mavjud"
 
 echo ""
-echo "🔍 VALIDATION STAGE 4: Verifying database ingress policy..."
+echo "🔍 TEKSHIRUV 4-BOSQICH: Tekshirilmoqda database ingress policy sini..."
 DB_POLICY=$(kubectl get networkpolicy -n $NAMESPACE -o json | jq -r '.items[] | select(.spec.podSelector.matchLabels.app == "database") | .metadata.name' | head -1)
 if [ -z "$DB_POLICY" ]; then
-    echo "❌ FAILED: No NetworkPolicy targeting database pod"
-    echo "💡 Maslahat: Create NetworkPolicy with podSelector matching app: database"
+    echo "❌ FAILED: No NetworkPolicy ni targeting database pod"
+    echo "💡 Maslahat: Create NetworkPolicy ni with podSelector matching app: database"
     exit 1
 fi
-echo "✅ Database has NetworkPolicy: $DB_POLICY"
+echo "✅ Database has NetworkPolicy ni: $DB_POLICY"
 
 echo ""
-echo "🔍 VALIDATION STAGE 5: Verifying backend egress policy..."
+echo "🔍 TEKSHIRUV 5-BOSQICH: Tekshirilmoqda backend egress policy sini..."
 BACKEND_POLICY=$(kubectl get networkpolicy -n $NAMESPACE -o json | jq -r '.items[] | select(.spec.podSelector.matchLabels.app == "backend") | .metadata.name' | head -1)
 if [ -z "$BACKEND_POLICY" ]; then
-    echo "❌ FAILED: No NetworkPolicy targeting backend pod"
-    echo "💡 Maslahat: Create NetworkPolicy with podSelector matching app: backend"
+    echo "❌ FAILED: No NetworkPolicy ni targeting backend pod"
+    echo "💡 Maslahat: Create NetworkPolicy ni with podSelector matching app: backend"
     exit 1
 fi
-echo "✅ Backend has NetworkPolicy: $BACKEND_POLICY"
+echo "✅ Backend has NetworkPolicy ni: $BACKEND_POLICY"
 
 echo ""
-echo "🔍 VALIDATION STAGE 6: Tekshirilmoqda Service & Endpoints (DNS)"
+echo "🔍 TEKSHIRUV 6-BOSQICH: Tekshirilmoqda Service va Endpoint lar (DNS)"
 
-# Ensure a Service exists for the database so the name 'database' resolves
+# Ensure a Service mavjud for the database so the name 'database' resolves
 if ! kubectl get svc database -n $NAMESPACE &>/dev/null; then
-    echo "❌ FAILED: Service 'database' not found in namespace $NAMESPACE"
+    echo "❌ FAILED: Service 'database' topilmadi in namespace $NAMESPACE"
     echo "💡 Maslahat: Create a ClusterIP Service named 'database' selecting the database pod"
     exit 1
 fi
-echo "✅ Service 'database' exists"
+echo "✅ Service 'database' mavjud"
 
 # Check endpoints for the service
 EP_COUNT=$(kubectl get endpoints database -n $NAMESPACE -o json | jq '.subsets | length')
@@ -79,7 +79,7 @@ fi
 echo "✅ Service has endpoints: $EP_COUNT subset(s)"
 
 echo ""
-echo "🔍 VALIDATION STAGE 7: Active connectivity test from backend pod"
+echo "🔍 TEKSHIRUV 7-BOSQICH: Faol ulanish testi from backend pod"
 echo "Policy lar kuchga kirishi uchun 5 soniya kutilmoqda..."
 sleep 5
 
@@ -89,15 +89,15 @@ if [ $? -eq 0 ]; then
     echo "✅ Backend can reach database: TCP connection to database:5432 succeeded"
 else
     echo "❌ FAILED: Backend cannot reach database (connection timed out or refused)"
-    echo "   Tekshiring: NetworkPolicy rules and ensure backend egress + database ingress allow port 5432"
+    echo "   Tekshiring: NetworkPolicy ni rules and ensure backend egress + database ingress allow port 5432"
     echo "   Tekshiring: backend logs: kubectl logs $BACKEND_POD -n $NAMESPACE"
     exit 1
 fi
 
 echo ""
-echo "🎉 SUCCESS! NetworkPolicy konfiguratsiya validated!"
+echo "🎉 SUCCESS! NetworkPolicy ni konfiguratsiya validated!"
 echo ""
-echo "Network policies are sozlangan to allow:"
+echo "Network policy lar quyidagilarga ruxsat berish uchun sozlangan:"
 echo "  • Backend → Database on port 5432"
 echo "  • Backend → DNS for name resolution"
 echo "  • Database accepts connections from backend only"

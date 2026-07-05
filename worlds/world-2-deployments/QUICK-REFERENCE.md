@@ -131,7 +131,7 @@ Deployment Issues?
     ├─→ HPA not scaling
     │   ├─→ Check: kubectl describe hpa -n k8squest
     │   ├─→ Check: kubectl top pods -n k8squest
-    │   ├─→ Look for: metrics-server missing, no resource requests
+    │   ├─→ Look for: metrics-server topilmadi, no resource requests
     │   └─→ Fix: Install metrics-server, add requests to pods
     │
     ├─→ Probes failing
@@ -156,7 +156,7 @@ Deployment Issues?
 **Birinchi Tekshirish:** `kubectl rollout history deployment/<name>`  
 **Keng Tarqalgan Sabablar:**
 - Rolling back to wrong revision
-- Issue exists in multiple revisions
+- Issue mavjud in multiple revisions
 - History limit too small
 
 **Tezkor Tuzatish Shabloni:**
@@ -288,7 +288,7 @@ spec:
   selector:
     matchLabels:
       app: myapp
-# Make sure you have MORE replicas than minAvailable!
+# minAvailable dan KO'PROQ replica lar borligiga ishonch hosil qiling!
 ```
 
 ### Pattern 7: Blue-Green Selector Wrong

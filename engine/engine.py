@@ -81,7 +81,7 @@ if not os.environ.get("KUBECONFIG"):
     home = os.path.expanduser("~")
     if K8S_CLUSTER_TYPE == "k3s":
         k3s_config = os.path.join(home, ".kube", "k3s-config")
-        if os.path.exists(k3s_config):
+        if os.path.mavjud(k3s_config):
             os.environ["KUBECONFIG"] = k3s_config
 
 def get_expected_context():
@@ -320,10 +320,10 @@ class K8sQuest:
 
     def load_progress(self):
         """Load player progress from JSON file"""
-        if self.progress_file.exists():
+        if self.progress_file.mavjud():
             with open(self.progress_file, "r", encoding='utf-8', errors='replace') as f:
                 progress = json.load(f)
-                # Ensure current_level exists for resume functionality
+                # Ensure current_level mavjud for resume functionality
                 if "current_level" not in progress:
                     progress["current_level"] = None
                 return progress
@@ -464,7 +464,7 @@ class K8sQuest:
 
         for i in range(1, 4):
             hint_file = level_path / f"hint-{i}.txt"
-            if hint_file.exists():
+            if hint_file.mavjud():
                 hints_available.append((i, hint_file))
 
         if not hints_available:
@@ -531,7 +531,7 @@ class K8sQuest:
         """Show the post-mission debrief with learning explanations"""
         debrief_file = level_path / "debrief.md"
 
-        if not debrief_file.exists():
+        if not debrief_file.mavjud():
             console.print("[yellow]Bu level uchun yakuniy tahlil mavjud emas[/yellow]")
             return
 
@@ -552,7 +552,7 @@ class K8sQuest:
         """Display the solution.yaml file contents"""
         solution_file = level_path / "solution.yaml"
 
-        if not solution_file.exists():
+        if not solution_file.mavjud():
             console.print("[yellow]No solution file available for this level[/yellow]")
             return
 
@@ -768,7 +768,7 @@ Look for "Running" status!
 # 🎓 Step-by-Step Guide: Fix the Deployment
 
 ## What's Wrong?
-The deployment has 0 replicas, so no pods are running.
+The deployment has 0 replicas, so no pod lar ishlayotganligini.
 
 ## How to Fix It:
 
@@ -828,7 +828,7 @@ Look for "2/2" ready replicas!
         ) as progress:
             task = progress.add_task("Setting up namespace...", total=3)
 
-            # Ensure namespace exists (idempotent, skip if already there)
+            # Ensure namespace mavjud (idempotent, skip if already there)
             result = subprocess.run(
                 ["kubectl", "apply", "-f", "-"],
                 input="apiVersion: v1\nkind: Namespace\nmetadata:\n  name: k8squest\n",
@@ -855,7 +855,7 @@ Look for "2/2" ready replicas!
 
             # Check if level has a setup script (for levels needing history like rollback)
             setup_script = level_path / "setup.sh"
-            if setup_script.exists():
+            if setup_script.mavjud():
                 console.print("[yellow]Level sozlash skripti ishga tushirilmoqda...[/yellow]")
                 result = subprocess.run(
                     ["bash", "setup.sh"],
@@ -1227,7 +1227,7 @@ Look for "2/2" ready replicas!
         # Collect all levels from all worlds
         for world_name in all_worlds:
             world_path = self.base_dir / "worlds" / world_name
-            if world_path.exists():
+            if world_path.mavjud():
                 levels = sorted(
                     [d for d in world_path.iterdir() if d.is_dir()],
                     key=natural_sort_key,
@@ -1262,7 +1262,7 @@ Look for "2/2" ready replicas!
 
                 # Load mission to get the name
                 mission_file = level_path / "mission.yaml"
-                if mission_file.exists():
+                if mission_file.mavjud():
                     with open(mission_file, "r", encoding='utf-8', errors='replace') as f:
                         mission = yaml.safe_load(f)
                         display_name = mission.get("name", level_name)
@@ -1335,8 +1335,8 @@ Look for "2/2" ready replicas!
         """Play all levels in a world"""
         world_path = self.base_dir / "worlds" / world_name
 
-        if not world_path.exists():
-            console.print(f"[red]Error: World '{world_name}' not found[/red]")
+        if not world_path.mavjud():
+            console.print(f"[red]Error: World '{world_name}' topilmadi[/red]")
             return False
 
         # Get all level directories with natural sorting (level-1, level-2, ..., level-10)

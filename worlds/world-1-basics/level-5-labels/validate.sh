@@ -1,15 +1,15 @@
 #!/bin/bash
 
-echo "🔍 Service va pod holati tekshirilmoqda..."
+echo "🔍 Service va pod holatini tekshirilmoqda..."
 
-# Check if pod is running
+# Check pod ishlayotganligini
 POD_STATUS=$(kubectl get pod backend-app -n k8squest -o jsonpath='{.status.phase}' 2>/dev/null)
 READY=$(kubectl get pod backend-app -n k8squest -o jsonpath='{.status.containerStatuses[0].ready}' 2>/dev/null)
 
 echo "   Pod Phase: $POD_STATUS"
 echo "   Pod Ready: $READY"
 
-# Check if service has endpoints
+# Service endpoint larga ega ekanligini tekshirish
 ENDPOINTS=$(kubectl get endpoints backend-service -n k8squest -o jsonpath='{.subsets[0].addresses[0].ip}' 2>/dev/null)
 echo "   Endpoints: ${ENDPOINTS:-none}"
 

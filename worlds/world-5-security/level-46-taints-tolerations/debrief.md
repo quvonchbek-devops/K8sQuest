@@ -6,7 +6,7 @@
 
 ## 📊 Nimani Tuzatdingiz
 
-**Problem:** Node tainted, pod has no toleration
+**Problem:** Node taint qilindi, pod has no toleration
 ```yaml
 # Node: dedicated=gpu:NoSchedule
 # Pod: No tolerations → Can't schedule
@@ -89,7 +89,7 @@ tolerations:
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 1. **Missing effect**: Must match taint effect
 2. **Typo in key/value**: Case-sensitive!
@@ -98,7 +98,7 @@ tolerations:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Taints repel**, **tolerations allow**
 2. **All parts must match**: key, value, effect

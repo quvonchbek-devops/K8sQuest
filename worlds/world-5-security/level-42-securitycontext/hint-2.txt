@@ -4,10 +4,10 @@ SecurityContext pod/konteyner uchun xavfsizlik sozlamalarini belgilaydi:
 
 ```yaml
 securityContext:
-  runAsNonRoot: true          # Root sifatida ishlashni taqiqlash
+  runAsNonRoot ni: true          # Root sifatida ishlashni taqiqlash
   runAsUser: 1000             # Aniq foydalanuvchi ID
   readOnlyRootFilesystem: true  # Fayl tizimiga yozishni taqiqlash
-  allowPrivilegeEscalation: false  # Imtiyoz oshirishni taqiqlash
+  allowPrivilegeEscalation ni: false  # Imtiyoz oshirishni taqiqlash
   capabilities:
     drop: ["ALL"]             # Barcha Linux capability larni olib tashlash
 ```

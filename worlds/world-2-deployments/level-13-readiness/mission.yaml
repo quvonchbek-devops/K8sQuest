@@ -5,8 +5,8 @@ xp: 200
 difficulty: o'rta
 expected_time: 15m
 concepts:
-  - readiness probes
-  - service endpoints
+  - readiness probe larni
+  - service endpoint larni
   - trafik yo'naltirish
   - pod ishga tushishi
   - HTTP probe lar

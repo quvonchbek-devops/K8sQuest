@@ -4,7 +4,7 @@ deny-all policy ni aniq ruxsat qoidalari bilan almashtiring:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
+kind: NetworkPolicy ni
 metadata:
   name: allow-frontend-to-backend
   namespace: k8squest

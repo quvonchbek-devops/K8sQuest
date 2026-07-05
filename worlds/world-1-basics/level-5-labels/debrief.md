@@ -148,7 +148,7 @@ Bo'sh endpoint larning keng tarqalgan sabablari:
 Label lar Kubernetes ning har joyida ishlatiladi:
 - Service lar Pod larni tanlash (hozirgina o'rgandingiz!)
 - Deployment lar ReplicaSet larni boshqarish
-- NetworkPolicy lar trafikni filtrlash
+- NetworkPolicy ni lar trafikni filtrlash
 - Node selector lar scheduling uchun
 - Volume claim lar storage tanlash uchun
 

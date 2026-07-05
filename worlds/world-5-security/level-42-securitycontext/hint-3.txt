@@ -6,14 +6,14 @@ broken.yaml ni tuzating — ilova ishlashi uchun zarur o'zgarishlar:
 ```yaml
 spec:
   securityContext:
-    runAsNonRoot: true
+    runAsNonRoot ni: true
     runAsUser: 1000
     fsGroup: 1000
   containers:
   - name: app
     securityContext:
       readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
+      allowPrivilegeEscalation ni: false
     volumeMounts:
     - name: tmp
       mountPath: /tmp

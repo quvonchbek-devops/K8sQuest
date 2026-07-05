@@ -67,7 +67,7 @@ Fayl yangi yo'lda yo'q edi. Sidecar crash bo'ldi. Pod "1/2" ready ko'rsatdi. Kub
 - Jamoa deployment muvaffaqiyatli deb o'yladi (replikalarning 75% "ishlayotgan" edi)
 - Monitoring faqat pod mavjudligini tekshirardi, readiness ni emas
 - Nihoyat `kubectl get pods` orqali barcha yangi pod larda "1/2" ko'rindi
-- Loglar tekshirildi: `kubectl logs <pod> -c metrics-sidecar` "file not found" ko'rsatdi
+- Loglar tekshirildi: `kubectl logs <pod> -c metrics-sidecar` "file topilmadi" ko'rsatdi
 
 **Yechim**: Konfiguratsiya yo'li to'g'irlandi. Barcha pod lar darhol 2/2 Ready bo'ldi.
 
@@ -110,7 +110,7 @@ kubectl logs <pod-nomi> --all-containers=true -f -n <namespace>
 Bosqichma-bosqich jarayon:
 
 ```bash
-# 1. Umumiy pod holatini tekshirish
+# 1. Umumiy pod holatinini tekshirish
 kubectl get pod <nom> -n <namespace>
 # READY ustunida X/Y ga qarang (masalan, 1/2 bitta konteyner muvaffaqiyatsiz)
 

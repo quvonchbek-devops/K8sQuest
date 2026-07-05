@@ -1,10 +1,10 @@
-🧭 Maslahat 2: NetworkPolicy ni Tushunish
+🧭 Maslahat 2: NetworkPolicy ni ni Tushunish
 
-NetworkPolicy pod lar orasidagi trafikni nazorat qiladi:
+NetworkPolicy ni pod lar orasidagi trafikni nazorat qiladi:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
+kind: NetworkPolicy ni
 metadata:
   name: backend-policy
 spec:

@@ -22,7 +22,7 @@ else
     echo "❌ HPA cannot scale"
     echo "   ScalingActive status: $HPA_STATUS"
     
-    # Check if metrics-server exists
+    # Check if metrics-server mavjud
     if ! kubectl get deployment metrics-server -n kube-system &>/dev/null; then
         echo "   ⚠️  metrics-server is not installed!"
         echo "   Install it with: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"

@@ -2,7 +2,7 @@
 
 ## Missiya Umumiy Ko'rinishi
 
-**Maqsad:** Boshqa namespace dagi backend service bilan aloqa qila olmagan frontend ilovani tuzatingce by using the proper DNS FQDN format.
+**Maqsad:** Boshqa namespace dagi backend service ni bilan aloqa qila olmagan frontend ilovani tuzatingce by using the proper DNS FQDN format.
 
 **XP berildi:** 250 XP  
 **Qiyinlik:** Intermediate  
@@ -16,7 +16,7 @@ Siz `k8squest` namespace da frontend ilovani deploy qildingiz, u `backend-ns` na
 
 Aybdor? Frontend faqat bir xil namespace ichida hal qilinadigan qisqa service nomi (`api-service`) ishlatayotgan edi.
 
-**The Broken Configuration:**
+**The Broken Konfiguratsiya:**
 ```yaml
 # Frontend pod in k8squest namespace
 command: ['sh', '-c', 'wget -q -O- http://api-service']
@@ -30,7 +30,7 @@ command: ['sh', '-c', 'wget -q -O- http://api-service']
 
 ---
 
-## The Root Cause: DNS Namespace Scoping
+## Asosiy Sabab: DNS Namespace Chegaralanishi
 
 ### Tushunish Kubernetes DNS
 
@@ -129,7 +129,7 @@ command: ['sh', '-c', 'wget -q -O- http://api-service.backend-ns.svc.cluster.loc
      |              |        |         |
      |              |        |         +-- Cluster DNS suffix (default: cluster.local)
      |              |        +------------ Service subdomain
-     |              +--------------------- Namespace where service exists
+     |              +--------------------- Namespace where service mavjud
      +------------------------------------ Service name
 ```
 
@@ -141,7 +141,7 @@ api-service.backend-ns                      (Minimal - works)
 api-service                                 (Short name - only same namespace!)
 ```
 
-**Why the Fix Works:**
+**Nima Uchun Tuzatish Ishlaydi:**
 
 1. Frontend requests: `http://api-service.backend-ns.svc.cluster.local`
 2. DNS query goes to CoreDNS
@@ -178,7 +178,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: user-service
-  namespace: backend    # New microservice in backend namespace
+  namespace: backend    # New microservice in backend namespace ini
 spec:
   selector:
     app: user-service
@@ -215,7 +215,7 @@ data:
 
 The frontend and backend teams tested independently:
 
-**Backend Team Testing:**
+**Backend Team Test qilinmoqda:**
 ```bash
 # Created test pod in 'backend' namespace
 kubectl run test -n backend --image=curlimages/curl -- curl http://user-service:8080/health
@@ -223,9 +223,9 @@ kubectl run test -n backend --image=curlimages/curl -- curl http://user-service:
 # Worked perfectly! ✅
 ```
 
-**Frontend Team Testing:**
+**Frontend Team Test qilinmoqda:**
 ```bash
-# Tested frontend service endpoints in 'frontend' namespace
+# Tested frontend service endpoint larni in 'frontend' namespace
 kubectl port-forward -n frontend service/web-frontend 3000:80
 
 # Frontend loaded fine ✅
@@ -255,17 +255,17 @@ User tries to login → Frontend calls http://user-service:8080/auth
 **2:15 AM:** On-call engineer paged (automated alert: 95% login failure rate)  
 **2:30 AM:** Team checking authentication service (appears healthy)  
 **3:00 AM:** Network team checks connectivity (all green)  
-**3:30 AM:** Someone checks frontend pod logs:  
+**3:30 AM:** Someone checks frontend pod ni logs:  
 ```
 Error: getaddrinfo ENOTFOUND user-service
 Error: getaddrinfo ENOTFOUND user-service
 Error: getaddrinfo ENOTFOUND user-service
 ```
 **3:45 AM:** DNS issue suspected  
-**4:00 AM:** Checked DNS resolution from frontend pod:  
+**4:00 AM:** Checked DNS resolution from frontend pod ni:  
 ```bash
 kubectl exec web-frontend-xxx -n frontend -- nslookup user-service
-# Returns: NXDOMAIN (not found)
+# Returns: NXDOMAIN (topilmadi)
 ```
 **4:15 AM:** Realized user-service is in different namespace!  
 **4:30 AM:** Hotfix deployed with FQDN  
@@ -293,7 +293,7 @@ data:
   API_URL: "http://user-service.backend.svc.cluster.local:8080"  # ✅ FQDN
 ```
 
-Then restart frontend pods to pick up new config.
+Then restart frontend pod nis to pick up new config.
 
 **Option 2: Move service to same namespace**
 Not chosen because:
@@ -399,7 +399,7 @@ kubectl run test-frontend -n frontend --image=curlimages/curl -- \
    - FQDN is explicit and to'sib qo'yadi errors
    - Document service locations
 
-3. **Validate Configuration:**
+3. **Validate Konfiguratsiya:**
    - Check for FQDN in config files
    - Validate DNS resolution before deployment
    - Use tools to detect short names in cross-namespace calls
@@ -416,7 +416,7 @@ kubectl run test-frontend -n frontend --image=curlimages/curl -- \
 
 ---
 
-## Kubernetes DNS Deep Dive
+## Kubernetes DNS Chuqur Tahlil
 
 ### DNS Record Types
 
@@ -562,7 +562,7 @@ options ndots:5
            │ http://api-service.backend.svc.cluster.local
            │
 ┌──────────▼──────────┐
-│  backend namespace  │
+│  backend namespace ini  │
 │                     │
 │  ┌───────────────┐  │
 │  │  API Service  │  │
@@ -580,7 +580,7 @@ options ndots:5
 └─────────────────────┘
 ```
 
-**Configuration:**
+**Konfiguratsiya:**
 ```yaml
 # Frontend deployment
 env:
@@ -617,7 +617,7 @@ env:
           └───────────────────────────┘
 ```
 
-**Configuration:**
+**Konfiguratsiya:**
 ```yaml
 # Tenant A app
 env:
@@ -653,7 +653,7 @@ env:
                 └────────────────────┘
 ```
 
-**Configuration:**
+**Konfiguratsiya:**
 ```yaml
 # Dev app
 env:
@@ -675,14 +675,14 @@ env:
 
 ## Security Considerations
 
-### NetworkPolicy for Cross-Namespace Access
+### NetworkPolicy ni for Cross-Namespace Access
 
-By default, pods can access services in any namespace. Use NetworkPolicy to restrict:
+By default, pods can access services in any namespace. Use NetworkPolicy ni to restrict:
 
 ```yaml
-# Allow only frontend namespace to access backend services
+# Allow only frontend namespace to access backend service nis
 apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
+kind: NetworkPolicy ni
 metadata:
   name: backend-access-policy
   namespace: backend
@@ -717,7 +717,7 @@ metadata:
 Control which service accounts can access resources in other namespaces:
 
 ```yaml
-# Role in backend namespace
+# Role in backend namespace ini
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -746,12 +746,12 @@ subjects:
 
 ---
 
-## Debug qilish Qilish Cross-Namespace DNS Issues
+## Cross-Namespace DNS Muammolarini Debug Qilish
 
 ### 1. Test DNS Resolution
 
 ```bash
-# From frontend pod
+# From frontend pod ni
 kubectl exec frontend-app -n k8squest -- nslookup api-service
 # Should fail: NXDOMAIN
 
@@ -918,7 +918,7 @@ sum(rate(coredns_dns_response_rcode_count_total{rcode="NXDOMAIN"}[5m])) > 10
 
 ---
 
-## Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **DNS Naming Rules:**
    - Same namespace: `service-name` (short name works)
@@ -938,7 +938,7 @@ sum(rate(coredns_dns_response_rcode_count_total{rcode="NXDOMAIN"}[5m])) > 10
 
 4. **Common Mistakes:**
    - Using short names for cross-namespace (DNS fails)
-   - Wrong namespace in FQDN (service not found)
+   - Wrong namespace in FQDN (service topilmadi)
    - Typos in service names (DNS fails)
    - Testing in same namespace, deploying cross-namespace
 

@@ -4,23 +4,23 @@ NAMESPACE="k8squest"
 POD_NAME="resource-hungry-app"
 QUOTA_NAME="compute-quota"
 
-echo "🔍 VALIDATION STAGE 1: Tekshirilmoqda if ResourceQuota exists..."
+echo "🔍 TEKSHIRUV 1-BOSQICH: Tekshirilmoqda ResourceQuota mavjudligini..."
 if ! kubectl get resourcequota $QUOTA_NAME -n $NAMESPACE &>/dev/null; then
-    echo "❌ FAILED: ResourceQuota '$QUOTA_NAME' not found"
+    echo "❌ FAILED: ResourceQuota '$QUOTA_NAME' topilmadi"
     exit 1
 fi
-echo "✅ ResourceQuota exists"
+echo "✅ ResourceQuota mavjud"
 
 echo ""
-echo "🔍 VALIDATION STAGE 2: Tekshirilmoqda if pod exists..."
+echo "🔍 TEKSHIRUV 2-BOSQICH: Tekshirilmoqda pod mavjudligini..."
 if ! kubectl get pod $POD_NAME -n $NAMESPACE &>/dev/null; then
-    echo "❌ FAILED: Pod '$POD_NAME' not found"
+    echo "❌ FAILED: Pod '$POD_NAME' topilmadi"
     exit 1
 fi
-echo "✅ Pod exists"
+echo "✅ Pod mavjud"
 
 echo ""
-echo "🔍 VALIDATION STAGE 3: Tekshirilmoqda if pod is Running (not Pending)..."
+echo "🔍 TEKSHIRUV 3-BOSQICH: Tekshirilmoqda pod Running holatida ekanligini (Pending emas)..."
 POD_STATUS=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.status.phase}')
 if [ "$POD_STATUS" = "Pending" ]; then
     echo "❌ FAILED: Pod is still Pending - likely quota exceeded"
@@ -32,10 +32,10 @@ if [ "$POD_STATUS" != "Running" ]; then
     echo "❌ FAILED: Pod is in '$POD_STATUS' state"
     exit 1
 fi
-echo "✅ Pod is Running"
+echo "✅ Pod Running holatida"
 
 echo ""
-echo "🔍 VALIDATION STAGE 4: Verifying CPU request is within quota..."
+echo "🔍 TEKSHIRUV 4-BOSQICH: Tekshirilmoqda CPU request quota ichida ekanligini..."
 
 CPU_REQUEST=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].resources.requests.cpu}')
 QUOTA_CPU=$(kubectl get resourcequota $QUOTA_NAME -n $NAMESPACE -o jsonpath='{.spec.hard.requests\.cpu}')
@@ -61,7 +61,7 @@ fi
 echo "✅ CPU request ($CPU_REQUEST) within quota ($QUOTA_CPU)"
 
 echo ""
-echo "🔍 VALIDATION STAGE 5: Tekshirilmoqda quota status..."
+echo "🔍 TEKSHIRUV 5-BOSQICH: Tekshirilmoqda quota holatini..."
 QUOTA_USED=$(kubectl get resourcequota $QUOTA_NAME -n $NAMESPACE -o jsonpath='{.status.used}')
 if [ -z "$QUOTA_USED" ]; then
     echo "❌ FAILED: Quota not tracking usage properly"
@@ -70,7 +70,7 @@ fi
 echo "✅ Quota tracking usage to'g'ri"
 
 echo ""
-echo "🔍 VALIDATION STAGE 6: Verifying resource requests are set..."
+echo "🔍 TEKSHIRUV 6-BOSQICH: Tekshirilmoqda resource request lar sozlanganligini..."
 if [ -z "$CPU_REQUEST" ]; then
     echo "❌ FAILED: No CPU request set on container"
     echo "💡 Maslahat: Add resources.requests.cpu to container spec"
@@ -86,5 +86,5 @@ echo "✅ Resource requests sozlangan (CPU: $CPU_REQUEST, Memory: $MEM_REQUEST)"
 
 echo ""
 echo "🎉 SUCCESS! All quota validations o'tdi!"
-echo "Your pod is running within namespace resource quotas:"
+echo "Pod ingiz namespace resource quota lar ichida ishlayapti:"
 kubectl describe resourcequota $QUOTA_NAME -n $NAMESPACE | grep -A 6 "Resource"

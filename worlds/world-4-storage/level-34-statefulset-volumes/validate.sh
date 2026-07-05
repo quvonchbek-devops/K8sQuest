@@ -3,15 +3,15 @@
 NAMESPACE="k8squest"
 STATEFULSET="postgres-cluster"
 
-echo "🔍 Stage 1: Tekshirilmoqda if StatefulSet exists..."
+echo "🔍 1-bosqich: Tekshirilmoqda StatefulSet mavjudligini..."
 if ! kubectl get statefulset "$STATEFULSET" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ StatefulSet '$STATEFULSET' not found"
+    echo "❌ StatefulSet '$STATEFULSET' topilmadi"
     exit 1
 fi
-echo "✅ StatefulSet exists"
+echo "✅ StatefulSet mavjud"
 
 echo ""
-echo "🔍 Stage 2: Tekshirilmoqda if volumeClaimTemplates is sozlangan..."
+echo "🔍 2-bosqich: Tekshirilmoqda volumeClaimTemplates sozlanganligini..."
 VOLUME_CLAIM_TEMPLATES=$(kubectl get statefulset "$STATEFULSET" -n "$NAMESPACE" -o jsonpath='{.spec.volumeClaimTemplates}')
 if [ "$VOLUME_CLAIM_TEMPLATES" == "null" ] || [ -z "$VOLUME_CLAIM_TEMPLATES" ]; then
     echo "❌ volumeClaimTemplates is not sozlangan in StatefulSet"
@@ -21,7 +21,7 @@ fi
 echo "✅ volumeClaimTemplates is sozlangan"
 
 echo ""
-echo "🔍 Stage 3: Tekshirilmoqda if 3 pods are ready..."
+echo "🔍 3-bosqich: Tekshirilmoqda 3 ta pod tayyor ekanligini..."
 READY_PODS=$(kubectl get statefulset "$STATEFULSET" -n "$NAMESPACE" -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
 if [ "$READY_PODS" != "3" ]; then
     echo "❌ Only $READY_PODS out of 3 pods are ready"
@@ -31,7 +31,7 @@ fi
 echo "✅ All 3 pods are ready"
 
 echo ""
-echo "🔍 Stage 4: Tekshirilmoqda if each pod has its own PVC..."
+echo "🔍 4-bosqich: Tekshirilmoqda har bir pod o'zining PVC siga ega ekanligini..."
 PVC_COUNT=$(kubectl get pvc -n "$NAMESPACE" -l app=postgres 2>/dev/null | grep -c "database-storage")
 if [ "$PVC_COUNT" -lt "3" ]; then
     echo "❌ Topildi only $PVC_COUNT PVCs (expected 3, one per pod)"
@@ -41,7 +41,7 @@ fi
 echo "✅ Topildi $PVC_COUNT PVCs (one per pod)"
 
 echo ""
-echo "🔍 Stage 5: Verifying PVC naming pattern..."
+echo "🔍 5-bosqich: Tekshirilmoqda PVC nomlash pattern ini..."
 # StatefulSet PVCs should follow pattern: <template-name>-<statefulset-name>-<ordinal>
 if ! kubectl get pvc -n "$NAMESPACE" | grep -q "database-storage-postgres-cluster-0"; then
     echo "❌ PVCs don't follow StatefulSet naming pattern"
@@ -51,16 +51,16 @@ fi
 echo "✅ PVCs follow correct naming pattern"
 
 echo ""
-echo "🔍 Stage 6: Tekshirilmoqda if all PVCs are Bound..."
+echo "🔍 6-bosqich: Tekshirilmoqda barcha PVC lar Bound ekanligini..."
 UNBOUND_PVCS=$(kubectl get pvc -n "$NAMESPACE" -l app=postgres -o jsonpath='{.items[?(@.status.phase!="Bound")].metadata.name}')
 if [ -n "$UNBOUND_PVCS" ]; then
     echo "❌ Some PVCs are not Bound: $UNBOUND_PVCS"
     exit 1
 fi
-echo "✅ All PVCs are Bound"
+echo "✅ Barcha PVC lar Bound holatida"
 
 echo ""
-echo "🔍 Stage 7: Verifying pod-to-PVC mapping..."
+echo "🔍 7-bosqich: Tekshirilmoqda pod-PVC bog'lanishini..."
 for i in 0 1 2; do
     POD_NAME="postgres-cluster-$i"
     EXPECTED_PVC="database-storage-postgres-cluster-$i"
@@ -71,7 +71,7 @@ for i in 0 1 2; do
         exit 1
     fi
 done
-echo "✅ Each pod is to'g'ri mapped to its own PVC"
+echo "✅ Har bir pod o'zining PVC siga to'g'ri bog'langan"
 
 echo ""
 echo "🎉 SUCCESS! StatefulSet sozlangan with per-pod persistent storage!"

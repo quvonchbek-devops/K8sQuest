@@ -13,7 +13,7 @@ Service ingiz sozlangan edi as type `LoadBalancer` in a local development cluste
 - **Application completely inaccessible** from outside the cluster
 - Cloud da nima uchun ishlaydi lekin lokal da ishlamaydi degan **chalkashlik**
 
-### The Root Cause
+### Asosiy Sabab
 ```yaml
 # ❌ BROKEN: LoadBalancer in local cluster
 apiVersion: v1
@@ -62,9 +62,9 @@ spec:
 
 ---
 
-## 🔍 Deep Dive: Kubernetes Service Types
+## 🔍 Chuqur Tahlil: Kubernetes Service Turlari
 
-Kubernetes provides **four service types**, each solving different networking needs:
+Kubernetes provides **four service turinis**, each solving different networking needs:
 
 ### 1. **ClusterIP** (Default)
 
@@ -82,7 +82,7 @@ Kubernetes provides **four service types**, each solving different networking ne
 - Internal message queues
 - Services that should never be exposed externally
 
-**Configuration:**
+**Konfiguratsiya:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -132,7 +132,7 @@ curl http://localhost:5432
 - On-premises deployments
 - Cost-conscious deployments (no LB charges)
 
-**Configuration:**
+**Konfiguratsiya:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -199,7 +199,7 @@ curl http://localhost:8080
 - Auto-scaling applications
 - High-availability services
 
-**Configuration:**
+**Konfiguratsiya:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -278,7 +278,7 @@ curl http://52.123.45.67
 - Migrating services to/from cluster
 - Aliasing external APIs
 
-**Configuration:**
+**Konfiguratsiya:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -504,10 +504,10 @@ deny[msg] {
 - **Costs reduced** from $7,200/month to $48/month
 - **Architecture improved** with single Ingress controller
 - **Policies enforced** to prevent future mistakes
-- **Team trained** on Kubernetes service types and costs
+- **Team trained** on Kubernetes service turinis and costs
 - **Monitoring added** for cloud resource usage
 
-### Key Takeaway
+### 🎯 Asosiy Xulosa
 **One LoadBalancer per cluster, not one per service!**
 
 Use the Ingress pattern:
@@ -536,7 +536,7 @@ This pattern:
 
 ## 🎯 Service Type Decision Tree
 
-Use this decision tree to choose the right service type:
+Use this decision tree to choose the right service turini:
 
 ```
 Does the service need external access?
@@ -791,7 +791,7 @@ curl http://localhost:30080
 
 ---
 
-## 🎓 Key Takeaways
+## 🎓 Asosiy Xulosalar
 
 ### Must Eslab qoling
 
@@ -812,7 +812,7 @@ curl http://localhost:30080
 
 ### Produkciya Checklist
 
-Before deploying to production:
+Production ga deploy qilishdan oldin:
 
 - [ ] **Use ClusterIP** for internal services
 - [ ] **Use single Ingress** for external access (not LoadBalancer per service)
@@ -836,7 +836,7 @@ Before deploying to production:
 
 ## 🎯 What's Next?
 
-Siz o'zlashtirgansiz Kubernetes service types and cloud provider integration. Keyingi:
+Siz o'zlashtirgansiz Kubernetes service turinis and cloud provider integration. Keyingi:
 
 **Level 30: Headless Service lar** — StatefulSet DNS va `clusterIP: None` qachon yechim ekanini o'rganing
 
@@ -852,7 +852,7 @@ Siz o'zlashtirgansiz Kubernetes service types and cloud provider integration. Ke
 ## 🏆 Achievement Unlocked!
 
 **Service Type Expert** - Siz now:
-- ✅ Choose the right service type for any scenario
+- ✅ Choose the right service turini for any scenario
 - ✅ Understand why LoadBalancer requires cloud provider
 - ✅ Use NodePort for local development
 - ✅ Design cost-effective architectures with Ingress

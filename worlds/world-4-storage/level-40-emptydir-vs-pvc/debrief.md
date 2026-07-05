@@ -90,7 +90,7 @@ Good for:
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: emptyDir for Database
 ```yaml
@@ -189,7 +189,7 @@ emptyDir:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **emptyDir = Temporary** - Data tied to pod lifecycle
 2. **PVC = Persistent** - Data independent of pod

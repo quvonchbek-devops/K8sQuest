@@ -32,7 +32,7 @@ Wait for metrics-server to be ready:
 kubectl wait --for=condition=ready pod -l k8s-app=metrics-server -n kube-system --timeout=60s
 ```
 
-Check if metrics are available:
+Metrikalar mavjudligini tekshiring:
 ```bash
 kubectl top nodes
 kubectl top pods -n k8squest

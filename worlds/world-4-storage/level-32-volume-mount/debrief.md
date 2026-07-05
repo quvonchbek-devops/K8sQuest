@@ -1,6 +1,6 @@
 # 🎓 Missiya Yakuni: Volume Mount Path Configuration
 
-**Tabriklaymiz!** You've successfully fixed a volume mount path misconfiguration. Bu eng keng tarqalgan storage errors Kubernetes da!
+**Tabriklaymiz!** You've successfully fixed a volume mount path ini misconfiguration. Bu eng keng tarqalgan storage errors Kubernetes da!
 
 ---
 
@@ -18,7 +18,7 @@ volumeMounts:
 /app/config/app.conf
 ```
 
-**Natija:** Pod crashed with "Config file not found"
+**Natija:** Pod crashed with "Config file topilmadi"
 
 **Yechim:**
 ```yaml
@@ -164,7 +164,7 @@ containers:
 
 ---
 
-## 💥 Common Mount Path Mistakes
+## 💥 Keng Tarqalgan Mount Path Xatolari
 
 ### Mistake 1: Path Mismatch
 
@@ -394,7 +394,7 @@ order_db = f"{DATA_DIR}/orders.db"
 ### The Timeline
 
 **14:00** - Deployment started (rolling update)  
-**14:05** - First pod crashed with "Database not found"  
+**14:05** - First pod crashed with "Database topilmadi"  
 **14:07** - All trading pods restarting continuously  
 **14:10** - Trading halted, emergency rollback initiated  
 **14:45** - Rollback failed (kubectl version mismatch)  
@@ -441,7 +441,7 @@ initContainers:
 2. **To'liq yo'lni test qiling:** Volume mount qilinganini emas, QAYERGA mount qilinganini
 3. **Use constants:** Define paths in one place (env vars or config)
 4. **Validate early:** Check paths in init containers or startup probes
-5. **Monitor file access:** Alert on "file not found" errors
+5. **Monitor file access:** Alert on "file topilmadi" errors
 
 ---
 
@@ -537,7 +537,7 @@ volumeMounts:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Mount Path is Critical** - It determines where files appear in the container
 2. **Match Application Expectations** - mountPath must align with app code
@@ -546,7 +546,7 @@ volumeMounts:
 5. **Follow Conventions** - Use standard filesystem hierarchy
 6. **Document Paths** - Make mount requirements explicit
 7. **Test Integration** - Tekshirish actual file access, not just mounts
-8. **Monitor Access** - Alert on file not found errors
+8. **Monitor Access** - Alert on file topilmadi errors
 
 ---
 
@@ -577,4 +577,4 @@ Endi volume mount yo'llarini tushunganingizdan keyin, quyidagilarga tayyorsiz:
 
 ---
 
-**Yaxshi ish!** Siz o'zlashtirgansiz volume mount path configuration. Eslab qoling: the path is part of your application's contract! 🎉
+**Yaxshi ish!** Siz o'zlashtirgansiz volume mount path ini configuration. Eslab qoling: the path is part of your application's contract! 🎉

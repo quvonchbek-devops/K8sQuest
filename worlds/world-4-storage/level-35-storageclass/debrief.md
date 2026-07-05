@@ -29,7 +29,7 @@ Result: PVC automatically provisioned and bound
 StorageClass is a Kubernetes resource that describes different "classes" of storage:
 - **Provisioner:** What creates the storage (AWS EBS, GCE PD, NFS, etc.)
 - **Parameters:** Configuration (disk type, IOPS, encryption, etc.)
-- **Reclaim Policy:** What happens when PVC is deleted
+- **Reclaim Policy:** PVC o'chirilganda nima bo'ladi
 - **Volume Binding Mode:** When to provision (Immediate or WaitForFirstConsumer)
 
 ### Static vs Dynamic Provisioning
@@ -106,7 +106,7 @@ parameters:
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: Non-Existent StorageClass
 
@@ -190,7 +190,7 @@ metadata:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **StorageClass enables dynamic provisioning** - No manual PV creation
 2. **Must exist before PVC creation** - Or PVC stays Pending

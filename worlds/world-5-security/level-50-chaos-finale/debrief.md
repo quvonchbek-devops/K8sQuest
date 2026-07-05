@@ -11,9 +11,9 @@ Siz yenga oldingiz the **CHAOS FINALE** - World 5 ning BARCHA konseptlarini birl
 Siz bir vaqtda tuzatdingiz:
 
 1. **RBAC** - ServiceAccount, Role, RoleBinding for API access
-2. **SecurityContext** - Non-root, no privilege escalation, capabilities dropped
+2. **SecurityContext** - Non-root, no privilege escalation, capabilities drop qilinganligini
 3. **ResourceQuota** - Balanced resource requests with namespace limits
-4. **NetworkPolicy** - Allowed necessary traffic while maintaining security
+4. **NetworkPolicy ni** - Allowed necessary traffic while maintaining security
 5. **Node Affinity** - Configured pod placement preferences
 6. **Taints & Tolerations** - Enabled scheduling on dedicated nodes
 7. **PodDisruptionBudget** - Maintained availability during disruptions
@@ -50,7 +50,7 @@ Siz bir vaqtda tuzatdingiz:
 
 ### World 5: Security & Production Ops (Levels 41-50)
 - RBAC, SecurityContext
-- ResourceQuota, NetworkPolicy
+- ResourceQuota, NetworkPolicy ni
 - Node Scheduling, Taints
 - PDB, Pod Security, Priority
 - **3,150 XP**

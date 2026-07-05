@@ -10,7 +10,7 @@ fi
 
 # Check if NodePort is in the valid range and explicitly set (30080)
 if [[ "$NODEPORT" == "30080" ]]; then
-  echo "✅ Level yakunlandi! NodePort explicitly sozlangan"
+  echo "✅ Level yakunlandi! NodePort aniq sozlangan"
   exit 0
 else
   echo "❌ NodePort is $NODEPORT (random). Set nodePort: 30080 explicitly"

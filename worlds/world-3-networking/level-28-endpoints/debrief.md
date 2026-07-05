@@ -13,7 +13,7 @@ Service ingiz pod larga **ular so'rovlarni qayta ishlashga tayyor bo'lmasdan** t
 - **Inconsistent behavior** as some pods worked while others didn't
 - **Poor user experience** with intermittent failures
 
-### The Root Cause
+### Asosiy Sabab
 ```yaml
 # ❌ BROKEN: No readiness probe
 apiVersion: v1
@@ -30,7 +30,7 @@ spec:
 
 **Why this fails:**
 1. Pod starts and gets an IP address
-2. Kubernetes immediately adds pod to service endpoints
+2. Kubernetes immediately adds pod to service endpoint larni
 3. Service starts routing traffic to the pod
 4. Pod is still initializing (loading config, warming cache, etc.)
 5. Requests fail with 500 errors or timeouts
@@ -60,12 +60,12 @@ spec:
 2. After 5 seconds (initialDelaySeconds), Kubernetes checks `/` endpoint
 3. Every 5 seconds (periodSeconds), the probe runs again
 4. If the probe succeeds, pod is marked "Ready"
-5. **Only then** is the pod added to service endpoints
+5. **Only then** is the pod added to service endpoint larni
 6. Traffic flows only to ready pods
 
 ---
 
-## 🔍 Deep Dive: Readiness vs Liveness Probes
+## 🔍 Chuqur Tahlil: Readiness va Liveness Probe lar
 
 Kubernetes da **uchta turdagi** health check mavjud, har biri turli maqsadga xizmat qiladi:
 
@@ -73,12 +73,12 @@ Kubernetes da **uchta turdagi** health check mavjud, har biri turli maqsadga xiz
 **Purpose:** Determine if a pod tayyor to receive traffic
 
 **When it fails:**
-- Pod is **removed from service endpoints**
+- Pod is **removed from service endpoint larni**
 - Pod continues running
 - No traffic is sent to the pod
 - Kubernetes keeps checking until pod recovers
 
-**Use cases:**
+**Foydalanish holatlari:**
 - Application initialization (loading config, warming cache)
 - External dependency checks (database connection, API availability)
 - Temporary overload (too many connections, high CPU)
@@ -104,7 +104,7 @@ readinessProbe:
 - Drastic action for deadlocked or hung processes
 - Traffic may be disrupted during restart
 
-**Use cases:**
+**Foydalanish holatlari:**
 - Deadlock detection (app ishlayapti but not responding)
 - Memory leaks (app degraded beyond recovery)
 - Fatal errors (app in unrecoverable state)
@@ -131,7 +131,7 @@ livenessProbe:
 - Disables liveness probe until startup succeeds
 - Prevents premature restarts during long initialization
 
-**Use cases:**
+**Foydalanish holatlari:**
 - Legacy applications with long startup times
 - Applications with unpredictable initialization duration
 - Prevent liveness probe from killing slow-starting pods
@@ -233,7 +233,7 @@ spec:
 
 **12:03 PM - The Realization**
 - Senior engineer joins war room
-- Checks service endpoints: sees unready pods receiving traffic
+- Checks service endpoint larni: sees unready pods receiving traffic
 - Realizes: **no readiness probe configured!**
 
 **12:05 PM - Emergency Fix**
@@ -289,7 +289,7 @@ kubectl get pods -l app=transcoder -o json | \
 - **#1 trending** on Twitter for wrong reasons
 - **15% customer churn** in following week
 
-### The Root Cause Analysis
+### Asosiy Sabab Analysis
 
 **Immediate cause:**
 - Missing readiness probe allowed traffic to unready pods
@@ -350,7 +350,7 @@ spec:
 
 ### Lessons Learned
 
-1. **Doim ishlating readiness probes** - Never assume pods are ready immediately
+1. **Doim ishlating readiness probe larni** - Never assume pods are ready immediately
 2. **Measure startup time** - Know how long your app takes to initialize
 3. **Test rollouts** - Simulate deployments in staging with realistic load
 4. **Monitor endpoints** - Alert on unready pods receiving traffic
@@ -364,7 +364,7 @@ spec:
 
 ### How Endpoints Work
 
-When you create a Service, Kubernetes automatically creates an **Endpoints** object:
+Service yaratganingizda, Kubernetes avtomatik ravishda **Endpoints** obyektini yaratadi:
 
 ```yaml
 # Service definition
@@ -667,7 +667,7 @@ kubectl describe endpoints web-backend
 ```
 
 **Common sabab bo'ladi:**
-- Pods siz readiness probes
+- Pods siz readiness probe larni
 - Readiness probe too aggressive (timing out)
 - Application not responding to probe path
 
@@ -726,11 +726,11 @@ kubectl describe pods -l app=web | grep -i "readiness probe failed"
 
 ---
 
-## 📚 Key Takeaways
+## 📚 Asosiy Xulosalar
 
 ### Must Eslab qoling
 
-1. **Readiness probes control traffic** - Pods siz readiness probes receive traffic immediately
+1. **Readiness probes control traffic** - Pods siz readiness probe larni receive traffic immediately
 2. **Liveness probes restart pods** - Use conservatively to avoid restart loops
 3. **Startup probes for slow apps** - Handle long initialization times
 4. **Endpoints = Ready pods** - Only ready pods receive traffic
@@ -738,7 +738,7 @@ kubectl describe pods -l app=web | grep -i "readiness probe failed"
 
 ### Produkciya Checklist
 
-Before deploying to production:
+Production ga deploy qilishdan oldin:
 
 - [ ] **Readiness probe configured** on all pods
 - [ ] **Liveness probe configured** (if needed)
@@ -765,9 +765,9 @@ Before deploying to production:
 
 ## 🎓 What's Next?
 
-Siz o'zlashtirgansiz readiness probes and endpoint management. Next, you'll tackle:
+Siz o'zlashtirgansiz readiness probe larni and endpoint management. Next, you'll tackle:
 
-**Level 29: LoadBalancer vs NodePort** - Understanding service types and cloud provider integration  
+**Level 29: LoadBalancer vs NodePort** - Understanding service turinis and cloud provider integration  
 **Level 30: Headless Services** - StatefulSet DNS and direct pod access
 
 ### Further Learning
@@ -781,7 +781,7 @@ Siz o'zlashtirgansiz readiness probes and endpoint management. Next, you'll tack
 ## 🏆 Achievement Unlocked!
 
 **Endpoint Master** - Siz now:
-- ✅ Configure readiness probes to control traffic flow
+- ✅ Configure readiness probe larni to control traffic flow
 - ✅ Understand the difference between readiness, liveness, and startup probes
 - ✅ Implement smart health check endpoints
 - ✅ Debug qilish service endpoint issues

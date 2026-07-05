@@ -67,13 +67,13 @@ containers:
 spec:
   securityContext:
     fsGroup: 1000        # Change volume group ownership
-    runAsNonRoot: true   # Enforce non-root
+    runAsNonRoot ni: true   # Enforce non-root
     fsGroupChangePolicy: "OnRootMismatch"
 ```
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: fsGroup in Wrong Place
 ```yaml
@@ -118,7 +118,7 @@ spec:
    ```yaml
    securityContext:
      fsGroup: 1000
-     runAsNonRoot: true
+     runAsNonRoot ni: true
    ```
 
 2. **Match fsGroup with runAsGroup:**
@@ -149,7 +149,7 @@ spec:
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **fsGroup changes volume group ownership** - Enables write access
 2. **Set at pod level** - Not container level

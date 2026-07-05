@@ -1,5 +1,5 @@
 name: "Ingress Path Nomuvofiqlik"
-description: "Ingress yaratilgan lekin trafik backend service ga yetib bormayapti"
+description: "Ingress yaratilgan lekin trafik backend service ni ga yetib bormayapti"
 objective: "Trafikni to'g'ri yo'naltirish uchun Ingress path qoidalarini tuzating"
 xp: 250
 difficulty: "o'rta"

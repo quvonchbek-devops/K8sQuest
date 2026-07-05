@@ -2,23 +2,23 @@
 
 NAMESPACE="k8squest"
 
-echo "🔍 VALIDATION STAGE 1: Tekshirilmoqda PriorityClasses exist..."
+echo "🔍 TEKSHIRUV 1-BOSQICH: Tekshirilmoqda PriorityClass lar mavjudligini..."
 if ! kubectl get priorityclass high-priority &>/dev/null; then
-    echo "❌ FAILED: PriorityClass 'high-priority' not found"
+    echo "❌ FAILED: PriorityClass 'high-priority' topilmadi"
     exit 1
 fi
-echo "✅ PriorityClasses exist"
+echo "✅ PriorityClass lar mavjudligini"
 
 echo ""
-echo "🔍 VALIDATION STAGE 2: Tekshirilmoqda critical pod..."
+echo "🔍 TEKSHIRUV 2-BOSQICH: Tekshirilmoqda muhim pod..."
 if ! kubectl get pod critical-api -n $NAMESPACE &>/dev/null; then
-    echo "❌ FAILED: Pod 'critical-api' not found"
+    echo "❌ FAILED: Pod 'critical-api' topilmadi"
     exit 1
 fi
-echo "✅ Critical pod exists"
+echo "✅ Critical pod mavjud"
 
 echo ""
-echo "🔍 VALIDATION STAGE 3: Verifying priority assignment..."
+echo "🔍 TEKSHIRUV 3-BOSQICH: Tekshirilmoqda priority tayinlanganligini..."
 PRIORITY_CLASS=$(kubectl get pod critical-api -n $NAMESPACE -o jsonpath='{.spec.priorityClassName}')
 if [ "$PRIORITY_CLASS" != "high-priority" ]; then
     echo "❌ FAILED: Critical pod doesn't have high-priority class"
@@ -27,10 +27,10 @@ fi
 echo "✅ Priority assigned to'g'ri"
 
 echo ""
-echo "🔍 VALIDATION STAGE 4: Tekshirilmoqda pod holati..."
+echo "🔍 TEKSHIRUV 4-BOSQICH: Tekshirilmoqda pod holatini..."
 POD_STATUS=$(kubectl get pod critical-api -n $NAMESPACE -o jsonpath='{.status.phase}')
 if [ "$POD_STATUS" = "Pending" ]; then
-    echo "⚠️  Pod still Pending (may need more time or resources)"
+    echo "⚠️  Pod hali Pending holatida (may need more time or resources)"
 else
     echo "✅ Pod is $POD_STATUS"
 fi

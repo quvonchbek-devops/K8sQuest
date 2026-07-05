@@ -8,7 +8,7 @@ ALLOWED ustuniga qarang — 0 mi?
 PDB ni describe qiling:
 `kubectl describe pdb db-proxy-pdb -n k8squest`
 
-"Disruptions allowed" ni tekshiring — agar 0 bo'lsa, node drain lar muvaffaqiyatsiz bo'ladi!
+"Ruxsat etilgan uzilishlar" ni tekshiring — agar 0 bo'lsa, node drain lar muvaffaqiyatsiz bo'ladi!
 
 Deployment ni tekshiring:
 `kubectl get deployment database-proxy -n k8squest`

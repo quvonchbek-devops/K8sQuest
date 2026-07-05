@@ -12,7 +12,7 @@ learning_objectives:
   - Understand PersistentVolume (PV) and PersistentVolumeClaim (PVC) relationship
   - Learn how PVC binding works in Kubernetes
   - Configure PV to match PVC requirements
-  - Understand storage capacity and access modes
+  - Understand saqlash hajmini and access modes
 
 concepts:
   - persistentvolume

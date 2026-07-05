@@ -6,7 +6,7 @@ Pod laringiz **tayyor bo'lmasdan trafik qabul qildi**, bu foydalanuvchilar uchun
 
 Asosiy sabab: **Readiness probe sozlanmagan**.
 
-Readiness probe siz, Kubernetes pod holati "Running" bo'lishi bilanoq uni trafik qabul qilishga tayyor deb hisoblaydi. Lekin "Running" faqat konteyner jarayoni boshlangani — ilova initsializatsiya qilinib tayyor ekanini bildirmaydi!
+Readiness probe siz, Kubernetes pod holatini "Running" bo'lishi bilanoq uni trafik qabul qilishga tayyor deb hisoblaydi. Lekin "Running" faqat konteyner jarayoni boshlangani — ilova initsializatsiya qilinib tayyor ekanini bildirmaydi!
 
 Ilovangizda 20 soniyalik ishga tushish kechikishi bor edi. Shu 20 soniya davomida pod lar Service endpoint lariga qo'shildi va haqiqiy foydalanuvchi trafigini oldi, lekin uni qayta ishlay olmadi.
 

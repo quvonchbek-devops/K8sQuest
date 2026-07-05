@@ -3,7 +3,7 @@
 1. Avval RBAC ni tuzating (Role + RoleBinding)
 2. SecurityContext ni to'g'rilang (fsGroup, runAsUser)
 3. Resource request larni kamaytiring (quota ga sig'sin)
-4. NetworkPolicy ni sozlang (kerakli trafikka ruxsat)
+4. NetworkPolicy ni ni sozlang (kerakli trafikka ruxsat)
 5. Node label yoki affinity tuzating
 6. Toleration qo'shing
 7. PDB ni sozlang

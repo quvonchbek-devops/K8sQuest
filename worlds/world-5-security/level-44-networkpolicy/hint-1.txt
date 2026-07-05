@@ -7,10 +7,10 @@ Tarmoq aloqasi muammosini tekshiring:
    ```bash
    kubectl exec <pod-nomi> -n k8squest -- wget -q -O- http://<service>:port --timeout=3
    ```
-3. NetworkPolicy larni ko'ring:
+3. NetworkPolicy ni larni ko'ring:
    ```bash
    kubectl get networkpolicy -n k8squest
    kubectl describe networkpolicy -n k8squest
    ```
 
-Qaysi NetworkPolicy qonuniy trafikni to'sib qo'ymoqda?
+Qaysi NetworkPolicy ni qonuniy trafikni to'sib qo'ymoqda?

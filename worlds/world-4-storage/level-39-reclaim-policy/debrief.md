@@ -43,7 +43,7 @@ persistentVolumeReclaimPolicy: Retain
 ```
 When PVC deleted:
 - PV status → "Released"
-- Data remains on disk
+- Ma'lumotlar diskda qoladi
 - Manual cleanup required
 - **Data preserved**
 
@@ -59,7 +59,7 @@ persistentVolumeReclaimPolicy: Recycle
 
 ---
 
-## 💥 Common Mistakes
+## 💥 Keng Tarqalgan Xatolar
 
 ### Mistake 1: Delete for Production
 ```yaml
@@ -82,7 +82,7 @@ kubectl delete pvc my-data
 ### Mistake 3: Forgetting Manual Cleanup
 ```yaml
 # Using Retain but never cleaning up Released PVs
-# Eventually: Out of storage capacity
+# Eventually: Out of saqlash hajmini
 ```
 
 ---
@@ -125,7 +125,7 @@ kubectl delete pvc my-data
 
 ---
 
-## 🎯 Key Takeaways
+## 🎯 Asosiy Xulosalar
 
 1. **Retain = Safe** - Data preserved when PVC deleted
 2. **Delete = Automatic** - Data lost when PVC deleted

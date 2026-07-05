@@ -4,56 +4,56 @@ NAMESPACE="k8squest"
 CONFIGMAP="app-config"
 POD_NAME="web-app"
 
-echo "🔍 Stage 1: Tekshirilmoqda if ConfigMap exists..."
+echo "🔍 1-bosqich: Tekshirilmoqda ConfigMap mavjudligini..."
 if ! kubectl get configmap "$CONFIGMAP" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ ConfigMap '$CONFIGMAP' not found"
+    echo "❌ ConfigMap '$CONFIGMAP' topilmadi"
     exit 1
 fi
-echo "✅ ConfigMap exists"
+echo "✅ ConfigMap mavjud"
 
 echo ""
-echo "🔍 Stage 2: Tekshirilmoqda if database_host key exists in ConfigMap..."
+echo "🔍 2-bosqich: Tekshirilmoqda ConfigMap da database_host kaliti borligini..."
 DB_HOST=$(kubectl get configmap "$CONFIGMAP" -n "$NAMESPACE" -o jsonpath='{.data.database_host}' 2>/dev/null)
 if [ -z "$DB_HOST" ]; then
-    echo "❌ Key 'database_host' not found in ConfigMap"
+    echo "❌ Key 'database_host' topilmadi in ConfigMap"
     echo "💡 Maslahat: Add database_host key to ConfigMap data"
-    echo "💡 Current keys:"
+    echo "💡 Joriy kalitlar:"
     kubectl get configmap "$CONFIGMAP" -n "$NAMESPACE" -o jsonpath='{.data}' | jq 'keys'
     exit 1
 fi
-echo "✅ database_host key exists: $DB_HOST"
+echo "✅ database_host key mavjud: $DB_HOST"
 
 echo ""
-echo "🔍 Stage 3: Tekshirilmoqda if pod exists..."
+echo "🔍 3-bosqich: Tekshirilmoqda pod mavjudligini..."
 if ! kubectl get pod "$POD_NAME" -n "$NAMESPACE" &>/dev/null; then
-    echo "❌ Pod '$POD_NAME' not found"
+    echo "❌ Pod '$POD_NAME' topilmadi"
     exit 1
 fi
-echo "✅ Pod exists"
+echo "✅ Pod mavjud"
 
 echo ""
-echo "🔍 Stage 4: Tekshirilmoqda if pod is Running..."
+echo "🔍 4-bosqich: Tekshirilmoqda pod Running holatida ekanligini..."
 POD_STATUS=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" -o jsonpath='{.status.phase}')
 if [ "$POD_STATUS" != "Running" ]; then
     echo "❌ Pod is in '$POD_STATUS' state (expected Running)"
     echo "💡 Tekshiring: pod events: kubectl describe pod $POD_NAME -n $NAMESPACE"
     exit 1
 fi
-echo "✅ Pod is Running"
+echo "✅ Pod Running holatida"
 
 echo ""
-echo "🔍 Stage 5: Verifying DATABASE_HOST environment variable..."
+echo "🔍 5-bosqich: Tekshirilmoqda DATABASE_HOST muhit o'zgaruvchisini..."
 ENV_DB_HOST=$(kubectl exec "$POD_NAME" -n "$NAMESPACE" -- sh -c 'echo $DATABASE_HOST' 2>/dev/null)
 if [ -z "$ENV_DB_HOST" ]; then
-    echo "❌ DATABASE_HOST environment variable is not set in pod"
+    echo "❌ DATABASE_HOST muhit o'zgaruvchisini is not set in pod"
     exit 1
 fi
 echo "✅ DATABASE_HOST is set: $ENV_DB_HOST"
 
 echo ""
-echo "🔍 Stage 6: Tekshirilmoqda pod logs for success message..."
+echo "🔍 6-bosqich: Tekshirilmoqda pod log laridagi muvaffaqiyat xabarini..."
 if ! kubectl logs "$POD_NAME" -n "$NAMESPACE" 2>/dev/null | grep -q "App started successfully"; then
-    echo "❌ Pod did not start muvaffaqiyatli"
+    echo "❌ Pod muvaffaqiyatli ishga tushmadi"
     echo "💡 Tekshiring: logs: kubectl logs $POD_NAME -n $NAMESPACE"
     exit 1
 fi

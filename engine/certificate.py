@@ -34,7 +34,7 @@ def generate_certificate(world_num, player_name, total_xp):
             "skills": [
                 "Rollback failed deployments",
                 "Configure liveness probes",
-                "Configure readiness probes",
+                "Configure readiness probe larni",
                 "Set up HorizontalPodAutoscaler",
                 "Optimize rollout strategies",
                 "Work with PodDisruptionBudgets",
@@ -47,7 +47,7 @@ def generate_certificate(world_num, player_name, total_xp):
     }
     
     if world_num not in world_info:
-        print(f"❌ World {world_num} not found")
+        print(f"❌ World {world_num} topilmadi")
         return
     
     world = world_info[world_num]

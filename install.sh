@@ -55,7 +55,7 @@ if ! kind get clusters | grep k8squest >/dev/null 2>&1; then
   echo "🔧 Creating Kubernetes cluster..."
   kind create cluster --name k8squest
 else
-  echo "✅ Cluster already exists"
+  echo "✅ Cluster already mavjud"
 fi
 
 kubectl config use-context kind-k8squest

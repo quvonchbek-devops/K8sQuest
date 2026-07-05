@@ -4,6 +4,6 @@ broken.yaml dagi xavfli sozlamalarni xavfsiz bilan almashtiring:
 - `privileged: true` → `privileged: false`
 - `runAsUser: 0` → `runAsUser: 1000`
 - `hostNetwork: true` → olib tashlang yoki `false`
-- `allowPrivilegeEscalation` qo'shing: `false`
+- `allowPrivilegeEscalation ni` qo'shing: `false`
 
 `kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`

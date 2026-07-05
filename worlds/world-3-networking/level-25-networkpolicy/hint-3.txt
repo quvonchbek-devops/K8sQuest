@@ -1,13 +1,13 @@
 ✅ Yechim maslahat:
 
-broken.yaml da NetworkPolicy bo'limini topib, label ni o'zgartiring:
+broken.yaml da NetworkPolicy ni bo'limini topib, label ni o'zgartiring:
 
 `app: admin-tool` → `app: frontend`
 
 Qadamlar:
 1. broken.yaml ni tahrirlang — faqat bitta qator o'zgaradi
 2. Apply qiling: `kubectl apply -f broken.yaml`
-3. NetworkPolicy ni tekshiring:
+3. NetworkPolicy ni ni tekshiring:
    ```bash
    kubectl describe networkpolicy backend-network-policy -n k8squest
    ```
