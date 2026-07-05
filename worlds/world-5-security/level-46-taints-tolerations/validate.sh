@@ -65,8 +65,8 @@ echo "✅ Pod scheduled on node: $SCHEDULED_NODE"
 echo ""
 echo "🎉 SUCCESS! Pod tolerates node taint and is running!"
 echo ""
-echo "Taint details:"
+echo "Taint tafsilotlari:"
 kubectl get node $SCHEDULED_NODE -o jsonpath='{.spec.taints[?(@.key=="dedicated")]}' | jq '.'
 echo ""
-echo "Toleration details:"
+echo "Toleration tafsilotlari:"
 kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.tolerations[?(@.key=="dedicated")]}' | jq '.'

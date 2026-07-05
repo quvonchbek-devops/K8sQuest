@@ -104,7 +104,7 @@ else
         echo ""
         
         # Stage 6: Verify sticky sessions (optional advanced check)
-        echo "Stage 6: Verifying sticky session behavior..."
+        echo "6-bosqich: Sticky session xatti-harakatini tekshirish..."
         echo "   Tekshirilmoqda client logs for consistent pod responses..."
         sleep 10  # Wait for some requests
         

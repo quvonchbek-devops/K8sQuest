@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Level 27 Validation: Cross-namespace Service Communication
-# Validates that frontend can access backend service across namespaces
+# Frontend namespace lar arasi backend service ga kira olishini tekshiradi
 
 set -e
 
@@ -113,7 +113,7 @@ fi
 echo ""
 
 # Stage 6: Wait for frontend to make requests
-echo "Stage 6: Waiting for frontend to attempt connection (10 seconds)..."
+echo "6-bosqich: Frontend ulanishga urinishini kutish (10 soniya)..."
 sleep 10
 echo "✅ Frontend should have attempted API calls"
 echo ""

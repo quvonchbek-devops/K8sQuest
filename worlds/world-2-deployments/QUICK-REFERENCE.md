@@ -326,7 +326,7 @@ spec:
 **Keng Tarqalgan Sabablar:**
 - Wrong replica counts
 - Labels not matching service selector
-- Both deployments have same labels
+- Ikkala deployment da bir xil label lar bor
 
 **Tezkor Tuzatish Shabloni:**
 ```bash
@@ -410,8 +410,8 @@ kubectl get rs -n k8squest -o wide
 | **Startup** | Has container started? | Slow-starting apps (avoid liveness kill) |
 
 **Rule of Thumb:**
-- Always use **readiness** for apps behind services
-- Use **liveness** only if app can deadlock/freeze
+- Service lar ortidagi ilovalar uchun doim **readiness** ishlating
+- **liveness** ni faqat ilova deadlock/freeze bo'lishi mumkin bo'lsa ishlating
 - Ishga tushishi >30s dan ko'p vaqt oladigan ilovalar uchun **startup** ishlating
 
 ---
@@ -432,7 +432,7 @@ resources:
 - **Requests**: Used for scheduling and HPA calculations
 - **Limits**: Enforced by kubelet (OOMKill if exceeded)
 - **HPA**: Scales based on % of REQUESTS, not limits
-- **Best Practice**: Set both, limits = 2x requests for burstable workloads
+- **Eng yaxshi amaliyot**: Ikkalasini qo'ying, burstable workload lar uchun limits = 2x requests
 
 ---
 
@@ -445,7 +445,7 @@ By completing World 2, you should be able to:
 - ✅ **Configure Readiness Probes** - Ensure zero-downtime deployments
 - ✅ **Debug HPA Issues** - Install metrics-server, configure autoscaling
 - ✅ **Optimize Rollout Strategy** - Balance speed vs stability
-- ✅ **Work with PodDisruptionBudgets** - Ensure availability during maintenance
+- ✅ **PodDisruptionBudget lar bilan ishlash** — texnik xizmat vaqtida mavjudlikni ta'minlash
 - ✅ **Implement Blue-Green Deployments** - Instant rollback capability
 - ✅ **Implement Canary Deployments** - Gradual traffic shifting
 - ✅ **Choose StatefulSet vs Deployment** - Understand stateful workloads
@@ -470,7 +470,7 @@ By completing World 2, you should be able to:
 
 ## 🚀 Tezkor G'alaba Cheklisti
 
-When stuck on a level, try these in order:
+Levelda qotib qolganingizda, quyidagilarni tartib bilan sinab ko'ring:
 
 - [ ] `kubectl get deployments,rs,pods -n k8squest` - See the full picture
 - [ ] `kubectl describe deployment <name> -n k8squest` - Check strategy, events
@@ -478,7 +478,7 @@ When stuck on a level, try these in order:
 - [ ] `kubectl get events -n k8squest --sort-by='.lastTimestamp'` - Recent activity
 - [ ] `kubectl describe pod <pod> -n k8squest` - Check probe failures, resources
 - [ ] `kubectl logs <pod> -n k8squest` - Application errors?
-- [ ] Compare `broken.yaml` vs expected behavior - What's misconfigured?
+- [ ] `broken.yaml` ni kutilgan xatti-harakat bilan solishtiring — nima noto'g'ri sozlangan?
 - [ ] Use `hints` in game - Progressive guidance
 - [ ] Use `guide` in game - Complete walkthrough if needed
 
@@ -488,4 +488,4 @@ When stuck on a level, try these in order:
 
 💡 **Pro maslahat:** Practice rolling updates on a test deployment before production. Use `--record` flag to track changes in rollout history!
 
-🎮 **Ready for advanced patterns?** Run `./play.sh` and master deployments!
+🎮 **Ilg'or pattern larga tayyormisiz?** `./play.sh` ni ishga tushiring va deployment larni o'zlashtirig!

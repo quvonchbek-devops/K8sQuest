@@ -80,7 +80,7 @@ echo "✅ Service has endpoints: $EP_COUNT subset(s)"
 
 echo ""
 echo "🔍 VALIDATION STAGE 7: Active connectivity test from backend pod"
-echo "Waiting 5 seconds for policies to take effect..."
+echo "Policy lar kuchga kirishi uchun 5 soniya kutilmoqda..."
 sleep 5
 
 # Try to connect from backend to the service DNS name

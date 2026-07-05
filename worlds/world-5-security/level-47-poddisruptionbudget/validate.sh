@@ -77,8 +77,8 @@ fi
 echo ""
 echo "🎉 SUCCESS! PodDisruptionBudget sozlangan to'g'ri!"
 echo ""
-echo "PDB Status:"
+echo "PDB Holati:"
 kubectl get pdb $PDB_NAME -n $NAMESPACE
 echo ""
-echo "Configuration allows $ALLOWED_DISRUPTIONS voluntary disruption(s)"
+echo "Konfiguratsiya $ALLOWED_DISRUPTIONS ta ixtiyoriy uzilishga ruxsat beradi"
 echo "This enables node maintenance while maintaining availability!"

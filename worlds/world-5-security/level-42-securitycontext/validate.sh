@@ -62,7 +62,7 @@ echo "✅ Container running as UID $ACTUAL_USER (non-root)"
 
 echo ""
 echo "🎉 SUCCESS! All security validations o'tdi!"
-echo "Your container is now running securely:"
+echo "Konteyneringiz endi xavfsiz ishlayapti:"
 echo "  - As non-root user (UID $RUN_AS_USER)"
 echo "  - With privilege escalation disabled"
 echo "  - Meeting security best practices"

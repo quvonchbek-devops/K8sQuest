@@ -71,7 +71,7 @@ Players who complete World 2 will master:
 
 ### Resource Hierarchy
 - ✅ Deployment → ReplicaSet → Pod abstraction
-- ✅ Why to use Deployments (not ReplicaSets directly)
+- ✅ Nima uchun Deployment lar ishlatish kerak (to'g'ridan-to'g'ri ReplicaSet emas)
 - ✅ Rollout management through Deployments
 - ✅ Resource ownership and lifecycle
 
@@ -127,7 +127,7 @@ worlds/world-2-deployments/
 
 Har bir level World 1 dan tasdiqlangan pattern ga amal qiladi:
 - 📋 **mission.yaml**: Metadata (name, XP, difficulty, concepts)
-- 💥 **broken.yaml**: The broken K8s configuration
+- 💥 **broken.yaml**: Buzilgan K8s konfiguratsiyasi
 - ✅ **solution.yaml**: The fixed configuration
 - 🧪 **validate.sh**: Automated validation script
 - 💡 **hint-1.txt**: Observation hint (what to check)
@@ -140,7 +140,7 @@ Har bir level World 1 dan tasdiqlangan pattern ga amal qiladi:
 Each debrief.md includes:
 - ✅ **What Happened**: Explanation of the issue
 - ✅ **How Kubernetes Behaved**: Step-by-step flow
-- ✅ **The Correct Mental Model**: Concepts explained with diagrams
+- ✅ **To'g'ri Tushuncha Modeli**: Konseptlar diagrammalar bilan tushuntirilgan
 - ✅ **Real-World Incident Example**: $50K-$5M+ real production failures
 - ✅ **Commands You Mastered**: Practical kubectl commands
 - ✅ **Best Practices**: ✅ DO and ❌ DON'T lists
@@ -159,7 +159,7 @@ All levels include:
 
 ## Integration with Game Engine
 
-Levels are fully compatible with the K8sQuest engine:
+Level lar K8sQuest engine bilan to'liq mos:
 - ✅ Progressive hint system (3 tiers)
 - ✅ XP tracking (200-250 XP per level)
 - ✅ Difficulty ratings (beginner → advanced)

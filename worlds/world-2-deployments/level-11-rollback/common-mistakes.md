@@ -103,7 +103,7 @@ Faqat rollback buyrug'ini bajarishga e'tibor berish, deployment NIMA UCHUN muvaf
 
 **Nima uchun ishlamaydi:**
 Siz muvaffaqiyatli rollback qilishingiz mumkin, lekin o'rganmasligingiz mumkin:
-- What went wrong in the new version?
+- Yangi versiyada nima noto'g'ri ketdi?
 - Kelajakda buni qanday oldini olish?
 - What to check before deploying?
 
@@ -167,7 +167,7 @@ kubectl edit deployment payment-api -n k8squest
 **Nima uchun ishlamaydi:**
 Bu rollback emas, YANGI revision yaratadi. Siz:
 - Lose the clean rollback history
-- Create confusion about which revision is which
+- Qaysi revision qaysi ekanini aralashtirish
 - May introduce typos
 
 **To'g'ri yondashuv:**
@@ -214,7 +214,7 @@ kubectl get deployment payment-api -n k8squest
 ```
 
 **Asosiy saboq:**
-Deployments manage pods. Check the Deployment status, not just individual pods.
+Deployment lar pod larni boshqaradi. Faqat alohida pod larni emas, Deployment holatini tekshiring.
 
 ---
 
@@ -284,7 +284,7 @@ kubectl logs deployment/payment-api -n k8squest
 
 ## 🎯 Asosiy Xulosalar
 
-1. **Check history before rollback** - Know which revision to target
+1. **Rollback dan oldin tarixni tekshiring** — maqsadli revision ni biling
 2. **Use `--to-revision=N`** - Don't rely on default "undo"
 3. **Wait for rollout completion** - Use `kubectl rollout status`
 4. **Don't delete ReplicaSets manually** - Deployment manages them
@@ -331,4 +331,4 @@ REVISION  CHANGE-CAUSE
 ✅ Difference between `undo` and `edit`  
 ✅ How to read deployment status output  
 
-**Keyingi Level Preview:** Level 12 covers liveness probes - when deployments succeed but pods keep restarting!
+**Keyingi Level:** Level 12 da liveness probe lar — deployment muvaffaqiyatli lekin pod lar qayta ishga tusha berayotganda!

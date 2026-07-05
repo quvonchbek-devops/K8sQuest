@@ -23,7 +23,7 @@ fi
 USERNAME_DECODED=$(echo "$USERNAME_RAW" | base64 -d 2>/dev/null)
 if [ $? -ne 0 ]; then
     echo "❌ username is not properly base64 encoded"
-    echo "💡 Maslahat: Use 'echo -n \"value\" | base64' to encode"
+    echo "💡 Maslahat: Kodlash uchun 'echo -n \"qiymat\" | base64' ishlating"
     exit 1
 fi
 echo "✅ username is base64 encoded (decodes to: $USERNAME_DECODED)"

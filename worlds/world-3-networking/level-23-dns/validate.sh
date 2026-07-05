@@ -12,7 +12,7 @@ else
   echo "❌ DNS resolution failing. Tekshiring: the service name in client pod"
   echo "Maslahat: Service is named 'database-service', not 'database'"
   echo ""
-  echo "Recent logs:"
+  echo "Oxirgi loglar:"
   echo "$LOGS"
   exit 1
 fi

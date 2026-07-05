@@ -96,9 +96,9 @@ echo "================================"
 if [ $ERRORS -eq 0 ]; then
     echo "🎉🎉🎉 SUCCESS! 🎉🎉🎉"
     echo ""
-    echo "YOU'VE CONQUERED THE CHAOS FINALE!"
+    echo "SIZ CHAOS FINALE NI YENGA OLDINGIZ!"
     echo ""
-    echo "All World 5 concepts mastered:"
+    echo "World 5 ning barcha konseptlari o'zlashtirildi:"
     echo "  ✅ RBAC"
     echo "  ✅ SecurityContext"
     echo "  ✅ ResourceQuota"
@@ -112,13 +112,13 @@ if [ $ERRORS -eq 0 ]; then
     echo "🏆 KUBERNETES MASTER! 🏆"
     echo ""
     echo "You've completed ALL 50 LEVELS!"
-    echo "Total XP earned: 10,200 XP!"
+    echo "Jami XP: 10,200 XP!"
     echo ""
     echo "THE STORM HAS PASSED! 🌈"
     echo "================================"
 else
     echo "❌ $ERRORS issue(s) found"
-    echo "Keep fixing! You're almost there!"
+    echo "Tuzatishda davom eting! Deyarli tamom!"
     echo "================================"
     exit 1
 fi

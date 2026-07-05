@@ -153,7 +153,7 @@ if [ -n "$READY_PODS" ] && [ -n "$ENDPOINTS_SORTED" ]; then
     else
         echo "❌ Endpoint IPs do not match ready pod IPs!"
         echo "Ready pods: $READY_PODS"
-        echo "Endpoints: $ENDPOINTS_SORTED"
+        echo "Endpoint lar: $ENDPOINTS_SORTED"
         echo "$DIFF"
         exit 1
     fi

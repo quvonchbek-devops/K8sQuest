@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Level 25 Validation: NetworkPolicy Too Restrictive
-# Validates that the NetworkPolicy allows frontend to access backend
+# NetworkPolicy frontend ga backend ga kirish ruxsati berganini tekshiradi
 
 set -e
 
@@ -99,7 +99,7 @@ else
 fi
 
 # Stage 5: Wait for frontend to start making requests
-echo "Stage 5: Waiting for frontend to initialize (15 seconds)..."
+echo "5-bosqich: Frontend ishga tushishini kutish (15 soniya)..."
 sleep 15
 echo "✅ Frontend should have attempted connections"
 echo ""
@@ -138,7 +138,7 @@ fi
 echo ""
 
 # Stage 7: Verify backend received requests
-echo "Stage 7: Verifying backend received requests..."
+echo "7-bosqich: Backend so'rovlar qabul qilganini tekshirish..."
 BACKEND_LOGS=$(kubectl logs $BACKEND_POD -n $NAMESPACE 2>&1)
 
 # The http-echo image doesn't log requests, so we just verify it's running
