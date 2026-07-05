@@ -343,7 +343,7 @@ spec:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The Shared Database Volume
+## 🚨 HAQIQIY VOQEA: Umumiy Database Volume
 
 ### The Incident: $3.2M Data Corruption Disaster
 

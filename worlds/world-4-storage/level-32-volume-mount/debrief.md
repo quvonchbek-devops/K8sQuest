@@ -361,7 +361,7 @@ containers:
 
 ---
 
-## 🚨 REAL-WORLD HORROR STORY: The Wrong Mount Path
+## 🚨 HAQIQIY VOQEA: Noto'g'ri Mount Path
 
 ### The Incident: $850,000 Trading Platform Outage
 
