@@ -858,7 +858,7 @@ Siz o'zlashtirgansiz Kubernetes service turinis and cloud provider integration. 
 - ✅ Design cost-effective architectures with Ingress
 - ✅ Avoid the $45,000 LoadBalancer mistake
 
-**Eslab qoling:** Produkciyada, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingizll will thank you!
+**Eslab qoling:** Production da, har bir service uchun LoadBalancer emas, bitta LoadBalancer bilan Ingress ishlating. Cloud provayderingizll will thank you!
 
 ---
 

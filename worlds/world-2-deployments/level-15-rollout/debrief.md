@@ -96,7 +96,7 @@ strategy:
 
 **Olingan saboqlar**:
 1. Deploy tezligi emas, mavjudlik birinchi
-2. Produkciyada `maxUnavailable: 100%` hech qachon ishlatmang
+2. Production da `maxUnavailable: 100%` hech qachon ishlatmang
 3. Deploy rejasi va rollback rejasi parallels bo'lsin
 
 ## O'zlashtirilgan Buyruqlar
@@ -132,4 +132,4 @@ Endi siz tushunasiz:
 
 ---
 
-💡 **Pro maslahat**: Produkciyadagi standart konfiguratsiya: `maxUnavailable: 25%`, `maxSurge: 25%`. Bu tezlik va mavjudlik o'rtasida yaxshi muvozanat.
+💡 **Pro maslahat**: Production dagi standart konfiguratsiya: `maxUnavailable: 25%`, `maxSurge: 25%`. Bu tezlik va mavjudlik o'rtasida yaxshi muvozanat.

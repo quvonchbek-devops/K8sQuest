@@ -4,7 +4,7 @@
 
 Pod laringiz qayta ishga tushirish siklida qotib qoldi, chunki liveness probe 404 (Topilmadi) qaytaradigan `/nonexistent-healthz` endpoint ni tekshirayotgan edi. Kubernetes buni "pod sog'lomsiz" deb qabul qilib qayta-qayta ishga tushirdi, bu esa albatta health check dan yana o'tolmadi.
 
-Bu produkciyada kaskadli nosozliklarga olib kelishi mumkin bo'lgan klassik konfiguratsiya xatosi.
+Bu production da kaskadli nosozliklarga olib kelishi mumkin bo'lgan klassik konfiguratsiya xatosi.
 
 ## Kubernetes Qanday Ishladi
 

@@ -127,7 +127,7 @@ kubectl patch deployment metrics-server -n kube-system --type='json' \
   -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--kubelet-insecure-tls"}]'
 ```
 
-⚠️ `--kubelet-insecure-tls` faqat ishlab chiqishda ishlating, produkciyada HECH QACHON!
+⚠️ `--kubelet-insecure-tls` faqat ishlab chiqishda ishlating, production da HECH QACHON!
 
 ## Haqiqiy Voqea Misoli
 
@@ -163,7 +163,7 @@ Staging da test qilishdi (metrics-server o'rnatilgan edi). Hamma narsa mukammal 
 10:10 - O'yin to'liq ishdan chiqdi
 10:15 - HPA tekshirish: "unable to get metrics for resource cpu"
 10:20 - metrics-server tekshirish: TOPILMADI
-10:20 - Anglash: Produkciyadagi klasterda metrics-server yo'q!
+10:20 - Anglash: Production dagi klasterda metrics-server yo'q!
 10:25 - metrics-server o'rnatish boshlandi
 10:30 - metrics-server ishlayapti
 10:35 - HPA ishlay boshladi
@@ -207,7 +207,7 @@ fi
 
 **Olingan saboqlar**:
 1. Feature deploy qilishdan oldin dependency lar mavjudligini tekshiring
-2. Staging produkciyadagi infrastrukturaga mos bo'lishi kerak
+2. Staging production dagi infrastrukturaga mos bo'lishi kerak
 3. HPA sog'ligini monitoring qiling — scaling muvaffaqiyatsizliklarida alert
 4. Haqiqiy scaling bilan yuk testi qiling — faqat belgilangan pod soni bilan emas
 
@@ -272,4 +272,4 @@ HPA ni sozlash va metrics-server dependency sini o'rganib oldingiz.
 
 ---
 
-💡 **Pro maslahat**: HPA metrics-server ni talab qiladi. Produkciyaga HPA deploy qilishdan oldin doim metrics-server o'rnatilgan va ishlayotganini tekshiring!
+💡 **Pro maslahat**: HPA metrics-server ni talab qiladi. Production ga HPA deploy qilishdan oldin doim metrics-server o'rnatilgan va ishlayotganini tekshiring!

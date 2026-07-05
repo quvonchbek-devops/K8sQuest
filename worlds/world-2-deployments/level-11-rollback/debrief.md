@@ -123,4 +123,4 @@ Endi siz tushunasiz:
 
 ---
 
-💡 **Pro maslahat**: Produkciyada `kubectl rollout undo` eng tezkor tuzatish. Lekin doimiy yechim — CI/CD pipeline ni tuzatish va image mavjudligini oldindan tekshirish.
+💡 **Pro maslahat**: Production da `kubectl rollout undo` eng tezkor tuzatish. Lekin doimiy yechim — CI/CD pipeline ni tuzatish va image mavjudligini oldindan tekshirish.

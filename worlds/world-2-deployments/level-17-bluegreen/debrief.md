@@ -45,7 +45,7 @@ Service selector: version=green  ← O'ZGARTIRILDI
 | **Almashish** | Bir lahzalik | Bosqichma-bosqich |
 | **Rollback** | Service selector qaytarish (soniya) | Rollout undo (daqiqa) |
 | **Resurs** | 2x resurs kerak (ikkala versiya) | 1x + maxSurge |
-| **Test** | GREEN ni alohida test qilish mumkin | Faqat produkciyada |
+| **Test** | GREEN ni alohida test qilish mumkin | Faqat production da |
 | **To'xtash** | Nol | Nol |
 
 ### Almashish jarayoni

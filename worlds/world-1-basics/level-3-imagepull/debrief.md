@@ -71,7 +71,7 @@ kubectl apply -f <fayl>.yaml
 
 ## Oldini Olish Strategiyalari
 
-1. Produkciyada `latest` emas, **aniq tag lar ishlating**
+1. Production da `latest` emas, **aniq tag lar ishlating**
 2. Image lar mavjudligini tekshirish uchun CI/CD da **image scanning** joriy qiling
 3. ImagePullBackOff event lari uchun **alert lar sozlang**
 4. Deploy dan oldin image manzillarini tekshirish uchun **admission controller lar** ishlating

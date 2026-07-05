@@ -791,5 +791,5 @@ Siz o'zlashtirgansiz readiness probe larni and endpoint management. Next, you'll
 
 ---
 
-*"Produkciyada, trafik faqat tayyor pod larga yo'naltirilishi kerak. Readiness probe lar ixtiyoriy emas — ular muhential."* - Kubernetes SRE Handbook
+*"Production da, trafik faqat tayyor pod larga yo'naltirilishi kerak. Readiness probe lar ixtiyoriy emas — ular muhential."* - Kubernetes SRE Handbook
 

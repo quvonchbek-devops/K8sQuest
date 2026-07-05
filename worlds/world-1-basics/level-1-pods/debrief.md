@@ -52,7 +52,7 @@ Bu **Kubernetes aynan siz aytganingizni bajarayotgan holat**. U `nginxzz` imlo x
 
 ## Haqiqiy Voqea Misoli
 
-### Stsenariy: Produkciyada tungi soat 3 da uzilish
+### Stsenariy: Production da tungi soat 3 da uzilish
 
 **Nima sodir bo'ldi:**
 Dasturchi API service ning yangi versiyasini deploy qildi. Ishga tushirish skriptini bajarish uchun `command` maydoni qo'shdi:
@@ -107,7 +107,7 @@ Faqat ayrim maydonlar:
 - `spec.activeDeadlineSeconds`
 - `spec.tolerations` (faqat qo'shish)
 
-Ko'p o'zgartirishlar uchun o'chirib qayta yaratish kerak. Shuning uchun produkciyada Deployment lar ishlatamiz.
+Ko'p o'zgartirishlar uchun o'chirib qayta yaratish kerak. Shuning uchun production da Deployment lar ishlatamiz.
 
 ## O'zlashtirilgan Buyruqlar
 
@@ -138,8 +138,8 @@ Endi siz tushunasiz:
 - ✅ Pod immutabilligi (o'zgarmaslik) va uning oqibatlari
 - ✅ `command` maydonining kuchi (va xavfi)
 
-**Keyingi topshiriq:** Deployment lar — produkciyada pod larni boshqarishning to'g'ri usuli bilan tanishamiz.
+**Keyingi topshiriq:** Deployment lar — production da pod larni boshqarishning to'g'ri usuli bilan tanishamiz.
 
 ---
 
-💡 **Pro maslahat:** Produkciyada mustaqil pod larni deyarli hech qachon ishlatmaysiz. Deployment lar qayta ishga tushirish, rollback va scaling ni boshqaradi. Lekin pod larni tushunish juda muhim, chunki Deployment lar ichki jarayonda pod lar yaratadi.
+💡 **Pro maslahat:** Production da mustaqil pod larni deyarli hech qachon ishlatmaysiz. Deployment lar qayta ishga tushirish, rollback va scaling ni boshqaradi. Lekin pod larni tushunish juda muhim, chunki Deployment lar ichki jarayonda pod lar yaratadi.

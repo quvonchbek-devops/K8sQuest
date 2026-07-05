@@ -50,7 +50,7 @@ Kubernetes aynan siz aytganingizni qildi — lekin siz kamida 1 ta replika ishla
 
 ### Eslab Qolish Kerak:
 
-- **Produkciyadagi workload lar uchun Deployment > Pod**
+- **Production dagi workload lar uchun Deployment > Pod**
 - **replicas: 0 to'g'ri qiymat**, lekin "hech narsa ishlamayapti" degani
 - **Deployment larni jonli tahrirlash mumkin** (pod lardan farqli)
 - **replicas emas, readyReplicas ni tekshiring** (pod lar crash bo'layotgan bo'lishi mumkin!)
@@ -67,7 +67,7 @@ spec:
   replicas: 0  # TODO: HPA ni 0 dan test qilish
 ```
 
-O'zgarish CI/CD orqali o'tib, Shukronalik kuni tungi soat 23:45 da produkciyaga deploy qilindi.
+O'zgarish CI/CD orqali o'tib, Shukronalik kuni tungi soat 23:45 da production ga deploy qilindi.
 
 **Ta'siri:**
 - Yarim tunda (Qora Juma boshlanishi) barcha checkout service lar NOLGA tushdi
@@ -88,7 +88,7 @@ kubectl scale deployment checkout --replicas=10 -n production
 
 # Doimiy yechim:
 # 1. Git pre-commit hook qo'shildi: replicas >= 1 bo'lishi shart
-# 2. Admission webhook qo'shildi: produkciyada replicas: 0 ni bloklash
+# 2. Admission webhook qo'shildi: production da replicas: 0 ni bloklash
 # 3. Alert qo'shildi: deployment.spec.replicas < 1
 ```
 
@@ -107,7 +107,7 @@ kubectl scale deployment checkout --replicas=10 -n production
 - **Pod** = yagona nusxa, vaqtincha, o'zini tiklay olmaydi
 - **Deployment** = bir nechta pod ni boshqaradi, kerakli sonni ta'minlaydi, rolling update lar, o'zini tiklash
 
-Produkciyada deyarli hech qachon to'g'ridan-to'g'ri pod yaratmaysiz. Deployment lar pod hayot siklini boshqaradi.
+Production da deyarli hech qachon to'g'ridan-to'g'ri pod yaratmaysiz. Deployment lar pod hayot siklini boshqaradi.
 
 **S: "Kubernetes da ilovani qanday scale qilasiz?"**
 
@@ -176,4 +176,4 @@ Endi siz tushunasiz:
 
 ---
 
-💡 **Pro maslahat:** Produkciyada CPU/xotira iste'moliga qarab avtomatik scale qilish uchun Horizontal Pod Autoscaler (HPA) ishlating. Qo'lda replika sonlari — faqat aniq bilganingizda kerak.
+💡 **Pro maslahat:** Production da CPU/xotira iste'moliga qarab avtomatik scale qilish uchun Horizontal Pod Autoscaler (HPA) ishlating. Qo'lda replika sonlari — faqat aniq bilganingizda kerak.

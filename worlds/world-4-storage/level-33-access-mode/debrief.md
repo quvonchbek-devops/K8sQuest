@@ -169,7 +169,7 @@ Not all storage types support all access modes!
 - Bu Kind da (bitta node li klaster) ishlaydi, chunki barcha pod lar bitta node ga tushadi
 - The `hostPath` *represents* shared network storage (like NFS/EFS)
 
-**Produkciyada:**
+**Production da:**
 - `hostPath` is **node-local** and does **NOT** support true ReadWriteMany
 - For real RWX, you need network-attached storage (NFS, EFS, CephFS, etc.)
 - This level teaches the *concept* of access modes in a multi-pod scenario
@@ -182,7 +182,7 @@ hostPath:                      # But hostPath is node-local!
   path: /data
 # Result: Pods on different nodes kira olmaydi the same data
 
-# ✅ Produkciyada for true RWX:
+# ✅ Production da for true RWX:
 accessModes: [ReadWriteMany]
 nfs:                          # Use network storage
   server: nfs.example.com
@@ -391,7 +391,7 @@ kubectl get pods -n k8squest
 
 ### ⚠️ Production Warning
 
-Produkciyada, **deleting a PVC can delete your data!**
+Production da, **deleting a PVC can delete your data!**
 
 ```yaml
 # Check reclaim policy first!

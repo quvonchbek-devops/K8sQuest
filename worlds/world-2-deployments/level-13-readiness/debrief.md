@@ -141,4 +141,4 @@ Endi siz tushunasiz:
 
 ---
 
-💡 **Pro maslahat**: Produkciyada HAR DOIM ikkala probe ni ishlating. Liveness — "qayta ishga tushirish kerakmi?", Readiness — "trafik yuborishim mumkinmi?". Ikkalasi birgalikda kuchli himoya beradi.
+💡 **Pro maslahat**: Production da HAR DOIM ikkala probe ni ishlating. Liveness — "qayta ishga tushirish kerakmi?", Readiness — "trafik yuborishim mumkinmi?". Ikkalasi birgalikda kuchli himoya beradi.
