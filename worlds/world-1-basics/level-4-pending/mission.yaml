@@ -25,6 +25,11 @@ concepts:
 # Batafsil: docs/MISSION-SCHEMA.md
 environments:
   hosted:
+    # Server broken.yaml ni QO'LLAMAYDI — uni foydalanuvchi o'zi qo'llaydi va
+    # admission ning rad etishini o'z ko'zi bilan ko'radi. Aynan shu — darsning
+    # boshlanishi. Server o'zi qo'llasa, setup 500 bilan yiqilardi va level
+    # boshlanmasdan tugardi.
+    setup: manual
     description: "Pod ning resource request lari namespace limitidan oshib ketgan — admission uni rad etmoqda"
     concepts:
       - Pod scheduling
