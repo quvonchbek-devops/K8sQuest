@@ -55,6 +55,7 @@ tayanmaydi:
 | `description` | ✅ | Muammo qanday **ko'rinishi** muhitga bog'liq |
 | `concepts` | ✅ | Mexanizm farq qiladi (masalan `Node sig'imi` → `LimitRange`) |
 | `expected_time` | ✅ | Yo'l uzunligi farq qilishi mumkin |
+| `setup` | ✅ | `broken.yaml` ni kim qo'llaydi — yo'l, dars emas |
 | **`objective`** | ❌ | **Bu — darsning o'zi.** Muhitga qarab o'zgarsa, bu boshqa level |
 | **`name`** | ❌ | Bir level — bir nom |
 | **`xp`**, **`difficulty`** | ❌ | Bir xil dars = bir xil mukofot |
@@ -64,7 +65,27 @@ HOSTED-SANDBOX §5 dagi "darsni o'zgartirmang" qoidasi shu tarzda kod bilan
 qo'llanadi: overlay da `objective:` yozsangiz, u shunchaki e'tiborsiz qoladi
 (va linter xato beradi).
 
-### 2.2 `available: false` ning ma'nosi
+### 2.2 `setup: auto | manual`
+
+- **`auto`** (sukut) — platforma `broken.yaml` ni o'zi qo'llaydi. Foydalanuvchi
+  tayyor buzilgan holatni ko'radi. 49/50 level shunday.
+- **`manual`** — platforma `broken.yaml` ni faqat ish katalogiga yozadi;
+  qo'llashni foydalanuvchi o'zi qiladi.
+
+`manual` **buzilgan holat admission da tug'ilganda** kerak: manifest
+namespace ning LimitRange/ResourceQuota siga urilib rad etiladi. Bunday
+levelda `apply` ning **o'z xatosi** — darsning boshlanishi.
+
+Bu jonli o'ynash paytida topilgan: `auto` da server `apply` ni o'zi bajaradi,
+admission rad etadi va setup **500 bilan yiqiladi** — foydalanuvchi levelga
+umuman kirolmaydi (bu BUG-022 ning ildizi).
+
+`auto` da apply xatosi HAMON 500 bo'lib qoladi. Aks holda haqiqiy nosozlik
+(klaster yiqilgan) "level holati" bo'lib ko'rinardi — bu BUG-024 dagi xato.
+
+Noma'lum qiymat `auto` ga tushadi va log ga warning yoziladi.
+
+### 2.3 `available: false` ning ma'nosi
 
 Level ro'yxatda **"faqat lokal o'yinda" belgisi bilan ko'rinadi**, lekin:
 
@@ -172,7 +193,8 @@ aynan shu yerda tuzoq.)
 `utils/lint_schema.sh` (yozilishi kerak) quyidagilarni tekshiradi:
 
 - overlay da faqat ruxsat etilgan kalitlar (`available`, `description`,
-  `concepts`, `expected_time`);
+  `concepts`, `expected_time`, `setup`);
+- `setup` qiymati faqat `auto` yoki `manual`;
 - `objective`/`name`/`xp`/`difficulty` overlay da **yo'q**;
 - `hosted/` da faqat ruxsat etilgan fayllar; `hosted/mission.yaml` yo'q;
 - `hosted/validate.sh` bo'lsa — CHANGELOG da shu level haqida yozuv bor.
@@ -209,6 +231,7 @@ concepts:
 
 environments:
   hosted:
+    setup: manual
     description: "Pod ning resource request lari namespace limitidan oshib ketgan — admission uni rad etmoqda"
     concepts:
       - Pod scheduling
