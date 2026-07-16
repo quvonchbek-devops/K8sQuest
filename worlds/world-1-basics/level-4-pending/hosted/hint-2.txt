@@ -1,0 +1,20 @@
+🧭 Yo'naltiruvchi maslahat:
+
+`kubectl apply -f broken.yaml` shunga o'xshash xato beradi:
+
+  The Pod "hungry-app" is invalid: spec.containers[0].resources.requests:
+  Invalid value: "999": must be less than or equal to cpu limit of 200m
+
+Bu — LimitRange. U namespace da har bir container so'rashi mumkin bo'lgan
+maksimumni belgilaydi.
+
+Namespace ning chegaralarini ko'ring:
+
+  kubectl describe limitrange
+  kubectl describe quota
+
+Pod nima so'rayotganini ko'ring:
+
+  kubectl get -f broken.yaml -o jsonpath='{.spec.containers[0].resources}'
+
+Ikkalasini solishtiring: pod qancha so'rayapti va ruxsat etilgani qancha?
