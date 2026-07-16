@@ -1,7 +1,8 @@
 💡 Yechimga yaqin maslahat:
 
-Pod 999 ta CPU va 999Gi xotira so'ramoqda. Namespace da bir container uchun
-ruxsat etilgan maksimum esa ancha kichik (`kubectl describe limitrange`).
+Pod 999 ta CPU va 999Gi xotira so'ramoqda. `kubectl describe limitrange`
+ko'rsatadiki, container ga beriladigan default limit ancha kichik
+(cpu 200m, memory 128Mi) — request esa limitdan oshmasligi kerak.
 
 Tuzatish qadamlari:
 1. broken.yaml dagi resource request larni oqilona qiymatlarga o'zgartiring:
@@ -13,6 +14,6 @@ Tuzatish qadamlari:
 Endi admission pod ni o'tkazadi va u ishlashi kerak.
 
 📝 Eslatma: haqiqiy klasterlarda LimitRange va ResourceQuota aynan shunday
-ishlaydi — jamoalar bir klasterni bo'lishganda, hech kim boshqalarning
+ishlaydi — jamoalar bitta klasterni bo'lishganda, hech kim boshqalarning
 resursini yeb ketmasligi uchun. Xato xabarini o'qishni bilish — kundalik
 ko'nikma.
