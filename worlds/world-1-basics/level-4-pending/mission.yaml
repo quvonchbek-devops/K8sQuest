@@ -11,3 +11,30 @@ concepts:
   - kubectl describe
   - Pending holati
   - Node sig'imi (capacity)
+
+# Hosted sandbox da bu level BOSHQACHA ko'rinadi — dars esa o'sha-o'sha.
+#
+# Lokal o'yinda siz cluster-admin siz: pod yaratiladi, scheduler uni
+# joylashtira olmaydi va u Pending da qotadi. Hosted da namespace ning
+# LimitRange i so'rovni ADMISSION da rad etadi — pod umuman yaratilmaydi.
+#
+# Ikkalasi ham haqiqiy: "999 CPU so'radingiz, bu mumkin emas". Tuzatish ham
+# bir xil — request larni oqilona qiymatga tushirish. Shuning uchun
+# `objective`, `solution.yaml` va `validate.sh` o'zgarmaydi.
+#
+# Batafsil: docs/MISSION-SCHEMA.md
+environments:
+  hosted:
+    # Server broken.yaml ni QO'LLAMAYDI — uni foydalanuvchi o'zi qo'llaydi va
+    # admission ning rad etishini o'z ko'zi bilan ko'radi. Aynan shu — darsning
+    # boshlanishi. Server o'zi qo'llasa, setup 500 bilan yiqilardi va level
+    # boshlanmasdan tugardi.
+    setup: manual
+    description: "Pod ning resource request lari namespace limitidan oshib ketgan — admission uni rad etmoqda"
+    concepts:
+      - Pod scheduling
+      - Resource requests
+      - Resource limits
+      - LimitRange
+      - Admission nazorati
+      - Xato xabarini o'qish
