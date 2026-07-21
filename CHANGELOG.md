@@ -29,6 +29,36 @@ bo'lsin.
 
 - `CHANGELOG.md` (shu fayl).
 
+### O'zgartirildi — hosted overlay (5 level)
+
+2026-07-21 jonli sinovda 5 level hosted sandbox da ishlamasligi aniqlandi.
+Har birida lokal kontent (`objective`, `broken.yaml`, `solution.yaml`,
+`validate.sh`) **o'zgarmadi** — `environments.hosted` overlay qo'shildi.
+
+- **W1 L4 (pending)** — `setup: manual`. Apply ning admission xatosi darsning
+  boshlanishi (ilgari bajarilgan, `feat/hosted-overlay-l4`).
+
+- **W3 L30 (headless)** — hosted da O'YNALADI. `hosted/broken.yaml` va
+  `hosted/solution.yaml`: lokaldagi `kind: Namespace` obyekti va qat'iy
+  `clusterIP: 10.96.100.50` olib tashlandi (hosted da namespace tayyor va scoped,
+  qat'iy IP klaster CIDR iga tushmaydi). `hosted/validate.sh`: per-pod DNS ni
+  `kubectl exec`+`nslookup` bilan isbotlash O'RNIGA headless-likni exec SIZ
+  tekshiradi — `clusterIP: None`, StatefulSet pod lari Ready, endpoint soni.
+
+  **Nega validate.sh overlay (§3.2 istisno):** hosted validate.sh sandbox ning
+  namespace-scoped SA i bilan ishlaydi, u `pods/exec` ga ega emas (xavfsizlik
+  chegarasi) va butun tekshiruv 15s timeout ichida bo'lishi kerak. Dars **o'sha**:
+  fix ikkala muhitda ham `clusterIP: None`. Overlay faqat *isbot usulini*
+  o'zgartiradi (DNS so'rovi → headless holatning to'g'ridan-to'g'ri kuzatuvi),
+  tekshirilayotgan *narsani* emas.
+
+- **W1 L10 (namespace), W5 L43 (resourcequota), W5 L49 (priorityclass)** —
+  `available: false`. Bular hosted da PRINSIPIAL ishlamaydi: bitta namespace li
+  sandbox (L10), `resourcequotas` namespace-scoped RBAC da yo'q (L43),
+  PriorityClass cluster-scoped (L49). Lokal o'yinda o'z o'rnida, o'zgarmadi.
+  L10 da bu bepul-XP nuqsonini ham yopdi (namespace-rewrite validate ni darrov
+  o'tkazardi).
+
 ### Platformada hal qilindi — kontentga tegilmadi
 
 k8s-dojo tomonida tuzatilgani uchun quyidagilar uchun **kontent o'zgarishi
