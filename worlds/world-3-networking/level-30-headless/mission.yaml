@@ -16,3 +16,16 @@ concepts:
   - pod-identity
   - stable-network-identity
   - clusterip-none
+
+# Hosted sandbox da bu level O'YNALMAYDI — dars esa lokal o'yinda o'z o'rnida.
+#
+# Dars: headless service (clusterIP: None) StatefulSet pod lariga barqaror
+# per-pod DNS beradi. Buni ISBOTLASH per-pod DNS resolution ni talab qiladi:
+# test pod ichidan `nslookup web-0.web-cluster...`. Hosted sandbox xavfsizlik
+# uchun `pods/exec` ni BERMAYDI (validate.sh sandbox ning o'z SA i bilan
+# ishlaydi), shuning uchun darsni bu muhitda tekshirib bo'lmaydi.
+# Batafsil: docs/MISSION-SCHEMA.md
+environments:
+  hosted:
+    available: false
+    description: "Headless service DNS ni tekshirish pod ichidan DNS resolution (kubectl exec + nslookup) talab qiladi. Hosted sandbox xavfsizlik uchun pods/exec ni bermaydi. Dars faqat lokal o'yinda o'ynaladi."

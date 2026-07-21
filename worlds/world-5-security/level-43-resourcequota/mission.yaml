@@ -17,3 +17,15 @@ learning_objectives:
   - Configure resource requests/limits properly
   - Balance quotas with application needs
   - Debug quota-related scheduling failures
+
+# Hosted sandbox da bu level O'YNALMAYDI — dars esa lokal o'yinda o'z o'rnida.
+#
+# Dars: namespace ResourceQuota si pod so'rovini to'sib qo'yadi; yechim —
+# so'rovlarni quota ichiga tushirish. Hosted sandbox da namespace-scoped RBAC
+# `resourcequotas` ni na yaratishga, na o'qishga ruxsat beradi (va tayyor
+# `sandbox-quota` allaqachon o'rnatilgan). validate.sh birinchi qadamdayoq
+# `kubectl get resourcequota` da 403 oladi. Batafsil: docs/MISSION-SCHEMA.md
+environments:
+  hosted:
+    available: false
+    description: "Bu level ResourceQuota obyektini yaratish/kuzatishni o'rgatadi. Hosted sandbox namespace-scoped RBAC da resourcequotas ga ruxsat bermaydi. Dars faqat lokal o'yinda o'ynaladi."
