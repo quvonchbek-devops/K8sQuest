@@ -47,10 +47,20 @@ if [ "$READY" != "$REPLICAS" ]; then
 fi
 echo "✅ Barcha $REPLICAS pod Ready"
 
-# 5) Endpoint soni pod soniga teng (headless service pod IP larini oshkor qiladi)
-EP=$(kubectl get endpoints web-cluster -n "$NS" -o jsonpath='{.subsets[*].addresses[*].ip}' 2>/dev/null | wc -w)
+# 5) Endpoint soni pod soniga teng (headless service pod IP larini oshkor qiladi).
+#    EndpointSlice dan o'qiymiz (v1 Endpoints v1.33+ da deprecated) va qisqa
+#    retry beramiz: service yangi yaratilganda controller birpasda to'ldiradi.
+EP=0
+for i in $(seq 1 6); do
+  EP=$(kubectl get endpointslices -n "$NS" -l kubernetes.io/service-name=web-cluster \
+    -o jsonpath='{range .items[*]}{range .endpoints[*]}{.addresses[0]}{"\n"}{end}{end}' \
+    2>/dev/null | grep -c .)
+  [ "$EP" = "$REPLICAS" ] && break
+  sleep 1
+done
 if [ "$EP" != "$REPLICAS" ]; then
   echo "❌ Endpoint soni mos emas ($EP, kutilgan $REPLICAS)"
+  echo "💡 Headless service selector i pod label lariga mos kelishini tekshiring."
   exit 1
 fi
 echo "✅ Service $EP endpoint ni oshkor qilyapti (pod soniga teng)"
