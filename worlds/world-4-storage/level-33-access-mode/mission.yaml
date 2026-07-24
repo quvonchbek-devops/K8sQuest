@@ -18,3 +18,12 @@ learning_objectives:
   - Configure storage for multi-pod shared access
   - Experience PVC spec immutability (accessModes cannot be edited)
   - Learn delete/recreate workflow for fixing immutable fields
+
+# Hosted moslik (k8s-dojo P2): bu level cluster darajasidagi resurs yoki alohida
+# namespace talab qiladi. Hosted sandbox — bitta izolyatsiyalangan namespace,
+# scoped RBAC bilan; bunday resurslarni yaratib bo'lmaydi. Shuning uchun dars
+# faqat lokal K8sQuest o'yinida o'ynaladi. Batafsil: docs/MISSION-SCHEMA.md
+environments:
+  hosted:
+    available: false
+    description: "Bu level cluster darajasidagi PersistentVolume access mode larini o'rgatadi. Hosted sandbox scoped RBAC bilan cluster-scoped resurs yaratolmaydi. Dars faqat lokal o'yinda o'ynaladi."

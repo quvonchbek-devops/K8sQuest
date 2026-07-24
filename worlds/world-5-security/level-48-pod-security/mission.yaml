@@ -17,3 +17,12 @@ learning_objectives:
   - Configure pods to meet restricted requirements
   - Apply security best practices
   - Debug pod security admission failures
+
+# Hosted moslik (k8s-dojo P2): bu level cluster darajasidagi resurs yoki alohida
+# namespace talab qiladi. Hosted sandbox — bitta izolyatsiyalangan namespace,
+# scoped RBAC bilan; bunday resurslarni yaratib bo'lmaydi. Shuning uchun dars
+# faqat lokal K8sQuest o'yinida o'ynaladi. Batafsil: docs/MISSION-SCHEMA.md
+environments:
+  hosted:
+    available: false
+    description: "Bu level namespace ga qo'yiladigan Pod Security Standard yorliqlarini o'rgatadi. Hosted sandbox namespace yorliqlari platforma tomonidan qat'iy belgilangan (baseline). Dars faqat lokal o'yinda o'ynaladi."
