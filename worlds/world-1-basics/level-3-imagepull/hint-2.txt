@@ -4,4 +4,4 @@ Xato "ImagePullBackOff" yoki "ErrImagePull" ni ko'rsatmoqda. Bu Kubernetes siz k
 
 Pod spetsifikatsiyasidagi image nomi va tag ni tekshiring. Bu image tag Docker Hub da haqiqatan mavjudmi?
 
-Sinab ko'ring: `kubectl get pod web-app -n k8squest -o yaml | grep image:`
+Sinab ko'ring: `kubectl get pod web-app -n k8squest -o yaml` — chiqishdan `image:` qatorini toping. (Bu terminalda faqat kubectl ishlaydi — `| grep` kabi quvurlar yo'q.)
