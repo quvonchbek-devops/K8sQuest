@@ -1,9 +1,15 @@
 💡 Yechimga yaqin maslahat:
 
-"nonexistent-tag-xyz-123" image tag mavjud emas. Uni to'g'ri tag ga o'zgartirish kerak.
+"nonexistent-tag-xyz-123" image tag mavjud emas — uni to'g'ri tag (`nginx:latest`) ga o'zgartirish kerak.
 
-Tuzatish qadamlari:
-1. Buzilgan pod ni o'chiring: `kubectl delete pod web-app -n k8squest`
-2. broken.yaml dagi image ni quyidagiga o'zgartiring: nginx:latest
-3. Apply qiling: `kubectl apply -f broken.yaml`
-4. Tekshiring: `kubectl get pod web-app -n k8squest`
+Bu sandbox terminalida faqat kubectl ishlaydi (fayl tahrirlagich yo'q), shuning uchun broken.yaml ni tahrirlash o'rniga jonli podning image'ini to'g'ridan-to'g'ri o'zgartiring. Podni o'chirish SHART EMAS:
+
+    kubectl set image pod/web-app web=nginx:latest -n k8squest
+
+Bu yerda `web` — konteyner nomi (describe chiqishida `spec.containers{web}` deb ko'ringan). kubelet yangi image ni tortadi va pod ishga tushadi.
+
+Keyin tekshiring:
+
+    kubectl get pod web-app -n k8squest
+
+Muqobil yo'l — interaktiv tahrir: `kubectl edit pod web-app -n k8squest` bilan `image:` qatorini `nginx:latest` ga o'zgartirib saqlang.

@@ -61,12 +61,14 @@ kubectl get pod <nom> -n <namespace>
 # Batafsil event larni ko'rish (eng yaxshi do'stingiz!)
 kubectl describe pod <nom> -n <namespace>
 
-# Ishlatilayotgan aniq image ni tekshirish
-kubectl get pod <nom> -n <namespace> -o yaml | grep image:
+# Ishlatilayotgan aniq image ni tekshirish (image: qatorini toping)
+kubectl get pod <nom> -n <namespace> -o yaml
 
-# Pod ni o'chirib qayta yaratish
-kubectl delete pod <nom> -n <namespace>
-kubectl apply -f <fayl>.yaml
+# Image ni to'g'rilash — jonli podda, faylsiz (bu platformada shu ishlaydi)
+kubectl set image pod/<nom> <konteyner>=<image> -n <namespace>
+
+# Haqiqiy klasterda manifest fayl bilan ishlaganda esa:
+#   kubectl apply -f <fayl>.yaml
 ```
 
 ## Oldini Olish Strategiyalari
