@@ -23,7 +23,7 @@ echo "✅ Pod mavjud"
 
 echo ""
 echo "🔍 TEKSHIRUV 3-BOSQICH: Tekshirilmoqda runAsNonRoot ni..."
-RUN_AS_NON_ROOT=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].securityContext.runAsNonRoot ni}')
+RUN_AS_NON_ROOT=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].securityContext.runAsNonRoot}')
 if [ "$RUN_AS_NON_ROOT" != "true" ]; then
     echo "❌ FAILED: runAsNonRoot ni not set to true"
     exit 1
@@ -41,7 +41,7 @@ echo "✅ runAsUser: $RUN_AS_USER (non-root)"
 
 echo ""
 echo "🔍 TEKSHIRUV 5-BOSQICH: Tekshirilmoqda allowPrivilegeEscalation ni..."
-ALLOW_PRIV=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].securityContext.allowPrivilegeEscalation ni}')
+ALLOW_PRIV=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].securityContext.allowPrivilegeEscalation}')
 if [ "$ALLOW_PRIV" != "false" ]; then
     echo "❌ FAILED: allowPrivilegeEscalation ni not set to false"
     exit 1
@@ -59,7 +59,7 @@ echo "✅ capabilities drop qilinganligini: ALL"
 
 echo ""
 echo "🔍 TEKSHIRUV 7-BOSQICH: Tekshirilmoqda seccompProfile ni..."
-SECCOMP=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.securityContext.seccompProfile ni.type}')
+SECCOMP=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.securityContext.seccompProfile.type}')
 if [ "$SECCOMP" != "RuntimeDefault" ] && [ "$SECCOMP" != "Localhost" ]; then
     echo "⚠️  seccompProfile ni not set to RuntimeDefault or Localhost"
     echo "   Bu restricted standart uchun talab qilinadi"

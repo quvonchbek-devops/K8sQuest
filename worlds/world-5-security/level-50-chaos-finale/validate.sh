@@ -65,8 +65,8 @@ echo "✅ Deployment mavjud"
 
 # 7. SecurityContext
 echo "🔍 7/9: Tekshirilmoqda SecurityContext (runAsNonRoot ni, allowPrivilegeEscalation ni)..."
-RUN_AS_NON_ROOT=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.template.spec.containers[0].securityContext.runAsNonRoot ni}')
-ALLOW_PRIV=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation ni}')
+RUN_AS_NON_ROOT=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.template.spec.containers[0].securityContext.runAsNonRoot}')
+ALLOW_PRIV=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation}')
 if [ "$RUN_AS_NON_ROOT" != "true" ]; then
     echo "❌ runAsNonRoot ni not true"; ((ERRORS++))
 elif [ "$ALLOW_PRIV" != "false" ]; then
