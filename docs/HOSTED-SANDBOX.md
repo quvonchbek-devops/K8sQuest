@@ -40,6 +40,44 @@ berish. Ya'ni lokal o'yin buzilmasin, hosted da ham ishlasin.
 
 ---
 
+## 1.1 ⚠️ 2026-07-27: hosted modeli O'ZGARDI (sandbox v2)
+
+Yuqoridagi tavsif — **v1** hosted sandbox i. k8s-dojo v2 ga o'tdi va u
+butunlay boshqa model: har foydalanuvchiga **pod ichida o'z nested k3s
+klasteri** beriladi.
+
+| | v1 hosted (eski) | **v2 hosted (joriy)** |
+|---|---|---|
+| Cluster | umumiy, ko'p ijarachi | **har kimga o'ziniki** (nested k3s) |
+| Huquq | namespace-scoped SA | **cluster-admin** |
+| Namespace | `sandbox-NNN` ga almashtirilardi | **`k8squest` — o'z holicha** |
+| Cluster-scoped resurs | ❌ mumkin emas | ✅ mumkin (PV, ClusterRole, …) |
+| Ikkinchi namespace | ❌ mumkin emas | ✅ mumkin |
+| `kubectl get nodes` | ❌ 403 | ✅ o'z node i (bitta) |
+| LimitRange / Quota | platforma qo'yardi | **yo'q** (faqat level qo'ysa) |
+| Fayllar | `broken.yaml`, `solution.yaml` | o'sha (`/home/dojo/` da) |
+| TTY / muharrir | yo'q | **hamon yo'q** — terminal satr-satr ishlaydi |
+
+Ya'ni **3.4 (cluster-scoped resurs yaratmang)**, **3.6 (node ga tegmang)** va
+**3.7 (resurs limitlari)** bo'limlari v2 uchun KUCHINI YO'QOTDI. 3.1 dagi
+namespace almashtirish ham v2 da yo'q — manifest o'z holicha qo'llanadi.
+
+Kuchda qoladigan qoidalar: **3.2** (fayllar), **3.3** (`kubectl edit`
+ishlatmang — TTY hamon yo'q), **3.5** (`hostPath` — nested klaster pod ining
+diskiga yozadi, ya'ni sessiya tugashi bilan yo'qoladi).
+
+**Qanday tekshirilgan (2026-07-27):** v1 da `available: false` qilingan 9 ta
+level jonli nested klasterda uchidan-uchiga o'ynaldi (`broken.yaml` →
+`solution.yaml` → `validate.sh`) — **9/9 validate rc=0**: L27, L29, L31, L32,
+L33, L39, L44, L48, L50. Shu sababdan ularning `environments.hosted` bloklari
+olib tashlandi.
+
+> Yangi level yozayotgan bo'lsangiz: level ni "hosted da ishlamaydi" deb
+> belgilashdan OLDIN uni v2 da sinab ko'ring. Eski taxminlarning ko'pi endi
+> noto'g'ri.
+
+---
+
 ## 2. Oltin qoida
 
 > **Level ning darsi (mohiyati) o'zgarmasin — faqat unga olib boradigan yo'l
