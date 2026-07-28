@@ -2,14 +2,62 @@
 
 NAMESPACE="k8squest"
 POD_NAME="regular-app"
-NODE_NAME="kind-control-plane"
+# Node nomi QOTIRILMAYDI — u har muhitda boshqacha.
+#
+# Ilgari bu yerda `kind-control-plane` turardi. Bizning klasterlarda
+# bunday node YO'Q (dev da `dev`, nested da `dojo-cluster-<id>`), ya'ni
+# quyidagi `kubectl taint` JIMGINA yiqilardi va node hech qachon taint
+# qilinmasdi. Natijada `regular-app` toleration siz ham DARHOL Running
+# bo'lar va darsning butun sharti ("pod Pending, chunki node taint
+# qilingan") umuman ko'rinmasdi — foydalanuvchi mavjud bo'lmagan
+# muammoni "tuzatardi".
+NODE_NAME=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
+if [ -z "$NODE_NAME" ]; then
+    echo "❌ Node topilmadi — klasterga ulanib bo'lmadi"
+    exit 1
+fi
 
 echo "🔍 TEKSHIRUV 1-BOSQICH: Tekshirilmoqda node taint qilinganligini..."
 NODE_TAINTS=$(kubectl get node $NODE_NAME -o jsonpath='{.spec.taints[?(@.key=="dedicated")]}')
 if [ -z "$NODE_TAINTS" ]; then
     echo "⚠️  Node hali taint qilinmagan. Taint qo'yilmoqda..."
-    kubectl taint nodes $NODE_NAME dedicated=gpu:NoSchedule --overwrite
+    if ! kubectl taint nodes "$NODE_NAME" dedicated=gpu:NoSchedule --overwrite; then
+        echo "❌ Node ni taint qilib bo'lmadi ($NODE_NAME)"
+        exit 1
+    fi
     echo "✅ Node taint qilindi: dedicated=gpu:NoSchedule"
+
+    # Pod ni QAYTA rejalashtiramiz.
+    #
+    # `NoSchedule` faqat YANGI rejalashtirishga ta'sir qiladi — allaqachon
+    # ishlab turgan pod ni u joyidan qo'zg'atmaydi. Setup esa broken.yaml ni
+    # taint dan OLDIN qo'llaydi, ya'ni pod bemalol joylashib bo'lgan bo'ladi.
+    #
+    # Natijada darsning butun sharti ("pod Pending, chunki node taint
+    # qilingan") umuman ko'rinmasdi va foydalanuvchi mavjud bo'lmagan
+    # muammoni "tuzatardi".
+    #
+    # Bu shox FAQAT birinchi tekshiruvda ishlaydi (taint hali yo'q payt),
+    # ya'ni foydalanuvchining ishi yo'qolmaydi: o'sha paytda pod hali
+    # broken.yaml dan kelgan asl holatda.
+    if kubectl get pod "$POD_NAME" -n "$NAMESPACE" &>/dev/null; then
+        echo "   Pod qayta rejalashtirilmoqda (taint kuchga kirsin)..."
+        # `spec.nodeName` OLIB TASHLANADI — bu yerda butun gap shunda.
+        #
+        # Rejalashtirilgan pod ning yaml ida `nodeName: <node>` yozib
+        # qo'yilgan bo'ladi. Uni o'sha holicha `replace --force` qilsak,
+        # pod SCHEDULER ni umuman chetlab o'tadi: kubelet uni to'g'ridan-
+        # to'g'ri ishga tushiradi va NoSchedule taint hech qanday rol
+        # o'ynamaydi. O'lchab ko'rdim — pod 3 soniya Pending ko'rinib,
+        # keyin toleration SIZ o'zicha Running bo'lib ketardi, ya'ni
+        # tekshiruv tasodifan "to'g'ri" javob berardi.
+        #
+        # `jq` ishlatilmaydi: u validate image ida yo'q.
+        kubectl get pod "$POD_NAME" -n "$NAMESPACE" -o yaml \
+            | sed '/^  nodeName:/d' \
+            | kubectl replace --force --grace-period=0 -f - &>/dev/null
+        sleep 5
+    fi
 else
     echo "✅ Node has taint: dedicated=gpu"
 fi
