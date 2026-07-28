@@ -1,3 +1,60 @@
+# ESKI, ISHLAYDIGAN revision — `rollout undo` uchun TARIX.
+#
+# MUAMMO: platforma broken.yaml ni BIR MARTA qo'llaydi, ya'ni deployment
+# darhol "revision 1" bo'lib tug'ilardi va qaytadigan joy qolmasdi.
+# hint-3 esa aynan `kubectl rollout undo` deb aytadi → foydalanuvchi
+# "no rollout history found" oladi va level maslahat bo'yicha YECHILMASDI.
+#
+# (Repoda `setup.sh` bor, u avval setup.yaml ni qo'yib keyin broken.yaml ni
+# yangilaydi — lekin platforma setup.sh ni umuman import qilmaydi, ya'ni u
+# hech qachon ishlamagan. BUG.md CNT-004 ga qarang.)
+#
+# YECHIM: eski revision ni O'ZIMIZ olib kelamiz. Deployment kontrolleri
+# selector iga mos "yetim" ReplicaSet ni o'zlashtiradi va uni eski revision
+# sifatida tarixga qo'yadi. `replicas: 0` — u pod yaratmaydi, faqat
+# `rollout undo` qaytadigan nuqta bo'lib turadi.
+#
+# `pod-template-hash` ataylab qo'lda berilgan: usiz RS joriy RS bilan bir xil
+# nom maydoniga tushib qolishi mumkin. Qiymati kontroller hisoblaydigan hash
+# ga mos kelishi SHART EMAS — eski RS lar uchun u qayta hisoblanmaydi.
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: web-app-v1
+  namespace: k8squest
+  labels:
+    app: web
+    version: v1
+    pod-template-hash: v1rev
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubernetes.io/change-cause: "Initial working version v1.0"
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: web
+      pod-template-hash: v1rev
+  template:
+    metadata:
+      labels:
+        app: web
+        version: v1
+        pod-template-hash: v1rev
+    spec:
+      containers:
+      - name: web
+        image: nginx:alpine          # ✅ ishlaydigan versiya — undo shu yerga qaytaradi
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "32Mi"
+          limits:
+            cpu: "50m"
+            memory: "64Mi"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

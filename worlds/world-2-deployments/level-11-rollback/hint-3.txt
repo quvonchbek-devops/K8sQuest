@@ -13,4 +13,4 @@ Keyin tekshiring:
 `kubectl get deployment web-app -n k8squest`
 `kubectl get pods -n k8squest`
 
-Barcha 3 ta pod Running bo'lishi kerak!
+Ikkala pod ham Running bo'lishi kerak (replicas: 2)!
