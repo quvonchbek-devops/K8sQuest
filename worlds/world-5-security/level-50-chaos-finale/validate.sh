@@ -76,19 +76,67 @@ else
 fi
 
 # 8. Resources within quota
+#
+# Ilgari bu bosqich qiymatlarni CHOP ETIB, so'ngra shartsiz
+# "✅ Resource requests tekshirildi" deb yozardi — ya'ni HECH NIMA
+# tekshirmasdi. Endi haqiqatan ham quota ga sig'ishi hisoblanadi.
 echo "🔍 8/9: Tekshirilmoqda resource request lar quota ga sig'ishini..."
-CPU_REQUEST=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.template.spec.containers[0].resources.requests.cpu}')
-REPLICAS=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.replicas}')
-echo "   CPU per pod: $CPU_REQUEST, Replicas: $REPLICAS"
-echo "✅ Resource requests tekshirildi"
+CPU_REQUEST=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.template.spec.containers[0].resources.requests.cpu}' 2>/dev/null)
+REPLICAS=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.replicas}' 2>/dev/null)
+# Quota NOM bo'yicha o'qiladi: hosted sandbox da namespace da
+# platformaning o'z quota si ham turadi va `.items[0]` qaysi biri
+# birinchi kelishiga qarab tasodifiy javob berardi.
+QUOTA_CPU=$(kubectl get resourcequota chaos-quota -n $NAMESPACE -o jsonpath='{.spec.hard.requests\.cpu}' 2>/dev/null)
+[ -z "$QUOTA_CPU" ] && QUOTA_CPU=$(kubectl get resourcequota -n $NAMESPACE -o jsonpath='{.items[0].spec.hard.requests\.cpu}' 2>/dev/null)
+
+# "100m" yoki "0.5"/"2" ni millicore ga keltiramiz (jq/bc siz — ular
+# hamma image da yo'q).
+to_milli() {
+    case "$1" in
+        "")      echo "" ;;
+        *m)      echo "${1%m}" ;;
+        *)       awk -v v="$1" 'BEGIN{printf "%d", v*1000}' ;;
+    esac
+}
+REQ_M=$(to_milli "$CPU_REQUEST")
+QUOTA_M=$(to_milli "$QUOTA_CPU")
+
+if [ -z "$REQ_M" ]; then
+    echo "❌ Container da CPU request yo'q — ResourceQuota li namespace da"
+    echo "   request siz pod UMUMAN yaratilmaydi"
+    ((ERRORS++))
+elif [ -n "$QUOTA_M" ] && [ $((REQ_M * REPLICAS)) -gt "$QUOTA_M" ]; then
+    echo "❌ $REPLICAS × ${CPU_REQUEST} = $((REQ_M * REPLICAS))m > quota ${QUOTA_CPU}"
+    echo "   Barcha replika ko'tarila olmaydi — yo request ni, yo replicas ni kamaytiring"
+    ((ERRORS++))
+else
+    echo "✅ CPU: $REPLICAS × ${CPU_REQUEST} = $((REQ_M * REPLICAS))m, quota: ${QUOTA_CPU:-cheklanmagan}"
+fi
 
 # 9. Pod status
+#
+# Ilgari pod lar tayyor bo'lmasa faqat ⚠️ chiqarib, ERRORS ni
+# OSHIRMASDI — ya'ni butun finalni BITTA ham ishlaydigan pod siz
+# topshirish mumkin edi. Endi bu xato, lekin avval haqiqiy imkon
+# beramiz: image tortish sekin bo'lishi mumkin.
 echo "🔍 9/9: Tekshirilmoqda pod holatini..."
-READY=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "0")
-if [ "$READY" = "0" ] || [ -z "$READY" ]; then
-    echo "⚠️  Pod lar hali tayyor emas (may need time to start)"
-else
+READY=0
+for i in $(seq 1 20); do
+    READY=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.status.readyReplicas}' 2>/dev/null)
+    [ -z "$READY" ] && READY=0
+    [ "$READY" -ge "${REPLICAS:-1}" ] && break
+    sleep 3
+done
+if [ "$READY" -ge "${REPLICAS:-1}" ]; then
     echo "✅ $READY/$REPLICAS pod tayyor"
+elif [ "$READY" -gt 0 ]; then
+    echo "❌ Faqat $READY/$REPLICAS pod tayyor — qolganlari ko'tarilmadi"
+    echo "   Sabab: kubectl describe deployment $DEPLOYMENT -n $NAMESPACE"
+    ((ERRORS++))
+else
+    echo "❌ Birorta ham pod tayyor emas ($READY/$REPLICAS)"
+    echo "   Sabab: kubectl get pods -n $NAMESPACE; kubectl describe deployment $DEPLOYMENT -n $NAMESPACE"
+    ((ERRORS++))
 fi
 
 echo ""

@@ -3,8 +3,18 @@
 # Level 26 Validation: Session Affinity Missing
 # Validates that the Service has sessionAffinity configured
 
-set -e
-
+# `set -e` ATAYLAB YO'Q.
+#
+# Ilgari bu yerda `set -e` turardi va u validator uchun ZARARLI: skript
+# nosozlikni TOPISHI kerak, undan o'lishi emas. Har qanday
+# `X=$(kubectl get ...)` yoki `DIFF=$(diff ...)` nolga teng bo'lmagan kod
+# qaytarsa (ya'ni AYNAN tekshirilayotgan holat ro'y berganda) skript o'sha
+# joyda jimgina to'xtardi — foydalanuvchi sababsiz muvaffaqiyatsizlik
+# ko'rardi. L28 da bu aniq ko'rinardi: endpoint lar mos kelmasa `diff` 1
+# qaytarar va tushuntirish chop etilishidan OLDIN skript o'lardi.
+#
+# Barcha tekshiruvlar o'z `exit 0/1` iga ega, ya'ni `set -e` shundoq ham
+# keraksiz edi.
 NAMESPACE="k8squest"
 SERVICE_NAME="session-service"
 CLIENT_POD="client"

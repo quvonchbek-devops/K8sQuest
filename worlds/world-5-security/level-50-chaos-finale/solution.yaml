@@ -135,11 +135,17 @@ spec:
         command: ['sh', '-c', 'echo "🎉 ALL SYSTEMS OPERATIONAL! The storm has passed!"; sleep 3600']
         resources:
           requests:
-            cpu: "200m"  # ✅ Fits quota
-            memory: "256Mi"
+            cpu: "100m"   # ✅ 2 × 100m = 200m — quota ga sig'adi
+            memory: "64Mi"
           limits:
-            cpu: "500m"
-            memory: "512Mi"
+            # Limit lar KONTEYNER chegarasidan (LimitRange) oshmasligi
+            # kerak. Ilgari bu yerda 512Mi turardi va hosted sandbox da
+            # pod UMUMAN yaratilmasdi: "maximum memory usage per Container
+            # is 256Mi, but limit is 512Mi". Ya'ni rasmiy yechim bilan ham
+            # birorta pod ko'tarilmasdi — buni eski validate ko'rmasdi,
+            # chunki u pod holatini faqat ogohlantirish sifatida tekshirardi.
+            cpu: "200m"
+            memory: "128Mi"
         securityContext:  # ✅ Container security
           runAsNonRoot: true
           runAsUser: 1000
