@@ -1,4 +1,20 @@
 #!/bin/bash
+#
+# ⚠️  BU SKRIPT PLATFORMA TOMONIDAN ISHGA TUSHIRILMAYDI.
+#
+# `setup.sh` importer ning ruxsat ro'yxatida YO'Q (k8s-dojo:
+# `services/content/importer.go`), ya'ni u bazaga umuman import
+# qilinmaydi. Kontent mualliflari mavjud deb o'ylagan "setup bosqichi"
+# hech qachon mavjud bo'lmagan — level lar esa unga tayangan va shu
+# sababdan buzuq edi (BUG.md CNT-004).
+#
+# Bu skript endi KERAK EMAS: broken.yaml ning o'zi eski revision ni
+# olib keladi (selectorga mos yetim ReplicaSet). BUG.md CNT-003.
+#
+# Fayl SAQLANDI: u mualliflarning niyatini ko'rsatadi va platformaga
+# setup bosqichi qo'shilsa (sandbox ichida Job da, host da EMAS — P0.2
+# host-exec zaifligiga qarang) shu yerdan boshlanadi.
+#
 # Level 11 O'rnatish Skripti
 # Bu rollback uchun oldingi revision borligini ta'minlaydi
 
