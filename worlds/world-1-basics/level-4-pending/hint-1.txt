@@ -1,7 +1,21 @@
 🔍 Kuzatuv maslahat:
 
-Pod holatini tekshiring: `kubectl get pod hungry-app -n k8squest`
+Avval buzilgan manifestni O'ZINGIZ qo'llang — bu levelda birinchi qadam shu:
 
-"Pending" holatida qotib turganini ko'rasiz. `kubectl describe pod hungry-app -n k8squest` buyrug'ini ishlating va Events bo'limiga qarang.
+`kubectl apply -f broken.yaml`
 
-Scheduling haqida qanday xabar ko'ryapsiz?
+Natija muhitga qarab ikki xil bo'ladi, lekin SABAB bitta:
+
+1. Xato darhol qaytishi mumkin:
+   "must be less than or equal to cpu limit of 200m" —
+   ya'ni so'ralgan resurs namespace qoidasidan (LimitRange) oshib ketgan
+   va pod umuman yaratilmadi.
+
+2. Yoki pod yaratiladi, lekin "Pending" da qotib qoladi:
+   `kubectl get pod hungry-app -n k8squest`
+   `kubectl describe pod hungry-app -n k8squest` -> Events bo'limi
+   "Insufficient cpu", "Insufficient memory" deydi — ya'ni hech bir node
+   bunchalik resurs bera olmaydi.
+
+Ikkala xabar ham bitta narsani aytadi: `resources.requests` haqiqatga
+mos emas. Manifestda qancha so'ralganiga qarang.

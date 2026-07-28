@@ -1,3 +1,16 @@
+# `setup: manual` — broken.yaml ni SERVER qo'llamaydi, foydalanuvchi o'zi.
+#
+# NEGA: bu manifest 999 CPU / 999Gi so'raydi va hosted sandbox da u
+# SCHEDULER GACHA YETIB BORMAYDI — namespace ning LimitRange i uni
+# ADMISSION da rad etadi ("must be less than or equal to cpu limit of
+# 200m"). Server uni o'zi qo'llaganda setup 500 bilan yiqilar va
+# foydalanuvchi bo'sh namespace ni ko'rardi: level boshlanmasdan tugardi.
+#
+# Manual da esa apply ning O'Z xatosi darsning boshlanishi bo'ladi —
+# talab qilingan resurs juda katta ekanini foydalanuvchi birinchi
+# buyruqdayoq o'z ko'zi bilan ko'radi. O'z klasteri bo'lgan muhitda (v2,
+# LimitRange yo'q) esa pod odatdagidek Pending da qoladi. Ikkala holatda
+# ham tashxis bir xil va yechim bir xil.
 name: "Pending Pod Muammosi"
 description: "Pod mavjud resurslardan ko'proq so'rayotgani uchun Pending holatida qotib qolgan"
 objective: "Resource request larni moslang, shunda pod schedule qilinsin"
@@ -11,3 +24,19 @@ concepts:
   - kubectl describe
   - Pending holati
   - Node sig'imi (capacity)
+
+# Muhit overlay i — platformaning O'Z mexanizmi (`environments.<env>`,
+# `services/content/environment.go`, env nomi "hosted"). `setup` ni
+# yuqori darajaga yozish NOTO'G'RI bo'lardi: o'z klasteri bo'lgan muhitda
+# (v2, LimitRange yo'q) avtomatik apply bemalol ishlaydi va pod odatdagidek
+# Pending da qoladi — u yerda foydalanuvchini qo'lda apply qilishga
+# majburlashning ma'nosi yo'q.
+environments:
+  hosted:
+    setup: manual
+    description: "Pod so'ragan resurs namespace qoidasidan (LimitRange) oshib ketgan — manifest umuman qabul qilinmaydi"
+    concepts:
+      - Resource requests
+      - LimitRange
+      - Admission rad etishi
+      - kubectl describe

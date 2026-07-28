@@ -1,3 +1,14 @@
+# MIQDORLAR SANDBOX KONVERTIGA MOSLANDI.
+#
+# Ilgari bu yerda 2.5 CPU / 1Gi turardi va hosted muhitda pod darsning
+# O'Z quota siga (compute-quota) yetib BORMASDI: sandbox namespace ining
+# LimitRange i uni oldinroq rad etardi ("maximum cpu usage per Container
+# is 500m, but limit is 3"). Ya'ni foydalanuvchi ResourceQuota haqidagi
+# darsda umuman boshqa xato ko'rardi.
+#
+# Endi raqamlar konteyner chegarasidan (500m / 256Mi) past, lekin
+# darsning quota sidan YUQORI — ya'ni to'suvchi shart aynan
+# `compute-quota` bo'ladi va xabar "exceeded quota" deb keladi.
 # BROKEN: ResourceQuota exceeded
 # Problem: Pod requests more resources than namespace quota allows
 # Result: Pod stuck in Pending - insufficient quota
@@ -9,10 +20,10 @@ metadata:
   namespace: k8squest
 spec:
   hard:
-    requests.cpu: "2"  # Total CPU requests limited to 2 cores
-    requests.memory: "2Gi"  # Total memory requests limited to 2Gi
-    limits.cpu: "4"  # Total CPU limits to 4 cores
-    limits.memory: "4Gi"  # Total memory limits to 4Gi
+    requests.cpu: "200m"    # Jami CPU request lari 200m bilan cheklangan
+    requests.memory: "128Mi" # Jami memory request lari 128Mi
+    limits.cpu: "400m"
+    limits.memory: "256Mi"
     pods: "10"  # Maximum 10 pods
 
 ---
@@ -28,12 +39,12 @@ spec:
     image: nginx:latest
     resources:
       requests:
-        cpu: "2500m"  # ❌ Requests 2.5 CPUs but quota only allows 2 total!
-        memory: "1Gi"
+        cpu: "300m"    # ❌ quota jami 200m ga ruxsat beradi — sig'maydi
+        memory: "192Mi" # ❌ quota jami 128Mi
       limits:
-        cpu: "3"
-        memory: "2Gi"
+        cpu: "400m"
+        memory: "256Mi"
 
 # Result: Pod can't be scheduled
-# Error: "exceeded quota: compute-quota, requested: requests.cpu=2500m"
+# Error: "exceeded quota: compute-quota, requested: requests.cpu=300m"
 # Quota only has 2 CPUs available, pod wants 2.5 CPUs

@@ -7,10 +7,10 @@ metadata:
   namespace: k8squest
 spec:
   hard:
-    requests.cpu: "2"  # Total 2 CPUs
-    requests.memory: "2Gi"  # Total 2Gi memory
-    limits.cpu: "4"
-    limits.memory: "4Gi"
+    requests.cpu: "200m"    # Jami 200m
+    requests.memory: "128Mi" # Jami 128Mi
+    limits.cpu: "400m"
+    limits.memory: "256Mi"
     pods: "10"
 
 ---
@@ -26,18 +26,18 @@ spec:
     image: nginx:latest
     resources:
       requests:
-        cpu: "500m"  # ✅ Reduced to 0.5 CPUs (fits in 2 CPU quota)
-        memory: "512Mi"  # ✅ Reduced to 512Mi (fits in 2Gi quota)
+        cpu: "100m"   # ✅ kamaytirildi — 200m quota ga sig'adi
+        memory: "64Mi" # ✅ 128Mi quota ga sig'adi
       limits:
-        cpu: "1"  # ✅ Reduced limit (fits in 4 CPU quota)
-        memory: "1Gi"  # ✅ Reduced limit (fits in 4Gi quota)
+        cpu: "200m"   # ✅ limit ham quota ga sig'adi
+        memory: "128Mi"
     command: ["/bin/sh"]
     args:
     - -c
     - |
       echo "Application running with reasonable resource requests"
-      echo "CPU request: 500m, Memory request: 512Mi"
+      echo "CPU request: 100m, Memory request: 64Mi"
       nginx -g 'daemon off;'
 
 # Now pod schedules successfully within quota limits
-# Requests: 500m CPU + 512Mi memory (well within 2 CPU / 2Gi quota)
+# Requests: 100m CPU + 64Mi memory (200m / 128Mi quota ichida)
