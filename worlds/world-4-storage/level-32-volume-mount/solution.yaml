@@ -14,7 +14,14 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: standard
+  # Bu PVC ni PROVISIONER bog'laydi (level o'z PersistentVolume ini
+  # yaratmaydi), ya'ni bu yerda KLASTERDA HAQIQATAN MAVJUD sinf turishi
+  # shart. Ilgari `standard` yozilgan edi — u kind/minikube nomi, k3s da
+  # esa yo'q: PVC abadiy Pending da qolar, pod hech qachon ko'tarilmas va
+  # darsning O'Z nuqsoni umuman ko'rinmasdi.
+  #
+  # Nomni yodlamang: `kubectl get storageclass` bilan so'rang.
+  storageClassName: local-path
   hostPath:
     path: /tmp/k8squest-config
     type: DirectoryOrCreate
@@ -27,7 +34,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: standard
+  storageClassName: local-path
   resources:
     requests:
       storage: 1Gi

@@ -71,12 +71,33 @@ echo "✅ Credentials to'g'ri dekodlandi va ishlatildi"
 
 echo ""
 echo "🔍 7-bosqich: Secret qiymatlar tekshirilmoqda..."
-POD_USERNAME=$(kubectl exec "$POD_NAME" -n "$NAMESPACE" -- sh -c 'echo $DB_USER' 2>/dev/null)
-if [ "$POD_USERNAME" != "$USERNAME_DECODED" ]; then
-    echo "❌ Pod noto'g'ri username oldi"
+# `kubectl exec` ATAYLAB ISHLATILMAYDI: sandbox foydalanuvchisida
+# `pods/exec` yo'q (interaktiv shell terminaldagi buyruq validatorini
+# chetlab o'tadi), validate esa aynan o'sha huquq bilan ishlaydi. Exec li
+# tekshiruv HAR DOIM bo'sh qaytar va skript YOLG'ON sabab bilan yiqilardi.
+# Buning o'rniga API dan o'qiymiz.
+#
+# Pod ning DB_USER env i qaysi Secret kalitidan kelayotganini o'qiymiz va
+# o'sha kalitning DEKODLANGAN qiymatini kutilgani bilan solishtiramiz —
+# bu exec bilan bir xil narsani isbotlaydi, chunki kubelet konteynerga
+# aynan shu qiymatni beradi.
+SEC_REF=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" \
+    -o jsonpath='{.spec.containers[0].env[?(@.name=="DB_USER")].valueFrom.secretKeyRef.name}' 2>/dev/null)
+SEC_KEY=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" \
+    -o jsonpath='{.spec.containers[0].env[?(@.name=="DB_USER")].valueFrom.secretKeyRef.key}' 2>/dev/null)
+if [ -z "$SEC_REF" ] || [ -z "$SEC_KEY" ]; then
+    echo "❌ DB_USER env i Secret kalitidan olinmayapti"
+    echo "💡 kubectl get pod $POD_NAME -n $NAMESPACE -o yaml | grep -A6 env:"
     exit 1
 fi
-echo "✅ Secret values to'g'ri decoded in pod"
+POD_USERNAME=$(kubectl get secret "$SEC_REF" -n "$NAMESPACE" \
+    -o jsonpath="{.data.$SEC_KEY}" 2>/dev/null | base64 -d 2>/dev/null)
+if [ "$POD_USERNAME" != "$USERNAME_DECODED" ]; then
+    echo "❌ Pod noto'g'ri username oladi (secret/$SEC_REF kaliti '$SEC_KEY')"
+    echo "   kutilgan: $USERNAME_DECODED, kelgan: $POD_USERNAME"
+    exit 1
+fi
+echo "✅ Secret qiymati to'g'ri kodlangan va pod ga to'g'ri yetib boradi"
 
 echo ""
 echo "🎉 SUCCESS! Secret properly base64 encoded and pod using credentials!"

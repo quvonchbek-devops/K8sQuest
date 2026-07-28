@@ -52,13 +52,33 @@ echo "✅ Privilege escalation o'chirilgan"
 
 echo ""
 echo "🔍 TEKSHIRUV 6-BOSQICH: Tekshirilmoqda konteyner haqiqatan non-root sifatida ishlayotganligini..."
-ACTUAL_USER=$(kubectl exec $POD_NAME -n $NAMESPACE -- id -u 2>/dev/null || echo "0")
-if [ "$ACTUAL_USER" = "0" ]; then
-    echo "❌ FAILED: Container is running as root (UID 0)"
-    echo "💡 Maslahat: Container user doesn't match runAsUser setting"
+# `kubectl exec` ATAYLAB ISHLATILMAYDI: sandbox foydalanuvchisida
+# `pods/exec` yo'q (interaktiv shell terminaldagi buyruq validatorini
+# chetlab o'tadi), validate esa aynan o'sha huquq bilan ishlaydi. Exec li
+# tekshiruv HAR DOIM bo'sh qaytar va skript YOLG'ON sabab bilan yiqilardi.
+# Buning o'rniga API dan o'qiymiz.
+#
+# `runAsNonRoot: true` bo'lganda tekshiruvni KUBELET bajaradi: image root
+# sifatida ishlashga urinsa, konteyner umuman ishga tushmaydi
+# (CreateContainerError: "container has runAsNonRoot and image will run as
+# root"). Ya'ni pod ning Running bo'lishining O'ZI dalil. Shu sababli
+# bu yerda effektiv UID ni pod spec idan o'qiymiz va nol emasligini
+# tekshiramiz.
+ACTUAL_USER=$(kubectl get pod $POD_NAME -n $NAMESPACE \
+    -o jsonpath='{.spec.containers[0].securityContext.runAsUser}' 2>/dev/null)
+[ -z "$ACTUAL_USER" ] && ACTUAL_USER=$(kubectl get pod $POD_NAME -n $NAMESPACE \
+    -o jsonpath='{.spec.securityContext.runAsUser}' 2>/dev/null)
+POD_PHASE=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.status.phase}' 2>/dev/null)
+if [ -z "$ACTUAL_USER" ] || [ "$ACTUAL_USER" = "0" ]; then
+    echo "❌ FAILED: Konteyner root (UID 0) sifatida ishlayapti yoki runAsUser berilmagan"
+    echo "💡 Maslahat: pod yoki konteyner securityContext ida runAsUser ni bering"
     exit 1
 fi
-echo "✅ Container running as UID $ACTUAL_USER (non-root)"
+if [ "$POD_PHASE" != "Running" ]; then
+    echo "❌ FAILED: Pod Running emas ($POD_PHASE) — runAsNonRoot bilan image mos kelmayotgan bo'lishi mumkin"
+    exit 1
+fi
+echo "✅ Konteyner UID $ACTUAL_USER bilan ishlayapti (non-root)"
 
 echo ""
 echo "🎉 SUCCESS! All security validations o'tdi!"

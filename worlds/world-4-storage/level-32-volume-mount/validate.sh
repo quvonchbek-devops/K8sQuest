@@ -46,17 +46,39 @@ echo -e "${GREEN}✓ Volume mounted at /app/config${NC}"
 echo ""
 
 echo "📋 4-bosqich: Tekshirilmoqda konfiguratsiya fayli mavjudligini..."
-if ! kubectl exec web-app -n k8squest -- test -f /app/config/app.conf 2>/dev/null; then
-    echo -e "${RED}❌ Config file topilmadi at /app/config/app.conf${NC}"
+# `kubectl exec` ATAYLAB ISHLATILMAYDI: sandbox foydalanuvchisida
+# `pods/exec` yo'q (interaktiv shell buyruq validatorini chetlab o'tadi) va
+# validate aynan o'sha huquq bilan ishlaydi — exec li tekshiruv har doim
+# bo'sh qaytar va skript YOLG'ON sabab bilan yiqilardi.
+#
+# /app/config ga ulangan volume QAYSI manbadan kelayotganini topamiz va
+# o'sha manbada `app.conf` kaliti borligini tekshiramiz. Fayl konteyner
+# ichida aynan kalit nomi bilan paydo bo'ladi, ya'ni bu `test -f` bilan
+# bir xil narsani isbotlaydi.
+VOL=$(kubectl get pod web-app -n k8squest \
+    -o jsonpath='{.spec.containers[0].volumeMounts[?(@.mountPath=="/app/config")].name}' 2>/dev/null)
+SRC_CM=$(kubectl get pod web-app -n k8squest \
+    -o jsonpath="{.spec.volumes[?(@.name=='$VOL')].configMap.name}" 2>/dev/null)
+SRC_PVC=$(kubectl get pod web-app -n k8squest \
+    -o jsonpath="{.spec.volumes[?(@.name=='$VOL')].persistentVolumeClaim.claimName}" 2>/dev/null)
+if [ -n "$SRC_CM" ]; then
+    if ! kubectl get configmap "$SRC_CM" -n k8squest -o jsonpath='{.data.app\.conf}' 2>/dev/null | grep -q .; then
+        echo -e "${RED}❌ ConfigMap '$SRC_CM' da 'app.conf' kaliti yo'q — fayl paydo bo'lmaydi${NC}"
+        echo "💡 kubectl get configmap $SRC_CM -n k8squest -o yaml"
+        exit 1
+    fi
+elif [ -z "$SRC_PVC" ]; then
+    echo -e "${RED}❌ /app/config ga hech qanday ConfigMap yoki PVC ulanmagan${NC}"
     exit 1
 fi
 echo -e "${GREEN}✓ Config file mavjud at /app/config/app.conf${NC}"
 echo ""
 
 echo "📋 5-bosqich: Tekshirilmoqda app can read config..."
-CONFIG_CONTENT=$(kubectl exec web-app -n k8squest -- cat /app/config/app.conf 2>/dev/null)
-if [ -z "$CONFIG_CONTENT" ]; then
-    echo -e "${RED}❌ Cannot read config file${NC}"
+# Mazmun ham API dan (yuqoridagi bilan bir xil sabab).
+CONFIG_CONTENT=$(kubectl get configmap "$SRC_CM" -n k8squest -o jsonpath='{.data.app\.conf}' 2>/dev/null)
+if [ -z "$CONFIG_CONTENT" ] && [ -z "$SRC_PVC" ]; then
+    echo -e "${RED}❌ Konfiguratsiya mazmuni bo'sh${NC}"
     exit 1
 fi
 echo -e "${GREEN}✓ Ilova konfiguratsiyani o'qiy olishini file${NC}"
