@@ -3,8 +3,9 @@ title: "Access Mode Mismatch"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "Access Mode Nomuvofiqlik"
 world: "Storage & Stateful Apps"
-difficulty: "intermediate"
+difficulty: intermediate
 xp: 250
+expected_time: 15m
 concepts:
   - access-modes
   - readwriteonce

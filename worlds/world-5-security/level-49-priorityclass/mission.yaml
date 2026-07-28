@@ -4,6 +4,7 @@ objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "PriorityClass Konfiguratsiyasi"
 difficulty: advanced
 xp: 300
+expected_time: 20m
 xp_reward: 300
 world: 5
 concepts:

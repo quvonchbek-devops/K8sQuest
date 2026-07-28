@@ -2,7 +2,7 @@ name: "NodePort ga Kirish Mumkin Emas"
 description: "NodePort service yaratilgan lekin klasterdan tashqaridan kirish mumkin emas"
 objective: "Tashqi kirishni yoqish uchun NodePort service konfiguratsiyasini to'g'rilang"
 xp: 200
-difficulty: "o'rta"
+difficulty: intermediate
 expected_time: "15m"
 concepts:
   - NodePort service

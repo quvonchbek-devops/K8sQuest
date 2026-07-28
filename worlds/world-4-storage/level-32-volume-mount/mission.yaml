@@ -4,6 +4,7 @@ objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "Volume Mount Yo'li Xatosi"
 difficulty: intermediate
 xp: 200
+expected_time: 12m
 xp_reward: 200
 estimated_time: "10 minutes"
 

@@ -2,7 +2,7 @@ name: "Stateful Ilova Ma'lumot Yo'qotishi"
 description: "Ma'lumotlar bazasi uchun Deployment ishlatish ma'lumot yo'qotishi va pod identifikatsiya muammolariga olib kelmoqda"
 objective: "Barqaror pod identifikatsiyasi va doimiy storage ta'minlash uchun Deployment ni StatefulSet ga aylantiring"
 xp: 200
-difficulty: ilg'or
+difficulty: advanced
 expected_time: 18m
 concepts:
   - StatefulSet

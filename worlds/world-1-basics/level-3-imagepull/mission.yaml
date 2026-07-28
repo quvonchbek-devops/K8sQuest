@@ -2,7 +2,7 @@ name: "ImagePullBackOff Jumboqi"
 description: "Pod mavjud bo'lmagan konteyner image ni tortishga (pull) urinib qotib qolgan"
 objective: "Image manzilini to'g'rilang, shunda pod muvaffaqiyatli ishga tushsin"
 xp: 100
-difficulty: boshlang'ich
+difficulty: beginner
 expected_time: 10m
 concepts:
   - ImagePullBackOff

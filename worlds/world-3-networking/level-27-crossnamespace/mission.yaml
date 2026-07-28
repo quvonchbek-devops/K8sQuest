@@ -3,7 +3,8 @@ objective: "To'g'ri DNS FQDN yordamida namespace lar arasi service aloqasini tuz
 world: 3
 level: 27
 xp: 250
-difficulty: o'rta
+expected_time: 15m
+difficulty: intermediate
 
 description: |
   'k8squest' namespace dagi frontend ilova 'backend-ns' namespace dagi API ga

@@ -3,8 +3,9 @@ title: "ConfigMap Missing Key"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "ConfigMap da Kalit Yetishmayapti"
 world: "Storage & Stateful Apps"
-difficulty: "beginner"
+difficulty: beginner
 xp: 200
+expected_time: 12m
 concepts:
   - configmap
   - environment-variables

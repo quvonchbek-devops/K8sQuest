@@ -1,7 +1,8 @@
 name: "LoadBalancer Pending da Qotib Qoldi"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
-difficulty: o'rta
+difficulty: intermediate
 xp: 250
+expected_time: 15m
 
 description: |
   Jamoangiz LoadBalancer turidagi service deploy qildi, lekin u 10 daqiqadan beri

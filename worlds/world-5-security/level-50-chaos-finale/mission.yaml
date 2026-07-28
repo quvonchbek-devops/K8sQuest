@@ -3,6 +3,7 @@ name: "Xaos Finali — Hamma Narsa Buzilgan!"
 title: "CHAOS FINALE: The Perfect Storm"
 difficulty: expert
 xp: 500
+expected_time: 40m
 xp_reward: 500
 world: 5
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"

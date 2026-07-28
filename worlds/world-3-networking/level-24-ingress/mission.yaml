@@ -2,7 +2,7 @@ name: "Ingress Path Nomuvofiqlik"
 description: "Ingress yaratilgan lekin trafik backend service ni ga yetib bormayapti"
 objective: "Trafikni to'g'ri yo'naltirish uchun Ingress path qoidalarini tuzating"
 xp: 250
-difficulty: "o'rta"
+difficulty: intermediate
 expected_time: "20m"
 concepts:
   - Ingress

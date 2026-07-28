@@ -2,7 +2,7 @@ name: "PDB Barcha Eviction larni Bloklayapti"
 description: "PodDisruptionBudget juda cheklangan, node drain va yangilanishlarni to'sib qo'ymoqda"
 objective: "Mavjudlikni saqlagan holda xavfsiz pod eviction larga ruxsat berish uchun PDB ni to'g'rilang"
 xp: 250
-difficulty: ilg'or
+difficulty: advanced
 expected_time: 15m
 concepts:
   - PodDisruptionBudget

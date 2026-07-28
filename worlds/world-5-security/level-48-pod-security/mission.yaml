@@ -4,6 +4,7 @@ objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "Pod Xavfsizlik Standarti"
 difficulty: advanced
 xp: 350
+expected_time: 25m
 xp_reward: 350
 world: 5
 concepts:

@@ -3,7 +3,8 @@ objective: "Service endpoint lari to'g'ri yangilanishi uchun readiness probe lar
 world: 3
 level: 28
 xp: 200
-difficulty: o'rta
+expected_time: 12m
+difficulty: intermediate
 
 description: |
   Service ning endpoint lari pod lar qayta ishga tushganida yoki sog'lomsiz bo'lganda

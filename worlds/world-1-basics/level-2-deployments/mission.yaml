@@ -2,7 +2,7 @@ name: Deployment ni Tuzatish
 description: Deployment da replika soni nolga teng
 objective: Deployment da mavjud (available) replikalar bo'lishi kerak
 xp: 150
-difficulty: boshlang'ich
+difficulty: beginner
 expected_time: 8m
 concepts:
   - deployments

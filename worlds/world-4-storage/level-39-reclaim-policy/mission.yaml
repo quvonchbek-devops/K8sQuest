@@ -3,8 +3,9 @@ title: "Reclaim Policy Data Loss"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "Reclaim Policy Ma'lumot Yo'qotishi"
 world: "Storage & Stateful Apps"
-difficulty: "intermediate"
+difficulty: intermediate
 xp: 250
+expected_time: 15m
 concepts:
   - reclaim-policy
   - persistent-volume

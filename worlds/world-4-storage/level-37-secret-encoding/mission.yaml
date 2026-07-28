@@ -3,8 +3,9 @@ title: "Secret Encoding vs Encryption"
 objective: "Base64 kodlash XAVFSIZLIK emasligini tushuning"
 name: "Secret Kodlash va Shifrlash Farqi"
 world: "Storage & Stateful Apps"
-difficulty: "intermediate"
+difficulty: intermediate
 xp: 250
+expected_time: 15m
 concepts:
   - secrets
   - base64-encoding

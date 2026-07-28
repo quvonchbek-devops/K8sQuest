@@ -4,6 +4,7 @@ objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "PVC Pending da Qotib Qoldi"
 difficulty: intermediate
 xp: 250
+expected_time: 15m
 xp_reward: 250
 estimated_time: "15 minutes"
 

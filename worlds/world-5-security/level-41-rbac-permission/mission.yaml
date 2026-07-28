@@ -3,8 +3,9 @@ title: "RBAC Permission Denied"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "RBAC Ruxsat Rad Etildi"
 world: "Security & Production Ops"
-difficulty: "advanced"
+difficulty: advanced
 xp: 300
+expected_time: 20m
 concepts:
   - rbac
   - role

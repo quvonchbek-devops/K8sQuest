@@ -3,8 +3,9 @@ title: "StatefulSet Volume Templates"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "StatefulSet Volume Template lari"
 world: "Storage & Stateful Apps"
-difficulty: "advanced"
+difficulty: advanced
 xp: 300
+expected_time: 20m
 concepts:
   - statefulset
   - volumeclaimtemplates

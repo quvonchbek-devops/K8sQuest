@@ -3,7 +3,8 @@ objective: "Frontend-dan-backend ga aloqani ta'minlash uchun haddan tashqari che
 world: 3
 level: 25
 xp: 250
-difficulty: o'rta
+expected_time: 15m
+difficulty: intermediate
 
 description: |
   NetworkPolicy ni pod lar orasidagi qonuniy trafikni to'sib qo'ymoqda. Frontend
