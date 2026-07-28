@@ -10,7 +10,14 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: standard  # ✅ Use existing StorageClass
+  # Bu platformaning HAQIQIY sinfi (k3s ning default i). Ilgari bu yerda
+  # `standard` turardi — u kind/minikube nomi va bizning klasterda
+  # MAVJUD EMAS, ya'ni rasmiy yechim bilan ham level o'tmasdi:
+  # "StorageClass 'standard' does not exist".
+  #
+  # Nomni yodlab olmang — har klasterda boshqacha bo'ladi. Uni har doim
+  # so'rab bilib oling:  kubectl get storageclass
+  storageClassName: local-path
 ---
 apiVersion: v1
 kind: Pod

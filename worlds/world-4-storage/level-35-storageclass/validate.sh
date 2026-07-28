@@ -61,9 +61,30 @@ echo "✅ Pod Running holatida"
 
 echo ""
 echo "🔍 7-bosqich: Tekshirilmoqda volume ulangan ekanligini..."
-MOUNT_CHECK=$(kubectl exec "$POD_NAME" -n "$NAMESPACE" -- sh -c 'test -d /data && echo "mounted"' 2>/dev/null)
-if [ "$MOUNT_CHECK" != "mounted" ]; then
-    echo "❌ Volume /data ga to'g'ri ulanmagan"
+# `kubectl exec` ATAYLAB ISHLATILMAYDI.
+#
+# Sandbox foydalanuvchisida `pods/exec` YO'Q va bu ataylab: interaktiv
+# shell terminaldagi buyruq validatorini butunlay chetlab o'tadi. Validate
+# esa aynan o'sha huquq bilan ishlaydi, ya'ni exec li tekshiruv HAR DOIM
+# bo'sh natija qaytarar va skript "Volume ulanmagan" deb YOLG'ON sabab
+# bilan yiqilardi — foydalanuvchi levelni to'g'ri yechgan bo'lsa ham.
+#
+# Buning o'rniga API dan o'qiymiz: (a) konteynerda /data ga mount
+# E'LON QILINGANMI, (b) o'sha volume PVC ga bog'langanmi. Bu yetarli
+# isbot — kubelet mount ni bajara olmasa, pod umuman Running bo'lmaydi
+# (yuqoridagi bosqich buni allaqachon tekshirdi).
+VOLUME_NAME=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" \
+    -o jsonpath='{.spec.containers[0].volumeMounts[?(@.mountPath=="/data")].name}' 2>/dev/null)
+if [ -z "$VOLUME_NAME" ]; then
+    echo "❌ Konteynerda /data ga volumeMount e'lon qilinmagan"
+    echo "💡 kubectl get pod $POD_NAME -n $NAMESPACE -o yaml | grep -A5 volumeMounts"
+    exit 1
+fi
+CLAIM=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" \
+    -o jsonpath="{.spec.volumes[?(@.name=='$VOLUME_NAME')].persistentVolumeClaim.claimName}" 2>/dev/null)
+if [ "$CLAIM" != "$PVC_NAME" ]; then
+    echo "❌ /data PVC $PVC_NAME ga bog'lanmagan; topilgani: ${CLAIM:-yoq}"
+    echo "💡 Pod ning volumes bo'limida persistentVolumeClaim.claimName ni tekshiring"
     exit 1
 fi
 echo "✅ Volume muvaffaqiyatli ulandi"

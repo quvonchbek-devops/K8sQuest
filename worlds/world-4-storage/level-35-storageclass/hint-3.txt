@@ -8,7 +8,7 @@ kubectl get sc    # Mavjud StorageClass nomlari
 
 ```yaml
 storageClassName: non-existent-class    # ❌
-storageClassName: standard              # ✅ (yoki klasteringizdagi nom)
+storageClassName: local-path             # ✅ klasteringizdagi HAQIQIY nom
 ```
 
 `kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
