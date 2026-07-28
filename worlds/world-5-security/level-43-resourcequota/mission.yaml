@@ -18,3 +18,18 @@ learning_objectives:
   - Configure resource requests/limits properly
   - Balance quotas with application needs
   - Debug quota-related scheduling failures
+
+# Muhit overlay i (`services/content/environment.go`, env nomi "hosted").
+#
+# NEGA `setup: manual`: bu levelda broken.yaml ning bir qismi ATAYLAB rad
+# etiladi — ResourceQuota yaratiladi, pod esa unga sig'maydi. Ya'ni
+# `kubectl apply` nolga teng bo'lmagan kod qaytaradi va server uni o'zi
+# qo'llaganda setup 500 bilan yiqilib, foydalanuvchi levelga umuman
+# kirolmasdi. Rad etishning O'ZI darsning boshlanishi bo'lgani uchun uni
+# foydalanuvchi ko'rishi kerak.
+#
+# Bu L4 bilan bir xil naqsh (CNT-012).
+environments:
+  hosted:
+    setup: manual
+    description: "Pod namespace ning ResourceQuota siga sig'maydi — manifest qabul qilinmaydi"
