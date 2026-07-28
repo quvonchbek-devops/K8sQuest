@@ -69,9 +69,24 @@ echo "✅ Pod muvaffaqiyatli wrote to volume"
 
 echo ""
 echo "🔍 8-bosqich: Tekshirilmoqda fayl yaratilganligini..."
-FILE_CHECK=$(kubectl exec "$POD_NAME" -n "$NAMESPACE" -- cat /data/test.txt 2>/dev/null)
-if [ "$FILE_CHECK" != "test data" ]; then
+# `kubectl exec` ATAYLAB ISHLATILMAYDI: sandbox foydalanuvchisida
+# `pods/exec` yo'q (interaktiv shell buyruq validatorini chetlab o'tadi) va
+# validate aynan o'sha huquq bilan ishlaydi — exec li tekshiruv har doim
+# bo'sh qaytar va skript "Fayl yaratilmadi" deb YOLG'ON sabab bilan
+# yiqilardi.
+#
+# Dars o'zgarmaydi: isbot ayni o'sha faylning MAZMUNI. Konteynerning o'zi
+# yozgandan keyin `cat /data/test.txt` qiladi, ya'ni mazmun uning
+# LOG ida turadi va `pods/log` sandbox da ruxsat etilgan. Ya'ni bu exec
+# bilan bir xil narsani, o'sha manbadan tekshiradi.
+#
+# `fsGroup` ni to'g'ridan-to'g'ri o'qimaymiz ataylab: level ni boshqa
+# to'g'ri yo'l bilan yechish ham mumkin (masalan initContainer bilan
+# egalikni o'zgartirish). Tekshiruv NATIJANI baholaydi, retseptni emas.
+if ! kubectl logs "$POD_NAME" -n "$NAMESPACE" 2>/dev/null | grep -q "^test data$"; then
     echo "❌ Fayl yaratilmadi yoki noto'g'ri tarkibga ega"
+    echo "💡 Konteyner yozgach faylni o'zi chop etadi — logda ko'ring:"
+    echo "   kubectl logs $POD_NAME -n $NAMESPACE"
     exit 1
 fi
 echo "✅ Fayl to'g'ri ruxsatlar bilan muvaffaqiyatli yaratildi"
