@@ -58,27 +58,57 @@ fi
 echo "✅ Pod Running holatida"
 
 echo ""
-echo "🔍 7-bosqich: Tekshirilmoqda ma'lumotlar saqlanishini..."
-kubectl exec "$POD_NAME" -n "$NAMESPACE" -- cat /data/persistent.txt &>/dev/null
-if [ $? -ne 0 ]; then
-    echo "⚠️  Hali ma'lumot fayli yo'q (this is okay on first run)"
-else
-    DATA_LINES=$(kubectl exec "$POD_NAME" -n "$NAMESPACE" -- wc -l /data/persistent.txt 2>/dev/null | awk '{print $1}')
-    echo "✅ Data file mavjud with $DATA_LINES lines"
-fi
+echo "🔍 7-bosqich: Tekshirilmoqda ma'lumot QAYERDA saqlanishini..."
 
-echo ""
-echo "🔍 8-bosqich: Tekshirilmoqda restart simulyatsiyasi orqali saqlanishni..."
-echo "   Test ma'lumotlari yozilmoqda..."
-kubectl exec "$POD_NAME" -n "$NAMESPACE" -- sh -c 'echo "Test persistence: $(date)" > /data/test-persistence.txt' 2>/dev/null
-
-echo "   Test ma'lumotlari o'qilmoqda..."
-TEST_DATA=$(kubectl exec "$POD_NAME" -n "$NAMESPACE" -- cat /data/test-persistence.txt 2>/dev/null)
-if [ -z "$TEST_DATA" ]; then
-    echo "❌ Yozilgan ma'lumotlarni o'qib bo'lmadi"
+# `kubectl exec` ATAYLAB ISHLATILMAYDI: sandbox foydalanuvchisida
+# `pods/exec` yo'q (interaktiv shell buyruq validatorini chetlab o'tadi) va
+# validate aynan o'sha huquq bilan ishlaydi — exec li tekshiruvlar har doim
+# bo'sh qaytar va skript YOLG'ON sabab bilan yiqilardi.
+#
+# Darsning MOHIYATI o'zgarmaydi. Bu level "faylni yozib ko'ring" haqida
+# emas — u ma'lumot QAYERDA turishi haqida: `emptyDir` pod bilan birga
+# tug'iladi va pod bilan birga O'LADI, `persistentVolumeClaim` esa pod dan
+# uzoq yashaydi. Faylni yozib-o'qish buni ISBOTLAMAYDI ham: emptyDir ga
+# yozilgan fayl ham bemalol o'qiladi — pod o'lmaguncha. Ya'ni eski
+# tekshiruv noto'g'ri narsani o'lchardi.
+#
+# Shuning uchun volume ning TURINI tekshiramiz: bu aynan foydalanuvchi
+# o'zgartirishi kerak bo'lgan narsa va u darsning yagona to'g'ri javobi.
+VOL_NAME=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" \
+    -o jsonpath='{.spec.containers[0].volumeMounts[?(@.mountPath=="/data")].name}' 2>/dev/null)
+if [ -z "$VOL_NAME" ]; then
+    echo "❌ Konteynerda /data ga volumeMount yo'q"
     exit 1
 fi
-echo "✅ Ma'lumotlar muvaffaqiyatli yozildi va o'qildi"
+
+IS_EMPTYDIR=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" \
+    -o jsonpath="{.spec.volumes[?(@.name=='$VOL_NAME')].emptyDir}" 2>/dev/null)
+CLAIM=$(kubectl get pod "$POD_NAME" -n "$NAMESPACE" \
+    -o jsonpath="{.spec.volumes[?(@.name=='$VOL_NAME')].persistentVolumeClaim.claimName}" 2>/dev/null)
+
+if [ -n "$IS_EMPTYDIR" ]; then
+    echo "❌ /data hamon emptyDir — ma'lumot pod bilan birga yo'q bo'ladi"
+    echo "💡 emptyDir pod bilan tug'iladi va pod bilan o'ladi. Pod qayta"
+    echo "   yaratilganda (deploy, node almashishi, crash) hamma narsa ketadi."
+    echo "💡 Uni PersistentVolumeClaim ga almashtiring."
+    exit 1
+fi
+if [ -z "$CLAIM" ]; then
+    echo "❌ /data ga PersistentVolumeClaim ulanmagan"
+    echo "💡 kubectl get pod $POD_NAME -n $NAMESPACE -o yaml | grep -A5 volumes:"
+    exit 1
+fi
+echo "✅ /data PersistentVolumeClaim '$CLAIM' dan kelyapti (pod dan uzoq yashaydi)"
+
+echo ""
+echo "🔍 8-bosqich: PVC haqiqatan bog'langanmi..."
+PVC_PHASE=$(kubectl get pvc "$CLAIM" -n "$NAMESPACE" -o jsonpath='{.status.phase}' 2>/dev/null)
+if [ "$PVC_PHASE" != "Bound" ]; then
+    echo "❌ PVC '$CLAIM' holati: ${PVC_PHASE:-topilmadi} (Bound bo'lishi kerak)"
+    echo "💡 kubectl describe pvc $CLAIM -n $NAMESPACE"
+    exit 1
+fi
+echo "✅ PVC Bound — saqlash joyi haqiqatan ajratilgan"
 
 echo ""
 echo "🎉 SUCCESS! Pod sozlangan with PersistentVolumeClaim for ma'lumotlar saqlanishini!"
