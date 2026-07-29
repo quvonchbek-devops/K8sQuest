@@ -18,3 +18,26 @@ learning_objectives:
   - Configure nodeAffinity selectors correctly
   - Match node label keys and values
   - Debug scheduling failures
+
+# Bu level HOSTED ning ikki turida BOSHQACHA — shuning uchun overlay ZANJIR.
+#
+# Dars: pod nodeAffinity bilan mos node ni topa olmayapti; yechim — node ga
+# kerakli label qo'yish yoki affinity ni to'g'rilash. Ya'ni dars NODE ustida
+# amal talab qiladi.
+#
+# `hosted` (v1, namespace sandbox): O'YNALMAYDI. Node — cluster-scoped
+# obyekt; sandbox foydalanuvchisi unga na yozadi, na label qo'yadi.
+# O'lchandi (2026-07-29 sweep):
+#   "No node found with label 'accelerator=gpu'" — va foydalanuvchi uni
+#   qo'ya OLMAYDI, ya'ni level hech qanday yo'l bilan yechilmaydi.
+# Ustiga node UMUMIY: bir foydalanuvchi qo'ygan label boshqalarning
+# podlariga ham ta'sir qilardi.
+#
+# `hosted-cluster` (v2, nested klaster): O'YNAYDI — node ham faqat
+# foydalanuvchiniki.
+environments:
+  hosted:
+    available: false
+    description: "Bu level node ga label qo'yishni o'rgatadi. Node — cluster darajasidagi va BARCHA foydalanuvchilar bo'lishadigan obyekt; hosted sandbox unga tegishga ruxsat bermaydi. Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
+  hosted-cluster:
+    available: true

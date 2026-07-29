@@ -18,3 +18,25 @@ learning_objectives:
   - Configure tolerations correctly
   - Differentiate NoSchedule, PreferNoSchedule, NoExecute
   - Debug taint-related scheduling failures
+
+# Bu level HOSTED ning ikki turida BOSHQACHA — shuning uchun overlay ZANJIR.
+#
+# Dars: node taint qilingan, pod da mos toleration yo'q. Ya'ni dars NODE
+# ustida amal talab qiladi.
+#
+# `hosted` (v1, namespace sandbox): O'YNALMAYDI va bu IKKI SABABDAN:
+#   1. RBAC — o'lchandi (2026-07-29 sweep):
+#      "nodes \"dev\" is forbidden: ... cannot patch resource \"nodes\"
+#      at the cluster scope";
+#   2. Xavfsizlik — `validate.sh` ning o'zi node ni taint qilishga
+#      urinadi. Ruxsat berilganda u UMUMIY node ni zaharlar va BOSHQA
+#      foydalanuvchilarning podlarini node dan quvib chiqarardi.
+#
+# `hosted-cluster` (v2, nested klaster): O'YNAYDI — node faqat
+# foydalanuvchiniki, zaharlanadigan qo'shni yo'q.
+environments:
+  hosted:
+    available: false
+    description: "Bu level node taint qilishni o'rgatadi. Node — barcha foydalanuvchilar bo'lishadigan obyekt; hosted sandbox unga tegishga ruxsat bermaydi (aks holda bir kishining taint i boshqalarning podlarini quvib chiqarardi). Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
+  hosted-cluster:
+    available: true
