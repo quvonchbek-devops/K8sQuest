@@ -18,3 +18,28 @@ learning_objectives:
   - Learn to create Roles and RoleBindings
   - Configure ServiceAccount permissions
   - Debug permission denied errors
+
+# Bu level HOSTED ning ikki turida BOSHQACHA — shuning uchun overlay ZANJIR.
+#
+# Dars: pod ning ServiceAccount iga kerakli huquq berilmagan; yechim —
+# Role/RoleBinding ni to'g'rilash. Ya'ni yechim ServiceAccount va
+# Role/RoleBinding YARATISHNI talab qiladi.
+#
+# `hosted` (v1, namespace sandbox): O'YNALMAYDI. Sandbox Role i
+# `serviceaccounts`, `roles`, `rolebindings` ga ruxsat BERMAYDI — aks
+# holda foydalanuvchi o'ziga istalgan huquqni yozib, sandbox
+# chegarasidan chiqib ketardi (eskalatsiya).
+#
+# `hosted-cluster` (v2, nested klaster): O'YNAYDI — foydalanuvchi o'z
+# klasterining cluster-admin i, eskalatsiya qiladigan joy yo'q.
+#
+# 2026-07-29 da `make check-content` bilan topildi: level "o'ynasa
+# bo'ladi" ko'rinardi, lekin yechimni QO'LLAB bo'lmasdi.
+#
+# Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
+environments:
+  hosted:
+    available: false
+    description: "Bu level RBAC (ServiceAccount, Role, RoleBinding) sozlashni o'rgatadi. Hosted sandbox bu turlarga ruxsat bermaydi — aks holda o'zingizga istalgan huquqni yozib, sandbox chegarasidan chiqib ketish mumkin bo'lardi. Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
+  hosted-cluster:
+    available: true

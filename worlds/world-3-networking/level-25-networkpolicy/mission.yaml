@@ -34,3 +34,26 @@ success_criteria:
   - NetworkPolicy ni frontend dan backend ga trafikka ruxsat beradi
   - NetworkPolicy ni boshqa pod lardan trafikni to'sishda davom etadi (xavfsizlikni saqlaydi)
   - Barcha pod lar ishlayotgan va sog'lom
+
+# Bu level HOSTED ning ikki turida BOSHQACHA — shuning uchun overlay ZANJIR.
+#
+# Dars: juda qattiq NetworkPolicy trafikni to'sib qo'yadi; yechim — qoidani
+# to'g'rilash. Ya'ni yechim NetworkPolicy YARATISHNI talab qiladi.
+#
+# `hosted` (v1, namespace sandbox): O'YNALMAYDI. Sandbox Role i
+# `networkpolicies` ga ATAYLAB ruxsat bermaydi: NetworkPolicy qoidalari
+# ADDITIV, ya'ni foydalanuvchi yozgan "allow-all" qoida platformaning
+# `sandbox-isolation` siyosati bilan birlashib izolyatsiyani TESHIB
+# o'tardi. Bu W5 L44 bilan bir xil holat va u allaqachon yopilgan —
+# L25 e'tibordan qolib ketgan edi (2026-07-29 sweep bilan topildi).
+#
+# `hosted-cluster` (v2, nested klaster): O'YNAYDI — klaster faqat
+# foydalanuvchiniki, teshiladigan qo'shni yo'q.
+#
+# Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
+environments:
+  hosted:
+    available: false
+    description: "Bu level NetworkPolicy yaratishni o'rgatadi. Hosted sandbox da izolyatsiya aynan NetworkPolicy bilan ushlab turiladi va qoidalar additiv — foydalanuvchi qoidasi uni teshib o'tardi. Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
+  hosted-cluster:
+    available: true
