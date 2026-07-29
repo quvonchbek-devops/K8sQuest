@@ -1,7 +1,13 @@
 # SOLUTION: NodeAffinity with correct labels
 
-# First, label a node for GPU workloads
-# kubectl label nodes kind-control-plane accelerator=gpu
+# MUHIM: bu fayl faqat POD ni tuzatadi. Node ga label qo'yish ALOHIDA
+# qadam va uni shu manifest bajara olmaydi — buyruqni o'zingiz yozasiz:
+#
+#   NODE=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')
+#   kubectl label nodes "$NODE" accelerator=gpu
+#
+# Node nomi ATAYLAB o'zgaruvchida: u har muhitda boshqacha (nested
+# klasterda `dojo-cluster-<id>`), qotirib yozilgan nom esa ishlamaydi.
 
 apiVersion: v1
 kind: Pod
@@ -33,14 +39,20 @@ spec:
       - weight: 100
         preference:
           matchExpressions:
-          - key: kubernetes.io/hostname
+          # Muhitdan MUSTAQIL label. Ilgari bu yerda `kubernetes.io/hostname`
+          # `kind-control-plane` ga tenglashtirilgan edi — bunday node bizning
+          # klasterlarda YO'Q. U yumshoq shart bo'lgani uchun scheduling ni
+          # bloklamasdi, lekin darsda qotirilgan node nomi yomon naqsh:
+          # o'quvchi uni ko'chirib, keyin required da ishlatadi va pod
+          # abadiy Pending da qoladi.
+          - key: kubernetes.io/os
             operator: In
             values:
-            - kind-control-plane
+            - linux
 
 # This configuration:
 # 1. REQUIRES node with label accelerator=gpu
-# 2. PREFERS kind-control-plane node (weight 100)
-# 3. Will schedule to any node with accelerator=gpu if control-plane unavailable
+# 2. PREFERS linux node (weight 100) — yumshoq shart, muhitdan mustaqil
+# 3. Required bajarilsa, preferred bajarilmasa ham pod joylashadi
 #
 # The pod now schedules successfully!

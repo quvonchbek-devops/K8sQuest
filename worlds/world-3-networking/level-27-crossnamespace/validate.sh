@@ -3,8 +3,18 @@
 # Level 27 Validation: Cross-namespace Service Communication
 # Frontend namespace lar arasi backend service ni ga kira olishini tekshiradi
 
-set -e
-
+# `set -e` ATAYLAB YO'Q.
+#
+# Ilgari bu yerda `set -e` turardi va u validator uchun ZARARLI: skript
+# nosozlikni TOPISHI kerak, undan o'lishi emas. Har qanday
+# `X=$(kubectl get ...)` yoki `DIFF=$(diff ...)` nolga teng bo'lmagan kod
+# qaytarsa (ya'ni AYNAN tekshirilayotgan holat ro'y berganda) skript o'sha
+# joyda jimgina to'xtardi — foydalanuvchi sababsiz muvaffaqiyatsizlik
+# ko'rardi. L28 da bu aniq ko'rinardi: endpoint lar mos kelmasa `diff` 1
+# qaytarar va tushuntirish chop etilishidan OLDIN skript o'lardi.
+#
+# Barcha tekshiruvlar o'z `exit 0/1` iga ega, ya'ni `set -e` shundoq ham
+# keraksiz edi.
 FRONTEND_NAMESPACE="k8squest"
 BACKEND_NAMESPACE="backend-ns"
 FRONTEND_POD="frontend-app"

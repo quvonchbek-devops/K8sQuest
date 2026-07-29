@@ -6,10 +6,16 @@ metadata:
   namespace: k8squest
 type: Opaque
 data:
-  # ⚠️ These look encoded, but base64 is NOT encryption!
-  # Anyone with kubectl access can decode these instantly
-  username: YWRtaW4=  # base64 encoded "admin"
-  password: c2VjcmV0cGFzczEyMw==  # base64 encoded "secretpass123"
+  # ⚠️ Bu qiymatlar IKKI MARTA kodlangan — ya'ni pod ularni dekodlaganda
+  # oddiy matn emas, yana base64 satrini oladi.
+  #
+  # `kubectl get secret db-credentials -o jsonpath='{.data.username}' | base64 -d`
+  # ni bajarib ko'ring: natija "admin" emas, "YWRtaW4=" bo'ladi.
+  #
+  # ⚠️ Va shuni ham unutmang: base64 XAVFSIZLIK EMAS. kubectl huquqi
+  # bo'lgan har kim buni bir soniyada ochadi — bu darsning ikkinchi yarmi.
+  username: WVdSdGFXND0=          # base64(base64("admin"))  — NOTO'G'RI
+  password: YzJWamNtVjBjR0Z6Y3pFeU13PT0=  # base64(base64("secretpass123")) — NOTO'G'RI
 ---
 apiVersion: v1
 kind: Pod

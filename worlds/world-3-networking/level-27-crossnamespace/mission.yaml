@@ -3,7 +3,8 @@ objective: "To'g'ri DNS FQDN yordamida namespace lar arasi service aloqasini tuz
 world: 3
 level: 27
 xp: 250
-difficulty: o'rta
+expected_time: 15m
+difficulty: intermediate
 
 description: |
   'k8squest' namespace dagi frontend ilova 'backend-ns' namespace dagi API ga
@@ -17,11 +18,21 @@ concepts:
   - Namespace lar bo'ylab service aniqlash
   - Kubernetes da DNS hal qilish
 
-# Hosted moslik (k8s-dojo P2): bu level cluster darajasidagi resurs yoki alohida
-# namespace talab qiladi. Hosted sandbox — bitta izolyatsiyalangan namespace,
-# scoped RBAC bilan; bunday resurslarni yaratib bo'lmaydi. Shuning uchun dars
-# faqat lokal K8sQuest o'yinida o'ynaladi. Batafsil: docs/MISSION-SCHEMA.md
+# Bu level HOSTED ning ikki turida BOSHQACHA — shuning uchun overlay ZANJIR.
+#
+# `hosted` (v1, namespace sandbox): O'YNALMAYDI. Foydalanuvchi bitta
+# izolyatsiyalangan namespace da, namespace-scoped RBAC bilan ishlaydi —
+# cluster-scoped resurs ham, ikkinchi namespace ham mumkin emas.
+#
+# `hosted-cluster` (v2, nested klaster): O'YNAYDI. Foydalanuvchi O'Z
+# klasterining cluster-admin i, to'qnashadigan qo'shni yo'q.
+# O'LCHANDI (taxmin emas): L27 — ikkinchi namespace yaratildi — validate rc=0.
+#
+# Zanjir: `hosted` ikkalasiga, `hosted-cluster` uning ustiga (faqat farq).
+# Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
     available: false
     description: "Bu level bir nechta namespace o'rtasidagi aloqani o'rgatadi. Hosted sandbox — bitta izolyatsiyalangan namespace; boshqa namespace yaratib/ishlatib bo'lmaydi. Dars faqat lokal o'yinda o'ynaladi."
+  hosted-cluster:
+    available: true

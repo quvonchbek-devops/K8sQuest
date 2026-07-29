@@ -3,8 +3,9 @@ title: "StorageClass Not Found"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "StorageClass Topilmadi"
 world: "Storage & Stateful Apps"
-difficulty: "intermediate"
+difficulty: intermediate
 xp: 200
+expected_time: 12m
 concepts:
   - storageclass
   - dynamic-provisioning

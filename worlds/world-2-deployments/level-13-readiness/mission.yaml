@@ -2,7 +2,7 @@ name: "Tayyor Bo'lmagan Pod larga Trafik"
 description: "Pod lar tayyor bo'lmasdan trafik qabul qilmoqda, bu foydalanuvchilar uchun 502 xatolarga olib kelmoqda"
 objective: "Pod larga erta trafik yuborishni oldini olish uchun readiness probe qo'shing"
 xp: 200
-difficulty: o'rta
+difficulty: intermediate
 expected_time: 15m
 concepts:
   - readiness probe larni

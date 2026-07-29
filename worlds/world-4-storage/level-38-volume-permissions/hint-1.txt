@@ -3,7 +3,7 @@
 Pod ishlayapti lekin volume ga yozish muvaffaqiyatsiz — "Permission denied".
 
 Tekshiring:
-1. `kubectl logs -n k8squest` — ruxsat xatosini ko'ring
+1. `kubectl logs writer-app -n k8squest` — ruxsat xatosini ko'ring
 2. `kubectl get pod -n k8squest -o yaml | grep -A10 securityContext`
 3. Konteyner qaysi foydalanuvchi (UID) sifatida ishlayapti?
 4. Volume fayl tizimi qaysi foydalanuvchiga tegishli?

@@ -87,12 +87,30 @@ echo "✅ Pod muvaffaqiyatli listed pods with RBAC permissions"
 
 echo ""
 echo "🔍 9-bosqich: Tekshirilmoqda RBAC ruxsatlarini bevosita..."
-kubectl auth can-i list pods --as=system:serviceaccount:k8squest:pod-reader -n k8squest &>/dev/null
-if [ $? -ne 0 ]; then
-    echo "❌ ServiceAccount cannot list pods according to RBAC check"
+# `kubectl auth can-i --as=...` ATAYLAB ISHLATILMAYDI.
+#
+# `--as=` IMPERSONATSIYA, ya'ni chaqiruvchida `impersonate` verb i bo'lishi
+# talab qilinadi. Sandbox foydalanuvchisida u yo'q va bo'lmasligi ham
+# kerak: impersonatsiya butun RBAC modelini chetlab o'tish vositasi. Ya'ni
+# bu bosqich hosted muhitda HAR DOIM yiqilardi — foydalanuvchi RBAC ni
+# to'g'ri sozlagan bo'lsa ham.
+#
+# Dars o'zgarmaydi. RBAC ning HAQIQATAN ishlashi allaqachon isbotlangan:
+# yuqoridagi bosqich pod ning O'Z logida "Success! Can list pods" ni
+# ko'rdi — pod aynan shu ServiceAccount bilan ishlaydi va API ga o'zi
+# murojaat qiladi. Bu impersonatsiyadan KUCHLIROQ dalil.
+#
+# Bu yerda esa bog'lanish ZANJIRINI yopamiz: RoleBinding aynan o'sha
+# ServiceAccount ga va aynan o'sha Role ga ishora qilyaptimi.
+BOUND_SA=$(kubectl get rolebinding "$ROLEBINDING_NAME" -n "$NAMESPACE" \
+    -o jsonpath="{.subjects[?(@.kind=='ServiceAccount')].name}" 2>/dev/null)
+if ! echo "$BOUND_SA" | grep -qw "$SA_NAME"; then
+    echo "❌ RoleBinding '$ROLEBINDING_NAME' ServiceAccount '$SA_NAME' ga bog'lanmagan"
+    echo "   topilgan subyekt(lar): ${BOUND_SA:-yoq}"
+    echo "💡 kubectl get rolebinding $ROLEBINDING_NAME -n $NAMESPACE -o yaml"
     exit 1
 fi
-echo "✅ RBAC permissions verified with auth can-i"
+echo "✅ RBAC zanjiri to'liq: ServiceAccount -> RoleBinding -> Role"
 
 echo ""
 echo "🎉 SUCCESS! ServiceAccount has proper RBAC permissions to list pods!"

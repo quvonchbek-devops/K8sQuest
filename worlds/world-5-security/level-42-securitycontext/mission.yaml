@@ -4,6 +4,7 @@ objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "SecurityContext Cheklovi"
 difficulty: intermediate
 xp: 250
+expected_time: 15m
 xp_reward: 250
 world: 5
 concepts:

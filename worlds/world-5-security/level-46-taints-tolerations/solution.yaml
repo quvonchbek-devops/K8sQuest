@@ -1,7 +1,9 @@
 # SOLUTION: Pod with matching toleration
 
 # First, ensure node is tainted (usually done by platform team)
-# kubectl taint nodes kind-control-plane dedicated=gpu:NoSchedule --overwrite
+# Node nomi har muhitda boshqacha — avval so'rang, qotirib yozmang:
+#   NODE=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')
+#   kubectl taint nodes "$NODE" dedicated=gpu:NoSchedule --overwrite
 
 apiVersion: v1
 kind: Pod

@@ -1,5 +1,20 @@
 🔍 Maslahat 1: Kuzatish va Tahlil
 
+Avval buzilgan manifestni O'ZINGIZ qo'llang — bu levelda birinchi qadam shu:
+
+```bash
+kubectl apply -f broken.yaml
+```
+
+ResourceQuota yaratiladi, pod esa YARATILMAYDI. Xatoni diqqat bilan o'qing:
+
+   Error from server (Forbidden): ... exceeded quota: compute-quota,
+   requested: requests.cpu=300m, used: requests.cpu=0, limited: requests.cpu=200m
+
+Uchta son bor: SO'RALGAN, ISHLATILGAN va CHEGARA. Pod umuman yaratilmagani
+uchun `kubectl get pod` bo'sh chiqadi — muammo pod ichida emas, quota bilan
+pod so'rovi o'rtasidagi nomutanosiblikda.
+
 Namespace dagi ResourceQuota muammosini tekshiring:
 
 1. Pod holatini ko'ring:

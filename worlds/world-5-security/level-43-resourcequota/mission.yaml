@@ -4,6 +4,7 @@ objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "ResourceQuota Limiti Oshib Ketdi"
 difficulty: advanced
 xp: 300
+expected_time: 20m
 xp_reward: 300
 world: 5
 concepts:
@@ -18,14 +19,31 @@ learning_objectives:
   - Balance quotas with application needs
   - Debug quota-related scheduling failures
 
-# Hosted sandbox da bu level O'YNALMAYDI — dars esa lokal o'yinda o'z o'rnida.
+# Bu level HOSTED ning ikki turida BOSHQACHA — shuning uchun overlay ZANJIR.
 #
 # Dars: namespace ResourceQuota si pod so'rovini to'sib qo'yadi; yechim —
-# so'rovlarni quota ichiga tushirish. Hosted sandbox da namespace-scoped RBAC
+# so'rovlarni quota ichiga tushirish.
+#
+# `hosted` (v1, namespace sandbox): O'YNALMAYDI. Namespace-scoped RBAC
 # `resourcequotas` ni na yaratishga, na o'qishga ruxsat beradi (va tayyor
 # `sandbox-quota` allaqachon o'rnatilgan). validate.sh birinchi qadamdayoq
-# `kubectl get resourcequota` da 403 oladi. Batafsil: docs/MISSION-SCHEMA.md
+# `kubectl get resourcequota` da 403 oladi.
+#
+# `hosted-cluster` (v2, nested klaster): O'YNALADI — foydalanuvchi o'z
+# klasterining cluster-admin i. Faqat `setup: manual` kerak: broken.yaml
+# ning bir qismi ATAYLAB rad etiladi (ResourceQuota yaratiladi, pod esa
+# unga sig'maydi), ya'ni apply nolga teng bo'lmagan kod qaytaradi. Server
+# uni o'zi qo'llasa setup 500 bilan yiqilib, foydalanuvchi levelga umuman
+# kirolmasdi. Rad etishning O'ZI darsning boshlanishi — L4 bilan bir xil
+# naqsh (CNT-012).
+#
+# Zanjir: `hosted` ikkalasiga, `hosted-cluster` uning ustiga (faqat farq).
+# Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
     available: false
     description: "Bu level ResourceQuota obyektini yaratish/kuzatishni o'rgatadi. Hosted sandbox namespace-scoped RBAC da resourcequotas ga ruxsat bermaydi. Dars faqat lokal o'yinda o'ynaladi."
+  hosted-cluster:
+    available: true
+    setup: manual
+    description: "Pod namespace ning ResourceQuota siga sig'maydi — manifest qabul qilinmaydi"

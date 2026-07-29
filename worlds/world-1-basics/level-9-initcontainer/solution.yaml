@@ -25,7 +25,18 @@ spec:
   - name: wait-for-service
     image: busybox:latest
     # ✅ This now succeeds because the service exists!
-    command: ['sh', '-c', 'until nslookup backend-service.k8squest.svc.cluster.local; do echo waiting; sleep 2; done']
+    # DNS nomi NAMESPACE'SIZ — ataylab.
+    #
+    # `backend-service` deb yozilgan edi va bu
+    # hosted v1 da levelni O'YNALMAYDIGAN qilardi: platforma manifestning
+    # `metadata.namespace` ini sessiya namespace'iga almashtiradi, buyruq
+    # MATNI ichidagi `k8squest` esa qoladi. Ya'ni Service `sandbox-0NN` da
+    # yaratilar, init container esa mavjud bo'lmagan `k8squest` da qidirar
+    # va POD ABADIY Pending turardi.
+    #
+    # Qisqa nom pod'ning DNS search domain'i orqali O'Z namespace'ida
+    # topiladi — lokal o'yinda ham, hosted'ning ikkala turida ham.
+    command: ['sh', '-c', 'until nslookup backend-service; do echo waiting; sleep 2; done']
   containers:
   - name: web
     image: nginx:latest

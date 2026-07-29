@@ -1,4 +1,20 @@
 #!/bin/bash
+#
+# ⚠️  BU SKRIPT PLATFORMA TOMONIDAN ISHGA TUSHIRILMAYDI.
+#
+# `setup.sh` importer ning ruxsat ro'yxatida YO'Q (k8s-dojo:
+# `services/content/importer.go`), ya'ni u bazaga umuman import
+# qilinmaydi. Kontent mualliflari mavjud deb o'ylagan "setup bosqichi"
+# hech qachon mavjud bo'lmagan — level lar esa unga tayangan va shu
+# sababdan buzuq edi (BUG.md CNT-004).
+#
+# Bu skript o'rniga endi hint-3 foydalanuvchining O'ZIGA node ni
+# yorliqlashni o'rgatadi — dars aynan shu. BUG.md CNT-001.
+#
+# Fayl SAQLANDI: u mualliflarning niyatini ko'rsatadi va platformaga
+# setup bosqichi qo'shilsa (sandbox ichida Job da, host da EMAS — P0.2
+# host-exec zaifligiga qarang) shu yerdan boshlanadi.
+#
 # O'rnatish skripti
 # Node ga accelerator=gpu label qo'yadi
 

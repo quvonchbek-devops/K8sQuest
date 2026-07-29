@@ -1,7 +1,8 @@
 name: "StatefulSet DNS Ishlamayapti"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
-difficulty: o'rta
+difficulty: intermediate
 xp: 250
+expected_time: 15m
 
 description: |
   StatefulSet pod laringiz bir-biri bilan bashorat qilinadigan DNS nomlari orqali

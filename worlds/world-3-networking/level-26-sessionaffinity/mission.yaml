@@ -3,7 +3,8 @@ objective: "Foydalanuvchi session larini saqlash uchun Service da sessionAffinit
 world: 3
 level: 26
 xp: 200
-difficulty: o'rta
+expected_time: 12m
+difficulty: intermediate
 
 description: |
   Stateful ilova foydalanuvchi session larini tasodifiy yo'qotmoqda. Foydalanuvchilar

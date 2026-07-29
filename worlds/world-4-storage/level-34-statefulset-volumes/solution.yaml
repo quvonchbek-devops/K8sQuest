@@ -37,7 +37,23 @@ spec:
       resources:
         requests:
           storage: 5Gi
-      storageClassName: standard
+      # Bu PVC ni PROVISIONER bog'laydi (level o'z PersistentVolume ini
+  # yaratmaydi), ya'ni bu yerda KLASTERDA HAQIQATAN MAVJUD sinf turishi
+  # shart. Ilgari `standard` yozilgan edi — u kind/minikube nomi, k3s da
+  # esa yo'q: PVC abadiy Pending da qolar, pod hech qachon ko'tarilmas va
+  # darsning O'Z nuqsoni umuman ko'rinmasdi.
+  #
+  # Nomni yodlamang: `kubectl get storageclass` bilan so'rang.
+  # `storageClassName` ATAYLAB BERILMAGAN.
+  #
+  # Maydon bo'sh bo'lsa Kubernetes klasterning DEFAULT StorageClass ini
+  # ishlatadi. Nom esa har distributivda boshqacha: k3s da `local-path`,
+  # kind/minikube da `standard`, EKS da `gp2`, GKE da `standard-rwo`.
+  # Nomni qotirib yozish level ni O'SHA distributivga bog'lab qo'yadi —
+  # avval men aynan shu xatoni qilgandim (`local-path` yozgandim).
+  #
+  # Nomni bilish kerak bo'lsa: `kubectl get storageclass` (default i
+  # `(default)` yozuvi bilan ko'rinadi).
 ---
 apiVersion: v1
 kind: Service

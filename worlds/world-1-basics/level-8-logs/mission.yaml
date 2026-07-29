@@ -2,7 +2,7 @@ name: "Pod Loglar Jumboqi"
 description: "Pod ishlayapti lekin ilova ishlamayapti. Muammo faqat loglarda ko'rinadi"
 objective: "Ilovaning jimgina ishdan chiqishiga sabab bo'layotgan konfiguratsiya muammosini toping va tuzating"
 xp: 150
-difficulty: boshlang'ich
+difficulty: beginner
 expected_time: 12m
 concepts:
   - kubectl logs

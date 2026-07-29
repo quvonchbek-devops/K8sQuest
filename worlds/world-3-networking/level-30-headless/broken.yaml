@@ -15,7 +15,16 @@ spec:
   # ❌ ClusterIP service (has virtual IP)
   # This gives us: web-cluster.k8squest.svc.cluster.local → random pod
   # But NOT: web-0.web-cluster.k8squest.svc.cluster.local → specific pod
-  clusterIP: 10.96.100.50  # Regular ClusterIP (not headless)
+  # ClusterIP QO'LDA BERILMAYDI — Kubernetes uni o'zi ajratadi.
+  #
+  # Ilgari bu yerda `10.96.100.50` qadab yozilgan edi. `10.96.0.0/12` —
+  # kubeadm ning DEFAULT Service CIDR i; k3s da u `10.43.0.0/16`, bulutlarda
+  # yana boshqacha. Ya'ni bu Service ko'pchilik klasterda UMUMAN
+  # yaratilmasdi ("provided IP is not in the valid range") va level
+  # boshlanmasdan yiqilardi.
+  #
+  # Dars uchun aniq manzil KERAK EMAS: gap shundaki bu Service da ClusterIP
+  # BOR (ya'ni headless emas) — qiymati qanday bo'lishi ahamiyatsiz.
   selector:
     app: web-cluster
   ports:

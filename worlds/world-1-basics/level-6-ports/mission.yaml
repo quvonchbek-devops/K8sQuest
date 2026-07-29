@@ -2,7 +2,7 @@ name: "Port Nomuvofiqlik Muammosi"
 description: "Service noto'g'ri konteyner portiga yo'naltirmoqda, bu ulanish xatolariga olib kelmoqda"
 objective: "Port konfiguratsiyasini to'g'rilang, shunda service konteynerga ulansin"
 xp: 100
-difficulty: boshlang'ich
+difficulty: beginner
 expected_time: 10m
 concepts:
   - Container ports

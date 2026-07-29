@@ -5,10 +5,10 @@ Pod ning resource request larini namespace quota ga sig'adigan qilib kamaytiring
 ```yaml
 resources:
   requests:
-    cpu: "500m"       # 2 emas, 500m
-    memory: "512Mi"   # 4Gi emas, 512Mi
+    cpu: "100m"       # 300m emas, 100m
+    memory: "64Mi"    # 192Mi emas, 64Mi
   limits:
-    cpu: "1"
+    cpu: "200m"
     memory: "1Gi"
 ```
 

@@ -1,17 +1,36 @@
 ✅ Maslahat 3: To'liq Yechim
 
-Ikki variantdan birini tanlang:
+Bu levelda IKKI narsa kerak: node da to'g'ri label VA pod da o'sha
+label ga mos affinity. Bittasi yetmaydi.
 
-**Variant 1: Node ga label qo'shing**
-```bash
-kubectl label nodes <node-nomi> disk-type=ssd
-```
+**1-qadam: node ni toping va label qo'ying**
 
-**Variant 2: Pod dagi affinity qoidasini o'zgartiring**
-broken.yaml da nodeAffinity ni mavjud node label lariga mos qiling.
+Node nomi har muhitda boshqacha — uni qotirib yozmang, avval so'rang:
 
 ```bash
-kubectl get nodes --show-labels    # Mavjud label larni ko'ring
+kubectl get nodes
+NODE=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')
+kubectl label nodes "$NODE" accelerator=gpu
 ```
 
-Keyin: `kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
+Label qo'yilganini tekshiring:
+
+```bash
+kubectl get nodes -l accelerator=gpu
+```
+
+**2-qadam: pod ning affinity si o'sha label ga mos bo'lsin**
+
+`broken.yaml` da `nodeAffinity` boshqa key/value ni so'raydi — shuning
+uchun pod Pending da qotib qolgan. Uni `accelerator: In [gpu]` ga
+to'g'rilang, so'ng qayta qo'llang:
+
+```bash
+kubectl delete -f broken.yaml && kubectl apply -f broken.yaml
+kubectl get pod gpu-workload -n k8squest
+```
+
+Pod `Running` bo'lishi kerak.
+
+⚠️ `disk-type=ssd` — bu 2-maslahatdagi UMUMIY misol, bu levelning
+javobi emas. Tekshiruv aynan `accelerator=gpu` ni qidiradi.

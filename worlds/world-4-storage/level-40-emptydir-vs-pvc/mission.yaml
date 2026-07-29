@@ -3,8 +3,9 @@ title: "EmptyDir Lost on Restart"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "EmptyDir Qayta Ishga Tushishda Yo'qoladi"
 world: "Storage & Stateful Apps"
-difficulty: "intermediate"
+difficulty: intermediate
 xp: 250
+expected_time: 15m
 concepts:
   - emptydir
   - ephemeral-storage

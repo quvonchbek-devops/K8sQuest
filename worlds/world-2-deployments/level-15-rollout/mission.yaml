@@ -2,7 +2,7 @@ name: "Nol-To'xtashli Deployment Muvaffaqiyatsizligi"
 description: "maxUnavailable: 100% bilan rolling update barcha pod larni bir vaqtda to'xtatmoqda"
 objective: "Barcha pod larning bir vaqtda ishdan chiqishini oldini olish uchun rollout strategiyasini to'g'rilang"
 xp: 200
-difficulty: o'rta
+difficulty: intermediate
 expected_time: 12m
 concepts:
   - rolling updates
