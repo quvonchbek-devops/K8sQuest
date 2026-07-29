@@ -1,0 +1,23 @@
+💡 Yechimga yaqin maslahat:
+
+To'g'ri yechim — init container kutayotgan service ni yaratish.
+
+Brauzerdagi terminalda matn muharriri yo'q, ya'ni YAML faylni o'zingiz
+yozib bo'lmaydi. Shuning uchun yo'l boshqacha:
+
+1. Yon paneldagi "Yechim" tugmasini bosing — platforma `solution.yaml`
+   faylini ish katalogingizga yozadi va uning ichini ko'rsatadi.
+
+2. Faylni qo'llang:
+   ```
+   kubectl apply -f solution.yaml
+   ```
+
+3. Service paydo bo'lgach, init container ning `nslookup` buyrug'i
+   muvaffaqiyatli tugaydi va pod asosiy konteynerga o'tadi. Kuzating:
+   ```
+   kubectl get pod web-with-init -w
+   ```
+
+Nima bo'layotganini ko'rish uchun avval `solution.yaml` ni o'qing —
+u yerda `backend-service` nomli oddiy ClusterIP Service bor.
