@@ -14,11 +14,28 @@ echo "✅ PVC mavjud"
 echo ""
 echo "🔍 2-bosqich: Tekshirilmoqda PVC ning StorageClass ini..."
 STORAGE_CLASS=$(kubectl get pvc "$PVC_NAME" -n "$NAMESPACE" -o jsonpath='{.spec.storageClassName}')
+
+# BO'SH maydon ham TO'G'RI javob: Kubernetes u holda klasterning DEFAULT
+# StorageClass ini ishlatadi. Ilgari bu yerda `exit 1` turardi, ya'ni
+# to'g'ri yechimning bir varianti rad etilardi.
+#
+# Sinf NOMI har distributivda boshqacha (k3s: local-path, kind/minikube:
+# standard, EKS: gp2, GKE: standard-rwo), shuning uchun tekshiruv nomga
+# EMAS, natijaga qaraydi: sinf mavjudmi va PVC bog'landimi.
 if [ -z "$STORAGE_CLASS" ]; then
-    echo "❌ No StorageClass specified in PVC"
-    exit 1
+    DEFAULT_SC=$(kubectl get storageclass \
+        -o jsonpath='{.items[?(@.metadata.annotations.storageclass\.kubernetes\.io/default-class=="true")].metadata.name}' 2>/dev/null)
+    if [ -z "$DEFAULT_SC" ]; then
+        echo "❌ PVC da StorageClass ko'rsatilmagan va klasterda default sinf ham yo'q"
+        echo "💡 Mavjud sinflar:"
+        kubectl get storageclass 2>/dev/null
+        exit 1
+    fi
+    echo "✅ PVC sinf ko'rsatmagan — klasterning default sinfi ishlatiladi: $DEFAULT_SC"
+    STORAGE_CLASS="$DEFAULT_SC"
+else
+    echo "✅ PVC references StorageClass: $STORAGE_CLASS"
 fi
-echo "✅ PVC references StorageClass: $STORAGE_CLASS"
 
 echo ""
 echo "🔍 3-bosqich: Tekshirilmoqda StorageClass mavjudligini..."
