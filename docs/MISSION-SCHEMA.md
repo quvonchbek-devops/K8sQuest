@@ -41,8 +41,48 @@ environments:
     expected_time: 15m
 ```
 
-`environments` — muhit nomi bo'yicha map. Hozircha yagona ma'noli kalit —
-`hosted`. `local` bloki **kerak emas**: base ning o'zi lokal haqiqat.
+`environments` — muhit nomi bo'yicha map. `local` bloki **kerak emas**:
+base ning o'zi lokal haqiqat.
+
+### 2.0 Muhit ZANJIRI — `hosted` va `hosted-cluster`
+
+Hosted platformaning O'ZI ikki xil bo'ladi va bu levelning o'ynalishiga
+bevosita ta'sir qiladi:
+
+| Kalit | Muhit | Foydalanuvchi huquqi |
+|---|---|---|
+| `hosted` | har ikkala hosted backend | — |
+| `hosted-cluster` | v2: har userga nested k3s klasteri | o'z klasterining **cluster-admin**i |
+
+v1 da foydalanuvchi bitta izolyatsiyalangan namespace da, namespace-scoped
+SA bilan ishlaydi: cluster-scoped resurs (PersistentVolume, PriorityClass,
+Namespace, ResourceQuota) na yaratiladi, na o'qiladi. v2 da bularning
+hammasi ishlaydi.
+
+Overlay lar **zanjir** bo'lib qo'llanadi: avval `hosted`, keyin uning
+USTIGA `hosted-cluster` (faqat v2 da). Ya'ni umumiy matn bir joyda
+qoladi, farq esa qisqa blok bo'ladi:
+
+```yaml
+environments:
+  hosted:              # ikkala backend uchun — v1 haqiqati
+    available: false
+    description: "Hosted sandbox namespace-scoped RBAC da resourcequotas ga ruxsat bermaydi."
+  hosted-cluster:      # faqat v2 — hosted ustiga tushadi
+    available: true
+    setup: manual
+```
+
+**Nega bu kerak edi:** ilgari kalit bitta edi va ikki shoxobcha BIR level
+uchun qarama-qarshi qaror yozdi (`available: false` va `setup: manual`) —
+ikkalasi ham to'g'ri edi, sig'adigan joy yo'q edi.
+
+**Diqqat:** overlay FAYLLARI (§4, `hosted/` katalogi) bo'linmaydi — ular
+"hosted platforma" uchun yozilgan va ikkala backendda ham to'g'ri.
+
+Platformadagi amalga oshirish: `services/content/environment.go`
+(`EnvChain`). Zanjir `SANDBOX_BACKEND` dan olinadi va overlay **yuklashda**
+hal qilinadi — backend o'zgarsa kontentni qayta import qilish kerak.
 
 ### 2.1 Nima override qilinadi — va nima QILINMAYDI
 
