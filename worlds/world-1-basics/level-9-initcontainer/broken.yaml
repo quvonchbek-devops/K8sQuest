@@ -7,19 +7,28 @@ spec:
   initContainers:
   - name: wait-for-service
     image: busybox:latest
-    # ❌ Waits for a service that doesn't exist - will never complete!
-    # DNS nomi NAMESPACE'SIZ — ataylab.
+    # DNS nomidagi namespace DOWNWARD API dan olinadi — qadab yozilmaydi.
     #
-    # `backend-service` deb yozilgan edi va bu
-    # hosted v1 da levelni O'YNALMAYDIGAN qilardi: platforma manifestning
+    # Ilgari bu yerda `backend-service.k8squest.svc.cluster.local` turardi va
+    # level hosted v1 da UMUMAN o'ynalmasdi: platforma manifestning
     # `metadata.namespace` ini sessiya namespace'iga almashtiradi, buyruq
-    # MATNI ichidagi `k8squest` esa qoladi. Ya'ni Service `sandbox-0NN` da
-    # yaratilar, init container esa mavjud bo'lmagan `k8squest` da qidirar
-    # va POD ABADIY Pending turardi.
+    # MATNI ichidagi `k8squest` esa qoladi. Service `sandbox-0NN` da
+    # yaratilar, init container esa mavjud bo'lmagan `k8squest` ni qidirar —
+    # pod ABADIY Pending turardi.
     #
-    # Qisqa nom pod'ning DNS search domain'i orqali O'Z namespace'ida
-    # topiladi — lokal o'yinda ham, hosted'ning ikkala turida ham.
-    command: ['sh', '-c', 'until nslookup backend-service; do echo waiting; sleep 2; done']
+    # Qisqa nom (`backend-service`) ham YETMAYDI: busybox ning `nslookup` i
+    # namespace search domain'ini o'tkazib yuborib
+    # `backend-service.svc.cluster.local` ni so'raydi → NXDOMAIN. O'lchandi.
+    #
+    # `$NS` esa har uch muhitda to'g'ri: lokal o'yin (k8squest), hosted v1
+    # (sandbox-0NN), hosted v2 (k8squest).
+    env:
+    - name: NS
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    # ❌ Mavjud BO'LMAGAN service ni kutadi — hech qachon tugamaydi!
+    command: ['sh', '-c', 'until nslookup backend-service.$NS.svc.cluster.local; do echo waiting; sleep 2; done']
   containers:
   - name: web
     image: nginx:latest

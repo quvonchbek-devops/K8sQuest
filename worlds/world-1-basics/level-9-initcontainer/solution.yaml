@@ -1,5 +1,5 @@
 ---
-# Service that the init container is waiting for
+# Init container kutayotgan Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,7 +14,7 @@ spec:
     targetPort: 8080
 
 ---
-# Pod with init container that waits for the service
+# Init container li pod — endi service mavjud
 apiVersion: v1
 kind: Pod
 metadata:
@@ -24,19 +24,17 @@ spec:
   initContainers:
   - name: wait-for-service
     image: busybox:latest
-    # ✅ This now succeeds because the service exists!
-    # DNS nomi NAMESPACE'SIZ — ataylab.
-    #
-    # `backend-service` deb yozilgan edi va bu
-    # hosted v1 da levelni O'YNALMAYDIGAN qilardi: platforma manifestning
-    # `metadata.namespace` ini sessiya namespace'iga almashtiradi, buyruq
-    # MATNI ichidagi `k8squest` esa qoladi. Ya'ni Service `sandbox-0NN` da
-    # yaratilar, init container esa mavjud bo'lmagan `k8squest` da qidirar
-    # va POD ABADIY Pending turardi.
-    #
-    # Qisqa nom pod'ning DNS search domain'i orqali O'Z namespace'ida
-    # topiladi — lokal o'yinda ham, hosted'ning ikkala turida ham.
-    command: ['sh', '-c', 'until nslookup backend-service; do echo waiting; sleep 2; done']
+    # Namespace DOWNWARD API dan — broken.yaml dagi bilan BIR XIL.
+    # Sababi o'sha yerda batafsil yozilgan (qadab yozilgan namespace hosted
+    # da levelni o'ynalmaydigan qiladi, qisqa nom esa busybox nslookup da
+    # NXDOMAIN beradi).
+    env:
+    - name: NS
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    # ✅ Endi muvaffaqiyatli tugaydi, chunki service mavjud
+    command: ['sh', '-c', 'until nslookup backend-service.$NS.svc.cluster.local; do echo waiting; sleep 2; done']
   containers:
   - name: web
     image: nginx:latest
