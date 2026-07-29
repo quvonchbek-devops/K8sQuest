@@ -15,7 +15,10 @@ spec:
     spec:
       containers:
       - name: backend
-        image: k8s.gcr.io/hpa-example
+        # `k8s.gcr.io` MUZLATILGAN (2023 dan beri yangi image qabul
+        # qilmaydi va o'chirilishi e'lon qilingan). Rasmiy manzil —
+        # `registry.k8s.io`.
+        image: registry.k8s.io/hpa-example
         ports:
         - containerPort: 80
         resources:
