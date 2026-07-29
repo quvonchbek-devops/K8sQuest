@@ -11,3 +11,27 @@ concepts:
   - autoscaling
   - kubectl top
   - resource requests
+
+# Bu level HOSTED ning ikki turida BOSHQACHA — shuning uchun overlay ZANJIR.
+#
+# Dars: HPA metrikasiz scale qila olmaydi; yechim — metrics-server
+# o'rnatish. Yechim manifesti esa CLUSTER-SCOPED obyektlar talab qiladi
+# (APIService, ClusterRole, ClusterRoleBinding).
+#
+# `hosted` (v1, namespace sandbox): O'YNALMAYDI. Server bunday manifestni
+# umuman qo'llamaydi (422 hosted-incompatible) va level YAKUNLAB
+# BO'LMAYDI. `available` yozilmagani uchun u "o'ynasa bo'ladi" ko'rinardi,
+# darvoza esa uni yakunlanmagan deb hisoblab, WORLD-3 DAN KEYINGI BARCHA
+# LEVELLARNI QULFLAB TURARDI — ya'ni bitta level butun o'yinning ikkinchi
+# yarmini yopib qo'ygan edi. 2026-07-29 da uchma-uch sweep bilan topildi.
+#
+# `hosted-cluster` (v2, nested klaster): foydalanuvchi o'z klasterining
+# cluster-admin i, ya'ni metrics-server o'rnatiladi. Level o'ynaydi.
+#
+# Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
+environments:
+  hosted:
+    available: false
+    description: "Bu level metrics-server o'rnatishni o'rgatadi — u cluster-scoped obyektlar (APIService, ClusterRole) talab qiladi. Hosted sandbox namespace-scoped RBAC da bunga ruxsat yo'q. Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
+  hosted-cluster:
+    available: true
