@@ -1,0 +1,12 @@
+🔍 Kuzatuv maslahat:
+
+Pod ro'yxatini tekshiring: `kubectl get pods`
+
+Pod umuman yo'q! Lokal klasterdan farqli o'laroq, bu yerda namespace ning
+o'z resurs chegaralari bor va ular pod ni YARATILISHIDAN OLDIN tekshiradi.
+
+broken.yaml ni o'zingiz qo'llab ko'ring:
+
+  kubectl apply -f broken.yaml
+
+Xato xabarini diqqat bilan o'qing — u muammoni to'g'ridan-to'g'ri aytadi.

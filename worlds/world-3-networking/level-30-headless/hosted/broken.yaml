@@ -1,0 +1,41 @@
+# ❌ HOSTED BROKEN: oddiy ClusterIP service — per-pod DNS bermaydi.
+# StatefulSet ga barqaror pod identligi uchun headless service (clusterIP: None) kerak.
+# (Lokal broken.yaml dan farqi: Namespace obyekti va qat'iy clusterIP olib tashlangan —
+#  ular hosted sandbox da RBAC/CIDR sabab yaroqsiz; dars esa o'sha — clusterIP: None emas.)
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-cluster
+  namespace: k8squest
+spec:
+  # ❌ Headless emas: virtual ClusterIP avtomatik beriladi.
+  #    Bu bizga web-cluster.<ns>.svc → tasodifiy pod beradi,
+  #    lekin web-0.web-cluster.<ns>.svc → aniq pod ni BERMAYDI.
+  selector:
+    app: web-cluster
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+  namespace: k8squest
+spec:
+  serviceName: web-cluster
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-cluster
+  template:
+    metadata:
+      labels:
+        app: web-cluster
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+          name: web

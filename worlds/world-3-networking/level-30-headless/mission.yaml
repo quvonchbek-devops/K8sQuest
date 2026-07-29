@@ -16,3 +16,29 @@ concepts:
   - pod-identity
   - stable-network-identity
   - clusterip-none
+
+# Hosted overlay — dars o'sha-o'sha: StatefulSet ga headless service kerak.
+#
+# Fix ikkala muhitda BIR XIL: service ning `clusterIP: None` bo'lishi.
+# Farqi — buzilgan holatning shakli va isboti:
+#
+#   - Lokal o'yin: broken.yaml `kind: Namespace` yaratadi va service ga
+#     qat'iy `clusterIP: 10.96.100.50` beradi; validate test pod ichidan
+#     `nslookup web-0.web-cluster...` bilan per-pod DNS ni ISBOTLAYDI.
+#   - Hosted sandbox: namespace tayyor (bitta, scoped) va `pods/exec` yo'q
+#     (validate.sh sandbox ning o'z SA i bilan ishlaydi). Shuning uchun
+#     `hosted/broken.yaml` Namespace obyektini va qat'iy IP ni olib tashlaydi;
+#     `hosted/validate.sh` esa headless-likni exec siz — `clusterIP: None`,
+#     StatefulSet pod lari Ready, va endpoint soni orqali tekshiradi.
+#
+# `objective`, `xp`, `name` o'zgarmaydi. validate.sh overlay i CHANGELOG da
+# asoslangan (§3.2). Batafsil: docs/MISSION-SCHEMA.md
+environments:
+  hosted:
+    description: "StatefulSet pod lari barqaror per-pod DNS ololmayapti, chunki service oddiy ClusterIP bilan sozlangan. Yechim — service ni headless qilish (clusterIP: None)."
+    concepts:
+      - headless-service
+      - statefulset-dns
+      - clusterip-none
+      - stable-network-identity
+      - service-endpoints

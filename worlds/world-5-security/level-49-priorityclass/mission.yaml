@@ -17,3 +17,15 @@ learning_objectives:
   - Configure preemption for critical workloads
   - Balance resource allocation by priority
   - Debug priority-based scheduling
+
+# Hosted sandbox da bu level O'YNALMAYDI — dars esa lokal o'yinda o'z o'rnida.
+#
+# Dars: PriorityClass va preemption muhim pod larga resurs tanqisligida ustunlik
+# beradi. PriorityClass — CLUSTER-scoped resurs, preemption esa butun node
+# sig'imini talab qiladi. Hosted sandbox faqat namespace-scoped ruxsat beradi:
+# foydalanuvchi PriorityClass yarata ham, o'qiy ham olmaydi (403).
+# Batafsil: docs/MISSION-SCHEMA.md
+environments:
+  hosted:
+    available: false
+    description: "PriorityClass — cluster-scoped resurs va preemption node darajasida ishlaydi. Hosted sandbox faqat namespace-scoped ruxsat beradi. Dars faqat lokal o'yinda o'ynaladi."

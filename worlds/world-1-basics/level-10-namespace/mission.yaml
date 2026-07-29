@@ -10,3 +10,16 @@ concepts:
   - kubectl namespaces
   - Namespace lar arasi aloqa
   - Namespace best practice lari
+
+# Hosted sandbox da bu level O'YNALMAYDI — dars esa lokal o'yinda o'z o'rnida.
+#
+# Dars: resurslarni noto'g'ri namespace dan to'g'risiga ko'chirish. Hosted
+# platforma xavfsizlik uchun foydalanuvchiga BITTA namespace (sandbox-xxx)
+# beradi va apply paytida namespace ni majburan o'sha namespace ga almashtiradi
+# (RBAC chegarasi). Ya'ni "boshqa namespace" tushunchasining O'ZI bu muhitda
+# yo'q: yangi namespace yaratib ham, ishlatib ham bo'lmaydi. Shu sababli dars
+# faqat lokal o'yinda ma'noli. Batafsil: docs/MISSION-SCHEMA.md
+environments:
+  hosted:
+    available: false
+    description: "Bu level bir nechta namespace o'rtasida resurs ko'chirishni o'rgatadi. Hosted sandbox — bitta izolyatsiyalangan namespace; boshqa namespace yaratib/ishlatib bo'lmaydi. Dars faqat lokal o'yinda o'ynaladi."
