@@ -1,0 +1,91 @@
+# HOSTED VARIANTI — dars o'sha, pod soni sandbox limitiga moslangan.
+#
+# NEGA: hosted sandbox namespace ining ResourceQuota si `pods: 10` va
+# `requests.memory: 256Mi`. Base manifest 9+1 = 10 pod so'raydi, ya'ni
+# butun chegarani yeydi va TEKSHIRUV pod iga bitta o'rin ham qolmaydi:
+# validate Job yaratiladi, uning pod i esa hech qachon tug'ilmaydi
+# ("exceeded quota"). O'lchandi — level v1 da HECH QACHON o'tmasdi.
+#
+# Bu yerda 8+1 = 9 pod: canary ulushi 11.1% bo'ladi va `validate.sh`
+# ning oynasiga (8-12%) tushadi, bitta o'rin esa tekshiruvga qoladi.
+# Resurs so'rovlari ham ANIQ yozilgan (LimitRange ning 32Mi default i
+# 9 pod uchun 288Mi bo'lib, 256Mi chegaradan oshib ketardi).
+#
+# Dars o'zgarmadi: canary — trafikning KICHIK ulushi, stable — katta.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-stable
+  namespace: k8squest
+spec:
+  replicas: 4  # MUAMMO! canary 50% — bu canary emas
+  selector:
+    matchLabels:
+      app: myapp
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: myapp
+        track: stable
+        version: v1
+    spec:
+      containers:
+      - name: app
+        image: hashicorp/http-echo:latest
+        args: ["-text=Stable v1", "-listen=:8080"]
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 25m
+            memory: 16Mi
+          limits:
+            cpu: 100m
+            memory: 64Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-canary
+  namespace: k8squest
+spec:
+  replicas: 4  # MUAMMO! stable bilan teng
+  selector:
+    matchLabels:
+      app: myapp
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: myapp
+        track: canary
+        version: v2
+    spec:
+      containers:
+      - name: app
+        image: hashicorp/http-echo:latest
+        args: ["-text=Canary v2", "-listen=:8080"]
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 25m
+            memory: 16Mi
+          limits:
+            cpu: 100m
+            memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+  namespace: k8squest
+spec:
+  selector:
+    app: myapp  # Matches BOTH stable and canary
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP
