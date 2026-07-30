@@ -1,0 +1,16 @@
+💡 Подсказка почти с решением:
+
+Откатите Deployment к предыдущей рабочей версии:
+
+`kubectl rollout undo deployment/web-app -n k8squest`
+
+Что при этом произойдёт:
+1. Возврат к предыдущему ReplicaSet
+2. Сломанные поды сворачиваются
+3. Рабочие поды разворачиваются
+
+Затем проверьте:
+`kubectl get deployment web-app -n k8squest`
+`kubectl get pods -n k8squest`
+
+Оба Pod должны быть Running (replicas: 2)!

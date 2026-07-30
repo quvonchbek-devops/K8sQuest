@@ -1,0 +1,9 @@
+🔍 Observation hint:
+
+Check the Deployment status:
+`kubectl get deployment web-app -n k8squest`
+
+Look at the rollout status:
+`kubectl rollout status deployment/web-app -n k8squest`
+
+What do you notice in the READY column and in the rollout status?

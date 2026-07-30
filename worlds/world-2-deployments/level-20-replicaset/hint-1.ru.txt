@@ -1,0 +1,16 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте, какие ресурсы есть:
+`kubectl get deployments,replicasets -n k8squest`
+
+Есть ли отдельный ReplicaSet (web-app-rs) без Deployment?
+
+Попробуйте обновить образ:
+`kubectl set image replicaset/web-app-rs web=hashicorp/http-echo:latest -n k8squest`
+
+Проверьте поды:
+`kubectl get pods -n k8squest -l app=webapp`
+
+Обновление сработало? Ответ: спецификация ReplicaSet обновилась, а СУЩЕСТВУЮЩИЕ поды не изменились!
+
+ReplicaSet не делает rolling update — поды пришлось бы удалять вручную или создавать новый ReplicaSet.

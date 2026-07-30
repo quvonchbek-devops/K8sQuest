@@ -1,0 +1,9 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте состояние Deployment:
+`kubectl get deployment web-app -n k8squest`
+
+Посмотрите статус rollout:
+`kubectl rollout status deployment/web-app -n k8squest`
+
+Что вы замечаете в колонке READY и в статусе rollout?

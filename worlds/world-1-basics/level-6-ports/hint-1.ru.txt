@@ -1,0 +1,9 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте, на каком порту слушает контейнер:
+`kubectl get pod web-server -n k8squest -o jsonpath='{.spec.containers[0].ports[0].containerPort}'`
+
+Затем — на какой порт направляет Service:
+`kubectl get service web-service -n k8squest -o jsonpath='{.spec.ports[0].targetPort}'`
+
+Совпадают ли они?

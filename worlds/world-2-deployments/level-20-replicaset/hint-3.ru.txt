@@ -1,0 +1,20 @@
+💡 Подсказка почти с решением:
+
+Превратите ReplicaSet в Deployment.
+
+Шаги:
+1. Удалите отдельный ReplicaSet:
+   `kubectl delete replicaset web-app-rs -n k8squest`
+
+2. Вместо него создайте Deployment:
+   `kubectl apply -f solution.yaml`
+
+3. Проверьте:
+   `kubectl get deployments,replicasets,pods -n k8squest`
+
+Вы должны увидеть:
+- 1 Deployment
+- 1 ReplicaSet (созданный САМИМ Deployment)
+- 3 Pod
+
+Deployment сам создал ReplicaSet и управляет им!

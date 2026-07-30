@@ -1,0 +1,16 @@
+🔍 Observation hint:
+
+Check what resources exist:
+`kubectl get deployments,replicasets -n k8squest`
+
+Is there a standalone ReplicaSet (web-app-rs) with no Deployment?
+
+Try updating the image:
+`kubectl set image replicaset/web-app-rs web=hashicorp/http-echo:latest -n k8squest`
+
+Check the pods:
+`kubectl get pods -n k8squest -l app=webapp`
+
+Did the update work? Answer: the ReplicaSet spec was updated, but the EXISTING pods did not change!
+
+ReplicaSets do not perform rolling updates — you would have to delete pods by hand or create a new ReplicaSet.

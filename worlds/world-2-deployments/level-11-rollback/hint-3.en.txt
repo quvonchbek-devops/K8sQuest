@@ -1,0 +1,16 @@
+💡 Near-solution hint:
+
+Roll the Deployment back to the previous working version:
+
+`kubectl rollout undo deployment/web-app -n k8squest`
+
+This does the following:
+1. Returns to the previous ReplicaSet
+2. Scales down the broken pods
+3. Scales up the working pods
+
+Then check:
+`kubectl get deployment web-app -n k8squest`
+`kubectl get pods -n k8squest`
+
+Both pods should be Running (replicas: 2)!

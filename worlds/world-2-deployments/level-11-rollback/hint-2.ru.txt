@@ -1,0 +1,12 @@
+🧭 Направляющая подсказка:
+
+Deployment застрял, потому что нового образа не существует. Проверьте:
+
+`kubectl describe deployment web-app -n k8squest`
+
+Посмотрите раздел Events. Вы увидите ошибки ImagePullBackOff.
+
+Посмотрите историю rollout:
+`kubectl rollout history deployment/web-app -n k8squest`
+
+К предыдущей ревизии можно откатиться!
