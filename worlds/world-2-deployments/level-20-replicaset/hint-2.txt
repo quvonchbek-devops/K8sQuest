@@ -18,3 +18,12 @@ Shunday tasavvur qiling:
 - Deployment = "Versiyalar, yangilanishlar, rollback larni boshqar" (aqlli)
 
 Deyarli HECH QACHON to'g'ridan-to'g'ri ReplicaSet yaratmang. Doim Deployment ishlating!
+
+Egasi bor-yo'qligini ko'ring — Deployment tomonidan yaratilgan ReplicaSet da
+`ownerReferences` bo'ladi:
+
+    kubectl get replicaset web-app-rs -n k8squest -o jsonpath='{.metadata.ownerReferences}'
+    kubectl get deployments -n k8squest
+
+Birinchi buyruq BO'SH qaytadi, ikkinchisi hech nima ko'rsatmaydi — ya'ni
+ReplicaSet mustaqil.

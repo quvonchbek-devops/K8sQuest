@@ -21,3 +21,11 @@ StatefulSet larga headless service kerak, chunki:
 - Barqaror pod nomlari (web-0, web-1)
 - Barqaror DNS nomlari (web-0.service-nomi)
 - Ma'lumotlar bazasi klasterlari, Kafka, etcd va boshqalar uchun
+
+Service turini ko'ring — headless bo'lishi uchun `clusterIP: None` kerak:
+
+    kubectl get service web-cluster -n k8squest -o jsonpath='{.spec.clusterIP}'
+    kubectl get statefulset web -n k8squest -o jsonpath='{.spec.serviceName}'
+
+Birinchi buyruq IP qaytarsa (masalan `10.43.x.x`), service oddiy ClusterIP —
+o'shanda per-pod DNS yozuvlari yaratilmaydi.

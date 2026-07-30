@@ -15,3 +15,10 @@ Bu 50/50 taqsimot beradi (5/10 = 50%)!
 - 9 stable : 1 canary kerak (9/10 = 90%, 1/10 = 10%)
 
 Muammo: Canary replikalari juda ko'p!
+
+Nisbatni pod SONI bo'yicha ko'ring — trafik shu nisbatda taqsimlanadi:
+
+    kubectl get deployment app-stable app-canary -n k8squest
+    kubectl get endpoints app-service -n k8squest
+
+READY ustunidagi sonlar 9:1 emas, boshqa nisbatda bo'ladi — muammo shu.

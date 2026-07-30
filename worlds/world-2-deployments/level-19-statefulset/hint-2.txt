@@ -15,3 +15,11 @@ Ma'lumotlar bazalari STATEFUL va quyidagilarni talab qiladi:
 - Tartibli to'xtash (replikalar primary dan oldin)
 
 Yechim: Deployment o'rniga StatefulSet ishlating!
+
+Pod NOMLARIGA qarang — Deployment tasodifiy suffiks beradi:
+
+    kubectl get pods -n k8squest -l app=database
+    kubectl get deployment database -n k8squest -o jsonpath='{.spec.template.spec.volumes}'
+
+Nomlar barqaror emas (`database-7d9f…`) va volume ham har pod uchun alohida
+emas — stateful ilova uchun ikkisi ham muammo.

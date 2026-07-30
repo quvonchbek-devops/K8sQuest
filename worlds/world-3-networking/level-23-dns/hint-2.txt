@@ -8,3 +8,12 @@ Bir xil namespace ichida qisqa nom ishlatish mumkin: `<service-nomi>`
 Klient "database" ishlatmoqda, lekin service "database-service".
 
 Klient pod ni to'g'ri service nomi ishlatadigan qilib tuzatish kerak!
+
+Service va uning DNS nomini tekshiring:
+
+    kubectl get svc -n k8squest
+    kubectl get endpoints database-service -n k8squest
+    kubectl logs app-client -n k8squest
+
+Loglarda qanday nom izlanayotganini ko'ring va uni yuqoridagi ro'yxat bilan
+solishtiring — nom xato bo'lsa DNS hech nima topmaydi.

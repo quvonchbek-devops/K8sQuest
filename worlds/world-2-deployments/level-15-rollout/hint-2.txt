@@ -11,3 +11,10 @@ Natija: Barcha eski pod lar to'xtatiladi, keyin yangilari ishga tushadi → TO'L
 Nol-to'xtashli deployment lar uchun kerak:
 - maxUnavailable < 100% (ba'zi pod lar doim ishlashini ta'minlash)
 - YOKI maxSurge > 0 (o'tish vaqtida qo'shimcha pod larga ruxsat berish)
+
+Strategiyani O'Z KO'ZINGIZ bilan ko'ring:
+
+    kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.strategy}'
+
+`maxUnavailable: 100%` — ya'ni rollout paytida HAMMA pod bir vaqtda
+o'chirilishiga ruxsat berilgan.

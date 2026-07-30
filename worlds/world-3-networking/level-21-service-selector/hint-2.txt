@@ -9,3 +9,12 @@ Ikki variant bor:
 2. Service selector ga mos kelish uchun pod label larini o'zgartirish
 
 1-variant osonroq — shunchaki service ni tahrirlang!
+
+Selector va pod label larini solishtiring:
+
+    kubectl get service backend-service -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pod backend-pod -n k8squest --show-labels
+
+Nomuvofiqlikning natijasi — bo'sh endpoint:
+
+    kubectl get endpoints backend-service -n k8squest

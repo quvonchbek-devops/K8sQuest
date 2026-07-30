@@ -18,3 +18,11 @@ Bu service faqat IKKALA label ga mos pod larga trafik yo'naltiradi:
 app-green pod larda version=green bor, shuning uchun mos kelmaydi!
 
 Foydalanuvchilar hali ham ESKI (blue) versiyani ko'rishmoqda.
+
+Service hozir QAYSI versiyaga ishora qilayotganini ko'ring:
+
+    kubectl get service app-service -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pods -n k8squest --show-labels
+
+Selector dagi `version` qiymati bilan pod lardagi label ni solishtiring —
+trafik faqat mos kelganiga boradi.

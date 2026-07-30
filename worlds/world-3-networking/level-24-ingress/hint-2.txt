@@ -22,3 +22,12 @@ Tuzatish: path ni "/api" dan "/" ga o'zgartiring.
 Path turlari:
 - **Prefix**: /path va /path/boshqa-narsa ga mos
 - **Exact**: Faqat aniq path ga mos
+
+Ingress qoidalarini va orqadagi service ni ko'ring:
+
+    kubectl get ingress web-ingress -n k8squest -o jsonpath='{.spec.rules}'
+    kubectl get service web-service -n k8squest
+    kubectl describe ingress web-ingress -n k8squest
+
+`describe` chiqishida `Backends` qismiga qarang: agar u `<error: endpoints
+"…" not found>` deb yozsa, qoida mavjud bo'lmagan service ga ishora qiladi.

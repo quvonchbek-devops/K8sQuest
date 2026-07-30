@@ -6,3 +6,14 @@ Muammo: minAvailable = replika soni → eviction imkonsiz
 
 Yechim: minAvailable ni kamayting YOKI replika sonini ko'paytiring.
 Masalan: 3 replika, minAvailable: 2 → 1 ta eviction ga ruxsat.
+
+PDB va deployment SONLARINI birga ko'ring:
+
+    kubectl get pdb web-pdb -n k8squest
+    kubectl get deployment web-app -n k8squest
+
+`ALLOWED DISRUPTIONS` ustuni `0` bo'lsa, hech qanday pod evict qilinmaydi —
+node xizmati va klaster yangilanishi to'siladi. Selector ham mos kelishi kerak:
+
+    kubectl get pdb web-pdb -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pods -n k8squest --show-labels

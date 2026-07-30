@@ -17,3 +17,11 @@ Bu qanday ishlaydi:
 2. Service eslab qoladi: "bu IP → Pod 2"
 3. Keyingi barcha so'rovlar Pod 2 ga ketadi
 4. Mapping timeoutSeconds dan keyin tugaydi
+
+Service da affinity sozlanganini tekshiring:
+
+    kubectl get service session-service -n k8squest -o jsonpath='{.spec.sessionAffinity}'
+    kubectl get endpoints session-service -n k8squest
+
+Birinchi buyruq `None` qaytaradi — ya'ni har so'rov boshqa pod ga tushishi
+mumkin; endpoint ro'yxatida esa uchta pod turadi.

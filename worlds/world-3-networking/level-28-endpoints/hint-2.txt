@@ -15,3 +15,12 @@ readinessProbe:
   periodSeconds: 5
   failureThreshold: 1
 ```
+
+Endpoint ro'yxati POD HOLATIGA ergashadi — ikkalasini birga ko'ring:
+
+    kubectl get pods -n k8squest -l app=web
+    kubectl get endpoints web-service -n k8squest
+    kubectl get pod web-app-1 -n k8squest -o jsonpath='{.spec.containers[0].readinessProbe}'
+
+Uchinchi buyruq BO'SH qaytadi — readiness probe yo'q, ya'ni Kubernetes pod ni
+"tayyor" deb hisoblaydi va uni endpoint ga qo'shadi.

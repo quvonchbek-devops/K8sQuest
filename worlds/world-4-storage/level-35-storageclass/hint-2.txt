@@ -9,3 +9,11 @@ Muammo: PVC mavjud bo'lmagan StorageClass nomiga murojaat qilmoqda.
 Sandbox'da StorageClass ro'yxati ko'rinmaydi (u cluster-scoped resurs).
 Shuning uchun eng ishonchli yo'l — sinf nomini UMUMAN ko'rsatmaslik: o'shanda
 klasterning default StorageClass i ishlatiladi.
+
+PVC qaysi sinfni so'rayotganini va nega kutayotganini ko'ring:
+
+    kubectl get pvc app-storage -n k8squest -o jsonpath='{.spec.storageClassName}'
+    kubectl describe pvc app-storage -n k8squest
+
+`describe` chiqishining `Events:` qismida sabab yoziladi — so'ralgan
+StorageClass topilmasa PVC abadiy `Pending` da qoladi.

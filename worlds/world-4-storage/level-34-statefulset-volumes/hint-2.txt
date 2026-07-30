@@ -18,3 +18,11 @@ Bu har bir pod uchun: data-pod-0, data-pod-1, data-pod-2 PVC yaratadi.
 
 Muammo ehtimol: noto'g'ri template nomi, mos kelmaydigan volumeMount nomi,
 yoki mavjud bo'lmagan StorageClass.
+
+StatefulSet volume ni QANDAY olayotganini ko'ring:
+
+    kubectl get statefulset postgres-cluster -n k8squest -o jsonpath='{.spec.volumeClaimTemplates}'
+    kubectl get pvc -n k8squest
+
+Birinchi buyruq bo'sh bo'lsa, StatefulSet umumiy PVC ga tayanadi — har pod
+uchun alohida disk yaratilmaydi (PVC ro'yxatida bittasi turadi).

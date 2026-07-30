@@ -12,3 +12,12 @@ env:
 
 Agar ConfigMap da bu kalit yo'q bo'lsa — pod ishga tushmaydi!
 ConfigMap dagi mavjud kalitlarni tekshiring va mos keling.
+
+ConfigMap dagi kalitlarni pod so'ragan kalit bilan solishtiring:
+
+    kubectl get configmap app-config -n k8squest -o jsonpath='{.data}'
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].env}'
+    kubectl describe pod web-app -n k8squest
+
+`describe` da `CreateContainerConfigError` va yo'q kalit nomi ko'rinadi —
+konteyner shu sababdan boshlanmaydi.

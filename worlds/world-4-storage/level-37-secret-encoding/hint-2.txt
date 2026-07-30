@@ -16,3 +16,13 @@ stringData:
 
 ⚠️ MUHIM: base64 bu XAVFSIZLIK EMAS! Bu faqat kodlash. Haqiqiy xavfsizlik uchun
 Vault yoki Sealed Secrets ishlating.
+
+Secret ning ichini ko'ring — u base64 da SAQLANADI, shifrlanmaydi:
+
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data}'
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data.password}'
+
+Ikkinchi qiymatni oddiy `base64 -d` bilan ochib bo'ladi — ya'ni bu "himoya"
+emas, faqat kodlash. Konteyner nima olayotganini ham ko'ring:
+
+    kubectl logs database-client -n k8squest

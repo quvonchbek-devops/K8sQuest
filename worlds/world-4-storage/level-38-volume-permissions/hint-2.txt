@@ -15,3 +15,12 @@ spec:
 ```
 
 `fsGroup` volume mount qilinganida fayl ruxsatlarini avtomatik sozlaydi.
+
+Kim nomidan yozilayotganini va fsGroup ni ko'ring:
+
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.securityContext}'
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
+    kubectl logs writer-app -n k8squest
+
+Loglarda `Permission denied` bo'ladi: konteyner non-root UID bilan ishlaydi,
+volume esa boshqa guruhga tegishli — `fsGroup` shu farqni yopadi.

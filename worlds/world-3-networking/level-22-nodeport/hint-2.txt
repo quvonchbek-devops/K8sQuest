@@ -8,3 +8,11 @@ Uchta port ishtirok etadi:
 - **nodePort**: Tashqi kirish porti (30080 bo'lishi kerak)
 
 Service spec ga `nodePort: 30080` qo'shishingiz kerak!
+
+Service ning port ta'rifini ko'ring:
+
+    kubectl get service web-nodeport -n k8squest -o jsonpath='{.spec.ports[0]}'
+    kubectl get service web-nodeport -n k8squest -o jsonpath='{.spec.type}'
+
+`nodePort` maydoni yo'q bo'lsa Kubernetes TASODIFIY port beradi — ya'ni
+manzil oldindan bilinmaydi.

@@ -23,3 +23,12 @@ volumes:
 - name: tmp
   emptyDir: {}
 ```
+
+Qo'yilgan cheklovlarni va ilova nimaga urilayotganini ko'ring:
+
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.securityContext}'
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
+    kubectl logs web-app -n k8squest
+
+Loglar aniq aytadi: `readOnlyRootFilesystem` yoki juda past UID sababli ilova
+kerakli joyga yozolmaydi.

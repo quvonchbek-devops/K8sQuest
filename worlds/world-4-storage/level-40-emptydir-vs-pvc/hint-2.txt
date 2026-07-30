@@ -11,3 +11,11 @@
 - Foydalanish: ma'lumotlar bazalari, foydalanuvchi fayllari
 
 Ma'lumotlar bazasi uchun DOIM PVC ishlating!
+
+Volume TURINI ko'ring — `emptyDir` pod bilan birga o'ladi:
+
+    kubectl get pod data-app -n k8squest -o jsonpath='{.spec.volumes}'
+    kubectl get pvc -n k8squest
+
+Birinchi buyruqda `emptyDir` ko'rinadi, ikkinchisi esa hech nima ko'rsatmaydi —
+ya'ni doimiy saqlash umuman so'ralmagan.
