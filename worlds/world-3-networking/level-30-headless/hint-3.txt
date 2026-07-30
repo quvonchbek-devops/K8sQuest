@@ -13,16 +13,18 @@ spec:
   clusterIP: None  # ✅ IP manzildan None ga o'zgardi
 ```
 
-Tekshirish:
-```bash
-# Service headless ekanini tasdiqlash
-kubectl get service web-cluster -n k8squest
-# CLUSTER-IP: None ko'rinishi kerak
+Tekshirish — service headless ekanini tasdiqlang (CLUSTER-IP: None):
 
-# Per-pod DNS ni test qilish
-kubectl run -it --rm debug --image=busybox:1.28 -n k8squest -- sh
-nslookup web-0.web-cluster.k8squest.svc.cluster.local
-nslookup web-1.web-cluster.k8squest.svc.cluster.local
-```
+    kubectl get service web-cluster -n k8squest
 
-Har bir so'rov aniq pod ning IP manzilini qaytarishi kerak!
+Per-pod DNS ni sinash. Terminal bir martalik va TTY yo'q, ya'ni `-it ... -- sh`
+bilan pod ichiga KIRIB bo'lmaydi — buyruqni pod ga BERIB yuborasiz va natijani
+log dan o'qiysiz:
+
+    kubectl run dns-test --image=busybox:1.28 --restart=Never -n k8squest --command -- nslookup web-0.web-cluster.k8squest.svc.cluster.local
+    kubectl logs dns-test -n k8squest
+    kubectl delete pod dns-test -n k8squest
+
+Log da web-0 ning ANIQ IP manzili ko'rinishi kerak (headless service har pod
+uchun alohida A yozuv beradi). Xuddi shu buyruqni `web-1` uchun ham
+takrorlang — IP boshqacha bo'ladi.

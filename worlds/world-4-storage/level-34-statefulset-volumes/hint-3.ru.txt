@@ -1,0 +1,30 @@
+✅ Подсказка 3: Полное решение
+
+StatefulSet использует ОДИН общий PVC для всех подов. Чтобы каждый под получил
+свой диск, нужны `volumeClaimTemplates` — это поле нельзя изменить у
+существующего StatefulSet (immutable), поэтому ресурс пересоздаётся.
+
+1. Удалите StatefulSet (поды уйдут вместе с ним):
+
+    kubectl delete statefulset postgres-cluster -n k8squest
+
+2. Удалите общий PVC — он больше не нужен:
+
+    kubectl delete pvc database-storage -n k8squest
+
+3. Примените вариант с volumeClaimTemplates (после `Показать решение` файл
+   лежит в вашей сессии):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+4. Посмотрите результат — на каждый под создаётся ОТДЕЛЬНЫЙ PVC:
+
+    kubectl get pvc -n k8squest
+    kubectl get pods -n k8squest -l app=postgres
+
+Имена будут вида `database-storage-postgres-cluster-0`, `-1`, `-2`:
+StatefulSet добавляет имя пода к имени шаблона. PVC должны быть `Bound`, а
+поды подниматься по порядку (0 → 1 → 2).
+
+Внимание: `volumeClaimTemplates[].metadata.name` и `volumeMounts[].name` у
+контейнера ДОЛЖНЫ совпадать — иначе под не найдёт том.

@@ -1,8 +1,37 @@
 ✅ Yechim maslahat:
 
-broken.yaml da IKKALA pod ga (web-app-1 va web-app-2) readinessProbe qo'shing:
+Ikkala pod ga readinessProbe kerak. MUHIM: probe ni ishlab turgan pod ga
+qo'shib bo'lmaydi — `spec.containers[].readinessProbe` immutable maydon
+(kubectl "may not be changed" xatosini beradi). Ya'ni pod lar QAYTA
+yaratiladi.
+
+1. Eski pod larni o'chiring:
+
+    kubectl delete pod web-app-1 web-app-2 -n k8squest
+
+2. Probe bilan qayta yarating. `Yechimni ko'rsatish` tugmasini bosgan
+   bo'lsangiz fayl sessiyangizda turadi:
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Yoki `O'z manifestini yozish` panelida quyidagini saqlab, o'zingiz
+   qo'llang (ikkinchi pod uchun nomni va `-text` ni almashtirib takrorlang):
 
 ```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app-1
+  namespace: k8squest
+  labels:
+    app: web
+spec:
+  containers:
+  - name: app
+    image: hashicorp/http-echo:latest
+    args: ["-text=Pod 1 ready", "-listen=:8080"]
+    ports:
+    - containerPort: 8080
     readinessProbe:
       httpGet:
         path: /
@@ -12,10 +41,13 @@ broken.yaml da IKKALA pod ga (web-app-1 va web-app-2) readinessProbe qo'shing:
       failureThreshold: 1
 ```
 
-Qadamlar:
-1. broken.yaml ni tahrirlang — har ikkala pod ning container spec iga readinessProbe qo'shing
-2. Eski pod larni o'chiring: `kubectl delete pod web-app-1 web-app-2 -n k8squest`
-3. Apply qiling: `kubectl apply -f broken.yaml`
-4. Pod lar tayyor bo'lishini kuzating: `kubectl get pods -n k8squest -l app=web      # bir necha marta takrorlang (-w bu terminalda ishlamaydi)`
+3. Pod lar tayyor bo'lishini kuzating (0/1 → 1/1):
 
-0/1 → 1/1 o'tishi readiness probe muvaffaqiyat bo'lganda sodir bo'ladi!
+    kubectl get pods -n k8squest -l app=web
+
+4. Endpoint lar FAQAT tayyor pod larni ko'rsatishini tekshiring:
+
+    kubectl get endpoints web-service -n k8squest
+
+0/1 → 1/1 o'tishi aynan readiness probe muvaffaqiyat bo'lganda sodir bo'ladi —
+va endpoint ga pod SHUNDAN KEYIN qo'shiladi.

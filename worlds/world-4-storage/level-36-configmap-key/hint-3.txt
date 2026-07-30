@@ -1,13 +1,32 @@
 ✅ Maslahat 3: To'liq Yechim
 
-broken.yaml da ikki yechimdan birini tanlang:
+Pod ConfigMap dan `database_host` kalitini so'raydi, ConfigMap da esa u yo'q —
+shuning uchun kubelet konteynerni umuman ishga tushira olmaydi
+(`CreateContainerConfigError`).
 
-1. Pod dagi key nomini ConfigMap dagi mavjud key ga o'zgartiring
-2. Yoki ConfigMap ga kerakli key ni qo'shing
+ConfigMap ma'lumotini JONLI o'zgartirish mumkin, ya'ni faylni tahrirlash
+kerak emas — yetishmagan kalitni qo'shing:
 
-```bash
-kubectl get configmap app-config -n k8squest -o yaml    # Mavjud key larni ko'ring
-```
+    kubectl patch configmap app-config -n k8squest -p '{"data":{"database_host":"postgres.k8squest.svc.cluster.local"}}'
 
-Keyin broken.yaml ni to'g'rilang va:
-`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
+Kalitlar joyida ekanini tekshiring:
+
+    kubectl get configmap app-config -n k8squest -o jsonpath='{.data}'
+
+Endi pod ni kutasiz: kubelet konteynerni qayta-qayta urinib ko'radi va kalit
+paydo bo'lgach o'zi ishga tushadi (bir necha o'n soniya):
+
+    kubectl get pod web-app -n k8squest
+    kubectl logs web-app -n k8squest
+
+Log da "App started successfully" ko'rinishi kerak.
+
+Agar kutish uzoq cho'zilsa, pod ni qayta yaratish ham mumkin (`Yechimni
+ko'rsatish` dan keyin fayl sessiyangizda turadi):
+
+    kubectl delete pod web-app -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+
+Muqobil yo'l: kalit nomini pod tomonida o'zgartirish. Lekin pod da
+`env[].valueFrom` immutable, ya'ni bu holda pod QAYTA yaratilishi kerak
+bo'ladi — ConfigMap ni to'ldirish osonroq.

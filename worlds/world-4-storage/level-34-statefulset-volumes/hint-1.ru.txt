@@ -1,0 +1,11 @@
+🔍 Подсказка 1: Наблюдение за проблемой
+
+Поды StatefulSet не запускаются.
+
+Проверьте:
+1. `kubectl get statefulset -n k8squest`
+2. `kubectl get pods -n k8squest` — в каком состоянии поды?
+3. `kubectl describe statefulset -n k8squest` — смотрите Events
+4. `kubectl get pvc -n k8squest` — созданы ли PVC?
+
+Есть ли у StatefulSet секция volumeClaimTemplates и настроена ли она верно?

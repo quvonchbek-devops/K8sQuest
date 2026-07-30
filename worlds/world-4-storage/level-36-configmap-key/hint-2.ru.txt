@@ -1,0 +1,23 @@
+🧭 Подсказка 2: Проблема ключа ConfigMap
+
+Под берёт значение из ConfigMap через конкретный ключ:
+```yaml
+env:
+- name: APP_CONFIG
+  valueFrom:
+    configMapKeyRef:
+      name: app-config
+      key: config.yaml    # ← есть ли этот ключ в ConfigMap?
+```
+
+Если такого ключа в ConfigMap нет — под не запустится!
+Проверьте, какие ключи есть в ConfigMap, и приведите их в соответствие.
+
+Сравните ключи ConfigMap с ключом, который запрашивает под:
+
+    kubectl get configmap app-config -n k8squest -o jsonpath='{.data}'
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].env}'
+    kubectl describe pod web-app -n k8squest
+
+В `describe` будет `CreateContainerConfigError` и имя отсутствующего ключа —
+именно поэтому контейнер не стартует.

@@ -1,0 +1,30 @@
+🧭 Guiding hint:
+
+The pods are MISSING readiness probes. Without them Kubernetes adds pods to the
+Service endpoints immediately, even if the app inside is not ready to serve
+traffic.
+
+Without a readiness probe: pod starts → added to endpoints at once → traffic
+arrives → ERROR!
+With a readiness probe: pod starts → the probe waits → the probe succeeds →
+added to endpoints → traffic arrives → OK!
+
+Fix — add a readiness probe to both pods:
+```yaml
+readinessProbe:
+  httpGet:
+    path: /
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  failureThreshold: 1
+```
+
+The endpoint list FOLLOWS POD STATE — look at both together:
+
+    kubectl get pods -n k8squest -l app=web
+    kubectl get endpoints web-service -n k8squest
+    kubectl get pod web-app-1 -n k8squest -o jsonpath='{.spec.containers[0].readinessProbe}'
+
+The third command returns EMPTY — there is no readiness probe, so Kubernetes
+considers the pod "ready" and adds it to the endpoints.

@@ -1,0 +1,19 @@
+🧭 Hint 2: Understanding StorageClass
+
+A StorageClass tells Kubernetes HOW to create a volume:
+- which provisioner (hostpath, nfs, aws-ebs, …)
+- which parameters (disk type, IOPS)
+- the reclaim policy (Delete or Retain)
+
+The problem: the PVC references a StorageClass name that does not exist.
+The sandbox cannot list StorageClasses (a cluster-scoped resource), so the most
+reliable path is to NOT NAME a class at all: then the cluster's default
+StorageClass is used.
+
+See which class the PVC is asking for and why it is waiting:
+
+    kubectl get pvc app-storage -n k8squest -o jsonpath='{.spec.storageClassName}'
+    kubectl describe pvc app-storage -n k8squest
+
+The `Events:` part of the `describe` output gives the reason — if the requested
+StorageClass is not found, the PVC stays `Pending` forever.

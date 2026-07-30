@@ -1,0 +1,9 @@
+🔍 Hint 1: Observe the problem
+
+The pod runs but writing to the volume fails — "Permission denied".
+
+Check:
+1. `kubectl logs writer-app -n k8squest` — look at the permission error
+2. `kubectl get pods -n k8squest -o jsonpath='{.items[*].spec.securityContext}'`
+3. Which user (UID) does the container run as?
+4. Which user owns the volume's filesystem?

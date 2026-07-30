@@ -1,0 +1,21 @@
+🧭 Guiding hint:
+
+The problem is in the Service selector!
+
+The Service looks for pods labelled `app: backend-app`, but the pod has
+`app: backend`.
+
+There are two options:
+1. change the Service selector to match the pod labels, OR
+2. change the pod labels to match the Service selector
+
+Option 1 is easier — just edit the Service!
+
+Compare the selector with the pod labels:
+
+    kubectl get service backend-service -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pod backend-pod -n k8squest --show-labels
+
+The result of a mismatch is an empty endpoint list:
+
+    kubectl get endpoints backend-service -n k8squest

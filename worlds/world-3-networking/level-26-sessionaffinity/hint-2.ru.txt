@@ -1,0 +1,28 @@
+🧭 Направляющая подсказка:
+
+У Service не настроен session affinity. Без него каждый запрос уходит на
+ПРОИЗВОЛЬНЫЙ под.
+
+Исправление: добавьте `sessionAffinity: ClientIP` в spec Service:
+
+```yaml
+spec:
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800  # 3 часа
+```
+
+Как это работает:
+1. Первый запрос клиента попадает на Pod 2
+2. Service запоминает: «этот IP → Pod 2»
+3. Все следующие запросы идут на Pod 2
+4. Привязка истекает через timeoutSeconds
+
+Проверьте, настроен ли affinity у Service:
+
+    kubectl get service session-service -n k8squest -o jsonpath='{.spec.sessionAffinity}'
+    kubectl get endpoints session-service -n k8squest
+
+Первая команда вернёт `None` — значит каждый запрос может попасть на другой
+под; а в списке endpoints три пода.

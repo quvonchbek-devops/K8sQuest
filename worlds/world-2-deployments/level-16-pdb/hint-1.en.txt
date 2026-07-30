@@ -1,0 +1,16 @@
+🔍 Observation hint:
+
+Check the PodDisruptionBudget:
+`kubectl get pdb -n k8squest`
+
+Look at the ALLOWED column — is it 0?
+
+Describe the PDB:
+`kubectl describe pdb db-proxy-pdb -n k8squest`
+
+Check "allowed disruptions" — if it is 0, node drains will fail!
+
+Check the Deployment:
+`kubectl get deployment database-proxy -n k8squest`
+
+How many replicas are there? Compare that with the PDB's minAvailable.

@@ -1,0 +1,32 @@
+🧭 Hint 2: Understanding SecurityContext
+
+SecurityContext sets the security options for a pod/container:
+
+```yaml
+securityContext:
+  runAsNonRoot: true             # forbid running as root
+  runAsUser: 1000                # the exact user ID
+  allowPrivilegeEscalation: false # forbid privilege escalation
+  capabilities:
+    drop: ["ALL"]                # drop all Linux capabilities
+  readOnlyRootFilesystem: true   # forbid writing to the filesystem
+```
+
+THIS level's problem: `runAsNonRoot: true` is set, but `runAsUser` is MISSING.
+Kubernetes says "must not be root" while the image (nginx) starts itself as
+root — a contradiction. As a result the container never starts at all:
+`CreateContainerConfigError`.
+
+In other words "runAsNonRoot: true" alone is not enough: you must also say WHICH
+user to be.
+
+See the restrictions in place and why the container does not start:
+
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
+    kubectl describe pod web-app -n k8squest
+
+The `Events:` part of the `describe` output states the reason:
+`container has runAsNonRoot and image will run as root`.
+
+The second trap: a non-root user cannot bind to a port below 1024. That is why
+the solution also swaps the image — `nginxinc/nginx-unprivileged` (port 8080).

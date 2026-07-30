@@ -1,0 +1,20 @@
+💡 Подсказка почти с решением:
+
+Исправьте PDB так, чтобы вытеснения были разрешены, а доступность сохранилась.
+
+В этом терминале нет редактора файлов (интерактивная правка тоже не работает: одноразовое выполнение, нет TTY) — измените PDB через `kubectl patch`:
+
+    kubectl patch pdb db-proxy-pdb -n k8squest -p '{"spec":{"minAvailable":2}}'
+
+То есть: 2 пода остаются, 1 можно вытеснить.
+
+Проверьте:
+
+    kubectl get pdb db-proxy-pdb -n k8squest
+
+Теперь в «ALLOWED DISRUPTIONS» должно быть 1 вместо 0!
+
+Альтернатива — убрать `minAvailable` и задать `maxUnavailable`. Вместе они
+стоять не могут, поэтому замена делается через JSON patch:
+
+    kubectl patch pdb db-proxy-pdb -n k8squest --type=json -p '[{"op":"remove","path":"/spec/minAvailable"},{"op":"add","path":"/spec/maxUnavailable","value":1}]'

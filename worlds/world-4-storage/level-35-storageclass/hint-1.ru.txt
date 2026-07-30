@@ -1,0 +1,12 @@
+🔍 Подсказка 1: Наблюдение за проблемой
+
+PVC застрял в Pending — проблема со StorageClass.
+
+Проверьте:
+1. `kubectl get pvc -n k8squest` — STATUS: Pending
+2. `kubectl describe pvc -n k8squest` — прочитайте сообщение об ошибке в Events
+3. В выводе `kubectl describe pvc -n k8squest` также видно имя запрошенного
+   класса (StorageClass — cluster-scoped ресурс, поэтому из sandbox список не
+   посмотреть)
+
+Какой StorageClass запрашивает PVC? Существует ли он в кластере?

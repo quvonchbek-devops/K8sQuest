@@ -1,0 +1,26 @@
+💡 Подсказка почти с решением:
+
+Исправьте число реплик, чтобы получить распределение 90/10.
+
+Шаги:
+1. Отмасштабируйте stable до 9 реплик:
+   `kubectl scale deployment app-stable --replicas=9 -n k8squest`
+
+2. Отмасштабируйте canary до 1 реплики:
+   `kubectl scale deployment app-canary --replicas=1 -n k8squest`
+
+3. Дождитесь готовности подов:
+   `kubectl get deployments -n k8squest      # повторите несколько раз (-w в этом терминале не работает)`
+
+4. Проверьте распределение — запросите число готовых подов по отдельности:
+   `kubectl get deployment app-stable -n k8squest -o jsonpath='{.status.readyReplicas}'`
+   `kubectl get deployment app-canary -n k8squest -o jsonpath='{.status.readyReplicas}'`
+
+   (Этот терминал принимает только kubectl: shell-переменные, `echo` и `$( )`
+   не работают — процент посчитайте сами.)
+
+Если первая вернёт 9, а вторая 1 — распределение 90/10, то есть canary 10%.
+
+Соотношение трафика также видно по числу endpoints:
+
+    kubectl get endpoints app-service -n k8squest

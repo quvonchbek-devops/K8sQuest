@@ -1,0 +1,45 @@
+✅ Подсказка с решением:
+
+Неверный hostname находится внутри АРГУМЕНТА пода, а его нельзя изменить на
+живом поде (`spec.containers[].args` — неизменяемое поле). Поэтому под
+пересоздаётся:
+
+    kubectl delete pod app-client -n k8squest
+
+Теперь создайте его заново с правильным hostname. Есть два пути:
+
+1) Если вы нажали `Показать решение`, файл лежит в вашей сессии:
+
+    kubectl apply -f solution.yaml -n k8squest
+
+2) Либо впишите это в панели `Написать свой манифест` и сохраните (панель
+   положит файл в вашу сессию, применяете вы сами):
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-client
+  namespace: k8squest
+spec:
+  containers:
+  - name: client
+    image: postgres:13
+    command: ["sh", "-c"]
+    args:
+    - |
+      while true; do
+        pg_isready -h database-service -p 5432 || echo "Connection failed"
+        sleep 10
+      done
+```
+
+(Этот цикл выполняется ВНУТРИ КОНТЕЙНЕРА — не в терминале. Поэтому здесь
+`while`/`echo` допустимы: их запускает Kubernetes, а не терминал sandbox.)
+
+Единственное изменение — hostname: `database` → `database-service`
+(НАСТОЯЩЕЕ имя сервиса).
+
+Проверьте — в логе должно появиться «accepting connections»:
+
+    kubectl logs app-client -n k8squest

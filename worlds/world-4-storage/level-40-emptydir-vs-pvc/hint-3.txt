@@ -1,34 +1,55 @@
 ✅ Maslahat 3: To'liq Yechim
 
-broken.yaml da emptyDir ni PVC ga almashtiring:
+Pod `emptyDir` ishlatmoqda — u pod bilan birga tug'iladi va pod bilan birga
+O'LADI. Ma'lumot saqlanishi uchun volume PersistentVolumeClaim bo'lishi
+kerak.
 
-Oldin:
-```yaml
-volumes:
-- name: data
-  emptyDir: {}    # ❌ Pod bilan birga yo'qoladi
-```
+`spec.volumes` — pod da immutable maydon, ya'ni pod qayta yaratiladi. Ustiga
+PVC ning O'ZI ham yo'q — uni ham yaratish kerak.
 
-Keyin:
-```yaml
-volumes:
-- name: data
-  persistentVolumeClaim:
-    claimName: db-data-pvc    # ✅ Doimiy storage
-```
+1. Eski pod ni o'chiring:
 
-PVC ham yarating (agar yo'q bo'lsa):
+    kubectl delete pod data-app -n k8squest
+
+2. PVC + pod ni birga qo'llang (`Yechimni ko'rsatish` dan keyin fayl
+   sessiyangizda turadi):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Yoki `O'z manifestini yozish` panelida — asosiy o'zgarish shu:
+
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: db-data-pvc
+  name: app-data
   namespace: k8squest
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 1Gi
+---
+# pod ichida:
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: app-data     # emptyDir: {} O'RNIGA
 ```
 
-`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
+3. Tekshiring:
+
+    kubectl get pvc app-data -n k8squest
+    kubectl get pod data-app -n k8squest -o jsonpath='{.spec.volumes}'
+    kubectl logs data-app -n k8squest
+
+PVC `Bound`, volume da `persistentVolumeClaim` ko'rinishi kerak.
+
+4. ENDI eng qiziq qadam — saqlanishini O'Z KO'ZINGIZ bilan ko'ring:
+
+    kubectl delete pod data-app -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+    kubectl logs data-app -n k8squest
+
+Log da "Found existing data" va oldingi yozuvlar turishi kerak — emptyDir
+bilan bu yozuvlar yo'q bo'lardi.

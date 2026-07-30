@@ -1,0 +1,16 @@
+💡 Подсказка почти с решением:
+
+В blue-green деплое трафик переключают обновлением селектора Service.
+
+В этом терминале нет редактора файлов (интерактивная правка тоже не работает: одноразовое выполнение, нет TTY) — переключите селектор через `kubectl patch`:
+
+    kubectl patch service app-service -n k8squest -p '{"spec":{"selector":{"app":"myapp","version":"green"}}}'
+
+Указать ОБА ключа селектора важно: patch сливает карту селектора, то есть при
+одном лишь `version` ключ `app` останется на месте — но явная запись
+показывает, к чему вы подключаетесь.
+
+Проверьте — endpoints должны перейти на поды green:
+
+    kubectl get endpoints app-service -n k8squest
+    kubectl get pods -n k8squest -l version=green

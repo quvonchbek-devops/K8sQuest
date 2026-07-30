@@ -1,0 +1,37 @@
+✅ Подсказка 3: Полное решение
+
+Контейнер работает под UID 1000, а том принадлежит другому владельцу — отсюда
+«Permission denied». Решение: задать `fsGroup` на уровне пода — при
+монтировании тома Kubernetes сменит его группу-владельца на этот GID.
+
+`securityContext` — неизменяемое поле пода, поэтому под ПЕРЕСОЗДАЁТСЯ (PVC не
+удаляется: данные остаются).
+
+1. Удалите под:
+
+    kubectl delete pod writer-app -n k8squest
+
+2. Примените вариант с fsGroup (после `Показать решение` файл лежит в вашей
+   сессии):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Для панели `Написать свой манифест` главное — это:
+
+```yaml
+spec:
+  securityContext:
+    fsGroup: 1000          # группа-владелец тома становится такой
+  containers:
+  - name: app
+    securityContext:
+      runAsUser: 1000      # контейнер работает от этого UID
+      runAsGroup: 1000     # и в этой группе — совпадает с fsGroup
+```
+
+3. Проверьте:
+
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.securityContext}'
+    kubectl logs writer-app -n k8squest
+
+Должно быть `fsGroup: 1000`, а «Permission denied» — исчезнуть из логов.

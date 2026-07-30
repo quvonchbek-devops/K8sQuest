@@ -4,31 +4,30 @@ SecurityContext pod/konteyner uchun xavfsizlik sozlamalarini belgilaydi:
 
 ```yaml
 securityContext:
-  runAsNonRoot ni: true          # Root sifatida ishlashni taqiqlash
-  runAsUser: 1000             # Aniq foydalanuvchi ID
-  readOnlyRootFilesystem: true  # Fayl tizimiga yozishni taqiqlash
-  allowPrivilegeEscalation ni: false  # Imtiyoz oshirishni taqiqlash
+  runAsNonRoot: true             # root sifatida ishlashni taqiqlash
+  runAsUser: 1000                # aniq foydalanuvchi ID
+  allowPrivilegeEscalation: false # imtiyoz oshirishni taqiqlash
   capabilities:
-    drop: ["ALL"]             # Barcha Linux capability larni olib tashlash
+    drop: ["ALL"]                # barcha Linux capability larni olib tashlash
+  readOnlyRootFilesystem: true   # fayl tizimiga yozishni taqiqlash
 ```
 
-Muammo: readOnlyRootFilesystem: true — lekin ilova vaqtincha fayllar yozishi kerak!
+Bu levelning MUAMMOSI: `runAsNonRoot: true` berilgan, lekin `runAsUser` YO'Q.
+Kubernetes "root bo'lmasin" deydi, image esa (nginx) o'zini root bilan ishga
+tushiradi — ziddiyat. Natijada konteyner umuman boshlanmaydi:
+`CreateContainerConfigError`.
 
-Yechim: `/tmp` uchun emptyDir volume qo'shing:
-```yaml
-volumeMounts:
-- name: tmp
-  mountPath: /tmp
-volumes:
-- name: tmp
-  emptyDir: {}
-```
+Ya'ni "runAsNonRoot: true" o'zi yetarli emas: QAYSI foydalanuvchi bo'lishini
+ham aytish kerak.
 
-Qo'yilgan cheklovlarni va ilova nimaga urilayotganini ko'ring:
+Qo'yilgan cheklovlarni va konteyner nega boshlanmayotganini ko'ring:
 
-    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.securityContext}'
     kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
-    kubectl logs web-app -n k8squest
+    kubectl describe pod web-app -n k8squest
 
-Loglar aniq aytadi: `readOnlyRootFilesystem` yoki juda past UID sababli ilova
-kerakli joyga yozolmaydi.
+`describe` chiqishining `Events:` qismida sabab yoziladi:
+`container has runAsNonRoot and image will run as root`.
+
+Ikkinchi tuzoq: non-root foydalanuvchi 1024 dan kichik portga bog'lanolmaydi.
+Shuning uchun yechim image ni ham almashtiradi —
+`nginxinc/nginx-unprivileged` (8080-port).

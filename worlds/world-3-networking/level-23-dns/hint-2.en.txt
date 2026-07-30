@@ -1,0 +1,19 @@
+🧭 Guiding hint:
+
+Kubernetes DNS creates records for services in this format:
+`<service-name>.<namespace>.svc.cluster.local`
+
+Inside the same namespace the short name works: `<service-name>`
+
+The client uses "database", but the service is "database-service".
+
+The client pod has to be fixed to use the correct service name!
+
+Check the Service and its DNS name:
+
+    kubectl get svc -n k8squest
+    kubectl get endpoints database-service -n k8squest
+    kubectl logs app-client -n k8squest
+
+See which name the logs are looking up and compare it with the list above —
+if the name is wrong, DNS finds nothing.

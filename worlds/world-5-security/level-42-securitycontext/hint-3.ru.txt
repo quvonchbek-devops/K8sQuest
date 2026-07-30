@@ -1,0 +1,51 @@
+✅ Подсказка 3: Полное решение
+
+У пода есть `runAsNonRoot: true`, но НЕТ `runAsUser` — а образ (nginx)
+запускает себя от root. Kubernetes не запустит это противоречие: контейнер
+остаётся в `CreateContainerConfigError`.
+
+Нужны три вещи:
+- `runAsUser: 1000` — явный non-root UID
+- `allowPrivilegeEscalation: false`
+- образ, работающий на non-root порту (`nginxinc/nginx-unprivileged`, порт
+  8080) — обычный `nginx` не может занять порт 80 без root
+
+`securityContext` и `image` у пода неизменяемы, поэтому под ПЕРЕСОЗДАЁТСЯ.
+
+1. Удалите под:
+
+    kubectl delete pod web-app -n k8squest
+
+2. Примените правильный вариант (после `Показать решение` файл лежит в вашей
+   сессии):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Главная часть для панели `Написать свой манифест`:
+
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxinc/nginx-unprivileged:latest
+    ports:
+    - containerPort: 8080
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+```
+
+3. Проверьте:
+
+    kubectl get pod web-app -n k8squest
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
+
+Под должен быть `Running`, а в securityContext — `runAsUser: 1000` и
+`allowPrivilegeEscalation: false`.
+
+Замечание: `readOnlyRootFilesystem: true` — тоже полезное правило, но проблема
+этого уровня не в нём: если его добавить, приложению понадобится место для
+записи (`emptyDir` для `/tmp`).

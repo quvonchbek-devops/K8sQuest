@@ -1,0 +1,20 @@
+🧭 Guiding hint:
+
+The problem: `maxUnavailable: 100%` and `maxSurge: 0`
+
+That means:
+- maxUnavailable: 100% → Kubernetes may take ALL 3 pods down at once (100% of 3 = 3)
+- maxSurge: 0 → Kubernetes may not create any extra pod during the rollout
+
+Result: every old pod is stopped first, and only then the new ones start → FULL DOWNTIME!
+
+For zero-downtime deployments you need:
+- maxUnavailable < 100% (so some pods always keep running)
+- OR maxSurge > 0 (so extra pods are allowed during the switch)
+
+See the strategy for yourself:
+
+    kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.strategy}'
+
+`maxUnavailable: 100%` means the rollout is allowed to take EVERY pod down at
+the same time.

@@ -1,0 +1,16 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте PodDisruptionBudget:
+`kubectl get pdb -n k8squest`
+
+Посмотрите на колонку ALLOWED — там 0?
+
+Сделайте describe для PDB:
+`kubectl describe pdb db-proxy-pdb -n k8squest`
+
+Проверьте «allowed disruptions» — если 0, drain узлов будет падать!
+
+Проверьте Deployment:
+`kubectl get deployment database-proxy -n k8squest`
+
+Сколько там реплик? Сравните с minAvailable у PDB.

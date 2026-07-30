@@ -1,0 +1,10 @@
+🔍 Hint 1: Observe the problem
+
+The database pod loses all its data when it restarts.
+
+Check:
+1. `kubectl get pods -n k8squest -o jsonpath='{.items[*].spec.volumes}'`
+2. What is the volume type? `emptyDir` or `persistentVolumeClaim`?
+3. Restart the pod and check whether the data survived
+
+emptyDir exists for the pod's lifetime — when the pod is deleted, it is GONE!

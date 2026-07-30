@@ -1,0 +1,16 @@
+💡 Подсказка почти с решением:
+
+Исправьте стратегию rollout, чтобы гарантировать отсутствие простоя.
+
+В этом терминале нет редактора файлов (интерактивная правка тоже не работает: одноразовое выполнение, нет TTY) — измените стратегию через `kubectl patch`:
+
+    kubectl patch deployment critical-api -n k8squest -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":1,"maxSurge":1}}}}'
+
+Это гарантирует:
+- при 3 репликах всегда работают минимум 2 пода (3 - 1 = 2)
+- во время rollout может существовать до 4 подов (3 + 1 = 4)
+- отсутствие простоя!
+
+Проверьте (терминал не принимает конвейеры — `| grep` — поэтому jsonpath):
+
+    kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.strategy}'

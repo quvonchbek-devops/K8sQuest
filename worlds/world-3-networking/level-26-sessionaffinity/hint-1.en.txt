@@ -1,0 +1,17 @@
+🔍 Observation hint:
+
+Users are being logged out at random. They log in successfully, but on the next
+request the authentication is gone.
+
+Check:
+1. Look at the client logs: `kubectl logs client -n k8squest`
+   Are "Session Pod 1", "Session Pod 2", "Session Pod 3" alternating?
+
+2. Look at the Service configuration: `kubectl describe service session-service -n k8squest`
+   If Session Affinity is None, load balancing is RANDOM.
+
+The problem: the user logs in on Pod 1 → the next request goes to Pod 2 → Pod 2
+has no session → it looks like a logout!
+
+The fix: "session affinity" (sticky sessions) — the same client is always routed
+to the same pod.

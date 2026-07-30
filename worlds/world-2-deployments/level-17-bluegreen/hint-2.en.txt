@@ -1,0 +1,28 @@
+🧭 Guiding hint:
+
+Two deployments are running:
+- app-blue (the old version)
+- app-green (the new version)
+
+The Service selector:
+```yaml
+selector:
+  app: myapp
+  version: blue  # this is the problem!
+```
+
+This Service sends traffic only to pods matching BOTH labels:
+- app=myapp ✅
+- version=blue ✅ (matches the app-blue pods)
+
+The app-green pods carry version=green, so they do not match!
+
+Users are still seeing the OLD (blue) version.
+
+See which version the Service currently points at:
+
+    kubectl get service app-service -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pods -n k8squest --show-labels
+
+Compare the `version` value in the selector with the labels on the pods —
+traffic only reaches the ones that match.

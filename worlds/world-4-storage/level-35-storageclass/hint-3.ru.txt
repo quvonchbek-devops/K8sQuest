@@ -1,0 +1,44 @@
+✅ Подсказка 3: Полное решение
+
+PVC запросил несуществующий класс `premium-ssd`, поэтому навсегда остался в
+`Pending`. `spec.storageClassName` — неизменяемое поле: PVC нельзя
+отредактировать, его нужно ПЕРЕСОЗДАТЬ.
+
+Самый надёжный путь — не указывать класс вовсе: тогда используется
+StorageClass по умолчанию (имя разное в каждом кластере: `local-path` в k3s,
+`standard` в kind, `gp2` в EKS).
+
+1. Удалите под, который использует PVC, затем сам PVC:
+
+    kubectl delete pod data-processor -n k8squest
+    kubectl delete pvc app-storage -n k8squest
+
+2. Примените вариант без указания класса (после `Показать решение` файл лежит
+   в вашей сессии):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Либо в панели `Написать свой манифест`:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-storage
+  namespace: k8squest
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+  # storageClassName СПЕЦИАЛЬНО отсутствует → берётся класс по умолчанию
+```
+
+3. Проверьте:
+
+    kubectl get pvc app-storage -n k8squest
+    kubectl get pod data-processor -n k8squest
+
+PVC должен стать `Bound`, под — `Running`. Если PVC всё ещё `Pending`,
+прочитайте причину в части `Events:` вывода
+`kubectl describe pvc app-storage -n k8squest`.

@@ -1,0 +1,32 @@
+✅ Hint 3: Full solution
+
+The pod asks the ConfigMap for the `database_host` key, and the ConfigMap does
+not have it — so the kubelet cannot start the container at all
+(`CreateContainerConfigError`).
+
+ConfigMap data can be changed on the LIVE object, so no file editing is needed —
+add the missing key:
+
+    kubectl patch configmap app-config -n k8squest -p '{"data":{"database_host":"postgres.k8squest.svc.cluster.local"}}'
+
+Check that the keys are in place:
+
+    kubectl get configmap app-config -n k8squest -o jsonpath='{.data}'
+
+Now wait for the pod: the kubelet keeps retrying the container and starts it by
+itself once the key appears (a few tens of seconds):
+
+    kubectl get pod web-app -n k8squest
+    kubectl logs web-app -n k8squest
+
+The log should show "App started successfully".
+
+If the wait drags on, you can recreate the pod (after `Show solution` the file is
+in your session):
+
+    kubectl delete pod web-app -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+
+Alternative: change the key name on the pod side. But `env[].valueFrom` is
+immutable on a pod, so that would require RECREATING the pod — filling in the
+ConfigMap is easier.

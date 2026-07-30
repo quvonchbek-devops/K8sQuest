@@ -1,0 +1,29 @@
+🧭 Подсказка 2: Разбираемся с volumeClaimTemplates
+
+StatefulSet использует `volumeClaimTemplates`, чтобы создать отдельный PVC для
+каждого пода:
+
+```yaml
+spec:
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+```
+
+Это создаёт по PVC на каждый под: data-pod-0, data-pod-1, data-pod-2.
+
+Вероятные причины: неверное имя шаблона, несовпадающее имя volumeMount или
+несуществующий StorageClass.
+
+Посмотрите, КАК StatefulSet получает том:
+
+    kubectl get statefulset postgres-cluster -n k8squest -o jsonpath='{.spec.volumeClaimTemplates}'
+    kubectl get pvc -n k8squest
+
+Если первая команда пуста, StatefulSet опирается на общий PVC — отдельный диск
+на под не создаётся (в списке PVC он один).

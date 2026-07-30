@@ -1,0 +1,54 @@
+✅ Подсказка 3: Полное решение
+
+Под использует `emptyDir` — он рождается вместе с подом и УМИРАЕТ вместе с
+ним. Чтобы данные сохранялись, том должен быть PersistentVolumeClaim.
+
+`spec.volumes` — неизменяемое поле пода, поэтому под пересоздаётся. Вдобавок
+САМОГО PVC нет — его тоже нужно создать.
+
+1. Удалите старый под:
+
+    kubectl delete pod data-app -n k8squest
+
+2. Примените PVC и под вместе (после `Показать решение` файл лежит в вашей
+   сессии):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Либо в панели `Написать свой манифест` — главное изменение вот такое:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-data
+  namespace: k8squest
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+---
+# внутри пода:
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: app-data     # ВМЕСТО emptyDir: {}
+```
+
+3. Проверьте:
+
+    kubectl get pvc app-data -n k8squest
+    kubectl get pod data-app -n k8squest -o jsonpath='{.spec.volumes}'
+    kubectl logs data-app -n k8squest
+
+PVC должен быть `Bound`, а в томе должен быть `persistentVolumeClaim`.
+
+4. А ТЕПЕРЬ самый интересный шаг — увидьте сохранность своими глазами:
+
+    kubectl delete pod data-app -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+    kubectl logs data-app -n k8squest
+
+В логе должно быть «Found existing data» и прежние записи — с emptyDir этих
+записей не было бы.

@@ -46,7 +46,7 @@ if [ -z "$DB_POLICY" ]; then
     echo "💡 Maslahat: Create NetworkPolicy ni with podSelector matching app: database"
     exit 1
 fi
-echo "✅ Database has NetworkPolicy ni: $DB_POLICY"
+echo "✅ Database has NetworkPolicy: $DB_POLICY"
 
 echo ""
 echo "🔍 TEKSHIRUV 5-BOSQICH: Tekshirilmoqda backend egress policy sini..."
@@ -56,7 +56,7 @@ if [ -z "$BACKEND_POLICY" ]; then
     echo "💡 Maslahat: Create NetworkPolicy ni with podSelector matching app: backend"
     exit 1
 fi
-echo "✅ Backend has NetworkPolicy ni: $BACKEND_POLICY"
+echo "✅ Backend has NetworkPolicy: $BACKEND_POLICY"
 
 echo ""
 echo "🔍 TEKSHIRUV 6-BOSQICH: Tekshirilmoqda Service va Endpoint lar (DNS)"

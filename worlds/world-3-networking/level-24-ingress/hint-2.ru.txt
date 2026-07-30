@@ -1,0 +1,33 @@
+🧭 Направляющая подсказка:
+
+В Ingress настроен НЕВЕРНЫЙ PATH.
+
+Текущее состояние:
+```yaml
+spec:
+  rules:
+  - host: myapp.local
+    http:
+      paths:
+      - path: /api        # ❌ НЕВЕРНО!
+        pathType: Prefix
+```
+
+Запрос: http://myapp.local/ → path: «/»
+Правило Ingress: path: «/api»
+Начинается ли «/» с «/api»? НЕТ! → 404 Not Found
+
+Исправление: смените path с «/api» на «/».
+
+Типы path:
+- **Prefix**: совпадает с /path и /path/что-угодно
+- **Exact**: совпадает только с точным путём
+
+Посмотрите правило своими глазами — path и backend одной командой:
+
+    kubectl get ingress web-ingress -n k8squest -o jsonpath='{.spec.rules[0].http.paths[0]}'
+    kubectl describe ingress web-ingress -n k8squest
+
+Backend в порядке (`web-service:80`), проблема в `path`: `/api` совпадает
+только с запросами, начинающимися на `/api...`, поэтому запрос к корню (`/`)
+не попадает ни в одно правило и Ingress отдаёт 404.

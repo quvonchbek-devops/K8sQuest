@@ -14,5 +14,5 @@ Pod bilan nima bo'layotganini tekshiring:
    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.securityContext}{"\n"}{.spec.containers[0].securityContext}'
    ```
 
-Qidiring: readOnlyRootFilesystem, runAsNonRoot ni, allowPrivilegeEscalation ni
+Qidiring: runAsNonRoot, runAsUser, allowPrivilegeEscalation
 Pod SecurityContext juda cheklangan bo'lishi mumkin.

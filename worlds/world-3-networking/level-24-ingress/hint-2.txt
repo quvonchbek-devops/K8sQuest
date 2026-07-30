@@ -23,11 +23,11 @@ Path turlari:
 - **Prefix**: /path va /path/boshqa-narsa ga mos
 - **Exact**: Faqat aniq path ga mos
 
-Ingress qoidalarini va orqadagi service ni ko'ring:
+Qoidani O'Z KO'ZINGIZ bilan ko'ring — path va backend bir buyruqda:
 
-    kubectl get ingress web-ingress -n k8squest -o jsonpath='{.spec.rules}'
-    kubectl get service web-service -n k8squest
+    kubectl get ingress web-ingress -n k8squest -o jsonpath='{.spec.rules[0].http.paths[0]}'
     kubectl describe ingress web-ingress -n k8squest
 
-`describe` chiqishida `Backends` qismiga qarang: agar u `<error: endpoints
-"…" not found>` deb yozsa, qoida mavjud bo'lmagan service ga ishora qiladi.
+Backend to'g'ri (`web-service:80`), muammo esa `path` da: `/api` faqat
+`/api...` bilan boshlanadigan so'rovga mos keladi, ildizga (`/`) kelgan
+so'rov hech qanday qoidaga tushmaydi va Ingress 404 qaytaradi.

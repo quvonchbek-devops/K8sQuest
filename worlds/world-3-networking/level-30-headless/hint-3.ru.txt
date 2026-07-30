@@ -1,0 +1,32 @@
+✅ Подсказка с решением:
+
+Смените clusterIP на None у сервиса:
+
+```bash
+kubectl delete service web-cluster -n k8squest
+kubectl apply -f solution.yaml
+```
+
+(`clusterIP` — неизменяемое поле, поэтому сервис пересоздаётся, а не патчится.)
+
+Ключевое изменение — ВСЕГО ОДНА СТРОКА:
+```yaml
+spec:
+  clusterIP: None  # ✅ вместо IP-адреса стало None
+```
+
+Проверьте — убедитесь, что сервис headless (CLUSTER-IP: None):
+
+    kubectl get service web-cluster -n k8squest
+
+Теперь протестируйте DNS для отдельных подов. Терминал одноразовый и без TTY,
+то есть попасть ВНУТРЬ пода через `-it … -- sh` нельзя — вы ПЕРЕДАЁТЕ команду
+поду и читаете результат из его лога:
+
+    kubectl run dns-test --image=busybox:1.28 --restart=Never -n k8squest --command -- nslookup web-0.web-cluster.k8squest.svc.cluster.local
+    kubectl logs dns-test -n k8squest
+    kubectl delete pod dns-test -n k8squest
+
+В логе должен появиться ТОЧНЫЙ IP пода web-0 (headless-сервис создаёт
+отдельную A-запись на каждый под). Повторите ту же команду для `web-1` — IP
+будет другим.

@@ -1,0 +1,13 @@
+🔍 Observation hint:
+
+The StatefulSet pods cannot find each other by name.
+
+Check:
+1. The pods: `kubectl get pods -n k8squest -l app=web-cluster` (web-0, web-1, web-2)
+2. The Service: `kubectl get service web-cluster -n k8squest` — look at CLUSTER-IP
+3. DNS: send a lookup into a throwaway pod (hint 3 shows the exact command) for
+   `web-0.web-cluster.k8squest.svc.cluster.local`
+
+The problem: a normal ClusterIP service only gives DNS for `web-cluster` → a
+random pod. StatefulSets need per-pod DNS: web-0.web-cluster, web-1.web-cluster…
+That requires a "headless service" (clusterIP: None)!

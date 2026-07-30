@@ -1,0 +1,18 @@
+🧭 Направляющая подсказка:
+
+Service типа NodePort открывает поды на статическом порту на каждом узле.
+
+Участвуют три порта:
+- **targetPort**: порт контейнера (80)
+- **port**: порт ClusterIP у Service (80)
+- **nodePort**: порт внешнего доступа (должен быть 30080)
+
+Нужно добавить `nodePort: 30080` в spec Service!
+
+Посмотрите определение порта у Service:
+
+    kubectl get service web-nodeport -n k8squest -o jsonpath='{.spec.ports[0]}'
+    kubectl get service web-nodeport -n k8squest -o jsonpath='{.spec.type}'
+
+Если поля `nodePort` нет, Kubernetes выдаёт СЛУЧАЙНЫЙ порт — адрес заранее
+неизвестен.

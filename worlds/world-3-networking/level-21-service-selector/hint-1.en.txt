@@ -1,0 +1,9 @@
+🔍 Observation hint:
+
+Check the Service details: `kubectl describe svc backend-service -n k8squest`
+
+Look at the "Endpoints" field. Is it empty? Then no pod matches the Service selector!
+
+Now check the pod labels: `kubectl get pod backend-pod -n k8squest --show-labels`
+
+Compare the pod labels with the Service selector.

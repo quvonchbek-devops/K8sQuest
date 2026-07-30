@@ -1,0 +1,25 @@
+🧭 Guiding hint:
+
+The problem: a Deployment is used for a database.
+
+Deployments are meant for STATELESS applications (web servers, APIs):
+- any pod may be replaced
+- pods are interchangeable
+- no stable identity needed
+
+Databases are STATEFUL and require:
+- stable pod names (database-0, database-1)
+- stable network IDs (database-0.database-service)
+- persistent storage per pod
+- ordered startup (primary before replicas)
+- ordered shutdown (replicas before primary)
+
+Solution: use a StatefulSet instead of a Deployment!
+
+Look at the pod NAMES — a Deployment gives them a random suffix:
+
+    kubectl get pods -n k8squest -l app=database
+    kubectl get deployment database -n k8squest -o jsonpath='{.spec.template.spec.volumes}'
+
+The names are not stable (`database-7d9f…`) and the volume is not per-pod
+either — both are problems for a stateful app.

@@ -1,0 +1,26 @@
+✅ Hint 3: Full solution
+
+The PDB requires `minAvailable: 3` while the Deployment has 2 replicas — hence
+`ALLOWED DISRUPTIONS = 0` and node drains are blocked.
+
+Pick one of two ways. Both act on the LIVE object, so no file editing is needed.
+
+Option 1 — lower the PDB requirement (fastest):
+
+    kubectl patch pdb web-pdb -n k8squest -p '{"spec":{"minAvailable":1}}'
+
+Option 2 — raise the replicas and set a matching PDB (more correct in
+production: 2 of the 3 replicas always stay alive):
+
+    kubectl scale deployment web-app --replicas=3 -n k8squest
+    kubectl patch pdb web-pdb -n k8squest -p '{"spec":{"minAvailable":2}}'
+
+Check — the `ALLOWED DISRUPTIONS` column must be greater than 0:
+
+    kubectl get pdb web-pdb -n k8squest
+    kubectl get deployment web-app -n k8squest
+
+An alternative form is `maxUnavailable` instead of `minAvailable` (the two cannot
+coexist, so the swap goes through a JSON patch):
+
+    kubectl patch pdb web-pdb -n k8squest --type=json -p '[{"op":"remove","path":"/spec/minAvailable"},{"op":"add","path":"/spec/maxUnavailable","value":1}]'

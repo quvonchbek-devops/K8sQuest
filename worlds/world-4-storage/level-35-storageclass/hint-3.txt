@@ -1,10 +1,44 @@
 ✅ Maslahat 3: To'liq Yechim
 
-broken.yaml da PVC ning storageClassName ni mavjud biriga o'zgartiring:
+PVC mavjud bo'lmagan `premium-ssd` sinfini so'ragan, shuning uchun abadiy
+`Pending` da. `spec.storageClassName` — immutable maydon, ya'ni PVC ni
+tahrirlab bo'lmaydi: uni QAYTA yaratish kerak.
+
+Eng ishonchli yo'l — sinf nomini UMUMAN yozmaslik: o'shanda klasterning
+default StorageClass i ishlatiladi (nomi har klasterda boshqacha: k3s da
+`local-path`, kind da `standard`, EKS da `gp2`).
+
+1. PVC ni ishlatayotgan pod ni, keyin PVC ning o'zini o'chiring:
+
+    kubectl delete pod data-processor -n k8squest
+    kubectl delete pvc app-storage -n k8squest
+
+2. Sinf ko'rsatilmagan variantni qo'llang (`Yechimni ko'rsatish` dan keyin
+   fayl sessiyangizda turadi):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Yoki `O'z manifestini yozish` panelida:
 
 ```yaml
-storageClassName: non-existent-class    # ❌
-# sinfni umuman ko0rsatmasangiz, klasterning default i ishlatiladi
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-storage
+  namespace: k8squest
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+  # storageClassName ATAYLAB yo'q → klasterning default sinfi ishlatiladi
 ```
 
-`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
+3. Tekshiring:
+
+    kubectl get pvc app-storage -n k8squest
+    kubectl get pod data-processor -n k8squest
+
+PVC `Bound`, pod `Running` bo'lishi kerak. Agar PVC hamon `Pending` bo'lsa,
+sababni `kubectl describe pvc app-storage -n k8squest` ning `Events:`
+qismidan o'qing.

@@ -1,0 +1,10 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте детали Service: `kubectl describe svc backend-service -n k8squest`
+
+Посмотрите на поле «Endpoints». Пустое? Значит ни один под не совпадает с
+селектором Service!
+
+Теперь проверьте метки пода: `kubectl get pod backend-pod -n k8squest --show-labels`
+
+Сравните метки пода с селектором Service.

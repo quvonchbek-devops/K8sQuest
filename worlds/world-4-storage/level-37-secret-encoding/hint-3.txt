@@ -1,18 +1,34 @@
 ✅ Maslahat 3: To'liq Yechim
 
-broken.yaml dagi Secret ni tuzating:
+Secret qiymatlari IKKI MARTA base64 kodlangan: pod ularni dekodlaganda
+"admin" emas, "YWRtaW4=" oladi va tekshiruvdan o'tmaydi.
 
-Variant 1 — `data` bilan (base64 kerak):
-```yaml
-data:
-  password: $(echo -n "to'g'ri-parol" | base64)
-```
+Eng oson yo'l — `stringData` bilan patch qilish: Kubernetes kodlashni O'ZI
+bajaradi, ya'ni base64 ni qo'lda hisoblash kerak emas:
 
-Variant 2 — `stringData` bilan (oddiy matn, osonroq):
-```yaml
-stringData:
-  password: "to'g'ri-parol"
-```
+    kubectl patch secret db-credentials -n k8squest -p '{"stringData":{"username":"admin","password":"secretpass123"}}'
 
-`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
-`kubectl get pod -n k8squest` — Running bo'lishi kerak
+Tekshiring — endi `data` ichida BIR marta kodlangan qiymat turadi:
+
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data.username}'
+
+`YWRtaW4=` bo'lishi kerak (bu "admin" ning base64 i). Ilgari u
+`WVdSdGFXND0=` edi — ya'ni "YWRtaW4=" ning base64 i.
+
+Klient pod xato qiymat bilan qulab tushgan; Secret tuzalgach kubelet keyingi
+qayta urinishda YANGI qiymatni beradi (env konteyner ishga tushganda
+o'qiladi):
+
+    kubectl get pod database-client -n k8squest
+    kubectl logs database-client -n k8squest
+
+Log da "Connected successfully!" ko'rinishi kerak. Agar pod uzoq vaqt
+`CrashLoopBackOff` da tursa, uni qayta yaratish kutishni qisqartiradi:
+
+    kubectl delete pod database-client -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+
+⚠️ Yodda tuting: base64 — XAVFSIZLIK EMAS, faqat kodlash. Yuqoridagi
+`kubectl get secret` buyrug'i buni isbotlaydi: kubectl huquqi bo'lgan har kim
+qiymatni bir soniyada ochadi. Haqiqiy himoya — RBAC, etcd shifrlash, Vault
+yoki Sealed Secrets.

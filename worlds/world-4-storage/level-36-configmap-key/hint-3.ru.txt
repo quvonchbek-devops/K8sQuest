@@ -1,0 +1,31 @@
+✅ Подсказка 3: Полное решение
+
+Под запрашивает у ConfigMap ключ `database_host`, а в ConfigMap его нет —
+поэтому kubelet вообще не может запустить контейнер
+(`CreateContainerConfigError`).
+
+Данные ConfigMap можно менять на ЖИВОМ объекте, править файл не нужно —
+добавьте отсутствующий ключ:
+
+    kubectl patch configmap app-config -n k8squest -p '{"data":{"database_host":"postgres.k8squest.svc.cluster.local"}}'
+
+Проверьте, что ключи на месте:
+
+    kubectl get configmap app-config -n k8squest -o jsonpath='{.data}'
+
+Теперь дождитесь пода: kubelet повторяет попытки и сам запустит контейнер,
+когда ключ появится (несколько десятков секунд):
+
+    kubectl get pod web-app -n k8squest
+    kubectl logs web-app -n k8squest
+
+В логе должно появиться «App started successfully».
+
+Если ожидание затянулось, под можно пересоздать (после `Показать решение` файл
+лежит в вашей сессии):
+
+    kubectl delete pod web-app -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+
+Альтернатива — поменять имя ключа на стороне пода. Но `env[].valueFrom` у пода
+неизменяемо, поэтому под пришлось бы ПЕРЕСОЗДАТЬ — дополнить ConfigMap проще.

@@ -1,0 +1,10 @@
+🔍 Hint 1: Observe the problem
+
+The pod is not starting — a ConfigMap-related error.
+
+Check:
+1. `kubectl get pod -n k8squest` — look at STATUS
+2. `kubectl describe pod -n k8squest` — the error in Events
+3. `kubectl get configmap -n k8squest -o yaml` — the ConfigMap contents
+
+Which key does the pod expect from the ConfigMap? Does that key exist there?

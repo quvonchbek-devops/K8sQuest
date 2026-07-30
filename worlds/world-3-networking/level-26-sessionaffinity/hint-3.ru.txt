@@ -1,0 +1,21 @@
+✅ Подсказка с решением:
+
+У Service нет `sessionAffinity`, поэтому каждый запрос попадает на другой под.
+Это поле меняется на ЖИВОМ Service — править файл не нужно:
+
+    kubectl patch svc session-service -n k8squest -p '{"spec":{"sessionAffinity":"ClientIP","sessionAffinityConfig":{"clientIP":{"timeoutSeconds":10800}}}}'
+
+Проверьте:
+
+    kubectl get service session-service -n k8squest -o jsonpath='{.spec.sessionAffinity}'
+
+Должно вернуться `ClientIP`. Теперь посмотрите логи клиента — через несколько
+секунд ответы должны идти с ОДНОГО пода:
+
+    kubectl logs client -n k8squest --tail=20
+
+Раньше (случайно): Session Pod 1, Session Pod 3, Session Pod 2...
+Теперь (sticky): Session Pod 2, Session Pod 2, Session Pod 2...
+
+Замечание: лучшее решение — хранить сессии в Redis или JWT. sessionAffinity —
+временная мера для legacy-приложений.

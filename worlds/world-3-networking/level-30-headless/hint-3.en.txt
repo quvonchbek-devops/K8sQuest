@@ -1,0 +1,33 @@
+✅ Solution hint:
+
+Change clusterIP to None on the service:
+
+```bash
+kubectl delete service web-cluster -n k8squest
+kubectl apply -f solution.yaml
+```
+
+(`clusterIP` is an immutable field, so the service is recreated rather than
+patched.)
+
+The key change is ONE SINGLE LINE:
+```yaml
+spec:
+  clusterIP: None  # ✅ changed from an IP address to None
+```
+
+Check — confirm the service is headless (CLUSTER-IP: None):
+
+    kubectl get service web-cluster -n k8squest
+
+Now test per-pod DNS. The terminal is one-shot and has no TTY, so you cannot go
+INSIDE a pod with `-it … -- sh` — instead you HAND the command to a pod and read
+the result from its log:
+
+    kubectl run dns-test --image=busybox:1.28 --restart=Never -n k8squest --command -- nslookup web-0.web-cluster.k8squest.svc.cluster.local
+    kubectl logs dns-test -n k8squest
+    kubectl delete pod dns-test -n k8squest
+
+The log should show web-0's EXACT IP address (a headless service creates a
+separate A record per pod). Repeat the same command for `web-1` — the IP will be
+different.

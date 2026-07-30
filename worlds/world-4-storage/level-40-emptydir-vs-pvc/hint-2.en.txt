@@ -1,0 +1,21 @@
+🧭 Hint 2: emptyDir vs PVC
+
+`emptyDir` — temporary storage:
+- created AND DELETED together with the pod
+- pod restart/delete = DATA LOST
+- use for: cache, temp files, sharing between containers
+
+`PersistentVolumeClaim` — durable storage:
+- exists INDEPENDENTLY of the pod
+- the data SURVIVES even if the pod is deleted
+- use for: databases, user files
+
+For a database ALWAYS use a PVC!
+
+Look at the volume TYPE — `emptyDir` dies with the pod:
+
+    kubectl get pod data-app -n k8squest -o jsonpath='{.spec.volumes}'
+    kubectl get pvc -n k8squest
+
+The first command shows `emptyDir`, the second shows nothing at all — meaning
+durable storage was never requested.

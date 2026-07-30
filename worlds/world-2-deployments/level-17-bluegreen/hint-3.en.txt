@@ -1,0 +1,16 @@
+💡 Near-solution hint:
+
+In a blue-green deployment you switch traffic by updating the Service selector.
+
+This terminal has no file editor (interactive editing does not work either: one-shot execution, no TTY) — switch the selector with `kubectl patch`:
+
+    kubectl patch service app-service -n k8squest -p '{"spec":{"selector":{"app":"myapp","version":"green"}}}'
+
+Writing BOTH selector keys matters: a patch merges the selector map, so giving
+only `version` would leave `app` in place — but being explicit shows what you
+are connecting to.
+
+Check — see the endpoints move to the green pods:
+
+    kubectl get endpoints app-service -n k8squest
+    kubectl get pods -n k8squest -l version=green

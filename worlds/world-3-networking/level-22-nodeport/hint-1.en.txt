@@ -1,0 +1,9 @@
+🔍 Observation hint:
+
+Check the Service details: `kubectl get svc web-nodeport -n k8squest`
+
+You will see a NodePort was assigned (a random port in the 30000-32767 range).
+
+The problem? It is random! Predictable access needs an explicit NodePort.
+
+Look at the Service YAML — is nodePort specified in the ports section?

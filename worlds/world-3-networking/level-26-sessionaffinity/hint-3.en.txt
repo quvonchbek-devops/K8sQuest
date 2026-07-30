@@ -1,0 +1,21 @@
+✅ Solution hint:
+
+The Service has no `sessionAffinity`, so every request lands on a different pod.
+This field is changed on the LIVE Service — no file editing needed:
+
+    kubectl patch svc session-service -n k8squest -p '{"spec":{"sessionAffinity":"ClientIP","sessionAffinityConfig":{"clientIP":{"timeoutSeconds":10800}}}}'
+
+Check:
+
+    kubectl get service session-service -n k8squest -o jsonpath='{.spec.sessionAffinity}'
+
+It should return `ClientIP`. Now look at the client logs — after a few seconds
+the responses should come from ONE pod:
+
+    kubectl logs client -n k8squest --tail=20
+
+Before (random): Session Pod 1, Session Pod 3, Session Pod 2...
+After (sticky): Session Pod 2, Session Pod 2, Session Pod 2...
+
+Note: a better solution is keeping sessions in Redis or a JWT. sessionAffinity
+is a stopgap for legacy applications.

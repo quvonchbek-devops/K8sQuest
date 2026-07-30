@@ -1,0 +1,10 @@
+🔍 Подсказка 1: Проверьте состояние PDB
+
+```bash
+kubectl get pdb -n k8squest
+kubectl describe pdb -n k8squest
+kubectl get deployment -n k8squest
+```
+
+Сравните minAvailable у PDB с числом реплик deployment.
+Если ALLOWED = 0, ни один под нельзя вытеснить!

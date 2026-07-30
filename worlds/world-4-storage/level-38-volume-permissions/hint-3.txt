@@ -1,16 +1,38 @@
 ✅ Maslahat 3: To'liq Yechim
 
-broken.yaml ga securityContext qo'shing:
+Konteyner UID 1000 bilan ishlaydi, volume esa boshqa egaga tegishli —
+natijada "Permission denied". Yechim: pod darajasida `fsGroup` berish —
+Kubernetes volume ni mount qilganda uning guruh egasini shu GID ga
+o'zgartiradi.
+
+`securityContext` — pod da immutable maydon, ya'ni pod QAYTA yaratiladi
+(PVC o'chirilmaydi: ma'lumot joyida qoladi).
+
+1. Pod ni o'chiring:
+
+    kubectl delete pod writer-app -n k8squest
+
+2. fsGroup li variantni qo'llang (`Yechimni ko'rsatish` dan keyin fayl
+   sessiyangizda turadi):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Yoki `O'z manifestini yozish` panelida asosiy qismi shunday bo'ladi:
 
 ```yaml
 spec:
   securityContext:
-    fsGroup: 1000          # ✅ Volume ruxsatlari uchun
+    fsGroup: 1000          # volume egasi shu guruhga o'tadi
   containers:
   - name: app
     securityContext:
-      runAsUser: 1000      # ✅ Konteyner foydalanuvchisi
+      runAsUser: 1000      # konteyner shu UID bilan ishlaydi
+      runAsGroup: 1000     # va shu guruhda — fsGroup bilan mos
 ```
 
-`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
-`kubectl logs writer-app -n k8squest` — "Permission denied" yo'qolishi kerak
+3. Tekshiring:
+
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.securityContext}'
+    kubectl logs writer-app -n k8squest
+
+`fsGroup: 1000` ko'rinishi va loglardan "Permission denied" yo'qolishi kerak.

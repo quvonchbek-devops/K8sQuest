@@ -1,0 +1,52 @@
+✅ Solution hint:
+
+Both pods need a readinessProbe. IMPORTANT: a probe cannot be added to a running
+pod — `spec.containers[].readinessProbe` is an immutable field (kubectl answers
+"may not be changed"). So the pods are RECREATED.
+
+1. Delete the old pods:
+
+    kubectl delete pod web-app-1 web-app-2 -n k8squest
+
+2. Recreate them with the probe. If you pressed `Show solution`, the file is in
+   your session:
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Or save this in the `Write your own manifest` panel and apply it yourself
+   (repeat for the second pod, changing the name and `-text`):
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app-1
+  namespace: k8squest
+  labels:
+    app: web
+spec:
+  containers:
+  - name: app
+    image: hashicorp/http-echo:latest
+    args: ["-text=Pod 1 ready", "-listen=:8080"]
+    ports:
+    - containerPort: 8080
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      failureThreshold: 1
+```
+
+3. Watch the pods become ready (0/1 → 1/1):
+
+    kubectl get pods -n k8squest -l app=web
+
+4. Check that the endpoints list ONLY ready pods:
+
+    kubectl get endpoints web-service -n k8squest
+
+The 0/1 → 1/1 transition happens exactly when the readiness probe succeeds —
+and only THEN is the pod added to the endpoints.

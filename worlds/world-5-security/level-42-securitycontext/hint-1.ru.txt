@@ -1,0 +1,18 @@
+🔍 Подсказка 1: Наблюдение и анализ
+
+Проверьте, что происходит с подом:
+
+1. Посмотрите состояние пода:
+   ```bash
+   kubectl get pod web-app -n k8squest
+   kubectl describe pod web-app -n k8squest
+   ```
+
+2. Прочитайте Events и сообщения об ошибках
+3. Проверьте конфигурацию SecurityContext:
+   ```bash
+   kubectl get pod web-app -n k8squest -o jsonpath='{.spec.securityContext}{"\n"}{.spec.containers[0].securityContext}'
+   ```
+
+Ищите: runAsNonRoot, runAsUser, allowPrivilegeEscalation
+SecurityContext пода может быть слишком ограничивающим.

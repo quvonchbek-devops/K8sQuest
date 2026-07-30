@@ -1,16 +1,27 @@
 ✅ Maslahat 3: To'liq Yechim
 
-PDB yoki Deployment ni tuzating:
+PDB `minAvailable: 3` talab qiladi, Deployment da esa 2 replika bor —
+shuning uchun `ALLOWED DISRUPTIONS = 0` va node drain to'siladi.
 
-```yaml
-# Variant 1: PDB ni o'zgartiring
-spec:
-  minAvailable: 2    # replika soni-1
+Ikki yo'ldan birini tanlang. Ikkisi ham JONLI obyektda bajariladi, ya'ni
+faylni tahrirlash kerak emas.
 
-# Variant 2: maxUnavailable ishlating
-spec:
-  maxUnavailable: 1
-```
+Variant 1 — PDB talabini kamaytirish (eng tez):
 
-`kubectl apply -f solution.yaml`
-`kubectl get pdb -n k8squest` — ALLOWED > 0 bo'lishi kerak
+    kubectl patch pdb web-pdb -n k8squest -p '{"spec":{"minAvailable":1}}'
+
+Variant 2 — replikani ko'paytirib, PDB ni ham mosini qo'yish (production da
+to'g'riroq: 3 replikadan 2 tasi doim tirik qoladi):
+
+    kubectl scale deployment web-app --replicas=3 -n k8squest
+    kubectl patch pdb web-pdb -n k8squest -p '{"spec":{"minAvailable":2}}'
+
+Tekshiring — `ALLOWED DISRUPTIONS` ustuni 0 dan katta bo'lishi kerak:
+
+    kubectl get pdb web-pdb -n k8squest
+    kubectl get deployment web-app -n k8squest
+
+Muqobil shakl — `minAvailable` o'rniga `maxUnavailable` (ikkisi birga
+turolmaydi, shuning uchun almashtirish JSON patch bilan):
+
+    kubectl patch pdb web-pdb -n k8squest --type=json -p '[{"op":"remove","path":"/spec/minAvailable"},{"op":"add","path":"/spec/maxUnavailable","value":1}]'

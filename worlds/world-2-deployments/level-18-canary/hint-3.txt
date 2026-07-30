@@ -12,12 +12,15 @@ Qadamlar:
 3. Pod lar tayyor bo'lishini kuting:
    `kubectl get deployments -n k8squest      # bir necha marta takrorlang (-w bu terminalda ishlamaydi)`
 
-4. Taqsimotni tekshiring:
-   ```bash
-   STABLE=$(kubectl get deployment app-stable -n k8squest -o jsonpath='{.status.readyReplicas}')
-   CANARY=$(kubectl get deployment app-canary -n k8squest -o jsonpath='{.status.readyReplicas}')
-   echo "Stable: $STABLE, Canary: $CANARY"
-   echo "Canary foizi: $((CANARY * 100 / (STABLE + CANARY)))%"
-   ```
+4. Taqsimotni tekshiring — tayyor pod sonini alohida so'rang:
+   `kubectl get deployment app-stable -n k8squest -o jsonpath='{.status.readyReplicas}'`
+   `kubectl get deployment app-canary -n k8squest -o jsonpath='{.status.readyReplicas}'`
 
-Taxminan 10% canary ko'rsatishi kerak!
+   (Bu terminal faqat kubectl ni qabul qiladi: shell o'zgaruvchisi, `echo` va
+   `$( )` ishlamaydi — foizni o'zingiz hisoblang.)
+
+Birinchisi 9, ikkinchisi 1 qaytarsa taqsimot 90/10 — ya'ni canary 10%.
+
+Trafik ham shu nisbatda ketayotganini endpoint soni bilan ko'rish mumkin:
+
+    kubectl get endpoints app-service -n k8squest

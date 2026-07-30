@@ -1,5 +1,5 @@
 level: 44
-title: "NetworkPolicy ni: Traffic Blocked"
+title: "NetworkPolicy: Traffic Blocked"
 objective: "Buzilgan resurslarni tuzating va validatsiyadan o'tkazing"
 name: "NetworkPolicy ni Izolyatsiyasi"
 difficulty: advanced

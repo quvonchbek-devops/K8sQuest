@@ -1,0 +1,28 @@
+🧭 Подсказка 2: Кодирование Secret и шифрование
+
+Kubernetes Secret ожидает в поле `data` значения, ЗАКОДИРОВАННЫЕ в base64:
+```yaml
+data:
+  password: cGFzc3dvcmQ=    # base64 от "password"
+```
+
+Если написать там обычный текст — получите ошибку YAML или неверное значение.
+
+Альтернатива: используйте поле `stringData` — Kubernetes закодирует само:
+```yaml
+stringData:
+  password: password    # Kubernetes сам переведёт в base64
+```
+
+⚠️ ВАЖНО: base64 — это НЕ БЕЗОПАСНОСТЬ, а только кодирование. Для настоящей
+защиты используйте Vault или Sealed Secrets.
+
+Посмотрите внутрь Secret — он ХРАНИТСЯ в base64, а не шифруется:
+
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data}'
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data.password}'
+
+Второе значение открывается обычным `base64 -d` — значит это не «защита», а
+лишь кодирование. Посмотрите и на то, что получает контейнер:
+
+    kubectl logs database-client -n k8squest

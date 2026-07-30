@@ -1,0 +1,20 @@
+✅ Подсказка с решением:
+
+NodePort нужно указать ЯВНО (не случайный порт): `nodePort: 30080`.
+Допустимый диапазон — 30000-32767.
+
+В этом терминале нет редактора файлов (интерактивная правка тоже не работает: одноразовое выполнение, нет TTY) — задайте порт через `kubectl patch`:
+
+    kubectl patch svc web-nodeport -n k8squest -p '{"spec":{"ports":[{"protocol":"TCP","port":80,"targetPort":80,"nodePort":30080}]}}'
+
+Список портов надо писать ПОЛНОСТЬЮ: strategic merge patch сопоставляет
+элементы ports по `port` + `protocol`, и пропущенные поля потерялись бы.
+
+Проверьте:
+
+    kubectl get svc web-nodeport -n k8squest
+
+Альтернативный путь (если вы взяли файл решения):
+
+    kubectl delete svc web-nodeport -n k8squest
+    kubectl apply -f solution.yaml -n k8squest

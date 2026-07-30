@@ -1,0 +1,28 @@
+🧭 Guiding hint:
+
+The Service is missing session affinity. Without it every request is spread to
+an ARBITRARY pod.
+
+Fix: add `sessionAffinity: ClientIP` to the Service spec:
+
+```yaml
+spec:
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800  # 3 hours
+```
+
+How it works:
+1. The client's first request lands on Pod 2
+2. The Service remembers: "this IP → Pod 2"
+3. All following requests go to Pod 2
+4. The mapping expires after timeoutSeconds
+
+Check whether affinity is configured on the Service:
+
+    kubectl get service session-service -n k8squest -o jsonpath='{.spec.sessionAffinity}'
+    kubectl get endpoints session-service -n k8squest
+
+The first command returns `None` — so each request may land on a different
+pod; and the endpoint list holds three pods.

@@ -1,0 +1,13 @@
+🔍 Подсказка-наблюдение:
+
+Service существует и поды работают, но при перезапуске подов время от времени
+появляются ошибки.
+
+Проверьте:
+1. Endpoints Service: `kubectl get endpoints web-service -n k8squest`
+2. Готовность подов: `kubectl get pods -n k8squest -l app=web` — колонка READY
+3. События подов: `kubectl describe pod web-app-1 -n k8squest`
+   Есть ли сообщения про «Readiness probe»? Или их нет вовсе?
+
+Без readiness probe Kubernetes считает «Running = Ready» и сразу отправляет
+трафик на поды, которые ещё инициализируются!

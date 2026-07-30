@@ -1,0 +1,26 @@
+🧭 Подсказка 2: Права доступа к тому
+
+Проблема: контейнер работает от non-root пользователя, а том принадлежит root.
+Итог: нет прав на запись.
+
+Исправление — добавьте `fsGroup` в spec пода:
+```yaml
+spec:
+  securityContext:
+    fsGroup: 1000    # меняет группу-владельца файлов тома на этот GID
+  containers:
+  - name: app
+    securityContext:
+      runAsUser: 1000    # контейнер работает от этого UID
+```
+
+`fsGroup` автоматически настраивает права файлов при монтировании тома.
+
+Посмотрите, от кого идёт запись и задан ли fsGroup:
+
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.securityContext}'
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
+    kubectl logs writer-app -n k8squest
+
+В логах будет `Permission denied`: контейнер работает под non-root UID, а том
+принадлежит другой группе — `fsGroup` закрывает этот разрыв.

@@ -1,0 +1,38 @@
+✅ Hint 3: Full solution
+
+The container runs as UID 1000 while the volume belongs to a different owner —
+hence "Permission denied". The fix: set `fsGroup` at pod level — when Kubernetes
+mounts the volume it changes its group owner to that GID.
+
+`securityContext` is an immutable field on a pod, so the pod is RECREATED (the
+PVC is not deleted: the data stays).
+
+1. Delete the pod:
+
+    kubectl delete pod writer-app -n k8squest
+
+2. Apply the variant with fsGroup (after `Show solution` the file is in your
+   session):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   For the `Write your own manifest` panel the essential part is:
+
+```yaml
+spec:
+  securityContext:
+    fsGroup: 1000          # the volume owner group becomes this
+  containers:
+  - name: app
+    securityContext:
+      runAsUser: 1000      # the container runs as this UID
+      runAsGroup: 1000     # and in this group — matching fsGroup
+```
+
+3. Check:
+
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.securityContext}'
+    kubectl logs writer-app -n k8squest
+
+You should see `fsGroup: 1000` and "Permission denied" should be gone from the
+logs.

@@ -1,27 +1,45 @@
 ✅ Yechim maslahat:
 
-Klient pod ni to'g'ri service nomi ishlatadigan qilib tuzating:
+Pod ning ARGUMENTI ichidagi hostname xato — uni jonli pod da o'zgartirib
+bo'lmaydi (`spec.containers[].args` — immutable maydon). Ya'ni pod qayta
+yaratiladi:
 
-```bash
-kubectl delete pod app-client -n k8squest
-kubectl apply -f solution.yaml -n k8squest
-```
+    kubectl delete pod app-client -n k8squest
 
-Yoki broken.yaml ni tahrirlang va o'zgartiring:
+Endi to'g'ri hostname bilan qayta yarating. Ikki yo'l bor:
+
+1) `Yechimni ko'rsatish` tugmasini bosgan bo'lsangiz, fayl sessiyangizda turadi:
+
+    kubectl apply -f solution.yaml -n k8squest
+
+2) Yoki `O'z manifestini yozish` panelida quyidagini yozib saqlang (panel faylni
+   sessiyangizga qo'yadi, keyin uni o'zingiz qo'llaysiz):
+
 ```yaml
-args:
-- |
-  pg_isready -h database -p 5432  # Noto'g'ri
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-client
+  namespace: k8squest
+spec:
+  containers:
+  - name: client
+    image: postgres:13
+    command: ["sh", "-c"]
+    args:
+    - |
+      while true; do
+        pg_isready -h database-service -p 5432 || echo "Connection failed"
+        sleep 10
+      done
 ```
 
-Quyidagiga:
-```yaml
-args:
-- |
-  pg_isready -h database-service -p 5432  # To'g'ri!
-```
+(Bu tsikl KONTEYNER ichida ishlaydi — terminalda emas. Shuning uchun bu yerda
+`while`/`echo` bemalol: ularni Kubernetes bajaradi, sandbox terminali emas.)
 
-Keyin pod ni qayta yarating. Ulanish muvaffaqiyatini tekshirish uchun loglarni ko'ring:
-```bash
-kubectl logs app-client -n k8squest
-```
+Yagona o'zgarish — hostname: `database` → `database-service` (service ning
+HAQIQIY nomi).
+
+Tekshirish — log da "accepting connections" ko'rinishi kerak:
+
+    kubectl logs app-client -n k8squest

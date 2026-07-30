@@ -1,0 +1,15 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте текущий тип ресурса:
+`kubectl get deployments,statefulsets -n k8squest`
+
+Это Deployment или StatefulSet?
+
+Проверьте имена подов:
+`kubectl get pods -n k8squest -l app=database`
+
+У подов Deployment случайные имена: database-7d8f9c-abc12
+У подов StatefulSet стабильные имена: database-0, database-1, database-2
+
+Stateful-приложениям (базы данных, очереди сообщений) нужна стабильная
+идентичность!

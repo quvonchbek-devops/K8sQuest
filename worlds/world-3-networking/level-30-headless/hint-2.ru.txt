@@ -1,0 +1,31 @@
+🧭 Направляющая подсказка:
+
+Обычный сервис (с ClusterIP):
+- web-cluster.ns.svc… → 10.96.100.50 → СЛУЧАЙНЫЙ под
+- web-0.web-cluster… → ❌ НЕ РАБОТАЕТ
+
+Headless-сервис (clusterIP: None):
+- web-0.web-cluster.ns.svc… → IP пода web-0 ✅
+- web-1.web-cluster.ns.svc… → IP пода web-1 ✅
+- web-2.web-cluster.ns.svc… → IP пода web-2 ✅
+
+Исправление — задайте у сервиса `clusterIP: None`:
+```yaml
+spec:
+  clusterIP: None  # ✅ делает сервис headless
+  selector:
+    app: web-cluster
+```
+
+StatefulSet'ам нужен headless-сервис из-за:
+- стабильных имён подов (web-0, web-1)
+- стабильных DNS-имён (web-0.имя-сервиса)
+- кластеров БД, Kafka, etcd и подобного
+
+Посмотрите тип сервиса — для headless нужен `clusterIP: None`:
+
+    kubectl get service web-cluster -n k8squest -o jsonpath='{.spec.clusterIP}'
+    kubectl get statefulset web -n k8squest -o jsonpath='{.spec.serviceName}'
+
+Если первая команда вернёт IP (например `10.43.x.x`), сервис — обычный
+ClusterIP, и тогда DNS-записи для отдельных подов не создаются.

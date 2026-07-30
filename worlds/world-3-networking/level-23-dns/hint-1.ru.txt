@@ -1,0 +1,10 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте логи клиентского пода: `kubectl logs app-client -n k8squest`
+
+Вы увидите повторяющееся «Connection failed». Под пытается подключиться к
+хосту «database».
+
+Но какое НАСТОЯЩЕЕ имя сервиса? `kubectl get svc -n k8squest`
+
+Сервис называется «database-service», а не «database»!

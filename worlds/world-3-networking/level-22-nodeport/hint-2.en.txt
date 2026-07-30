@@ -1,0 +1,18 @@
+🧭 Guiding hint:
+
+NodePort services expose pods on a static port on every node.
+
+Three ports are involved:
+- **targetPort**: the container port (80)
+- **port**: the Service ClusterIP port (80)
+- **nodePort**: the external access port (should be 30080)
+
+You need to add `nodePort: 30080` to the Service spec!
+
+Look at the Service port definition:
+
+    kubectl get service web-nodeport -n k8squest -o jsonpath='{.spec.ports[0]}'
+    kubectl get service web-nodeport -n k8squest -o jsonpath='{.spec.type}'
+
+If the `nodePort` field is absent, Kubernetes assigns a RANDOM port — so the
+address is not predictable.

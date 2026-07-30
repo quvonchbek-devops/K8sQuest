@@ -68,9 +68,9 @@ echo "🔍 7/9: Tekshirilmoqda SecurityContext (runAsNonRoot ni, allowPrivilegeE
 RUN_AS_NON_ROOT=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.template.spec.containers[0].securityContext.runAsNonRoot}')
 ALLOW_PRIV=$(kubectl get deployment $DEPLOYMENT -n $NAMESPACE -o jsonpath='{.spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation}')
 if [ "$RUN_AS_NON_ROOT" != "true" ]; then
-    echo "❌ runAsNonRoot ni not true"; ((ERRORS++))
+    echo "❌ runAsNonRoot not true"; ((ERRORS++))
 elif [ "$ALLOW_PRIV" != "false" ]; then
-    echo "❌ allowPrivilegeEscalation ni not false"; ((ERRORS++))
+    echo "❌ allowPrivilegeEscalation not false"; ((ERRORS++))
 else
     echo "✅ SecurityContext sozlangan securely"
 fi

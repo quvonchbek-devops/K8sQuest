@@ -1,0 +1,21 @@
+🧭 Подсказка 2: Разбираемся с PDB
+
+PodDisruptionBudget гарантирует минимальную доступность во время добровольных
+прерываний.
+
+Проблема: minAvailable = числу реплик → вытеснение невозможно
+
+Решение: уменьшить minAvailable ЛИБО увеличить число реплик.
+Например: 3 реплики, minAvailable: 2 → разрешено одно вытеснение.
+
+Смотрите ЧИСЛА PDB и deployment вместе:
+
+    kubectl get pdb web-pdb -n k8squest
+    kubectl get deployment web-app -n k8squest
+
+Если в колонке `ALLOWED DISRUPTIONS` стоит `0`, ни один под не вытесняется —
+обслуживание узлов и обновления кластера блокируются. Селектор тоже должен
+совпадать:
+
+    kubectl get pdb web-pdb -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pods -n k8squest --show-labels

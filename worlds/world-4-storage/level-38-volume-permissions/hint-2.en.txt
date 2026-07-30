@@ -1,0 +1,26 @@
+🧭 Hint 2: Volume permissions
+
+The problem: the container runs as a non-root user, but the volume is owned by
+root. Result: no write permission.
+
+Fix — add `fsGroup` to the pod spec:
+```yaml
+spec:
+  securityContext:
+    fsGroup: 1000    # changes the group owner of the volume files to this GID
+  containers:
+  - name: app
+    securityContext:
+      runAsUser: 1000    # the container runs as this UID
+```
+
+`fsGroup` adjusts the file permissions automatically when the volume is mounted.
+
+See who is writing and whether fsGroup is set:
+
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.securityContext}'
+    kubectl get pod writer-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
+    kubectl logs writer-app -n k8squest
+
+The logs say `Permission denied`: the container runs as a non-root UID while the
+volume belongs to another group — `fsGroup` closes that gap.

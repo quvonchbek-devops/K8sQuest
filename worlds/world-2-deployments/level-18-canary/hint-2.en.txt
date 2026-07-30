@@ -1,0 +1,24 @@
+🧭 Guiding hint:
+
+In a canary deployment you normally want:
+- 90% of traffic → the stable version
+- 10% of traffic → the canary version (the new version under test)
+
+Right now:
+- app-stable: 5 replicas
+- app-canary: 5 replicas
+- Total: 10 pods
+
+That gives a 50/50 split (5/10 = 50%)!
+
+With whole numbers, a 10% canary needs:
+- 9 stable : 1 canary (9/10 = 90%, 1/10 = 10%)
+
+The problem: too many canary replicas!
+
+Look at the ratio through the pod COUNT — traffic is split in that ratio:
+
+    kubectl get deployment app-stable app-canary -n k8squest
+    kubectl get endpoints app-service -n k8squest
+
+The numbers in the READY column are not 9:1 — that is the problem.

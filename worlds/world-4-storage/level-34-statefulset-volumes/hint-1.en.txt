@@ -1,0 +1,12 @@
+🔍 Hint 1: Observe the problem
+
+The StatefulSet pods are not starting.
+
+Check:
+1. `kubectl get statefulset -n k8squest`
+2. `kubectl get pods -n k8squest` — what state are the pods in?
+3. `kubectl describe statefulset -n k8squest` — look at Events
+4. `kubectl get pvc -n k8squest` — were the PVCs created?
+
+Does the StatefulSet have a volumeClaimTemplates section, and is it configured
+correctly?

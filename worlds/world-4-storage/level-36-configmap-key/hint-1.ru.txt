@@ -1,0 +1,10 @@
+🔍 Подсказка 1: Наблюдение за проблемой
+
+Под не запускается — ошибка, связанная с ConfigMap.
+
+Проверьте:
+1. `kubectl get pod -n k8squest` — смотрите STATUS
+2. `kubectl describe pod -n k8squest` — ошибку в Events
+3. `kubectl get configmap -n k8squest -o yaml` — содержимое ConfigMap
+
+Какой ключ под ожидает из ConfigMap? Есть ли этот ключ там?

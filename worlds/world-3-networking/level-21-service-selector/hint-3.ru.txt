@@ -1,0 +1,16 @@
+✅ Подсказка с решением:
+
+Селектор Service не совпадает с меткой пода: вместо `app: backend-app` должно быть `app: backend`.
+
+В этом терминале нет редактора файлов (интерактивная правка тоже не работает: одноразовое выполнение, нет TTY) — исправьте селектор через `kubectl patch`:
+
+    kubectl patch svc backend-service -n k8squest -p '{"spec":{"selector":{"app":"backend","tier":"api"}}}'
+
+Затем проверьте, что endpoints появились:
+
+    kubectl get endpoints backend-service -n k8squest
+
+Альтернативный путь (если вы взяли файл решения):
+
+    kubectl delete svc backend-service -n k8squest
+    kubectl apply -f solution.yaml -n k8squest

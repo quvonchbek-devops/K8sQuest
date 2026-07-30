@@ -1,0 +1,17 @@
+🔍 Observation hint:
+
+You get a 404 when visiting http://myapp.local, yet the Ingress and the Service
+both exist. The problem is in HOW the Ingress routes traffic.
+
+Check:
+
+1. **The Ingress configuration**
+   ```bash
+   kubectl describe ingress web-ingress -n k8squest
+   ```
+   Look at the "Rules" section. Which path is configured?
+
+2. **Path matching**
+   A path is configured in the Ingress — but is it the RIGHT path?
+   Your app serves content at "/", so what happens if the Ingress is set to "/api"?
+   The request does not match the Ingress rule, so you get a 404!

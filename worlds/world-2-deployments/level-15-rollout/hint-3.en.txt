@@ -1,0 +1,16 @@
+💡 Near-solution hint:
+
+Fix the rollout strategy to guarantee zero downtime.
+
+This terminal has no file editor (interactive editing does not work either: one-shot execution, no TTY) — change the strategy with `kubectl patch`:
+
+    kubectl patch deployment critical-api -n k8squest -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":1,"maxSurge":1}}}}'
+
+That guarantees:
+- with 3 replicas at least 2 pods always run (3 - 1 = 2)
+- up to 4 pods may exist during the rollout (3 + 1 = 4)
+- zero downtime!
+
+Check (the terminal does not accept pipes — `| grep` — so use jsonpath):
+
+    kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.strategy}'

@@ -1,0 +1,11 @@
+🔍 Hint 1: Observe the problem
+
+Something is wrong with the Secret data.
+
+Check:
+1. `kubectl get secret -n k8squest -o yaml` — look at the Secret contents
+2. Base64-decode the values in the `data` field:
+   `echo "value" | base64 -d`
+3. Check the pod logs: `kubectl logs database-client -n k8squest`
+
+Are the Secret values encoded correctly? Or written as plain text?

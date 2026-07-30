@@ -1,0 +1,33 @@
+✅ Hint 3: Full solution
+
+The Secret values are base64-encoded TWICE: when the pod decodes them it gets
+"YWRtaW4=" instead of "admin", and the check fails.
+
+The easiest path is a patch with `stringData`: Kubernetes does the encoding
+ITSELF, so you never compute base64 by hand:
+
+    kubectl patch secret db-credentials -n k8squest -p '{"stringData":{"username":"admin","password":"secretpass123"}}'
+
+Check — now `data` holds a value encoded ONCE:
+
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data.username}'
+
+It should be `YWRtaW4=` (the base64 of "admin"). Before it was `WVdSdGFXND0=` —
+that is the base64 of "YWRtaW4=".
+
+The client pod crashed on the bad value; once the Secret is fixed the kubelet
+hands the NEW value over on the next retry (env is read when the container
+starts):
+
+    kubectl get pod database-client -n k8squest
+    kubectl logs database-client -n k8squest
+
+The log should show "Connected successfully!". If the pod sits in
+`CrashLoopBackOff` for a long time, recreating it shortens the wait:
+
+    kubectl delete pod database-client -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+
+⚠️ Remember: base64 is NOT SECURITY, only encoding. The `kubectl get secret`
+command above proves it: anyone with kubectl access opens the value in a second.
+Real protection is RBAC, etcd encryption, Vault or Sealed Secrets.

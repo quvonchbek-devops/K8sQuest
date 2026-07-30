@@ -1,0 +1,14 @@
+🔍 Observation hint:
+
+Check the Deployments:
+`kubectl get deployments -n k8squest`
+
+You should see app-blue and app-green, both with 3/3 replicas.
+
+Check the Service:
+`kubectl get service app-service -n k8squest -o jsonpath='{.spec.selector}'`
+
+Which version is it pointed at?
+
+Check the endpoints:
+`kubectl get endpoints app-service -n k8squest`

@@ -1,0 +1,19 @@
+🧭 Подсказка 2: Разбираемся со StorageClass
+
+StorageClass говорит Kubernetes, КАК создавать том:
+- какой provisioner (hostpath, nfs, aws-ebs, …)
+- какие параметры (тип диска, IOPS)
+- reclaim policy (Delete или Retain)
+
+Проблема: PVC ссылается на несуществующее имя StorageClass.
+Из sandbox список StorageClass не виден (это cluster-scoped ресурс), поэтому
+самый надёжный путь — НЕ указывать класс вовсе: тогда используется
+StorageClass по умолчанию.
+
+Посмотрите, какой класс запрашивает PVC и почему он ждёт:
+
+    kubectl get pvc app-storage -n k8squest -o jsonpath='{.spec.storageClassName}'
+    kubectl describe pvc app-storage -n k8squest
+
+В части `Events:` вывода `describe` указана причина — если запрошенный
+StorageClass не найден, PVC навсегда остаётся в `Pending`.

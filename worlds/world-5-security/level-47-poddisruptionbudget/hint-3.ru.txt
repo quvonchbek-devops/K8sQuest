@@ -1,0 +1,27 @@
+✅ Подсказка 3: Полное решение
+
+PDB требует `minAvailable: 3`, а в Deployment 2 реплики — отсюда
+`ALLOWED DISRUPTIONS = 0`, и drain узлов блокируется.
+
+Выберите один из двух путей. Оба выполняются на ЖИВОМ объекте, править файл не
+нужно.
+
+Вариант 1 — снизить требование PDB (быстрее всего):
+
+    kubectl patch pdb web-pdb -n k8squest -p '{"spec":{"minAvailable":1}}'
+
+Вариант 2 — увеличить число реплик и задать подходящий PDB (в production
+правильнее: из 3 реплик 2 всегда живы):
+
+    kubectl scale deployment web-app --replicas=3 -n k8squest
+    kubectl patch pdb web-pdb -n k8squest -p '{"spec":{"minAvailable":2}}'
+
+Проверьте — в колонке `ALLOWED DISRUPTIONS` должно быть больше 0:
+
+    kubectl get pdb web-pdb -n k8squest
+    kubectl get deployment web-app -n k8squest
+
+Альтернативная форма — `maxUnavailable` вместо `minAvailable` (вместе они стоять
+не могут, поэтому замена через JSON patch):
+
+    kubectl patch pdb web-pdb -n k8squest --type=json -p '[{"op":"remove","path":"/spec/minAvailable"},{"op":"add","path":"/spec/maxUnavailable","value":1}]'

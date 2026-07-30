@@ -1,0 +1,28 @@
+🧭 Направляющая подсказка:
+
+Работают два deployment'а:
+- app-blue (старая версия)
+- app-green (новая версия)
+
+Селектор Service:
+```yaml
+selector:
+  app: myapp
+  version: blue  # вот в чём проблема!
+```
+
+Этот Service направляет трафик только на поды, совпадающие по ОБЕИМ меткам:
+- app=myapp ✅
+- version=blue ✅ (совпадает с подами app-blue)
+
+У подов app-green метка version=green, поэтому они не совпадают!
+
+Пользователи всё ещё видят СТАРУЮ (blue) версию.
+
+Посмотрите, на какую версию сейчас указывает Service:
+
+    kubectl get service app-service -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pods -n k8squest --show-labels
+
+Сравните значение `version` в селекторе с метками на подах — трафик идёт
+только к совпадающим.

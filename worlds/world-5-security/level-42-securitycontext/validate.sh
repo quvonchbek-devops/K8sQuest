@@ -21,14 +21,14 @@ fi
 echo "✅ Pod ishlayapti"
 
 echo ""
-echo "🔍 TEKSHIRUV 3-BOSQICH: Tekshirilmoqda runAsNonRoot ni is enabled..."
+echo "🔍 TEKSHIRUV 3-BOSQICH: Tekshirilmoqda runAsNonRoot is enabled..."
 RUN_AS_NON_ROOT=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].securityContext.runAsNonRoot}')
 if [ "$RUN_AS_NON_ROOT" != "true" ]; then
-    echo "❌ FAILED: runAsNonRoot ni is not set to true"
-    echo "💡 Maslahat: Add 'runAsNonRoot ni: true' in securityContext"
+    echo "❌ FAILED: runAsNonRoot is not set to true"
+    echo "💡 Maslahat: Add 'runAsNonRoot: true' in securityContext"
     exit 1
 fi
-echo "✅ runAsNonRoot ni enabled"
+echo "✅ runAsNonRoot yoqilgan"
 
 echo ""
 echo "🔍 TEKSHIRUV 4-BOSQICH: Tekshirilmoqda runAsUser is set to non-root..."
@@ -44,8 +44,8 @@ echo ""
 echo "🔍 TEKSHIRUV 5-BOSQICH: Tekshirilmoqda privilege escalation o'chirilganligini..."
 ALLOW_PRIV_ESC=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].securityContext.allowPrivilegeEscalation}')
 if [ "$ALLOW_PRIV_ESC" != "false" ]; then
-    echo "❌ FAILED: allowPrivilegeEscalation ni is not set to false"
-    echo "💡 Maslahat: Add 'allowPrivilegeEscalation ni: false' in securityContext"
+    echo "❌ FAILED: allowPrivilegeEscalation is not set to false"
+    echo "💡 Maslahat: Add 'allowPrivilegeEscalation: false' in securityContext"
     exit 1
 fi
 echo "✅ Privilege escalation o'chirilgan"

@@ -67,7 +67,7 @@ containers:
 spec:
   securityContext:
     fsGroup: 1000        # Change volume group ownership
-    runAsNonRoot ni: true   # Enforce non-root
+    runAsNonRoot: true   # Enforce non-root
     fsGroupChangePolicy: "OnRootMismatch"
 ```
 
@@ -118,7 +118,7 @@ spec:
    ```yaml
    securityContext:
      fsGroup: 1000
-     runAsNonRoot ni: true
+     runAsNonRoot: true
    ```
 
 2. **Match fsGroup with runAsGroup:**

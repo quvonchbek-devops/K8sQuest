@@ -1,0 +1,21 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте Deployment'ы:
+`kubectl get deployments -n k8squest`
+
+Посмотрите на колонку READY. Сколько stable-подов? Сколько canary-подов?
+
+Проверьте endpoints Service:
+`kubectl get endpoints app-service -n k8squest`
+
+Посчитайте IP — это ВСЕ поды, принимающие трафик (и stable, и canary).
+
+Распределение трафика задаётся ЧИСЛОМ подов — посчитайте endpoints отдельно
+для stable и canary:
+`kubectl get pods -n k8squest -l app=app,track=stable`
+`kubectl get pods -n k8squest -l app=app,track=canary`
+
+(Этот терминал не принимает shell-циклы — `for ... done` — и потоковые
+команды: каждая строка — отдельный вызов kubectl.)
+
+Соотношение близко к 50/50? Для canary это неверно!

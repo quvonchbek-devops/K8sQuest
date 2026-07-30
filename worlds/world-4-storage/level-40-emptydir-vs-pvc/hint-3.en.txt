@@ -1,0 +1,54 @@
+✅ Hint 3: Full solution
+
+The pod uses `emptyDir` — it is born with the pod and DIES with the pod. For the
+data to survive, the volume must be a PersistentVolumeClaim.
+
+`spec.volumes` is an immutable field on a pod, so the pod is recreated. On top of
+that the PVC ITSELF does not exist — it has to be created too.
+
+1. Delete the old pod:
+
+    kubectl delete pod data-app -n k8squest
+
+2. Apply the PVC and the pod together (after `Show solution` the file is in your
+   session):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   Or in the `Write your own manifest` panel — the key change is this:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-data
+  namespace: k8squest
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+---
+# inside the pod:
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: app-data     # INSTEAD OF emptyDir: {}
+```
+
+3. Check:
+
+    kubectl get pvc app-data -n k8squest
+    kubectl get pod data-app -n k8squest -o jsonpath='{.spec.volumes}'
+    kubectl logs data-app -n k8squest
+
+The PVC must be `Bound` and the volume must show `persistentVolumeClaim`.
+
+4. NOW the most interesting step — see the persistence with your own eyes:
+
+    kubectl delete pod data-app -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+    kubectl logs data-app -n k8squest
+
+The log should show "Found existing data" and the earlier entries — with
+emptyDir those entries would be gone.

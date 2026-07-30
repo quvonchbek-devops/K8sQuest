@@ -1,0 +1,16 @@
+✅ Solution hint:
+
+The Service selector does not match the pod label: `app: backend-app` should be `app: backend`.
+
+This terminal has no file editor (interactive editing does not work either: one-shot execution, no TTY) — fix the selector with `kubectl patch`:
+
+    kubectl patch svc backend-service -n k8squest -p '{"spec":{"selector":{"app":"backend","tier":"api"}}}'
+
+Then check that the endpoints appeared:
+
+    kubectl get endpoints backend-service -n k8squest
+
+Alternative path (if you have taken the solution file):
+
+    kubectl delete svc backend-service -n k8squest
+    kubectl apply -f solution.yaml -n k8squest

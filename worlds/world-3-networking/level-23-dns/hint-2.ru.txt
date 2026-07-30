@@ -1,0 +1,20 @@
+🧭 Направляющая подсказка:
+
+Kubernetes DNS создаёт для сервисов записи в формате:
+`<имя-сервиса>.<namespace>.svc.cluster.local`
+
+Внутри одного namespace работает короткое имя: `<имя-сервиса>`
+
+Клиент использует «database», а сервис — «database-service».
+
+Клиентский под нужно исправить так, чтобы он использовал правильное имя
+сервиса!
+
+Проверьте Service и его DNS-имя:
+
+    kubectl get svc -n k8squest
+    kubectl get endpoints database-service -n k8squest
+    kubectl logs app-client -n k8squest
+
+Посмотрите, какое имя ищут логи, и сравните со списком выше — если имя
+неверное, DNS ничего не найдёт.

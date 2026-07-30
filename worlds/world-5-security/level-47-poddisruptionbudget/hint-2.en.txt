@@ -1,0 +1,20 @@
+🧭 Hint 2: Understanding a PDB
+
+A PodDisruptionBudget guarantees a minimum availability during voluntary
+disruptions.
+
+The problem: minAvailable = the replica count → eviction is impossible
+
+Fix: lower minAvailable OR raise the replica count.
+For example: 3 replicas, minAvailable: 2 → one eviction allowed.
+
+Look at the PDB and deployment NUMBERS together:
+
+    kubectl get pdb web-pdb -n k8squest
+    kubectl get deployment web-app -n k8squest
+
+If the `ALLOWED DISRUPTIONS` column is `0`, no pod is ever evicted — node
+maintenance and cluster upgrades are blocked. The selector must match too:
+
+    kubectl get pdb web-pdb -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pods -n k8squest --show-labels

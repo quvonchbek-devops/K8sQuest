@@ -1,0 +1,50 @@
+✅ Hint 3: Full solution
+
+The pod has `runAsNonRoot: true` but NO `runAsUser` — and the image (nginx)
+starts itself as root. Kubernetes will not run that contradiction: the container
+stays in `CreateContainerConfigError`.
+
+Three things are needed:
+- `runAsUser: 1000` — an explicit non-root UID
+- `allowPrivilegeEscalation: false`
+- an image that works on a non-root port (`nginxinc/nginx-unprivileged`, port
+  8080) — plain `nginx` cannot bind to port 80 as non-root
+
+`securityContext` and `image` are immutable on a pod, so the pod is RECREATED.
+
+1. Delete the pod:
+
+    kubectl delete pod web-app -n k8squest
+
+2. Apply the correct variant (after `Show solution` the file is in your session):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   The essential part for the `Write your own manifest` panel:
+
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxinc/nginx-unprivileged:latest
+    ports:
+    - containerPort: 8080
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+```
+
+3. Check:
+
+    kubectl get pod web-app -n k8squest
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
+
+The pod must be `Running`, with `runAsUser: 1000` and
+`allowPrivilegeEscalation: false` in the securityContext.
+
+Note: `readOnlyRootFilesystem: true` is also a useful rule, but it is not this
+level's problem — adding it means the app needs a writable place (an `emptyDir`
+for `/tmp`).

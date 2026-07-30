@@ -1,25 +1,52 @@
 ✅ Maslahat 3: To'liq Yechim
 
-broken.yaml ni tuzating — ilova ishlashi uchun zarur o'zgarishlar:
+Pod da `runAsNonRoot: true` bor, lekin `runAsUser` YO'Q — image esa (nginx)
+o'zini root bilan ishga tushiradi. Kubernetes bu ziddiyatni ishga tushirmaydi:
+konteyner `CreateContainerConfigError` bilan qoladi.
 
-1. readOnlyRootFilesystem saqlang lekin yoziladigan volume qo'shing:
+Uch narsa kerak:
+- `runAsUser: 1000` — aniq non-root UID
+- `allowPrivilegeEscalation: false`
+- non-root port da ishlaydigan image (`nginxinc/nginx-unprivileged`, port 8080)
+  — oddiy `nginx` non-root holda 80-portga bog'lanolmaydi
+
+`securityContext` va `image` (root ga aloqador qismi) pod da immutable, ya'ni
+pod QAYTA yaratiladi.
+
+1. Pod ni o'chiring:
+
+    kubectl delete pod web-app -n k8squest
+
+2. To'g'ri variantni qo'llang (`Yechimni ko'rsatish` dan keyin fayl
+   sessiyangizda turadi):
+
+    kubectl apply -f solution.yaml -n k8squest
+
+   `O'z manifestini yozish` paneli uchun asosiy qism:
+
 ```yaml
 spec:
-  securityContext:
-    runAsNonRoot ni: true
-    runAsUser: 1000
-    fsGroup: 1000
   containers:
-  - name: app
+  - name: nginx
+    image: nginxinc/nginx-unprivileged:latest
+    ports:
+    - containerPort: 8080
     securityContext:
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation ni: false
-    volumeMounts:
-    - name: tmp
-      mountPath: /tmp
-  volumes:
-  - name: tmp
-    emptyDir: {}
+      runAsNonRoot: true
+      runAsUser: 1000
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
 ```
 
-`kubectl delete -f broken.yaml && kubectl apply -f broken.yaml`
+3. Tekshiring:
+
+    kubectl get pod web-app -n k8squest
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].securityContext}'
+
+Pod `Running`, securityContext da `runAsUser: 1000` va
+`allowPrivilegeEscalation: false` bo'lishi kerak.
+
+Eslatma: `readOnlyRootFilesystem: true` ham foydali qoida, lekin bu levelning
+muammosi u emas — uni qo'shsangiz ilovaga yoziladigan joy kerak bo'ladi
+(`/tmp` uchun `emptyDir`).

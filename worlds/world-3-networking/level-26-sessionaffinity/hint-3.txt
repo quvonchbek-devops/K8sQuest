@@ -1,21 +1,22 @@
 ✅ Yechim maslahat:
 
-broken.yaml da Service ga quyidagi qatorlarni qo'shing (ports bo'limidan keyin):
+Service da `sessionAffinity` yo'q — shuning uchun har so'rov boshqa pod ga
+tushadi. Bu maydon JONLI service da o'zgartiriladi, ya'ni faylni tahrirlash
+kerak emas:
 
-```yaml
-  sessionAffinity: ClientIP           # ✅ Shu qatorni qo'shing
-  sessionAffinityConfig:              # ✅ Shu qatorni qo'shing
-    clientIP:
-      timeoutSeconds: 10800           # ✅ Shu qatorni qo'shing (3 soat)
-```
+    kubectl patch svc session-service -n k8squest -p '{"spec":{"sessionAffinity":"ClientIP","sessionAffinityConfig":{"clientIP":{"timeoutSeconds":10800}}}}'
 
-Qadamlar:
-1. broken.yaml ni tahrirlang va yuqoridagi qatorlarni Service spec ga qo'shing
-2. Apply qiling: `kubectl apply -f broken.yaml`
-3. Tekshiring: `kubectl logs client -n k8squest --tail=20`
+Tekshiring:
 
-Oldin (tasodifiy pod lar): Session Pod 1, Session Pod 3, Session Pod 2...
-Keyin (bitta pod): Session Pod 2, Session Pod 2, Session Pod 2...
+    kubectl get service session-service -n k8squest -o jsonpath='{.spec.sessionAffinity}'
 
-Eslatma: Yaxshiroq yechim — Redis yoki JWT ishlatib session larni taqsimlash.
-SessionAffinity vaqtincha yechim yoki legacy ilovalar uchun.
+`ClientIP` qaytishi kerak. Endi klient loglariga qarang — bir necha soniyadan
+keyin javoblar BITTA pod dan kelishi kerak:
+
+    kubectl logs client -n k8squest --tail=20
+
+Oldin (tasodifiy): Session Pod 1, Session Pod 3, Session Pod 2...
+Keyin (yopishqoq): Session Pod 2, Session Pod 2, Session Pod 2...
+
+Eslatma: yaxshiroq yechim — session ni Redis yoki JWT da saqlash.
+sessionAffinity legacy ilovalar uchun vaqtincha chora.

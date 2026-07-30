@@ -1,0 +1,18 @@
+🔍 Hint 1: Observe and analyse
+
+Check what is happening to the pod:
+
+1. Look at the pod state:
+   ```bash
+   kubectl get pod web-app -n k8squest
+   kubectl describe pod web-app -n k8squest
+   ```
+
+2. Read the Events and error messages
+3. Check the SecurityContext configuration:
+   ```bash
+   kubectl get pod web-app -n k8squest -o jsonpath='{.spec.securityContext}{"\n"}{.spec.containers[0].securityContext}'
+   ```
+
+Look for: runAsNonRoot, runAsUser, allowPrivilegeEscalation
+The pod SecurityContext may be too restrictive.

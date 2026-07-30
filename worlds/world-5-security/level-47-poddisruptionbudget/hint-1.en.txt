@@ -1,0 +1,10 @@
+🔍 Hint 1: Check the PDB state
+
+```bash
+kubectl get pdb -n k8squest
+kubectl describe pdb -n k8squest
+kubectl get deployment -n k8squest
+```
+
+Compare the PDB's minAvailable with the deployment's replica count.
+If ALLOWED = 0, no pod can be evicted at all!

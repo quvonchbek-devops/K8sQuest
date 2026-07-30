@@ -1,0 +1,14 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте стратегию rollout у Deployment:
+`kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.strategy}'`
+
+Посмотрите на `maxUnavailable` и `maxSurge`. Что заметили?
+
+Попробуйте запустить rollout (смените тег образа):
+`kubectl set image deployment/critical-api api=hashicorp/http-echo:latest -n k8squest`
+
+Следите, что происходит с подами:
+`kubectl get pods -n k8squest -l app=api      # повторите несколько раз (-w в этом терминале не работает)`
+
+ВСЕ поды выключаются одновременно? Это и есть простой!

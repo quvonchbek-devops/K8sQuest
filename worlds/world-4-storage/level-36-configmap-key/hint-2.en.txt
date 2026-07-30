@@ -1,0 +1,23 @@
+🧭 Hint 2: The ConfigMap key problem
+
+The pod takes a value from the ConfigMap through a specific key:
+```yaml
+env:
+- name: APP_CONFIG
+  valueFrom:
+    configMapKeyRef:
+      name: app-config
+      key: config.yaml    # ← does this key exist in the ConfigMap?
+```
+
+If the ConfigMap has no such key, the pod does not start!
+Check which keys the ConfigMap has and make them match.
+
+Compare the keys in the ConfigMap with the key the pod asks for:
+
+    kubectl get configmap app-config -n k8squest -o jsonpath='{.data}'
+    kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].env}'
+    kubectl describe pod web-app -n k8squest
+
+In `describe` you will see `CreateContainerConfigError` and the name of the
+missing key — that is why the container never starts.

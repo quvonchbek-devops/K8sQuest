@@ -25,10 +25,10 @@ echo ""
 echo "🔍 TEKSHIRUV 3-BOSQICH: Tekshirilmoqda runAsNonRoot ni..."
 RUN_AS_NON_ROOT=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].securityContext.runAsNonRoot}')
 if [ "$RUN_AS_NON_ROOT" != "true" ]; then
-    echo "❌ FAILED: runAsNonRoot ni not set to true"
+    echo "❌ FAILED: runAsNonRoot not set to true"
     exit 1
 fi
-echo "✅ runAsNonRoot ni: true"
+echo "✅ runAsNonRoot: true"
 
 echo ""
 echo "🔍 TEKSHIRUV 4-BOSQICH: Tekshirilmoqda runAsUser ni (noldan farqli bo'lishi kerak)..."
@@ -43,10 +43,10 @@ echo ""
 echo "🔍 TEKSHIRUV 5-BOSQICH: Tekshirilmoqda allowPrivilegeEscalation ni..."
 ALLOW_PRIV=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.containers[0].securityContext.allowPrivilegeEscalation}')
 if [ "$ALLOW_PRIV" != "false" ]; then
-    echo "❌ FAILED: allowPrivilegeEscalation ni not set to false"
+    echo "❌ FAILED: allowPrivilegeEscalation not set to false"
     exit 1
 fi
-echo "✅ allowPrivilegeEscalation ni: false"
+echo "✅ allowPrivilegeEscalation: false"
 
 echo ""
 echo "🔍 TEKSHIRUV 6-BOSQICH: Tekshirilmoqda capabilities drop qilinganligini..."
@@ -61,10 +61,10 @@ echo ""
 echo "🔍 TEKSHIRUV 7-BOSQICH: Tekshirilmoqda seccompProfile ni..."
 SECCOMP=$(kubectl get pod $POD_NAME -n $NAMESPACE -o jsonpath='{.spec.securityContext.seccompProfile.type}')
 if [ "$SECCOMP" != "RuntimeDefault" ] && [ "$SECCOMP" != "Localhost" ]; then
-    echo "⚠️  seccompProfile ni not set to RuntimeDefault or Localhost"
+    echo "⚠️  seccompProfile not set to RuntimeDefault or Localhost"
     echo "   Bu restricted standart uchun talab qilinadi"
 fi
-echo "✅ seccompProfile ni: $SECCOMP"
+echo "✅ seccompProfile: $SECCOMP"
 
 echo ""
 echo "🔍 TEKSHIRUV 8-BOSQICH: Tekshirilmoqda pod holatini..."
@@ -79,10 +79,10 @@ echo ""
 echo "🎉 SUCCESS! Pod meets restricted Pod Security Standards!"
 echo ""
 echo "Xavfsizlik konfiguratsiyasi:"
-echo "  • runAsNonRoot ni: true"
+echo "  • runAsNonRoot: true"
 echo "  • runAsUser: $RUN_AS_USER"
-echo "  • allowPrivilegeEscalation ni: false"
+echo "  • allowPrivilegeEscalation: false"
 echo "  • capabilities: drop ALL"
-echo "  • seccompProfile ni: $SECCOMP"
+echo "  • seccompProfile: $SECCOMP"
 echo ""
 echo "Bu pod xavfsizlik eng yaxshi amaliyotlariga amal qiladi! 🔒"

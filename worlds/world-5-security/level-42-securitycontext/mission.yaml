@@ -15,7 +15,7 @@ concepts:
 description: "Pod ning SecurityContext juda cheklangan, bu ilova to'g'ri ishlashi uchun kerakli operatsiyalarni to'sib qo'ymoqda."
 learning_objectives:
   - Understand container user contexts
-  - Configure runAsNonRoot ni and runAsUser
+  - Configure runAsNonRoot and runAsUser
   - Prevent privilege escalation
   - Apply security best practices
 

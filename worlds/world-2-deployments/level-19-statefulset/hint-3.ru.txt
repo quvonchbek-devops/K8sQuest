@@ -1,0 +1,18 @@
+💡 Подсказка почти с решением:
+
+Превратите Deployment в StatefulSet.
+
+Шаги:
+1. Удалите существующий Deployment:
+   `kubectl delete deployment database -n k8squest`
+
+2. Создайте вместо него StatefulSet:
+   `kubectl apply -f solution.yaml`
+
+3. Посмотрите, как поды запускаются по порядку (0, затем 1, затем 2):
+   `kubectl get pods -n k8squest -l app=database      # повторите несколько раз (-w в этом терминале не работает)`
+
+4. Проверьте стабильные имена:
+   `kubectl get pods -n k8squest -l app=database`
+
+Должно быть: database-0, database-1, database-2 (а не случайный хеш)!

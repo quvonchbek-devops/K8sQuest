@@ -1,0 +1,27 @@
+💡 Near-solution hint:
+
+Fix the replica counts to reach a 90/10 split.
+
+Steps:
+1. Scale stable to 9 replicas:
+   `kubectl scale deployment app-stable --replicas=9 -n k8squest`
+
+2. Scale canary to 1 replica:
+   `kubectl scale deployment app-canary --replicas=1 -n k8squest`
+
+3. Wait for the pods to become ready:
+   `kubectl get deployments -n k8squest      # repeat a few times (-w does not work in this terminal)`
+
+4. Check the split — ask for the ready pod count separately:
+   `kubectl get deployment app-stable -n k8squest -o jsonpath='{.status.readyReplicas}'`
+   `kubectl get deployment app-canary -n k8squest -o jsonpath='{.status.readyReplicas}'`
+
+   (This terminal accepts kubectl only: shell variables, `echo` and `$( )` do
+   not work — do the percentage in your head.)
+
+If the first returns 9 and the second 1, the split is 90/10 — that is a 10%
+canary.
+
+You can also see the traffic ratio through the number of endpoints:
+
+    kubectl get endpoints app-service -n k8squest

@@ -1,20 +1,24 @@
 ✅ Yechim maslahat:
 
-broken.yaml da quyidagini o'zgartiring:
+Ingress qoidasidagi path `/api` — u faqat `/api...` bilan boshlanadigan
+so'rovga mos keladi, ilova esa `/` da javob beradi. Path ni `/` ga
+o'zgartirish kerak.
 
-```yaml
-      - path: /api        # ❌ NOTO'G'RI PATH
-```
-Quyidagiga:
-```yaml
-      - path: /           # ✅ TO'G'RI PATH
-```
+Bu terminalda fayl tahrirlagich yo'q (interaktiv tahrir ham ishlamaydi: bir
+martalik ijro, TTY yo'q) — qoidani JSON patch bilan tuzating:
 
-Qadamlar:
-1. broken.yaml ni tahrirlang — Ingress dagi `path: /api` ni `path: /` ga o'zgartiring
-2. Apply qiling: `kubectl apply -f broken.yaml`
-3. Tekshiring: `kubectl describe ingress web-ingress -n k8squest`
+    kubectl patch ingress web-ingress -n k8squest --type=json -p '[{"op":"replace","path":"/spec/rules/0/http/paths/0/path","value":"/"}]'
+
+Nega `--type=json`: qoida RO'YXAT ichida (`rules[0].http.paths[0]`) va uni
+merge patch bilan o'zgartirsangiz butun ro'yxatni qayta yozish kerak bo'ladi.
+JSON patch aynan bitta maydonni almashtiradi.
+
+Tekshiring:
+
+    kubectl get ingress web-ingress -n k8squest -o jsonpath='{.spec.rules[0].http.paths[0]}'
+
+`path: /` va backend `web-service:80` bo'lishi kerak.
 
 Nima uchun ishlaydi:
-- So'rov: "/" → Ingress qoidasi: "/" → Mos! ✅
-- Oldin: "/" → Ingress qoidasi: "/api" → Mos emas! ❌
+- So'rov `/` → qoida `/` → MOS ✅
+- Oldin: so'rov `/` → qoida `/api` → mos emas → 404 ❌

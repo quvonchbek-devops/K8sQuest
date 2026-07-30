@@ -3,7 +3,7 @@
 NetworkPolicy ni da NOTO'G'RI label selector bor.
 
 **Frontend Pod:** `app: frontend` label ga ega
-**NetworkPolicy ni:** faqat `app: admin-tool` label li pod lardan trafikka ruxsat beradi
+**NetworkPolicy:** faqat `app: admin-tool` label li pod lardan trafikka ruxsat beradi
 
 ```yaml
 ingress:

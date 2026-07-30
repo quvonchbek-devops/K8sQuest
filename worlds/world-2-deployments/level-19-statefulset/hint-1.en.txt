@@ -1,0 +1,14 @@
+🔍 Observation hint:
+
+Check the current resource type:
+`kubectl get deployments,statefulsets -n k8squest`
+
+Is it a Deployment or a StatefulSet?
+
+Check the pod names:
+`kubectl get pods -n k8squest -l app=database`
+
+Deployment pods get random names: database-7d8f9c-abc12
+StatefulSet pods get stable names: database-0, database-1, database-2
+
+Stateful applications (databases, message queues) need a stable identity!

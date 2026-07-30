@@ -1,0 +1,34 @@
+✅ Подсказка 3: Полное решение
+
+Значения Secret закодированы в base64 ДВАЖДЫ: раскодировав их, под получает
+«YWRtaW4=» вместо «admin», и проверка не проходит.
+
+Самый простой путь — patch через `stringData`: Kubernetes выполнит кодирование
+САМ, base64 руками считать не придётся:
+
+    kubectl patch secret db-credentials -n k8squest -p '{"stringData":{"username":"admin","password":"secretpass123"}}'
+
+Проверьте — теперь в `data` лежит значение, закодированное ОДИН раз:
+
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data.username}'
+
+Должно быть `YWRtaW4=` (base64 от «admin»). Раньше было `WVdSdGFXND0=` — это
+base64 от «YWRtaW4=».
+
+Клиентский под падал из-за неверного значения; после исправления Secret kubelet
+передаст НОВОЕ значение при следующей попытке (env читается при старте
+контейнера):
+
+    kubectl get pod database-client -n k8squest
+    kubectl logs database-client -n k8squest
+
+В логе должно появиться «Connected successfully!». Если под долго висит в
+`CrashLoopBackOff`, пересоздание сократит ожидание:
+
+    kubectl delete pod database-client -n k8squest
+    kubectl apply -f solution.yaml -n k8squest
+
+⚠️ Помните: base64 — НЕ БЕЗОПАСНОСТЬ, только кодирование. Команда
+`kubectl get secret` выше это доказывает: любой с доступом к kubectl откроет
+значение за секунду. Настоящая защита — RBAC, шифрование etcd, Vault или
+Sealed Secrets.

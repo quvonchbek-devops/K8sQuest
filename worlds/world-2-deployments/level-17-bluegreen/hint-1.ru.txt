@@ -1,0 +1,14 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте Deployment'ы:
+`kubectl get deployments -n k8squest`
+
+Вы должны увидеть app-blue и app-green, оба с 3/3 репликами.
+
+Проверьте Service:
+`kubectl get service app-service -n k8squest -o jsonpath='{.spec.selector}'`
+
+На какую версию он направлен?
+
+Проверьте endpoints:
+`kubectl get endpoints app-service -n k8squest`

@@ -1,0 +1,20 @@
+🧭 Направляющая подсказка:
+
+Проблема в селекторе Service!
+
+Service ищет поды с меткой `app: backend-app`, а у пода `app: backend`.
+
+Есть два варианта:
+1. изменить селектор Service под метки пода, ИЛИ
+2. изменить метки пода под селектор Service
+
+Вариант 1 проще — достаточно поправить Service!
+
+Сравните селектор с метками Pod:
+
+    kubectl get service backend-service -n k8squest -o jsonpath='{.spec.selector}'
+    kubectl get pod backend-pod -n k8squest --show-labels
+
+Результат несовпадения — пустой список endpoints:
+
+    kubectl get endpoints backend-service -n k8squest

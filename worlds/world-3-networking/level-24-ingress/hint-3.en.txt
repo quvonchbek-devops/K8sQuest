@@ -1,0 +1,23 @@
+✅ Solution hint:
+
+The path in the Ingress rule is `/api`, which matches only requests starting
+with `/api...`, while the app answers at `/`. The path must become `/`.
+
+This terminal has no file editor (interactive editing does not work either:
+one-shot execution, no TTY) — fix the rule with a JSON patch:
+
+    kubectl patch ingress web-ingress -n k8squest --type=json -p '[{"op":"replace","path":"/spec/rules/0/http/paths/0/path","value":"/"}]'
+
+Why `--type=json`: the rule lives inside a LIST (`rules[0].http.paths[0]`), and
+changing it with a merge patch would mean rewriting the whole list. A JSON
+patch replaces exactly one field.
+
+Check:
+
+    kubectl get ingress web-ingress -n k8squest -o jsonpath='{.spec.rules[0].http.paths[0]}'
+
+You should see `path: /` and backend `web-service:80`.
+
+Why it works:
+- Request `/` → rule `/` → MATCH ✅
+- Before: request `/` → rule `/api` → no match → 404 ❌

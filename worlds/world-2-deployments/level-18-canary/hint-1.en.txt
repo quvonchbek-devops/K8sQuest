@@ -1,0 +1,21 @@
+🔍 Observation hint:
+
+Check the Deployments:
+`kubectl get deployments -n k8squest`
+
+Look at the READY column. How many stable pods are there? How many canary pods?
+
+Check the Service endpoints:
+`kubectl get endpoints app-service -n k8squest`
+
+Count the IPs — that shows ALL pods receiving traffic (both stable and canary).
+
+The traffic split is decided by the pod COUNT — count the service endpoints
+separately for stable and canary:
+`kubectl get pods -n k8squest -l app=app,track=stable`
+`kubectl get pods -n k8squest -l app=app,track=canary`
+
+(This terminal does not accept shell loops — `for ... done` — or streaming
+commands: each line is a separate kubectl call.)
+
+Is the ratio close to 50/50? For a canary that is wrong!

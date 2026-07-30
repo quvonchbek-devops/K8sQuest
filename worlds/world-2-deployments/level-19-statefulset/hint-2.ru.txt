@@ -1,0 +1,25 @@
+🧭 Направляющая подсказка:
+
+Проблема: для базы данных используется Deployment.
+
+Deployment'ы предназначены для STATELESS-приложений (веб-серверы, API):
+- любой под можно заменить
+- поды взаимозаменяемы
+- стабильная идентичность не нужна
+
+Базы данных STATEFUL и требуют:
+- стабильных имён подов (database-0, database-1)
+- стабильных сетевых ID (database-0.database-service)
+- постоянного хранилища для каждого пода
+- упорядоченного запуска (primary до реплик)
+- упорядоченной остановки (реплики до primary)
+
+Решение: используйте StatefulSet вместо Deployment!
+
+Посмотрите на ИМЕНА подов — Deployment добавляет случайный суффикс:
+
+    kubectl get pods -n k8squest -l app=database
+    kubectl get deployment database -n k8squest -o jsonpath='{.spec.template.spec.volumes}'
+
+Имена нестабильны (`database-7d9f…`), и том тоже не отдельный для каждого
+пода — для stateful-приложения плохо и то, и другое.

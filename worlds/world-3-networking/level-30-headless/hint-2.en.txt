@@ -1,0 +1,31 @@
+🧭 Guiding hint:
+
+A normal service (with a ClusterIP):
+- web-cluster.ns.svc… → 10.96.100.50 → a RANDOM pod
+- web-0.web-cluster… → ❌ DOES NOT WORK
+
+A headless service (clusterIP: None):
+- web-0.web-cluster.ns.svc… → web-0's pod IP ✅
+- web-1.web-cluster.ns.svc… → web-1's pod IP ✅
+- web-2.web-cluster.ns.svc… → web-2's pod IP ✅
+
+Fix — set `clusterIP: None` on the service:
+```yaml
+spec:
+  clusterIP: None  # ✅ makes it headless
+  selector:
+    app: web-cluster
+```
+
+StatefulSets need a headless service because of:
+- stable pod names (web-0, web-1)
+- stable DNS names (web-0.service-name)
+- database clusters, Kafka, etcd and the like
+
+Look at the service type — being headless requires `clusterIP: None`:
+
+    kubectl get service web-cluster -n k8squest -o jsonpath='{.spec.clusterIP}'
+    kubectl get statefulset web -n k8squest -o jsonpath='{.spec.serviceName}'
+
+If the first command returns an IP (e.g. `10.43.x.x`), the service is a normal
+ClusterIP — and then no per-pod DNS records are created.

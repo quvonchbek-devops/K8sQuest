@@ -19,10 +19,10 @@ Ma'lum privilege escalation larning oldini oladi:
 
 ### 3. Restricted (Hardened)
 Xavfsizlik eng yaxshi amaliyotlari (siz hozirgina amalga oshirgansiz):
-- ✅ runAsNonRoot ni: true
-- ✅ allowPrivilegeEscalation ni: false
+- ✅ runAsNonRoot: true
+- ✅ allowPrivilegeEscalation: false
 - ✅ capabilities drop qilinganligini
-- ✅ seccompProfile ni
+- ✅ seccompProfile
 - ✅ Non-root user
 
 ---

@@ -1,0 +1,20 @@
+💡 Near-solution hint:
+
+Fix the PDB so evictions are allowed while availability is kept.
+
+This terminal has no file editor (interactive editing does not work either: one-shot execution, no TTY) — change the PDB with `kubectl patch`:
+
+    kubectl patch pdb db-proxy-pdb -n k8squest -p '{"spec":{"minAvailable":2}}'
+
+That is: 2 pods stay up, and 1 may be evicted.
+
+Check:
+
+    kubectl get pdb db-proxy-pdb -n k8squest
+
+Now "ALLOWED DISRUPTIONS" should be 1 instead of 0!
+
+An alternative is to drop `minAvailable` and set `maxUnavailable` instead. The
+two cannot be set together, so the swap is done with a JSON patch:
+
+    kubectl patch pdb db-proxy-pdb -n k8squest --type=json -p '[{"op":"remove","path":"/spec/minAvailable"},{"op":"add","path":"/spec/maxUnavailable","value":1}]'

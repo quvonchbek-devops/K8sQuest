@@ -1,0 +1,14 @@
+🔍 Подсказка-наблюдение:
+
+Поды StatefulSet не могут найти друг друга по имени.
+
+Проверьте:
+1. Поды: `kubectl get pods -n k8squest -l app=web-cluster` (web-0, web-1, web-2)
+2. Service: `kubectl get service web-cluster -n k8squest` — смотрите CLUSTER-IP
+3. DNS: отправьте запрос в одноразовый под (точная команда — в подсказке 3) для
+   `web-0.web-cluster.k8squest.svc.cluster.local`
+
+Проблема: обычный ClusterIP-сервис даёт DNS только для `web-cluster` →
+случайный под. StatefulSet'ам нужен DNS на каждый под:
+web-0.web-cluster, web-1.web-cluster… Для этого нужен «headless service»
+(clusterIP: None)!

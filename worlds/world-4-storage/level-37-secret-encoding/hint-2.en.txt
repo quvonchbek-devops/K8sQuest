@@ -1,0 +1,28 @@
+🧭 Hint 2: Secret encoding vs encryption
+
+Kubernetes Secrets expect base64-ENCODED values in the `data` field:
+```yaml
+data:
+  password: cGFzc3dvcmQ=    # base64 of "password"
+```
+
+If you write plain text there, you get a YAML error or a wrong value.
+
+Alternative: use the `stringData` field — Kubernetes encodes it for you:
+```yaml
+stringData:
+  password: password    # Kubernetes turns it into base64 itself
+```
+
+⚠️ IMPORTANT: base64 is NOT SECURITY. It is only encoding. For real protection
+use Vault or Sealed Secrets.
+
+Look inside the Secret — it is STORED in base64, not encrypted:
+
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data}'
+    kubectl get secret db-credentials -n k8squest -o jsonpath='{.data.password}'
+
+The second value can be opened with a plain `base64 -d` — so this is not
+"protection", just encoding. Also look at what the container receives:
+
+    kubectl logs database-client -n k8squest
