@@ -1,0 +1,9 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте состояние Pod: `kubectl get pod database-app -n k8squest`
+
+Посмотрите на колонку RESTARTS. Он перезапускается снова и снова?
+
+Теперь посмотрите логи: `kubectl logs database-app -n k8squest`
+
+Какую ошибку вы видите?

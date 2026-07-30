@@ -1,0 +1,12 @@
+💡 Подсказка почти с решением:
+
+Шаги:
+1. Удалите Pod: `kubectl delete pod app-with-logging -n k8squest`
+2. В broken.yaml замените команду log-sidecar на работающую:
+   ```
+   command: ["sh", "-c", "while true; do echo 'Logging...' >> /var/log/app.log; sleep 5; done"]
+   ```
+3. Примените: `kubectl apply -f broken.yaml`
+4. Проверьте, что работают оба контейнера: `kubectl get pod app-with-logging -n k8squest`
+
+В колонке READY должно быть "2/2"!

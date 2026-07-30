@@ -1,0 +1,1 @@
+Run `kubectl get deployment web -n k8squest` and look at the READY column. How many replicas are configured, and how many should be running?

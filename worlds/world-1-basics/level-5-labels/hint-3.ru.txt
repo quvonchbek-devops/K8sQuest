@@ -1,0 +1,11 @@
+💡 Подсказка почти с решением:
+
+В селекторе Service указано `app: frontend`, а у Pod метка `app: backend`. Они не совпадают!
+
+Шаги:
+1. Удалите ресурсы: `kubectl delete -f broken.yaml`
+2. В broken.yaml измените селектор Service с `app: frontend` на `app: backend`
+3. Примените: `kubectl apply -f broken.yaml`
+4. Проверьте endpoints: `kubectl get endpoints backend-service -n k8squest`
+
+В endpoints должен появиться IP-адрес!

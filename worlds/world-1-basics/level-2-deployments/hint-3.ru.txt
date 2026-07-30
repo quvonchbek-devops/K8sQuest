@@ -1,0 +1,1 @@
+В Deployment стоит `replicas: 0`, поэтому ни один Pod не работает! Увеличьте число: `kubectl scale deployment web --replicas=1 -n k8squest`

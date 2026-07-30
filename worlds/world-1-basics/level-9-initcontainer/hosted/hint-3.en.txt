@@ -1,0 +1,23 @@
+💡 Near-solution hint:
+
+The right fix is to create the service the init container is waiting for.
+
+The browser terminal has no text editor, so you cannot write the YAML file
+yourself. The path is different here:
+
+1. Press the "Solution" button in the side panel — the platform writes
+   `solution.yaml` into your working directory and shows its contents.
+
+2. Apply the file:
+   ```
+   kubectl apply -f solution.yaml
+   ```
+
+3. Once the service exists, the init container's `nslookup` finishes
+   successfully and the pod moves on to the main container. Watch it:
+   ```
+   kubectl get pod web-with-init      # repeat a few times
+   ```
+
+Read `solution.yaml` first to see what is happening — it contains a plain
+ClusterIP Service named `backend-service`.

@@ -1,0 +1,11 @@
+🧭 Guiding hint:
+
+A Service finds pods through **label selectors**. The Service selector must match the pod's labels.
+
+Check the Service selector:
+`kubectl get service backend-service -n k8squest -o jsonpath='{.spec.selector}'`
+
+Check the pod labels:
+`kubectl get pod backend-app -n k8squest --show-labels`
+
+Do the labels match? Find the mismatch!

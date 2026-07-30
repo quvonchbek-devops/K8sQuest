@@ -1,0 +1,7 @@
+🧭 Guiding hint:
+
+The error shows "ImagePullBackOff" or "ErrImagePull". That means Kubernetes cannot find the container image you asked for.
+
+Check the image name and tag in the pod spec. Does that tag really exist on Docker Hub?
+
+Try: `kubectl get pod web-app -n k8squest -o yaml` and find the `image:` line in the output. (This terminal is kubectl-only — pipes like `| grep` are not available.)

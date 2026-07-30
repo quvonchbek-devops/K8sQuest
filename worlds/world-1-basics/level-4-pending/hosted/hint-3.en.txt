@@ -1,0 +1,18 @@
+💡 Near-solution hint:
+
+The pod is asking for 999 CPUs and 999Gi of memory. `kubectl describe limitrange`
+shows that the default limit given to a container is far smaller
+(cpu 200m, memory 128Mi) — and a request must not exceed the limit.
+
+Steps:
+1. Change the resource requests in broken.yaml to sane values:
+   - memory: "64Mi" (instead of 999Gi)
+   - cpu: "100m" (instead of 999)
+2. Apply: `kubectl apply -f broken.yaml`
+3. Check: `kubectl get pod hungry-app`
+
+Now admission lets the pod through and it should run.
+
+📝 Note: this is exactly how LimitRange and ResourceQuota work in real
+clusters — when teams share one cluster, so that nobody eats everyone else's
+resources. Being able to read the error message is an everyday skill.

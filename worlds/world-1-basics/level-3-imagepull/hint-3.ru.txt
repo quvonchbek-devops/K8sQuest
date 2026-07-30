@@ -1,0 +1,18 @@
+💡 Подсказка почти с решением:
+
+Тега "nonexistent-tag-xyz-123" не существует — его нужно заменить на реальный (`nginx:latest`).
+
+В этом терминале работает только kubectl (редактора файлов нет: `nano`, `vi` и интерактивная правка не работают), поэтому вместо правки broken.yaml измените образ живого Pod напрямую. Удалять Pod НЕ нужно:
+
+    kubectl set image pod/web-app web=nginx:latest -n k8squest
+
+Здесь `web` — имя контейнера (в выводе describe оно видно как `spec.containers{web}`). Kubelet скачает новый образ, и Pod запустится.
+
+Затем проверьте:
+
+    kubectl get pod web-app -n k8squest
+
+Альтернатива (пересоздать Pod):
+
+    kubectl delete pod web-app -n k8squest
+    kubectl run web-app --image=nginx:latest -n k8squest

@@ -670,7 +670,7 @@ When pod crashed:
    - Migration started siz validation
 
 4. **Missing safeguards:**
-   - No alerts for PVC pending状态
+   - No alerts for PVC pending holati
    - No backup during migration
    - Auto-decommissioned source database too early
 

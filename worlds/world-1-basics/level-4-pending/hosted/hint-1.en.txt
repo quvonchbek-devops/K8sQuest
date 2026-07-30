@@ -1,0 +1,12 @@
+🔍 Observation hint:
+
+Check the pod list: `kubectl get pods`
+
+There is no pod at all! Unlike a local cluster, this namespace has its own
+resource limits and they are checked BEFORE the pod is created.
+
+Apply broken.yaml yourself:
+
+  kubectl apply -f broken.yaml
+
+Read the error message carefully — it states the problem directly.

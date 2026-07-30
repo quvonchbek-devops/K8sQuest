@@ -1,0 +1,8 @@
+🧭 Направляющая подсказка:
+
+В логах ошибка о обязательной переменной окружения:
+"Error: Database is uninitialized and superuser password is not specified."
+
+Из соображений безопасности PostgreSQL требует переменную окружения POSTGRES_PASSWORD.
+
+Эту переменную нужно добавить в спецификацию Pod.

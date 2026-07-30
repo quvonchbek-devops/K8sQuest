@@ -1,0 +1,8 @@
+🧭 Guiding hint:
+
+The logs show an error about a required environment variable:
+"Error: Database is uninitialized and superuser password is not specified."
+
+For safety PostgreSQL requires the POSTGRES_PASSWORD environment variable.
+
+That environment variable has to be added to the pod spec.

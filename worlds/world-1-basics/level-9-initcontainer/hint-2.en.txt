@@ -1,0 +1,9 @@
+🧭 Guiding hint:
+
+The init container is trying to find "backend-service" with `nslookup`, but that service does not exist. The container waits for it forever.
+
+An init container must finish successfully before the main container starts. This one never finishes!
+
+There are two options:
+1. Change the command to one that can finish, or
+2. Create the service it is waiting for
