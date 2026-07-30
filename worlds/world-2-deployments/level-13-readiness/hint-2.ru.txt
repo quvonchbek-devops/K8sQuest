@@ -1,0 +1,12 @@
+🧭 Направляющая подсказка:
+
+Проблема: поды в состоянии Running, но им нужно 20 секунд, прежде чем они смогут обслуживать трафик (имитируется через `sleep 20`).
+
+Без readiness probe Kubernetes считает, что "Running = Ready", и сразу добавляет Pod в endpoints сервиса.
+
+Значит, пользователи попадают на ещё запускающиеся поды → ошибки 502 Bad Gateway!
+
+Проверьте Deployment:
+`kubectl get deployment slow-startup-app -n k8squest -o jsonpath='{.spec.template.spec.containers[0]}'`
+
+Readiness probe там нет (есть только livenessProbe). Вот в чём проблема!

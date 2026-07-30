@@ -1,0 +1,17 @@
+💡 Near-solution hint:
+
+The liveness probe checks `/nonexistent-healthz`, which does not exist (404).
+
+nginx answers successfully at the root path `/`.
+
+This terminal has no file editor (interactive editing does not work either) — change the live object with `kubectl patch`:
+
+    kubectl patch deployment api-server -n k8squest -p '{"spec":{"template":{"spec":{"containers":[{"name":"api","livenessProbe":{"httpGet":{"path":"/","port":80}}}]}}}}'
+
+The container name (`api`) MATTERS: a strategic merge patch merges the list by that name, otherwise the whole container definition would be replaced.
+
+After the patch the Deployment rolls out new pods. Wait ~30 seconds and check:
+
+    kubectl get pods -n k8squest -l app=api
+
+The pods should be Running with a low restart count!

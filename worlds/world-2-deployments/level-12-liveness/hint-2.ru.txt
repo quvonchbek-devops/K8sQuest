@@ -1,0 +1,10 @@
+🧭 Направляющая подсказка:
+
+В Events видно "Liveness probe failed: HTTP probe failed with statuscode: 404".
+
+Значит, liveness probe проверяет endpoint, который отвечает 404 (не найдено).
+
+Проверьте конфигурацию Deployment:
+`kubectl get deployment api-server -n k8squest -o jsonpath='{.spec.template.spec.containers[0].livenessProbe}'`
+
+Посмотрите на проверяемый `path`. Это правильный health-endpoint?

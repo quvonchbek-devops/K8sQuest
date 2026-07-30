@@ -1,0 +1,17 @@
+💡 Подсказка почти с решением:
+
+Нужен readiness probe, чтобы трафик ждал, пока приложение действительно готово.
+
+В этом терминале нет редактора файлов (интерактивная правка тоже не работает) — добавьте probe через `kubectl patch`:
+
+    kubectl patch deployment slow-startup-app -n k8squest -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","readinessProbe":{"httpGet":{"path":"/","port":80},"initialDelaySeconds":22,"periodSeconds":5,"successThreshold":1}}]}}}}'
+
+`initialDelaySeconds: 22` — контейнер спит 20 секунд плюс 2 секунды запаса.
+
+Имя контейнера (`app`) ВАЖНО: патч объединяет список именно по нему.
+
+Поды пересоздадутся. Проверьте состояние (этот терминал не принимает `-w` — повторите команду несколько раз):
+
+    kubectl get pods -n k8squest -l app=slow-app
+
+Теперь поды не принимают трафик, пока действительно не готовы!

@@ -1,0 +1,11 @@
+🔍 Observation hint:
+
+Check the pods:
+`kubectl get pods -n k8squest -l app=slow-app`
+
+Watch the READY column. Some pods may show "0/1" even while STATUS is "Running".
+
+Check the Service endpoints:
+`kubectl get endpoints slow-app-service -n k8squest`
+
+Are pods that are not ready being added to the Service? That sends traffic to pods that cannot serve it!

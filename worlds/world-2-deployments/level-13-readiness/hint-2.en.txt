@@ -1,0 +1,12 @@
+🧭 Guiding hint:
+
+The problem: the pods are Running, but they need 20 seconds before they can serve traffic (simulated with `sleep 20`).
+
+Without a readiness probe Kubernetes treats "Running = Ready" and adds the pod to the Service endpoints immediately.
+
+That means users hit pods that are still starting → 502 Bad Gateway errors!
+
+Check the Deployment:
+`kubectl get deployment slow-startup-app -n k8squest -o jsonpath='{.spec.template.spec.containers[0]}'`
+
+You will see no readiness probe (only a livenessProbe). That is the problem!

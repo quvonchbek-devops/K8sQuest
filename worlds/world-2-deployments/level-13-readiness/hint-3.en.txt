@@ -1,0 +1,17 @@
+💡 Near-solution hint:
+
+A readiness probe is needed so traffic waits until the app is really ready.
+
+This terminal has no file editor (interactive editing does not work either) — add the probe with `kubectl patch`:
+
+    kubectl patch deployment slow-startup-app -n k8squest -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","readinessProbe":{"httpGet":{"path":"/","port":80},"initialDelaySeconds":22,"periodSeconds":5,"successThreshold":1}}]}}}}'
+
+`initialDelaySeconds: 22` — the container sleeps for 20 seconds, plus 2 seconds of margin.
+
+The container name (`app`) MATTERS: the patch merges the list by that name.
+
+The pods are recreated. Check the state (this terminal does not accept `-w` — repeat the command a few times):
+
+    kubectl get pods -n k8squest -l app=slow-app
+
+Now the pods take no traffic until they are really ready!

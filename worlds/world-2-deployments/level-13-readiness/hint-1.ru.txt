@@ -1,0 +1,11 @@
+🔍 Подсказка-наблюдение:
+
+Проверьте поды:
+`kubectl get pods -n k8squest -l app=slow-app`
+
+Следите за колонкой READY. Некоторые поды могут показывать "0/1", даже когда STATUS "Running".
+
+Проверьте endpoints сервиса:
+`kubectl get endpoints slow-app-service -n k8squest`
+
+Добавляются ли в Service неготовые поды? Тогда трафик идёт на поды, которые его не обслужат!
