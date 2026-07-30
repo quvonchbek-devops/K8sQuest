@@ -21,5 +21,18 @@ concepts:
 # faqat lokal o'yinda ma'noli. Batafsil: docs/MISSION-SCHEMA.md
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches moving resources between several namespaces. The hosted sandbox is a single isolated namespace, so other namespaces cannot be created or used. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит переносу ресурсов между несколькими namespace. Хостед-песочница — один изолированный namespace, другие создавать и использовать нельзя. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level bir nechta namespace o'rtasida resurs ko'chirishni o'rgatadi. Hosted sandbox — bitta izolyatsiyalangan namespace; boshqa namespace yaratib/ishlatib bo'lmaydi. Dars faqat lokal o'yinda o'ynaladi."
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "Namespace Confusion"
+  ru:
+    name: "Путаница с namespace"

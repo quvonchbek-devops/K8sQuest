@@ -53,7 +53,20 @@ success_criteria:
 # Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches writing NetworkPolicies. In the hosted sandbox isolation itself is enforced by NetworkPolicy, and rules are additive — a user rule could punch a hole in it. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит писать NetworkPolicy. В хостед-песочнице изоляция как раз держится на NetworkPolicy, а правила складываются — пользовательское правило пробило бы в ней дыру. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level NetworkPolicy yaratishni o'rgatadi. Hosted sandbox da izolyatsiya aynan NetworkPolicy bilan ushlab turiladi va qoidalar additiv — foydalanuvchi qoidasi uni teshib o'tardi. Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "NetworkPolicy Too Restrictive"
+  ru:
+    name: "Слишком строгая NetworkPolicy"

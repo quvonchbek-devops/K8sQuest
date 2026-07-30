@@ -43,7 +43,20 @@ hints_available: 3
 # Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches cluster-scoped PersistentVolumes. The hosted sandbox has namespace-scoped RBAC and cannot touch cluster-scoped resources. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит PersistentVolume уровня кластера. У хостед-песочницы RBAC ограничен namespace, ресурсы уровня кластера недоступны. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level cluster darajasidagi PersistentVolume ni o'rgatadi. Hosted sandbox scoped RBAC bilan cluster-scoped resurs yaratolmaydi. Dars faqat lokal o'yinda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "Volume Mount Path Error"
+  ru:
+    name: "Ошибка пути монтирования тома"

@@ -32,7 +32,20 @@ learning_objectives:
 # Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches PersistentVolume reclaim policies at cluster level. The hosted sandbox has namespace-scoped RBAC. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит reclaim policy у PersistentVolume на уровне кластера. У хостед-песочницы RBAC ограничен namespace. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level cluster darajasidagi PersistentVolume reclaim siyosatini o'rgatadi. Hosted sandbox scoped RBAC bilan cluster-scoped resurs yaratolmaydi. Dars faqat lokal o'yinda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "Reclaim Policy Data Loss"
+  ru:
+    name: "Потеря данных из-за reclaim policy"

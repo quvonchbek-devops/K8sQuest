@@ -33,7 +33,20 @@ learning_objectives:
 # Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches Pod Security Standard labels applied to a namespace. The hosted sandbox does not let you change namespace labels. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит метки Pod Security Standard на namespace. Хостед-песочница не позволяет менять метки namespace. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level namespace ga qo'yiladigan Pod Security Standard yorliqlarini o'rgatadi. Hosted sandbox namespace yorliqlari platforma tomonidan qat'iy belgilangan (baseline). Dars faqat lokal o'yinda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "Pod Security Standards"
+  ru:
+    name: "Стандарты безопасности Pod"

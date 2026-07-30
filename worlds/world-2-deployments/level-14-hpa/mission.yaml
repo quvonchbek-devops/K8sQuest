@@ -31,7 +31,20 @@ concepts:
 # Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches installing metrics-server, which needs cluster-scoped objects (APIService, ClusterRole). This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит установке metrics-server, которому нужны объекты уровня кластера (APIService, ClusterRole). Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level metrics-server o'rnatishni o'rgatadi — u cluster-scoped obyektlar (APIService, ClusterRole) talab qiladi. Hosted sandbox namespace-scoped RBAC da bunga ruxsat yo'q. Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "HPA Cannot Scale"
+  ru:
+    name: "HPA не может масштабировать"

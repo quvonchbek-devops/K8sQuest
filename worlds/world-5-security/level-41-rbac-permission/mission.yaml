@@ -39,7 +39,20 @@ learning_objectives:
 # Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches setting up RBAC (ServiceAccount, Role, RoleBinding). The hosted sandbox does not allow those kinds — writing your own permissions would be a way out of the sandbox. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит настройке RBAC (ServiceAccount, Role, RoleBinding). Хостед-песочница не разрешает эти типы: выдать себе права — это выход из песочницы. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level RBAC (ServiceAccount, Role, RoleBinding) sozlashni o'rgatadi. Hosted sandbox bu turlarga ruxsat bermaydi — aks holda o'zingizga istalgan huquqni yozib, sandbox chegarasidan chiqib ketish mumkin bo'lardi. Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "RBAC Permission Denied"
+  ru:
+    name: "RBAC: доступ запрещён"

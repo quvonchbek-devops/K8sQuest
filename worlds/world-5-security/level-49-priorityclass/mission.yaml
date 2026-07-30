@@ -28,5 +28,18 @@ learning_objectives:
 # Batafsil: docs/MISSION-SCHEMA.md
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "PriorityClass is a cluster-scoped resource and preemption works at node level. The hosted sandbox is namespace-scoped only. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "PriorityClass — ресурс уровня кластера, а preemption работает на уровне узла. Хостед-песочница ограничена namespace. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "PriorityClass — cluster-scoped resurs va preemption node darajasida ishlaydi. Hosted sandbox faqat namespace-scoped ruxsat beradi. Dars faqat lokal o'yinda o'ynaladi."
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "PriorityClass Configuration"
+  ru:
+    name: "Настройка PriorityClass"

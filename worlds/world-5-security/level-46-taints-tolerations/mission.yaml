@@ -36,7 +36,20 @@ learning_objectives:
 # foydalanuvchiniki, zaharlanadigan qo'shni yo'q.
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches tainting nodes. A node is shared by every user, so the hosted sandbox cannot taint it. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит ставить taint на узлы. Узел общий для всех пользователей, поэтому хостед-песочница этого не может. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level node taint qilishni o'rgatadi. Node — barcha foydalanuvchilar bo'lishadigan obyekt; hosted sandbox unga tegishga ruxsat bermaydi (aks holda bir kishining taint i boshqalarning podlarini quvib chiqarardi). Dars lokal o'yinda va o'z klasteri bo'lgan muhitda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "Taints and Tolerations"
+  ru:
+    name: "Taint и toleration"

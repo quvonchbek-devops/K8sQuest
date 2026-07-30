@@ -32,7 +32,20 @@ concepts:
 # Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This lesson teaches Services of type LoadBalancer, which need a cloud provider or MetalLB. This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот урок учит Service типа LoadBalancer, которому нужен облачный провайдер или MetalLB. Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu level LoadBalancer turidagi Service ni o'rgatadi — u bulut provayderi yoki MetalLB ni talab qiladi. Hosted sandbox da tashqi LoadBalancer yo'q. Dars faqat lokal o'yinda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "LoadBalancer Stuck in Pending"
+  ru:
+    name: "LoadBalancer застрял в Pending"

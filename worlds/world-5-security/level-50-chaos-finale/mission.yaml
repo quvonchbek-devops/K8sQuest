@@ -38,7 +38,20 @@ learning_objectives:
 # Batafsil: docs/MISSION-SCHEMA.md, services/content/environment.go
 environments:
   hosted:
+    # Tavsif overlay da almashtirilgan — tarjimasi ham shu yerda.
+    i18n:
+      en:
+        description: "This final lesson combines several cluster-scoped resources (Namespace, ResourceQuota and others). This lesson runs only in the local K8sQuest game."
+      ru:
+        description: "Этот финальный урок объединяет несколько ресурсов уровня кластера (Namespace, ResourceQuota и другие). Этот урок доступен только в локальной игре K8sQuest."
     available: false
     description: "Bu yakuniy level cluster darajasidagi bir nechta resurs (Namespace, ResourceQuota va boshqalar) ni birga o'rgatadi. Hosted sandbox da ular yaratilmaydi. Dars faqat lokal o'yinda o'ynaladi."
   hosted-cluster:
     available: true
+
+# Tarjimalar — bu level hosted da o'ynalmaydi, lekin KATALOGDA ko'rinadi.
+i18n:
+  en:
+    name: "Chaos Finale — Everything Is Broken!"
+  ru:
+    name: "Финал хаоса — сломано всё!"
