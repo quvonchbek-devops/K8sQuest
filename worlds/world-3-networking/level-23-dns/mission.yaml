@@ -10,3 +10,15 @@ concepts:
   - FQDN formati
   - CoreDNS
   - DNS muammolarini aniqlash
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "DNS Resolution Fails"
+    description: "Pods cannot resolve service names through DNS"
+    objective: "Fix the DNS configuration so pods resolve service names"
+  ru:
+    name: "DNS-разрешение не работает"
+    description: "Поды не могут разрешить имена сервисов через DNS"
+    objective: "Исправьте настройку DNS, чтобы поды разрешали имена сервисов"

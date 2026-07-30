@@ -9,3 +9,15 @@ concepts:
   - Ilovani debugging qilish
   - Environment variables
   - Konteyner muammolarini aniqlash
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "The Pod Logs Puzzle"
+    description: "The pod is running but the application is not. The clue is only in the logs"
+    objective: "Find and fix the configuration problem that makes the app fail silently"
+  ru:
+    name: "Загадка логов Pod"
+    description: "Pod работает, а приложение нет. Причина видна только в логах"
+    objective: "Найдите и исправьте проблему конфигурации, из-за которой приложение молча падает"

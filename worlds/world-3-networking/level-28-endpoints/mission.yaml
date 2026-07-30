@@ -17,3 +17,15 @@ concepts:
   - Service endpoint lari
   - Pod health check lari
   - Trafik yo'naltirish
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Service Endpoints Do Not Update"
+    description: "Service endpoints are not updated when pods restart or become unhealthy, so traffic keeps going to broken pods — the readiness probes are missing"
+    objective: "Add readiness probes so the Service endpoints update correctly"
+  ru:
+    name: "Endpoints сервиса не обновляются"
+    description: "Endpoints не обновляются при перезапуске или отказе подов, поэтому трафик продолжает идти на сломанные поды — не хватает readiness probe"
+    objective: "Добавьте readiness probe, чтобы endpoints сервиса обновлялись корректно"

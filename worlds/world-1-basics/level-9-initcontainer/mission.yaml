@@ -10,3 +10,15 @@ concepts:
   - Konteyner bog'liqliklari
   - kubectl describe
   - Init container ni debugging qilish
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Init Container Deadlock"
+    description: "The pod is stuck in Init because the init container never finishes"
+    objective: "Fix the init container so the main container starts"
+  ru:
+    name: "Тупик init-контейнера"
+    description: "Pod застрял в состоянии Init, потому что init-контейнер не завершается"
+    objective: "Почините init-контейнер, чтобы основной контейнер запустился"

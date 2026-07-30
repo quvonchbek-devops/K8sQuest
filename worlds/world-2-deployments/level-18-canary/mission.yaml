@@ -11,3 +11,15 @@ concepts:
   - bosqichma-bosqich rollout
   - A/B test
   - deployment pattern lari
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Canary Weight Imbalance"
+    description: "The canary deployment has the wrong replica ratio, making the test results meaningless"
+    objective: "Fix the replica counts to get a correct 90/10 traffic split for the canary test"
+  ru:
+    name: "Дисбаланс веса canary"
+    description: "У canary-деплоя неверное соотношение реплик, из-за чего результаты теста бессмысленны"
+    objective: "Исправьте число реплик, чтобы получить корректное распределение трафика 90/10"

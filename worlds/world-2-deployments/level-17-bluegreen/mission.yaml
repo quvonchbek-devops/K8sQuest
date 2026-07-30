@@ -11,3 +11,15 @@ concepts:
   - trafik almashtirish
   - deployment strategiyalari
   - nol-to'xtashli almashish
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Blue-Green Gone Wrong"
+    description: "The Service still points at the old version, so users never see the new deployment"
+    objective: "Update the Service selector to send traffic to the new blue-green deployment"
+  ru:
+    name: "Blue-Green пошёл не так"
+    description: "Service всё ещё указывает на старую версию, поэтому пользователи не видят новый деплой"
+    objective: "Обновите селектор Service, чтобы трафик шёл на новый blue-green деплой"

@@ -11,3 +11,15 @@ concepts:
   - kubectl get bilan label filtrlash
   - Service endpoints
   - Pod ulanish (connectivity)
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Broken Wiring — Labels & Selectors"
+    description: "The Service cannot find its pods because the label selector does not match"
+    objective: "Fix the Service selector or the pod labels so traffic reaches the pod"
+  ru:
+    name: "Разорванная связь — Labels и Selectors"
+    description: "Service не находит поды, потому что селектор меток не совпадает"
+    objective: "Исправьте селектор Service или метки Pod, чтобы трафик дошёл до Pod"

@@ -11,3 +11,15 @@ concepts:
   - deklarativ yangilanishlar
   - rollout boshqaruvi
   - abstraksiya qatlamlari
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "A ReplicaSet Without a Deployment"
+    description: "A hand-made ReplicaSet makes updates hard and breaks automation"
+    objective: "Convert the standalone ReplicaSet into a Deployment for proper management"
+  ru:
+    name: "ReplicaSet без Deployment"
+    description: "Созданный вручную ReplicaSet усложняет обновления и ломает автоматизацию"
+    objective: "Преобразуйте отдельный ReplicaSet в Deployment для нормального управления"

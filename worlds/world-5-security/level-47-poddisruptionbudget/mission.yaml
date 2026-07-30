@@ -18,3 +18,15 @@ learning_objectives:
   - Configure minAvailable vs maxUnavailable
   - Balance availability with maintenance needs
   - Debug PDB-related eviction failures
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "PodDisruptionBudget Configuration"
+    description: "The PDB does not match the deployment, which blocks node maintenance and cluster upgrades"
+    objective: "Fix the broken resources and pass validation"
+  ru:
+    name: "Настройка PodDisruptionBudget"
+    description: "PDB не соответствует деплою, что блокирует обслуживание узлов и обновления кластера"
+    objective: "Исправьте сломанные ресурсы и пройдите проверку"

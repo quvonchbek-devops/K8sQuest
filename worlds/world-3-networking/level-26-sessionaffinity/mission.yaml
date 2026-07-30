@@ -30,3 +30,15 @@ success_criteria:
   - Bir xil klientdan so'rovlar doimiy bir xil pod ga yo'naltiriladi
   - Foydalanuvchi session lari bir nechta so'rovlar davomida saqlanadi
   - Ilova session affinity bilan to'g'ri ishlaydi
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Session Affinity Is Missing"
+    description: "A stateful app randomly loses user sessions: users log in successfully but look logged out on the next request, because the Service spreads requests across pods that do not share session state"
+    objective: "Configure sessionAffinity on the Service to keep user sessions"
+  ru:
+    name: "Отсутствует session affinity"
+    description: "Stateful-приложение случайно теряет сессии: пользователь входит успешно, но на следующем запросе выглядит вышедшим, потому что Service распределяет запросы по подам, не разделяющим состояние сессии"
+    objective: "Настройте sessionAffinity на Service, чтобы сохранять сессии пользователей"

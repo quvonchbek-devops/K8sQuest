@@ -10,3 +10,15 @@ concepts:
   - service endpoint larni
   - kubectl describe svc
   - ClusterIP
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Service Selector Mismatch"
+    description: "The Service exists but the pods receive no traffic"
+    objective: "Fix the Service so it routes traffic to the backend pods"
+  ru:
+    name: "Несовпадение селектора Service"
+    description: "Service существует, но поды не получают трафик"
+    objective: "Исправьте Service, чтобы он направлял трафик на backend-поды"

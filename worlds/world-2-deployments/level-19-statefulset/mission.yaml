@@ -12,3 +12,15 @@ concepts:
   - barqaror tarmoq ID lari
   - headless service lar
   - stateful workload lar
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Data Loss in a Stateful App"
+    description: "Using a Deployment for a database causes data loss and pod identity problems"
+    objective: "Convert the Deployment into a StatefulSet for stable identity and persistent storage"
+  ru:
+    name: "Потеря данных в stateful-приложении"
+    description: "Использование Deployment для базы данных ведёт к потере данных и проблемам идентичности подов"
+    objective: "Преобразуйте Deployment в StatefulSet для стабильной идентичности и постоянного хранилища"

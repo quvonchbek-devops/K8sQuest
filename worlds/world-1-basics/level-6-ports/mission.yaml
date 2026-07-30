@@ -10,3 +10,15 @@ concepts:
   - Port mapping
   - kubectl port-forward
   - Ulanish muammolarini aniqlash
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "The Port Mismatch"
+    description: "The Service points at the wrong container port, causing connection errors"
+    objective: "Fix the port configuration so the Service connects to the container"
+  ru:
+    name: "Несовпадение портов"
+    description: "Service направляет трафик на неверный порт контейнера, что вызывает ошибки соединения"
+    objective: "Исправьте настройку портов, чтобы Service подключился к контейнеру"

@@ -10,3 +10,15 @@ concepts:
   - Konteyner bog'liqliklari
   - kubectl logs bilan konteyner tanlash
   - Pod hayot sikli (lifecycle)
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Sidecar Sabotage"
+    description: "In a multi-container pod the sidecar keeps crashing"
+    objective: "Fix the sidecar container so the whole pod runs successfully"
+  ru:
+    name: "Саботаж sidecar"
+    description: "В многоконтейнерном Pod sidecar постоянно падает"
+    objective: "Почините контейнер sidecar, чтобы весь Pod работал"

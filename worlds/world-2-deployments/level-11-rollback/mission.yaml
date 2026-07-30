@@ -11,3 +11,15 @@ concepts:
   - kubectl rollout
   - deployment tarixi
   - image versiyalash
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "The Deployment Update Is Stuck"
+    description: "The rolling update failed because the new container image does not exist"
+    objective: "Roll the Deployment back to the previous working version"
+  ru:
+    name: "Обновление Deployment застряло"
+    description: "Rolling update не удался: нового образа контейнера не существует"
+    objective: "Откатите Deployment к предыдущей рабочей версии"

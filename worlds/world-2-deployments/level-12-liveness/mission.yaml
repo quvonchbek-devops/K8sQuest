@@ -11,3 +11,15 @@ concepts:
   - HTTP probe lar
   - probe konfiguratsiyasi
   - restart policy lari
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "The Restart Loop"
+    description: "Pods restart over and over because the liveness probe checks the wrong endpoint"
+    objective: "Fix the liveness probe configuration so the pods keep running"
+  ru:
+    name: "Цикл перезапусков"
+    description: "Поды перезапускаются снова и снова: liveness probe проверяет неверный endpoint"
+    objective: "Исправьте настройку liveness probe, чтобы поды продолжали работать"

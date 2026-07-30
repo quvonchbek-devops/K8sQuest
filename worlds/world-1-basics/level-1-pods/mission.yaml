@@ -9,3 +9,15 @@ concepts:
   - kubectl describe
   - CrashLoopBackOff
   - container commands
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Fix the Broken Pod"
+    description: "The pod keeps crashing because of a wrong container command"
+    objective: "The pod must be in the \"Running\" state"
+  ru:
+    name: "Починить сломанный Pod"
+    description: "Pod падает из-за неверной команды контейнера"
+    objective: "Pod должен быть в состоянии \"Running\""

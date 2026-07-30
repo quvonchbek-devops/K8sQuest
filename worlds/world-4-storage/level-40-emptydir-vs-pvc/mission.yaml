@@ -17,3 +17,15 @@ learning_objectives:
   - Learn when to use ephemeral vs persistent storage
   - Recognize ma'lumotlar saqlanishini requirements
   - Choose appropriate volume types
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "EmptyDir Loses Data on Restart"
+    description: "The database uses an emptyDir volume — every restart wipes the data; it needs a PVC for persistence"
+    objective: "Fix the broken resources and pass validation"
+  ru:
+    name: "EmptyDir теряет данные при перезапуске"
+    description: "База данных использует emptyDir — при каждом перезапуске данные исчезают; нужен PVC для постоянного хранения"
+    objective: "Исправьте сломанные ресурсы и пройдите проверку"

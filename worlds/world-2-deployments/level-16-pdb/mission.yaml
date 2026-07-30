@@ -11,3 +11,15 @@ concepts:
   - node texnik xizmati
   - pod eviction
   - klaster yangilanishlari
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "The PDB Blocks Every Eviction"
+    description: "The PodDisruptionBudget is too strict and blocks node drains and upgrades"
+    objective: "Fix the PDB to allow safe evictions while keeping availability"
+  ru:
+    name: "PDB блокирует все eviction"
+    description: "PodDisruptionBudget слишком строгий и блокирует drain узлов и обновления"
+    objective: "Исправьте PDB, чтобы разрешить безопасные eviction, сохранив доступность"

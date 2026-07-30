@@ -43,6 +43,13 @@ concepts:
 # Batafsil: docs/MISSION-SCHEMA.md
 environments:
   hosted:
+    # Overlay tavsifi base ni almashtiradi — tarjimasi ham shu yerda
+    # bo'lishi SHART: base tarjimasi boshqa matnning tarjimasi bo'lib qolardi.
+    i18n:
+      en:
+        description: "The pod's resource requests exceed the namespace limit — admission rejects it"
+      ru:
+        description: "Запросы ресурсов Pod превышают лимит namespace — admission его отклоняет"
     # Server broken.yaml ni QO'LLAMAYDI — uni foydalanuvchi o'zi qo'llaydi va
     # admission ning rad etishini o'z ko'zi bilan ko'radi. Aynan shu — darsning
     # boshlanishi. Server o'zi qo'llasa, setup 500 bilan yiqilardi va level
@@ -56,3 +63,13 @@ environments:
       - LimitRange
       - Admission nazorati
       - Xato xabarini o'qish
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "The Pending Pod Problem"
+    objective: "Adjust the resource requests so the pod gets scheduled"
+  ru:
+    name: "Проблема Pending Pod"
+    objective: "Настройте запросы ресурсов, чтобы Pod был запланирован"

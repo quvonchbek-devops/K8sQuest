@@ -18,3 +18,15 @@ learning_objectives:
   - Learn per-pod persistent storage
   - Configure dynamic PVC creation
   - Understand StatefulSet storage patterns
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "StatefulSet Volume Templates"
+    description: "The StatefulSet's volumeClaimTemplates are misconfigured, so per-pod persistent storage is never created"
+    objective: "Fix the broken resources and pass validation"
+  ru:
+    name: "Шаблоны томов StatefulSet"
+    description: "volumeClaimTemplates в StatefulSet настроены неверно, поэтому постоянное хранилище для подов не создаётся"
+    objective: "Исправьте сломанные ресурсы и пройдите проверку"

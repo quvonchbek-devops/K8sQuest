@@ -18,3 +18,15 @@ learning_objectives:
   - Learn why base64 provides zero security
   - Discover how easily Secrets can be decoded
   - Explore proper secret management strategies
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Secret Encoding Is Not Encryption"
+    description: "Secret data is encoded incorrectly or stored as plain text; understand the difference between base64 encoding and real encryption"
+    objective: "Understand that base64 encoding is NOT security"
+  ru:
+    name: "Кодирование Secret — не шифрование"
+    description: "Данные Secret закодированы неверно или хранятся открытым текстом; поймите разницу между base64 и настоящим шифрованием"
+    objective: "Поймите, что кодирование base64 — это НЕ безопасность"

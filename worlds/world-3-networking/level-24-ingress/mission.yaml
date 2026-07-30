@@ -10,3 +10,15 @@ concepts:
   - Ingress qoidalari
   - Service backend
   - HTTP yo'naltirish
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Ingress Path Mismatch"
+    description: "The Ingress exists but traffic never reaches the backend Service"
+    objective: "Fix the Ingress path rules so traffic is routed correctly"
+  ru:
+    name: "Несовпадение путей Ingress"
+    description: "Ingress создан, но трафик не доходит до backend-сервиса"
+    objective: "Исправьте правила путей Ingress, чтобы трафик маршрутизировался верно"

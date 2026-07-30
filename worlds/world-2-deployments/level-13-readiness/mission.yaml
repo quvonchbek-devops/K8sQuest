@@ -11,3 +11,15 @@ concepts:
   - pod ishga tushishi
   - HTTP probe lar
   - liveness va readiness farqi
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Traffic to Pods That Are Not Ready"
+    description: "Pods accept traffic before they are ready, which gives users 502 errors"
+    objective: "Add a readiness probe to stop traffic reaching pods too early"
+  ru:
+    name: "Трафик на неготовые поды"
+    description: "Поды принимают трафик до готовности, из-за чего пользователи получают 502"
+    objective: "Добавьте readiness probe, чтобы трафик не шёл на поды слишком рано"

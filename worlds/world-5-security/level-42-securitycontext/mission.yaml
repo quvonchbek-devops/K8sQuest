@@ -18,3 +18,15 @@ learning_objectives:
   - Configure runAsNonRoot ni and runAsUser
   - Prevent privilege escalation
   - Apply security best practices
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "SecurityContext Too Restrictive"
+    description: "The pod's SecurityContext is so strict that it blocks operations the app needs to work"
+    objective: "Fix the broken resources and pass validation"
+  ru:
+    name: "Слишком строгий SecurityContext"
+    description: "SecurityContext пода настолько строгий, что блокирует операции, нужные приложению"
+    objective: "Исправьте сломанные ресурсы и пройдите проверку"

@@ -9,3 +9,15 @@ concepts:
   - scaling
   - replicas
   - kubectl scale
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Fix the Deployment"
+    description: "The Deployment has its replica count set to zero"
+    objective: "The Deployment must have available replicas"
+  ru:
+    name: "Починить Deployment"
+    description: "В Deployment число реплик равно нулю"
+    objective: "У Deployment должны быть доступные реплики"

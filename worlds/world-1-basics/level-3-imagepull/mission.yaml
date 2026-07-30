@@ -10,3 +10,15 @@ concepts:
   - image tags
   - kubectl describe
   - pod xatolarini aniqlash
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "The ImagePullBackOff Puzzle"
+    description: "The pod is stuck trying to pull a container image that does not exist"
+    objective: "Fix the image reference so the pod starts successfully"
+  ru:
+    name: "Загадка ImagePullBackOff"
+    description: "Pod застрял, пытаясь скачать несуществующий образ контейнера"
+    objective: "Исправьте ссылку на образ, чтобы Pod успешно запустился"

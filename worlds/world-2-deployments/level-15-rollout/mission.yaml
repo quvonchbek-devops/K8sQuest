@@ -11,3 +11,15 @@ concepts:
   - deployment strategiyasi
   - nol-to'xtashli deployment lar
   - mavjudlik (availability)
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Zero-Downtime Deployment Failure"
+    description: "With maxUnavailable: 100% the rolling update takes down every pod at once"
+    objective: "Fix the rollout strategy so all pods never go down together"
+  ru:
+    name: "Провал развёртывания без простоя"
+    description: "При maxUnavailable: 100% rolling update выключает все поды одновременно"
+    objective: "Исправьте стратегию rollout, чтобы все поды не падали одновременно"

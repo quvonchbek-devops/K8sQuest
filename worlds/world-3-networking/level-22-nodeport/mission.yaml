@@ -10,3 +10,15 @@ concepts:
   - tashqi kirish
   - service turlari
   - port konfiguratsiyasi
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "The NodePort Is Unreachable"
+    description: "The NodePort Service exists but cannot be reached from outside the cluster"
+    objective: "Fix the NodePort Service configuration to enable external access"
+  ru:
+    name: "NodePort недоступен"
+    description: "NodePort Service создан, но недоступен извне кластера"
+    objective: "Исправьте настройку NodePort Service, чтобы включить внешний доступ"

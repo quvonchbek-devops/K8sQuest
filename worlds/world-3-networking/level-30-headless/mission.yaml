@@ -36,6 +36,13 @@ concepts:
 # asoslangan (§3.2). Batafsil: docs/MISSION-SCHEMA.md
 environments:
   hosted:
+    # Overlay tavsifi base ni almashtiradi — tarjimasi ham shu yerda
+    # bo'lishi SHART: base tarjimasi boshqa matnning tarjimasi bo'lib qolardi.
+    i18n:
+      en:
+        description: "StatefulSet pods get no stable per-pod DNS because the Service is a normal ClusterIP; the fix is a headless Service (clusterIP: None)"
+      ru:
+        description: "Поды StatefulSet не получают стабильный DNS, так как Service — обычный ClusterIP; решение — headless Service (clusterIP: None)"
     description: "StatefulSet pod lari barqaror per-pod DNS ololmayapti, chunki service oddiy ClusterIP bilan sozlangan. Yechim — service ni headless qilish (clusterIP: None)."
     concepts:
       - headless-service
@@ -43,3 +50,13 @@ environments:
       - clusterip-none
       - stable-network-identity
       - service-endpoints
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "StatefulSet DNS Does Not Work"
+    objective: "Fix the broken resources and pass validation"
+  ru:
+    name: "DNS StatefulSet не работает"
+    objective: "Исправьте сломанные ресурсы и пройдите проверку"

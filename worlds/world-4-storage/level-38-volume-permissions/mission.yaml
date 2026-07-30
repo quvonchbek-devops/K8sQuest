@@ -18,3 +18,15 @@ learning_objectives:
   - Learn to configure fsGroup and runAsUser
   - Debug permission issues in containers
   - Properly configure security contexts
+
+# Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
+# Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
+i18n:
+  en:
+    name: "Volume Permission Denied"
+    description: "The container cannot write to the volume because fsGroup and SecurityContext are not set correctly"
+    objective: "Fix the broken resources and pass validation"
+  ru:
+    name: "Отказано в доступе к тому"
+    description: "Контейнер не может писать в том, потому что fsGroup и SecurityContext заданы неверно"
+    objective: "Исправьте сломанные ресурсы и пройдите проверку"
