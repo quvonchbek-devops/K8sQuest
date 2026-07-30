@@ -1,0 +1,10 @@
+Ошибка говорит "executable file not found" про "nginxzz" — такой команды не существует! Контейнер nginx должен запускаться вообще без своей команды.
+
+В этом терминале работает только kubectl (`nano`, `vi` и интерактивное редактирование недоступны), поэтому вместо правки broken.yaml пересоздайте живой Pod без неверной команды:
+
+    kubectl delete pod nginx-broken -n k8squest
+    kubectl run nginx-broken --image=nginx -n k8squest
+
+Затем проверьте:
+
+    kubectl get pod nginx-broken -n k8squest

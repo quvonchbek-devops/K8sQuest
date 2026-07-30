@@ -1,0 +1,1 @@
+Pod падает снова и снова. Запустите `kubectl describe pod nginx-broken -n k8squest`, чтобы увидеть раздел Events. Ищите сообщения о том, что именно идёт не так.
