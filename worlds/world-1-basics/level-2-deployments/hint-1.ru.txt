@@ -1,1 +1,14 @@
-Deployment существует, но что-то не так. Проверьте, сколько подов должно работать.
+🔍 Подсказка-наблюдение:
+
+Посмотрите состояние Deployment:
+
+    kubectl get deployment web -n k8squest
+
+В колонке READY стоит `0/0`: второе число — сколько подов ДОЛЖНО работать,
+то есть у Kubernetes ничего не запрошено. Подов тоже нет:
+
+    kubectl get pods -n k8squest
+
+Посмотрите точное запрошенное число реплик:
+
+    kubectl get deployment web -n k8squest -o jsonpath='{.spec.replicas}'

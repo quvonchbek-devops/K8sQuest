@@ -1,1 +1,14 @@
-Deployment mavjud, lekin nimadir noto'g'ri. Qancha pod ishlashi kerakligini tekshiring.
+🔍 Kuzatuv maslahat:
+
+Deployment holatini ko'ring:
+
+    kubectl get deployment web -n k8squest
+
+READY ustuni `0/0`: ikkinchi raqam — ISHLASHI KERAK bo'lgan pod soni, ya'ni
+Kubernetes dan hech narsa so'ralmagan. Pod lar ham yo'q:
+
+    kubectl get pods -n k8squest
+
+Nechta replika so'ralganini aniq ko'ring:
+
+    kubectl get deployment web -n k8squest -o jsonpath='{.spec.replicas}'

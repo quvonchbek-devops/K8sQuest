@@ -1,8 +1,15 @@
 🧭 Направляющая подсказка:
 
-В логах ошибка о обязательной переменной окружения:
-"Error: Database is uninitialized and superuser password is not specified."
+Логи называют причину прямо:
 
-Из соображений безопасности PostgreSQL требует переменную окружения POSTGRES_PASSWORD.
+    Error: Database is uninitialized and superuser password is not specified.
 
-Эту переменную нужно добавить в спецификацию Pod.
+Образ PostgreSQL ТРЕБУЕТ переменную окружения `POSTGRES_PASSWORD` для
+запуска (правило безопасности — база без пароля не поднимается). В Pod её
+нет, поэтому контейнер сразу умирает.
+
+Посмотрите список env у Pod — он окажется пустым:
+
+    kubectl get pod database-app -n k8squest -o jsonpath='{.spec.containers[0].env}'
+
+Значит, исправление — в спецификации Pod: нужно добавить требуемую env.

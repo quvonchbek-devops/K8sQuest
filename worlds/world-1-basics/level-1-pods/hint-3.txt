@@ -1,1 +1,14 @@
-Xato "nginxzz" uchun "executable file topilmadi" deb ko'rsatmoqda. Bu buyruq mavjud emas! nginx konteyner oddiy holatda maxsus buyruqsiz ishlashi kerak. Pod ni o'chirib, noto'g'ri command override ni olib tashlaydigan solution.yaml ni apply qiling.
+💡 Yechimga yaqin maslahat:
+
+Xato aniq: `executable file not found` — `nginxzz` degan buyruq yo'q. nginx
+image i maxsus buyruqsiz ishlaydi, ya'ni `command` ni olib tashlash kerak.
+
+MUHIM: pod ning `command` maydonini o'zgartirib bo'lmaydi (u immutable —
+faqat `image` ni almashtirish mumkin). Shuning uchun pod qayta yaratiladi:
+
+    kubectl delete pod nginx-broken -n k8squest
+    kubectl run nginx-broken --image=nginx -n k8squest
+
+Tekshiring — READY ustuni `1/1` bo'lishi kerak:
+
+    kubectl get pod nginx-broken -n k8squest

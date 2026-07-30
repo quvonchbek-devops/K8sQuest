@@ -1,9 +1,14 @@
 🧭 Guiding hint:
 
-The init container is trying to find "backend-service" with `nslookup`, but that service does not exist. The container waits for it forever.
+The init container tries to resolve the name `backend-service` through DNS and
+does not finish UNTIL it finds it. The main container does not start until the
+init container finishes — so the pod stays stuck in `Init:0/1`.
 
-An init container must finish successfully before the main container starts. This one never finishes!
+Look at what the init container runs, and whether the service exists:
 
-There are two options:
-1. Change the command to one that can finish, or
-2. Create the service it is waiting for
+    kubectl get pod web-with-init -n k8squest -o jsonpath='{.spec.initContainers[0].command}'
+    kubectl get svc -n k8squest
+
+The second command does NOT list `backend-service` — the init container is
+waiting for something that does not exist. Two ways out: create the service it
+waits for, or change the command so it can finish.

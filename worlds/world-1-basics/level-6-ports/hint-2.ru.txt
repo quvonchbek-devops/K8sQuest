@@ -1,9 +1,16 @@
 🧭 Направляющая подсказка:
 
-Контейнер слушает порт 80, а Service направляет трафик на порт 8080.
+У Service ДВА порта, и это разные вещи:
 
-У Service две настройки портов:
-- `port`: порт, к которому подключаются клиенты (внешний)
-- `targetPort`: на какой порт внутри Pod/контейнера направлять (внутренний)
+  - `port` — порт, по которому клиенты обращаются к Service;
+  - `targetPort` — порт ВНУТРИ Pod, куда трафик приходит в итоге.
 
-targetPort обязан совпадать с containerPort контейнера!
+`targetPort` обязан совпадать с `containerPort` контейнера. Сравните их:
+
+    kubectl get service web-service -n k8squest -o jsonpath='{.spec.ports[0]}'
+    kubectl get pod web-server -n k8squest -o jsonpath='{.spec.containers[0].ports[0]}'
+
+Если не совпадают, Service всё равно «находит» Pod, но соединение
+отбрасывается. Это видно по списку endpoints:
+
+    kubectl get endpoints web-service -n k8squest

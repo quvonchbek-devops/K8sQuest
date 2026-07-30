@@ -1,10 +1,15 @@
-The error says "executable file not found" for "nginxzz" — that command does not exist! An nginx container should run with no custom command at all.
+💡 Near-solution hint:
 
-This sandbox terminal is kubectl-only (`nano`, `vi` and interactive editing do not work), so instead of editing broken.yaml, change the live pod. Recreate it without the wrong command override:
+The error is explicit: `executable file not found` — there is no command
+called `nginxzz`. The nginx image runs fine with no custom command, so the
+`command` has to go.
+
+IMPORTANT: a pod's `command` field cannot be changed (it is immutable — only
+`image` can be swapped). So the pod is recreated:
 
     kubectl delete pod nginx-broken -n k8squest
     kubectl run nginx-broken --image=nginx -n k8squest
 
-Then check:
+Check — the READY column must show `1/1`:
 
     kubectl get pod nginx-broken -n k8squest

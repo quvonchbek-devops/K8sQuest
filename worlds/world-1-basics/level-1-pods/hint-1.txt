@@ -1,1 +1,16 @@
-Bu pod bilan nimadir noto'g'ri. Avval nima bo'layotganini tekshirishdan boshlang.
+🔍 Kuzatuv maslahat:
+
+Pod holatini ko'ring:
+
+    kubectl get pod nginx-broken -n k8squest
+
+STATUS ustunida `CrashLoopBackOff` turadi: konteyner ishga tushadi, darhol
+o'ladi, Kubernetes qayta uradi — RESTARTS ustuni o'sib boradi.
+
+Sabab STATUS da emas. Ikki joyga qarang:
+
+    kubectl describe pod nginx-broken -n k8squest
+    kubectl logs nginx-broken -n k8squest
+
+`describe` chiqishining ENG PASTIDAGI `Events:` bo'limi va `logs` ning
+oxirgi qatori — sabab shu ikkisidan birida bo'ladi.

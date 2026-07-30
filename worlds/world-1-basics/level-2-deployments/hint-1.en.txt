@@ -1,1 +1,14 @@
-The Deployment exists, but something is off. Check how many pods are supposed to be running.
+🔍 Observation hint:
+
+Check the Deployment status:
+
+    kubectl get deployment web -n k8squest
+
+The READY column says `0/0`: the second number is how many pods SHOULD run —
+so nothing was asked of Kubernetes at all. There are no pods either:
+
+    kubectl get pods -n k8squest
+
+Look at the exact replica count that was requested:
+
+    kubectl get deployment web -n k8squest -o jsonpath='{.spec.replicas}'

@@ -1,8 +1,15 @@
 🧭 Yo'naltiruvchi maslahat:
 
-Loglarda kerakli environment variable haqida xato ko'rinmoqda:
-"Error: Database is uninitialized and superuser password is not specified."
+Loglar sababni AYNAN aytadi:
 
-PostgreSQL xavfsizlik uchun POSTGRES_PASSWORD environment variable ni talab qiladi.
+    Error: Database is uninitialized and superuser password is not specified.
 
-Bu environment variable ni pod spetsifikatsiyasiga qo'shish kerak.
+PostgreSQL image i ishga tushish uchun `POSTGRES_PASSWORD` environment
+o'zgaruvchisini TALAB qiladi (xavfsizlik uchun — parolsiz baza ko'tarilmaydi).
+Pod da u yo'q, shuning uchun konteyner darhol o'ladi.
+
+Pod ning env ro'yxatini ko'ring — bo'sh chiqadi:
+
+    kubectl get pod database-app -n k8squest -o jsonpath='{.spec.containers[0].env}'
+
+Ya'ni tuzatish pod spetsifikatsiyasida: kerakli env qo'shilishi kerak.

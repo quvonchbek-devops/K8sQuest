@@ -1,1 +1,16 @@
-С этим Pod что-то не так. Начните с того, чтобы посмотреть, что происходит.
+🔍 Подсказка-наблюдение:
+
+Посмотрите состояние Pod:
+
+    kubectl get pod nginx-broken -n k8squest
+
+В колонке STATUS стоит `CrashLoopBackOff`: контейнер запускается, сразу
+умирает, Kubernetes повторяет — и колонка RESTARTS растёт.
+
+Причина не в STATUS. Смотрите в двух местах:
+
+    kubectl describe pod nginx-broken -n k8squest
+    kubectl logs nginx-broken -n k8squest
+
+Раздел `Events:` в САМОМ НИЗУ вывода `describe` и последняя строка `logs` —
+причина в одном из них.

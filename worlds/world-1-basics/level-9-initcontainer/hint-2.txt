@@ -1,9 +1,14 @@
 🧭 Yo'naltiruvchi maslahat:
 
-Init container `nslookup` orqali "backend-service" ni topishga urinmoqda, lekin bu service mavjud emas. Konteyner uni abadiy kutib turadi.
+Init container `backend-service` nomini DNS orqali topishga urinadi va
+TOPMAGUNCHA tugamaydi. Asosiy konteyner esa init tugamaguncha boshlanmaydi —
+shuning uchun pod `Init:0/1` da qotib turadi.
 
-Init container lar asosiy konteyner ishga tushishidan oldin muvaffaqiyatli tugashi shart. Bu esa hech qachon tugamaydi!
+Init container qanday buyruq bajarayotganini va service bor-yo'qligini ko'ring:
 
-Ikki variant bor:
-1. Buyruqni tugatila oladigan biriga o'zgartirish, yoki
-2. Kutayotgan service ni yaratish
+    kubectl get pod web-with-init -n k8squest -o jsonpath='{.spec.initContainers[0].command}'
+    kubectl get svc -n k8squest
+
+Ikkinchi buyruq `backend-service` ni KO'RSATMAYDI — ya'ni init container
+mavjud bo'lmagan narsani kutmoqda. Ikki yo'l bor: kutilayotgan service ni
+yaratish yoki buyruqni tugaydigan qilib o'zgartirish.

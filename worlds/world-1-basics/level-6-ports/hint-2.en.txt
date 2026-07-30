@@ -1,9 +1,16 @@
 🧭 Guiding hint:
 
-The container listens on port 80, but the Service forwards traffic to port 8080.
+A Service has TWO ports and they mean different things:
 
-A Service has two port settings:
-- `port`: the port clients connect to (external)
-- `targetPort`: which port inside the pod/container to forward to (internal)
+  - `port` — the port clients use to reach the Service;
+  - `targetPort` — the port INSIDE the pod where traffic finally lands.
 
-targetPort must match the container's containerPort!
+`targetPort` must match the container's `containerPort`. Compare them:
+
+    kubectl get service web-service -n k8squest -o jsonpath='{.spec.ports[0]}'
+    kubectl get pod web-server -n k8squest -o jsonpath='{.spec.containers[0].ports[0]}'
+
+If they do not match, the Service still "finds" the pod but the connection is
+refused. The endpoint list shows it:
+
+    kubectl get endpoints web-service -n k8squest

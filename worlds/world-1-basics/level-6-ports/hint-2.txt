@@ -1,9 +1,17 @@
 🧭 Yo'naltiruvchi maslahat:
 
-Konteyner 80-portda tinglayapti, lekin service trafikni 8080-portga yo'naltirmoqda.
+Service da IKKI port bor va ular boshqa-boshqa narsa:
 
-Service da ikkita port konfiguratsiyasi bor:
-- `port`: Klientlar ulanadigan port (tashqi)
-- `targetPort`: Pod/konteynerdagi qaysi portga yo'naltirish kerak (ichki)
+  - `port` — klient service ga ulanadigan port;
+  - `targetPort` — pod ICHIDAGI port, trafik oxirida shu yerga boradi.
 
-targetPort konteynerning containerPort iga mos bo'lishi shart!
+`targetPort` konteynerning `containerPort` iga mos bo'lishi SHART. Ikkalasini
+solishtiring:
+
+    kubectl get service web-service -n k8squest -o jsonpath='{.spec.ports[0]}'
+    kubectl get pod web-server -n k8squest -o jsonpath='{.spec.containers[0].ports[0]}'
+
+Mos kelmasa, service pod ni "topadi", lekin ulanish rad etiladi. Endpoint
+ro'yxati buni ko'rsatadi:
+
+    kubectl get endpoints web-service -n k8squest
