@@ -2,24 +2,19 @@
 
 Mavjudlikni saqlab eviction larga ruxsat berish uchun PDB ni tuzating.
 
-Qadamlar:
-1. PDB ni tahrirlang:
-   `kubectl edit pdb db-proxy-pdb -n k8squest`
+Bu terminalda fayl tahrirlagich yo'q (interaktiv tahrir ham ishlamaydi: bir martalik ijro, TTY yo'q) — PDB ni `kubectl patch` bilan o'zgartiring:
 
-2. minAvailable ni 3 dan 2 ga o'zgartiring:
+    kubectl patch pdb db-proxy-pdb -n k8squest -p '{"spec":{"minAvailable":2}}'
 
-```yaml
-spec:
-  minAvailable: 2  # 2 pod saqlang, 1 tasini evict qilishga ruxsat
-```
+Ya'ni: 2 pod saqlanadi, 1 tasini evict qilishga ruxsat beriladi.
 
-3. Saqlang va tekshiring:
-   `kubectl get pdb db-proxy-pdb -n k8squest`
+Tekshiring:
 
-Endi "ALLOWED" 0 o'rniga 1 bo'lishi kerak!
+    kubectl get pdb db-proxy-pdb -n k8squest
 
-Muqobil: maxUnavailable ishlating:
-```yaml
-spec:
-  maxUnavailable: 1  # 1 pod mavjud bo'lmasligiga ruxsat
-```
+Endi "ALLOWED DISRUPTIONS" 0 o'rniga 1 bo'lishi kerak!
+
+Muqobil yo'l — `minAvailable` ni olib tashlab `maxUnavailable` qo'yish. Bu ikkisi
+BIRGA turolmaydi, shuning uchun almashtirish JSON patch bilan qilinadi:
+
+    kubectl patch pdb db-proxy-pdb -n k8squest --type=json -p '[{"op":"remove","path":"/spec/minAvailable"},{"op":"add","path":"/spec/maxUnavailable","value":1}]'

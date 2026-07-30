@@ -1,24 +1,20 @@
 ✅ Yechim maslahat:
 
-Aniq NodePort qo'shish uchun service ni tahrirlang:
+NodePort ni ANIQ ko'rsatish kerak (tasodifiy port emas): `nodePort: 30080`.
+To'g'ri oraliq — 30000-32767.
 
-```bash
-kubectl edit svc web-nodeport -n k8squest
-```
+Bu terminalda fayl tahrirlagich yo'q (interaktiv tahrir ham ishlamaydi: bir martalik ijro, TTY yo'q) — portni `kubectl patch` bilan qo'ying:
 
-Yoki o'chirib qayta apply qiling:
-```bash
-kubectl delete svc web-nodeport -n k8squest
-kubectl apply -f solution.yaml -n k8squest
-```
+    kubectl patch svc web-nodeport -n k8squest -p '{"spec":{"ports":[{"protocol":"TCP","port":80,"targetPort":80,"nodePort":30080}]}}'
 
-ports bo'limiga quyidagini qo'shing:
-```yaml
-ports:
-- protocol: TCP
-  port: 80
-  targetPort: 80
-  nodePort: 30080  # Bu qatorni qo'shing!
-```
+Port ro'yxatini TO'LIQ yozish kerak: strategic merge patch ports elementlarini
+`port` + `protocol` bo'yicha topadi, yetishmagan maydonlar esa tushib qolardi.
 
-To'g'ri NodePort oralig'i: 30000-32767
+Tekshiring:
+
+    kubectl get svc web-nodeport -n k8squest
+
+Muqobil yo'l (yechim faylini olgan bo'lsangiz):
+
+    kubectl delete svc web-nodeport -n k8squest
+    kubectl apply -f solution.yaml -n k8squest

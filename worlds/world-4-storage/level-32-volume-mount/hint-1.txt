@@ -5,5 +5,5 @@ Pod ishlayapti lekin ilova ma'lumotlarni topa olmayapti.
 Tekshiring:
 1. Pod loglarini ko'ring: `kubectl logs web-app -n k8squest`
 2. Volume mount yo'lini tekshiring:
-   `kubectl get pod web-app -n k8squest -o yaml | grep -A5 volumeMounts`
+   `kubectl get pod web-app -n k8squest -o jsonpath='{.spec.containers[0].volumeMounts}'`
 3. Ilova qaysi yo'lda ma'lumot kutmoqda vs volume qayerga mount qilingan?

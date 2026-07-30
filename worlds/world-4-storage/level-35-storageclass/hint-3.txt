@@ -2,10 +2,6 @@
 
 broken.yaml da PVC ning storageClassName ni mavjud biriga o'zgartiring:
 
-```bash
-kubectl get sc    # Mavjud StorageClass nomlari
-```
-
 ```yaml
 storageClassName: non-existent-class    # ❌
 # sinfni umuman ko0rsatmasangiz, klasterning default i ishlatiladi

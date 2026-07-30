@@ -6,4 +6,6 @@ StorageClass — Kubernetes ga volume ni QANDAY yaratishni aytadi:
 - Reclaim policy (Delete yoki Retain)
 
 Muammo: PVC mavjud bo'lmagan StorageClass nomiga murojaat qilmoqda.
-`kubectl get sc` bilan mavjud nomlarni ko'ring va PVC dagi nomni to'g'rilang.
+Sandbox'da StorageClass ro'yxati ko'rinmaydi (u cluster-scoped resurs).
+Shuning uchun eng ishonchli yo'l — sinf nomini UMUMAN ko'rsatmaslik: o'shanda
+klasterning default StorageClass i ishlatiladi.

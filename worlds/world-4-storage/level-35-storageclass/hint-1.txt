@@ -5,6 +5,7 @@ PVC Pending da qotib turgan — StorageClass bilan bog'liq muammo.
 Tekshiring:
 1. `kubectl get pvc -n k8squest` — STATUS: Pending
 2. `kubectl describe pvc -n k8squest` — Events dagi xato xabarini o'qing
-3. `kubectl get storageclass` — mavjud StorageClass larni ko'ring
+3. `kubectl describe pvc -n k8squest` chiqishida so'ralgan sinf nomi ko'rinadi
+   (StorageClass cluster-scoped, ya'ni sandbox'dan ro'yxatini ko'rib bo'lmaydi)
 
 PVC qaysi StorageClass ni so'ramoqda? Bu StorageClass klasterda bormi?

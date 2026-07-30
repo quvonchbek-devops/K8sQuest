@@ -10,7 +10,7 @@ Qadamlar:
    `kubectl apply -f solution.yaml`
 
 3. Pod lar tartib bilan ishga tushishini kuzating (0, keyin 1, keyin 2):
-   `kubectl get pods -n k8squest -l app=database -w`
+   `kubectl get pods -n k8squest -l app=database      # bir necha marta takrorlang (-w bu terminalda ishlamaydi)`
 
 4. Barqaror nomlarni tekshiring:
    `kubectl get pods -n k8squest -l app=database`

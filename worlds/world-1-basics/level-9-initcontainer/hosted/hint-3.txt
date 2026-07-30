@@ -16,7 +16,7 @@ yozib bo'lmaydi. Shuning uchun yo'l boshqacha:
 3. Service paydo bo'lgach, init container ning `nslookup` buyrug'i
    muvaffaqiyatli tugaydi va pod asosiy konteynerga o'tadi. Kuzating:
    ```
-   kubectl get pod web-with-init -w
+   kubectl get pod web-with-init      # bir necha marta takrorlang
    ```
 
 Nima bo'layotganini ko'rish uchun avval `solution.yaml` ni o'qing —

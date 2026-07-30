@@ -1,7 +1,7 @@
 🔍 Kuzatuv maslahat:
 
 Deployment ning rollout strategiyasini tekshiring:
-`kubectl get deployment critical-api -n k8squest -o yaml | grep -A 5 strategy`
+`kubectl get deployment critical-api -n k8squest -o jsonpath='{.spec.strategy}'`
 
 `maxUnavailable` va `maxSurge` ga qarang. Nima sezayapsiz?
 
@@ -9,6 +9,6 @@ Rollout ni ishga tushirib ko'ring (image tag o'zgartiring):
 `kubectl set image deployment/critical-api api=hashicorp/http-echo:latest -n k8squest`
 
 Pod larga nima bo'lishini kuzating:
-`kubectl get pods -n k8squest -l app=api -w`
+`kubectl get pods -n k8squest -l app=api      # bir necha marta takrorlang (-w bu terminalda ishlamaydi)`
 
 BARCHA pod lar bir vaqtda to'xtaydimi? Bu to'xtash vaqtiga olib keladi!

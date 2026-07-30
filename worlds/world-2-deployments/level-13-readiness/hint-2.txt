@@ -7,6 +7,6 @@ Readiness probe siz, Kubernetes "Running = Ready" deb hisoblaydi va pod ni darho
 Bu foydalanuvchilar hali ishga tushayotgan pod larga urilishiga olib keladi → 502 Bad Gateway xatolar!
 
 Deployment ni tekshiring:
-`kubectl get deployment slow-startup-app -n k8squest -o yaml | grep -A 10 readinessProbe`
+`kubectl get deployment slow-startup-app -n k8squest -o jsonpath='{.spec.template.spec.containers[0]}'`
 
 Hech narsa ko'rmaysiz (yoki faqat livenessProbe). Muammo shu!

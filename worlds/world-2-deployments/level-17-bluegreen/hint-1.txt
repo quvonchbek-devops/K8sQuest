@@ -6,7 +6,7 @@ Deployment larni tekshiring:
 app-blue va app-green ni ko'rishingiz kerak, ikkalasi ham 3/3 replika bilan.
 
 Service ni tekshiring:
-`kubectl get service app-service -n k8squest -o yaml | grep -A 5 selector`
+`kubectl get service app-service -n k8squest -o jsonpath='{.spec.selector}'`
 
 Qaysi versiyaga yo'naltirilgan?
 

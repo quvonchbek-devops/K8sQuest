@@ -2,22 +2,15 @@
 
 Blue-green deployment larda service selector ni yangilab trafik almashtirasiz.
 
-Qadamlar:
-1. Service ni tahrirlang:
-   `kubectl edit service app-service -n k8squest`
+Bu terminalda fayl tahrirlagich yo'q (interaktiv tahrir ham ishlamaydi: bir martalik ijro, TTY yo'q) — selector ni `kubectl patch` bilan almashtiring:
 
-2. Selector ni blue dan green ga o'zgartiring:
+    kubectl patch service app-service -n k8squest -p '{"spec":{"selector":{"app":"myapp","version":"green"}}}'
 
-```yaml
-spec:
-  selector:
-    app: myapp
-    version: green  # blue dan green ga o'zgartirildi
-```
+Selector ning IKKI kalitini ham yozish MUHIM: patch selector xaritasini
+qo'shib ketadi, ya'ni faqat `version` ni bersangiz `app` joyida qoladi — lekin
+aniq yozish nimaga ulanayotganini ko'rsatadi.
 
-3. Saqlang va chiqing.
+Tekshiring — endpoint lar green pod larga ko'chganini ko'ring:
 
-4. Trafik endi green ga yo'naltirilganini tekshiring:
-   `kubectl get endpoints app-service -n k8squest`
-
-Green deployment dan 3 ta IP ko'rinishi kerak!
+    kubectl get endpoints app-service -n k8squest
+    kubectl get pods -n k8squest -l version=green

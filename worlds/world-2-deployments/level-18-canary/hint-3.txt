@@ -10,7 +10,7 @@ Qadamlar:
    `kubectl scale deployment app-canary --replicas=1 -n k8squest`
 
 3. Pod lar tayyor bo'lishini kuting:
-   `kubectl get deployments -n k8squest -w`
+   `kubectl get deployments -n k8squest      # bir necha marta takrorlang (-w bu terminalda ishlamaydi)`
 
 4. Taqsimotni tekshiring:
    ```bash

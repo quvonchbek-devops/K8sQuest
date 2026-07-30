@@ -4,22 +4,14 @@ Liveness probe mavjud bo'lmagan `/nonexistent-healthz` ni tekshirayapti (404 xat
 
 nginx server root path `/` da muvaffaqiyatli javob beradi.
 
-Tuzatish qadamlari:
-1. Deployment ni tahrirlang:
-   `kubectl edit deployment api-server -n k8squest`
+Bu terminalda fayl tahrirlagich yo'q (interaktiv tahrir ham ishlamaydi: bir martalik ijro, TTY yo'q) — jonli obyektni `kubectl patch` bilan o'zgartiring:
 
-2. livenessProbe bo'limini topib, o'zgartiring:
-   ```yaml
-   path: /nonexistent-healthz
-   ```
-   quyidagiga:
-   ```yaml
-   path: /
-   ```
+    kubectl patch deployment api-server -n k8squest -p '{"spec":{"template":{"spec":{"containers":[{"name":"api","livenessProbe":{"httpGet":{"path":"/","port":80}}}]}}}}'
 
-3. Saqlang va chiqing. Deployment avtomatik tuzatilgan pod larni chiqaradi.
+Konteyner nomi (`api`) MUHIM: strategic merge patch ro'yxatni aynan shu nom bo'yicha qo'shib ketadi, aks holda konteyner ta'rifi butunlay almashib qolardi.
 
-4. 30 soniya kuting va tekshiring:
-   `kubectl get pods -n k8squest -l app=api`
+Patch dan keyin Deployment yangi pod larni chiqaradi. 30 soniya kutib tekshiring:
+
+    kubectl get pods -n k8squest -l app=api
 
 Pod lar kam restart soni bilan Running bo'lishi kerak!

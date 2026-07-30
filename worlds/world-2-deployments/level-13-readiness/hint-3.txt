@@ -2,25 +2,16 @@
 
 Ilova haqiqatan tayyor bo'lguncha kutadigan readiness probe qo'shish kerak.
 
-Qadamlar:
-1. Deployment ni tahrirlang:
-   `kubectl edit deployment slow-startup-app -n k8squest`
+Bu terminalda fayl tahrirlagich yo'q (interaktiv tahrir ham ishlamaydi: bir martalik ijro, TTY yo'q) — probe ni `kubectl patch` bilan qo'shing:
 
-2. `livenessProbe` bo'limini toping va uning pastiga `readinessProbe` qo'shing:
+    kubectl patch deployment slow-startup-app -n k8squest -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","readinessProbe":{"httpGet":{"path":"/","port":80},"initialDelaySeconds":22,"periodSeconds":5,"successThreshold":1}}]}}}}'
 
-```yaml
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 22  # 20s sleep + 2s zaxira
-          periodSeconds: 5
-          successThreshold: 1
-```
+`initialDelaySeconds: 22` — konteyner 20 soniya `sleep` qiladi, ustiga 2 soniya zaxira.
 
-3. Saqlang va chiqing. Pod lar qayta yaratiladi.
+Konteyner nomi (`app`) MUHIM: patch ro'yxatni aynan shu nom bo'yicha qo'shib ketadi.
 
-4. Pod lar tayyor bo'lishini kuzating:
-   `kubectl get pods -n k8squest -l app=slow-app -w`
+Pod lar qayta yaratiladi. Holatni tekshiring (terminal `-w` ni qabul qilmaydi — buyruqni bir necha marta takrorlang):
+
+    kubectl get pods -n k8squest -l app=slow-app
 
 Endi pod lar haqiqatan tayyor bo'lguncha trafik qabul qilmaydi!

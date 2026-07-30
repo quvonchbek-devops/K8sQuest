@@ -5,7 +5,10 @@ Events da "0/1 nodes are available: 1 Insufficient cpu" yoki "Insufficient memor
 Bu pod klasterdagi hech qanday node taqdim eta olmaydigan darajada ko'p resurs so'rayotganini bildiradi.
 
 Pod qancha resurs so'rayotganini tekshiring:
-`kubectl get pod hungry-app -n k8squest -o yaml | grep -A 4 resources:`
+`kubectl get pod hungry-app -n k8squest -o jsonpath='{.spec.containers[0].resources}'`
 
-Node sig'imi bilan solishtiring:
-`kubectl describe nodes | grep -A 5 Allocatable`
+(Terminal quvurni — `| grep` — qabul qilmaydi, shuning uchun jsonpath.)
+
+Sandbox namespace ining chegarasi bilan solishtiring (node lar sandbox'dan ko'rinmaydi — ular umumiy):
+`kubectl describe resourcequota -n k8squest`
+`kubectl describe limitrange -n k8squest`

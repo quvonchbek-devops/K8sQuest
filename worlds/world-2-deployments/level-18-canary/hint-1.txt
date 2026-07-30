@@ -10,7 +10,12 @@ Service endpoint larini tekshiring:
 
 IP larni saning — bu trafik qabul qilayotgan BARCHA pod larni ko'rsatadi (ham stable, ham canary).
 
-Trafik taqsimotini test qiling:
-`for i in $(seq 1 20); do kubectl run -it --rm test-$i --image=busybox --restart=Never -n k8squest -- wget -q -O- app-service; done`
+Trafik taqsimoti pod SONI bilan belgilanadi — service endpoint larini stable va
+canary bo'yicha alohida saning:
+`kubectl get pods -n k8squest -l app=app,track=stable`
+`kubectl get pods -n k8squest -l app=app,track=canary`
 
-"Stable" va "Canary" necha marta ko'rinishini saning. 50/50 ga yaqinmi? Canary uchun bu noto'g'ri!
+(Bu terminal shell tsikli — `for ... done` — va uzluksiz buyruqlarni qabul
+qilmaydi: har satr alohida kubectl chaqiruvi.)
+
+Nisbat 50/50 ga yaqinmi? Canary uchun bu noto'g'ri!

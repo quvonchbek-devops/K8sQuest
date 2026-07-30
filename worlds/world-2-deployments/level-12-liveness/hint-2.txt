@@ -5,6 +5,6 @@ Events da "Liveness probe failed: HTTP probe failed with statuscode: 404" ko'rin
 Bu liveness probe 404 (topilmadi) qaytaradigan endpoint ni tekshirayotganini bildiradi.
 
 Deployment konfiguratsiyasini tekshiring:
-`kubectl get deployment api-server -n k8squest -o yaml | grep -A 10 livenessProbe`
+`kubectl get deployment api-server -n k8squest -o jsonpath='{.spec.template.spec.containers[0].livenessProbe}'`
 
 Tekshirilayotgan `path` ga qarang. Bu to'g'ri health endpoint mi?

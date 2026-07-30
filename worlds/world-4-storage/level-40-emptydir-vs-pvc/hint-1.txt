@@ -3,7 +3,7 @@
 Ma'lumotlar bazasi pod qayta ishga tushganida barcha ma'lumotlarni yo'qotmoqda.
 
 Tekshiring:
-1. `kubectl get pod -n k8squest -o yaml | grep -A5 volumes`
+1. `kubectl get pods -n k8squest -o jsonpath='{.items[*].spec.volumes}'`
 2. Volume turi nima? `emptyDir` mi yoki `persistentVolumeClaim`?
 3. Pod ni qayta ishga tushiring va ma'lumotlar saqlanganmi tekshiring
 

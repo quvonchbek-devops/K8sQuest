@@ -11,7 +11,7 @@ Pod bilan nima bo'layotganini tekshiring:
 2. Events va xato xabarlarini o'qing
 3. SecurityContext konfiguratsiyasini tekshiring:
    ```bash
-   kubectl get pod web-app -n k8squest -o yaml | grep -A 15 securityContext
+   kubectl get pod web-app -n k8squest -o jsonpath='{.spec.securityContext}{"\n"}{.spec.containers[0].securityContext}'
    ```
 
 Qidiring: readOnlyRootFilesystem, runAsNonRoot ni, allowPrivilegeEscalation ni

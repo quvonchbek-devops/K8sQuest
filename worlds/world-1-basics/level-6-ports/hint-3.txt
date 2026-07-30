@@ -4,5 +4,6 @@ Tuzatish qadamlari:
 1. Resurslarni o'chiring: `kubectl delete -f broken.yaml`
 2. broken.yaml da service ning targetPort ini 8080 dan 80 ga o'zgartiring
 3. Apply qiling: `kubectl apply -f broken.yaml`
-4. Test (ixtiyoriy): `kubectl port-forward service/web-service 8080:80 -n k8squest`
-   Keyin brauzerda http://localhost:8080 ga o'ting
+4. Tekshirish: `kubectl get endpoints web-service -n k8squest`
+   Endpoint da pod IP si va 80-port ko'rinishi kerak. (`port-forward` bu
+   terminalda yo'q — u uzluksiz tunnel talab qiladi.)
