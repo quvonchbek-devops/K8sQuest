@@ -1,6 +1,6 @@
 name: "Uzilgan Aloqa — Labels & Selectors"
 description: "Service label selector mos kelmagani uchun pod larni topa olmayapti"
-objective: "Service selector yoki Pod label larni to'g'rilang, shunda trafik pod ga yetib borsin"
+objective: "__APP__-service Service i __APP__-app pod ga trafikni yetkazsin (endpoint paydo bo'lsin)"
 xp: 150
 difficulty: beginner
 expected_time: 15m
@@ -12,14 +12,29 @@ concepts:
   - Service endpoints
   - Pod ulanish (connectivity)
 
+# Generatsiya qilinadigan topshiriq (docs/DESIGN-generated-tasks.md).
+#
+# Nomlar HAR FOYDALANUVCHIDA boshqacha: "backend-service selector ini
+# to'g'rilang" degan tayyor javob endi hech kimga yaramaydi — odam
+# klasterdagi HAQIQIY pod nomini va label ini o'qishi kerak.
+#
+# `name` va `description` da parametr ATAYLAB yo'q: ular katalogda ham
+# ko'rinadi, katalog esa namuna variantni chizadi (ParamClient.Worlds).
+params:
+  - name: app
+    type: word
+  - name: tier
+    type: choice
+    values: [api, web, worker, edge]
+
 # Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
 # Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
 i18n:
   en:
     name: "Broken Wiring — Labels & Selectors"
     description: "The Service cannot find its pods because the label selector does not match"
-    objective: "Fix the Service selector or the pod labels so traffic reaches the pod"
+    objective: "Make the __APP__-service Service reach the __APP__-app pod (an endpoint must appear)"
   ru:
     name: "Разорванная связь — Labels и Selectors"
     description: "Service не находит поды, потому что селектор меток не совпадает"
-    objective: "Исправьте селектор Service или метки Pod, чтобы трафик дошёл до Pod"
+    objective: "Сделайте так, чтобы Service __APP__-service дошёл до пода __APP__-app (должен появиться endpoint)"

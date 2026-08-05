@@ -4,9 +4,9 @@
 
 Шаги:
 1. Удалите отдельный ReplicaSet:
-   `kubectl delete replicaset web-app-rs -n k8squest`
+   `kubectl delete replicaset __APP__-rs -n k8squest`
 
-2. Вместо него создайте Deployment:
+2. Вместо него создайте Deployment с именем __APP__ (__REPLICAS__ реплик):
    `kubectl apply -f solution.yaml`
 
 3. Проверьте:
@@ -15,6 +15,9 @@
 Вы должны увидеть:
 - 1 Deployment
 - 1 ReplicaSet (созданный САМИМ Deployment)
-- 3 Pod
+- __REPLICAS__ Pod
 
 Deployment сам создал ReplicaSet и управляет им!
+
+Число реплик должно совпадать с заданием:
+`kubectl scale deployment __APP__ -n k8squest --replicas=__REPLICAS__`

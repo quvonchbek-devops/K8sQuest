@@ -1,9 +1,9 @@
 🔍 Observation hint:
 
-First check that the pod is running: `kubectl get pod backend-app -n k8squest`
+First check that the pod is running: `kubectl get pod __APP__-app -n k8squest`
 
-Then check the service: `kubectl get service backend-service -n k8squest`
+Then check the service: `kubectl get service __APP__-service -n k8squest`
 
-Finally, check whether the service found any pods: `kubectl get endpoints backend-service -n k8squest`
+Finally, check whether the service found any pods: `kubectl get endpoints __APP__-service -n k8squest`
 
 Do you see any endpoint (IP address)? If not, the service is not wired to the pod.

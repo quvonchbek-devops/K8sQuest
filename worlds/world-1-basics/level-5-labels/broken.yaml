@@ -1,29 +1,29 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: backend-app
+  name: __APP__-app
   namespace: k8squest
   labels:
-    app: backend
-    tier: api
+    app: frontend  # Wrong! Service bu pod ni shu label bilan topolmaydi
+    tier: __TIER__
 spec:
   containers:
   - name: app
     image: hashicorp/http-echo:latest
     args:
-      - "-text=Hello from backend!"
+      - "-text=Hello from __APP__!"
     ports:
     - containerPort: 5678
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
+  name: __APP__-service
   namespace: k8squest
 spec:
   selector:
-    app: frontend  # Wrong! Should be 'backend'
-    tier: api
+    app: __APP__
+    tier: __TIER__
   ports:
   - port: 80
     targetPort: 5678

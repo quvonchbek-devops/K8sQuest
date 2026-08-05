@@ -3,13 +3,13 @@
 Qanday resurslar mavjudligini tekshiring:
 `kubectl get deployments,replicasets -n k8squest`
 
-Deployment siz mustaqil ReplicaSet (web-app-rs) bormi?
+Deployment siz mustaqil ReplicaSet (__APP__-rs) bormi?
 
 Image ni yangilashga urining:
-`kubectl set image replicaset/web-app-rs web=hashicorp/http-echo:latest -n k8squest`
+`kubectl set image replicaset/__APP__-rs web=hashicorp/http-echo:latest -n k8squest`
 
 Pod larni tekshiring:
-`kubectl get pods -n k8squest -l app=webapp`
+`kubectl get pods -n k8squest -l app=__APP__`
 
 Yangilanish ishladimi? Javob: ReplicaSet spec yangilandi, lekin MAVJUD pod lar o'zgarmadi!
 

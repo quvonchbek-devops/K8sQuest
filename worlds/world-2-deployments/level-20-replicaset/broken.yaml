@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: ReplicaSet  # PROBLEM! Should use Deployment instead
 metadata:
-  name: web-app-rs
+  name: __APP__-rs
   namespace: k8squest
 spec:
-  replicas: 3
+  replicas: __REPLICAS__
   selector:
     matchLabels:
-      app: webapp
+      app: __APP__
   template:
     metadata:
       labels:
-        app: webapp
+        app: __APP__
     spec:
       containers:
       - name: web

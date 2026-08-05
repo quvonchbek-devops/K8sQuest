@@ -14,7 +14,7 @@ Deployment — YUQORI DARAJA resurs:
 - Rollout tarixini kuzatadi
 
 Shunday tasavvur qiling:
-- ReplicaSet = "3 ta pod ishlashda tur" (oddiy)
+- ReplicaSet = "__REPLICAS__ ta pod ishlashda tur" (oddiy)
 - Deployment = "Versiyalar, yangilanishlar, rollback larni boshqar" (aqlli)
 
 Deyarli HECH QACHON to'g'ridan-to'g'ri ReplicaSet yaratmang. Doim Deployment ishlating!
@@ -22,7 +22,7 @@ Deyarli HECH QACHON to'g'ridan-to'g'ri ReplicaSet yaratmang. Doim Deployment ish
 Egasi bor-yo'qligini ko'ring — Deployment tomonidan yaratilgan ReplicaSet da
 `ownerReferences` bo'ladi:
 
-    kubectl get replicaset web-app-rs -n k8squest -o jsonpath='{.metadata.ownerReferences}'
+    kubectl get replicaset __APP__-rs -n k8squest -o jsonpath='{.metadata.ownerReferences}'
     kubectl get deployments -n k8squest
 
 Birinchi buyruq BO'SH qaytadi, ikkinchisi hech nima ko'rsatmaydi — ya'ni

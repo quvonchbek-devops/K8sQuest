@@ -14,7 +14,7 @@ A Deployment is a HIGH-LEVEL resource:
 - Keeps rollout history
 
 Think of it like this:
-- ReplicaSet = "keep 3 pods running" (simple)
+- ReplicaSet = "keep __REPLICAS__ pods running" (simple)
 - Deployment = "manage versions, updates and rollbacks" (smart)
 
 Almost NEVER create a ReplicaSet directly. Always use a Deployment!
@@ -22,7 +22,7 @@ Almost NEVER create a ReplicaSet directly. Always use a Deployment!
 Check whether it has an owner — a ReplicaSet created by a Deployment has
 `ownerReferences`:
 
-    kubectl get replicaset web-app-rs -n k8squest -o jsonpath='{.metadata.ownerReferences}'
+    kubectl get replicaset __APP__-rs -n k8squest -o jsonpath='{.metadata.ownerReferences}'
     kubectl get deployments -n k8squest
 
 The first command returns EMPTY and the second lists nothing — so the

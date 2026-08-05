@@ -3,9 +3,9 @@
 Service pod larni **label selector** lar orqali topadi. Service ning selector i pod ning label lariga mos kelishi kerak.
 
 Service selector ni tekshiring:
-`kubectl get service backend-service -n k8squest -o jsonpath='{.spec.selector}'`
+`kubectl get service __APP__-service -n k8squest -o jsonpath='{.spec.selector}'`
 
 Pod label larini tekshiring:
-`kubectl get pod backend-app -n k8squest --show-labels`
+`kubectl get pod __APP__-app -n k8squest --show-labels`
 
 Label lar mos kelyaptimi? Nomuvofiqlikni toping!

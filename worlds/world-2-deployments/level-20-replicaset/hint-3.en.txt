@@ -4,9 +4,9 @@ Convert the ReplicaSet into a Deployment.
 
 Steps:
 1. Delete the standalone ReplicaSet:
-   `kubectl delete replicaset web-app-rs -n k8squest`
+   `kubectl delete replicaset __APP__-rs -n k8squest`
 
-2. Create a Deployment instead:
+2. Create a Deployment named __APP__ instead (__REPLICAS__ replicas):
    `kubectl apply -f solution.yaml`
 
 3. Check:
@@ -15,6 +15,9 @@ Steps:
 You should see:
 - 1 Deployment
 - 1 ReplicaSet (created BY the Deployment)
-- 3 Pods
+- __REPLICAS__ Pods
 
 The Deployment created and now manages the ReplicaSet for you!
+
+The replica count must match the task:
+`kubectl scale deployment __APP__ -n k8squest --replicas=__REPLICAS__`

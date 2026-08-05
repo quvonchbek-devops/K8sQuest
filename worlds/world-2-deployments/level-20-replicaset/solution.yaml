@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment  # Fixed: Use Deployment (manages ReplicaSets for you)
 metadata:
-  name: web-app
+  name: __APP__
   namespace: k8squest
 spec:
-  replicas: 3
+  replicas: __REPLICAS__
   selector:
     matchLabels:
-      app: webapp
+      app: __APP__
   template:
     metadata:
       labels:
-        app: webapp
+        app: __APP__
     spec:
       containers:
       - name: web

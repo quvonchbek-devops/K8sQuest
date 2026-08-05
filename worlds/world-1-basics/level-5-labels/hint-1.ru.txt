@@ -1,9 +1,9 @@
 🔍 Подсказка-наблюдение:
 
-Сначала проверьте, что Pod работает: `kubectl get pod backend-app -n k8squest`
+Сначала проверьте, что Pod работает: `kubectl get pod __APP__-app -n k8squest`
 
-Затем проверьте Service: `kubectl get service backend-service -n k8squest`
+Затем проверьте Service: `kubectl get service __APP__-service -n k8squest`
 
-И наконец, нашёл ли Service поды: `kubectl get endpoints backend-service -n k8squest`
+И наконец, нашёл ли Service поды: `kubectl get endpoints __APP__-service -n k8squest`
 
 Видите хотя бы один endpoint (IP-адрес)? Если нет — Service не связан с Pod.

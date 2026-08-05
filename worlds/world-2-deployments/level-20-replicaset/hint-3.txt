@@ -4,9 +4,9 @@ ReplicaSet ni Deployment ga aylantiring.
 
 Qadamlar:
 1. Mustaqil ReplicaSet ni o'chiring:
-   `kubectl delete replicaset web-app-rs -n k8squest`
+   `kubectl delete replicaset __APP__-rs -n k8squest`
 
-2. O'rniga Deployment yarating:
+2. O'rniga __APP__ nomli Deployment yarating (__REPLICAS__ ta replika):
    `kubectl apply -f solution.yaml`
 
 3. Tekshiring:
@@ -15,6 +15,9 @@ Qadamlar:
 Ko'rishingiz kerak:
 - 1 ta Deployment
 - 1 ta ReplicaSet (deployment TOMONIDAN yaratilgan)
-- 3 ta Pod
+- __REPLICAS__ ta Pod
 
 Deployment avtomatik ReplicaSet ni yaratdi va boshqarmoqda!
+
+Replika soni topshiriqdagi bilan bir xil bo'lishi shart:
+`kubectl scale deployment __APP__ -n k8squest --replicas=__REPLICAS__`

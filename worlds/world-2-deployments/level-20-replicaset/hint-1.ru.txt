@@ -3,13 +3,13 @@
 Проверьте, какие ресурсы есть:
 `kubectl get deployments,replicasets -n k8squest`
 
-Есть ли отдельный ReplicaSet (web-app-rs) без Deployment?
+Есть ли отдельный ReplicaSet (__APP__-rs) без Deployment?
 
 Попробуйте обновить образ:
-`kubectl set image replicaset/web-app-rs web=hashicorp/http-echo:latest -n k8squest`
+`kubectl set image replicaset/__APP__-rs web=hashicorp/http-echo:latest -n k8squest`
 
 Проверьте поды:
-`kubectl get pods -n k8squest -l app=webapp`
+`kubectl get pods -n k8squest -l app=__APP__`
 
 Обновление сработало? Ответ: спецификация ReplicaSet обновилась, а СУЩЕСТВУЮЩИЕ поды не изменились!
 

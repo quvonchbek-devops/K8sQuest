@@ -1,6 +1,6 @@
 name: "Deployment siz ReplicaSet"
 description: "Qo'lda ReplicaSet yangilanishlarni qiyinlashtirmoqda va avtomatlashtirishni buzmoqda"
-objective: "Yaxshiroq boshqarish uchun mustaqil ReplicaSet ni Deployment ga aylantiring"
+objective: "Mustaqil ReplicaSet ni __APP__ nomli Deployment ga aylantiring va __REPLICAS__ ta replika ishlab tursin"
 xp: 150
 difficulty: beginner
 expected_time: 10m
@@ -12,14 +12,37 @@ concepts:
   - rollout boshqaruvi
   - abstraksiya qatlamlari
 
+# Generatsiya qilinadigan topshiriq (docs/DESIGN-generated-tasks.md).
+#
+# Bu yerda SON ham parametr: ko'chirilgan `replicas: 3` boshqa odamning
+# variantida yiqiladi, ya'ni yechimni yopishtirish yetarli emas — topshiriq
+# matnini o'qish kerak.
+#
+# `replicas` oralig'i ATAYLAB tor (2-3). Sabab o'lchangan: budjet hisobida
+# broken.yaml ning ReplicaSet i va solution.yaml ning Deployment i BIRGA
+# sanaladi (ikkalasi ham namespace da bo'lishi mumkin), ustiga tekshiruv
+# pod'i ham joy oladi. `max: 4` da bu 288Mi bo'lib, sandbox ning 256Mi
+# chegarasidan oshib ketardi — `make check-content` shuni ushladi.
+#
+# Ya'ni son parametrining oralig'ini KONTENT muallifi emas, sandbox budjeti
+# belgilaydi; oraliqni kengaytirishdan oldin scripts/kontent-budjet.py ni
+# yugurtiring.
+params:
+  - name: app
+    type: word
+  - name: replicas
+    type: number
+    min: 2
+    max: 3
+
 # Tarjimalar (interfeys uz/en/ru, kontent esa faqat o'zbekcha edi).
 # Yo'q maydon = o'zbekchaga qaytadi (contentapi.Mission.I18n).
 i18n:
   en:
     name: "A ReplicaSet Without a Deployment"
     description: "A hand-made ReplicaSet makes updates hard and breaks automation"
-    objective: "Convert the standalone ReplicaSet into a Deployment for proper management"
+    objective: "Convert the standalone ReplicaSet into a Deployment named __APP__ running __REPLICAS__ replicas"
   ru:
     name: "ReplicaSet без Deployment"
     description: "Созданный вручную ReplicaSet усложняет обновления и ломает автоматизацию"
-    objective: "Преобразуйте отдельный ReplicaSet в Deployment для нормального управления"
+    objective: "Преобразуйте отдельный ReplicaSet в Deployment с именем __APP__ и __REPLICAS__ репликами"

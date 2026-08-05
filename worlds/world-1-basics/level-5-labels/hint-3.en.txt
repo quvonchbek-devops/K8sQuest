@@ -1,11 +1,11 @@
 💡 Near-solution hint:
 
-The Service selector says `app: frontend`, but the pod has the label `app: backend`. They do not match!
+The Service selector looks for `app: __APP__`, but the pod is labelled `app: frontend`. They do not match!
 
-Steps:
-1. Delete the resources: `kubectl delete -f broken.yaml`
-2. In broken.yaml change the Service selector from `app: frontend` to `app: backend`
-3. Apply: `kubectl apply -f broken.yaml`
-4. Check the endpoints: `kubectl get endpoints backend-service -n k8squest`
+Fix the pod label with a single command (no file editing needed):
+`kubectl label pod __APP__-app app=__APP__ --overwrite -n k8squest`
+
+Then check:
+`kubectl get endpoints __APP__-service -n k8squest`
 
 An IP address should appear as an endpoint!

@@ -14,7 +14,7 @@ Deployment — ВЫСОКОУРОВНЕВЫЙ ресурс:
 - Ведёт историю rollout
 
 Проще так:
-- ReplicaSet = "держи 3 пода" (просто)
+- ReplicaSet = "держи __REPLICAS__ пода" (просто)
 - Deployment = "управляй версиями, обновлениями и откатами" (умно)
 
 Почти НИКОГДА не создавайте ReplicaSet напрямую. Всегда используйте Deployment!
@@ -22,7 +22,7 @@ Deployment — ВЫСОКОУРОВНЕВЫЙ ресурс:
 Проверьте, есть ли владелец — у ReplicaSet, созданного Deployment, есть
 `ownerReferences`:
 
-    kubectl get replicaset web-app-rs -n k8squest -o jsonpath='{.metadata.ownerReferences}'
+    kubectl get replicaset __APP__-rs -n k8squest -o jsonpath='{.metadata.ownerReferences}'
     kubectl get deployments -n k8squest
 
 Первая команда вернёт ПУСТО, вторая ничего не покажет — значит ReplicaSet

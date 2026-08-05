@@ -3,9 +3,9 @@
 Service находит поды через **селекторы меток**. Селектор Service должен совпадать с метками Pod.
 
 Проверьте селектор Service:
-`kubectl get service backend-service -n k8squest -o jsonpath='{.spec.selector}'`
+`kubectl get service __APP__-service -n k8squest -o jsonpath='{.spec.selector}'`
 
 Проверьте метки Pod:
-`kubectl get pod backend-app -n k8squest --show-labels`
+`kubectl get pod __APP__-app -n k8squest --show-labels`
 
 Совпадают ли метки? Найдите расхождение!
